@@ -120,6 +120,12 @@ export const Pages: CollectionConfig<'pages'> = {
         position: 'sidebar',
       },
     },
+    {
+      name: 'logo-list',
+      type: 'upload',
+      relationTo: 'logos',
+      hasMany: true,
+    },
     ...slugField(),
   ],
   hooks: {
