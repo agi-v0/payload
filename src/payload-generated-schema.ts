@@ -21,8 +21,8 @@ import {
   timestamp,
   type AnyPgColumn,
   pgEnum,
-} from '@payloadcms/db-postgres/drizzle/pg-core'
-import { sql, relations } from '@payloadcms/db-postgres/drizzle'
+} from '@payloadcms/db-vercel-postgres/drizzle/pg-core'
+import { sql, relations } from '@payloadcms/db-vercel-postgres/drizzle'
 export const enum_pages_hero_links_link_type = pgEnum('enum_pages_hero_links_link_type', [
   'reference',
   'custom',
@@ -385,7 +385,6 @@ export const pages_rels = pgTable(
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
     categoriesID: integer('categories_id'),
-    logosID: integer('logos_id'),
   },
   (columns) => ({
     order: index('pages_rels_order_idx').on(columns.order),
@@ -394,7 +393,6 @@ export const pages_rels = pgTable(
     pages_rels_pages_id_idx: index('pages_rels_pages_id_idx').on(columns.pagesID),
     pages_rels_posts_id_idx: index('pages_rels_posts_id_idx').on(columns.postsID),
     pages_rels_categories_id_idx: index('pages_rels_categories_id_idx').on(columns.categoriesID),
-    pages_rels_logos_id_idx: index('pages_rels_logos_id_idx').on(columns.logosID),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [pages.id],
@@ -414,11 +412,6 @@ export const pages_rels = pgTable(
       columns: [columns['categoriesID']],
       foreignColumns: [categories.id],
       name: 'pages_rels_categories_fk',
-    }).onDelete('cascade'),
-    logosIdFk: foreignKey({
-      columns: [columns['logosID']],
-      foreignColumns: [logos.id],
-      name: 'pages_rels_logos_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -712,7 +705,6 @@ export const _pages_v_rels = pgTable(
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
     categoriesID: integer('categories_id'),
-    logosID: integer('logos_id'),
   },
   (columns) => ({
     order: index('_pages_v_rels_order_idx').on(columns.order),
@@ -723,7 +715,6 @@ export const _pages_v_rels = pgTable(
     _pages_v_rels_categories_id_idx: index('_pages_v_rels_categories_id_idx').on(
       columns.categoriesID,
     ),
-    _pages_v_rels_logos_id_idx: index('_pages_v_rels_logos_id_idx').on(columns.logosID),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [_pages_v.id],
@@ -743,11 +734,6 @@ export const _pages_v_rels = pgTable(
       columns: [columns['categoriesID']],
       foreignColumns: [categories.id],
       name: '_pages_v_rels_categories_fk',
-    }).onDelete('cascade'),
-    logosIdFk: foreignKey({
-      columns: [columns['logosID']],
-      foreignColumns: [logos.id],
-      name: '_pages_v_rels_logos_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -987,6 +973,7 @@ export const media = pgTable(
     id: serial('id').primaryKey(),
     alt: varchar('alt'),
     caption: jsonb('caption'),
+    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -1149,98 +1136,6 @@ export const users = pgTable(
     users_updated_at_idx: index('users_updated_at_idx').on(columns.updatedAt),
     users_created_at_idx: index('users_created_at_idx').on(columns.createdAt),
     users_email_idx: uniqueIndex('users_email_idx').on(columns.email),
-  }),
-)
-
-export const logos = pgTable(
-  'logos',
-  {
-    id: serial('id').primaryKey(),
-    alt: varchar('alt'),
-    caption: jsonb('caption'),
-    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
-      .defaultNow()
-      .notNull(),
-    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
-      .defaultNow()
-      .notNull(),
-    url: varchar('url'),
-    thumbnailURL: varchar('thumbnail_u_r_l'),
-    filename: varchar('filename'),
-    mimeType: varchar('mime_type'),
-    filesize: numeric('filesize'),
-    width: numeric('width'),
-    height: numeric('height'),
-    focalX: numeric('focal_x'),
-    focalY: numeric('focal_y'),
-    sizes_thumbnail_url: varchar('sizes_thumbnail_url'),
-    sizes_thumbnail_width: numeric('sizes_thumbnail_width'),
-    sizes_thumbnail_height: numeric('sizes_thumbnail_height'),
-    sizes_thumbnail_mimeType: varchar('sizes_thumbnail_mime_type'),
-    sizes_thumbnail_filesize: numeric('sizes_thumbnail_filesize'),
-    sizes_thumbnail_filename: varchar('sizes_thumbnail_filename'),
-    sizes_square_url: varchar('sizes_square_url'),
-    sizes_square_width: numeric('sizes_square_width'),
-    sizes_square_height: numeric('sizes_square_height'),
-    sizes_square_mimeType: varchar('sizes_square_mime_type'),
-    sizes_square_filesize: numeric('sizes_square_filesize'),
-    sizes_square_filename: varchar('sizes_square_filename'),
-    sizes_small_url: varchar('sizes_small_url'),
-    sizes_small_width: numeric('sizes_small_width'),
-    sizes_small_height: numeric('sizes_small_height'),
-    sizes_small_mimeType: varchar('sizes_small_mime_type'),
-    sizes_small_filesize: numeric('sizes_small_filesize'),
-    sizes_small_filename: varchar('sizes_small_filename'),
-    sizes_medium_url: varchar('sizes_medium_url'),
-    sizes_medium_width: numeric('sizes_medium_width'),
-    sizes_medium_height: numeric('sizes_medium_height'),
-    sizes_medium_mimeType: varchar('sizes_medium_mime_type'),
-    sizes_medium_filesize: numeric('sizes_medium_filesize'),
-    sizes_medium_filename: varchar('sizes_medium_filename'),
-    sizes_large_url: varchar('sizes_large_url'),
-    sizes_large_width: numeric('sizes_large_width'),
-    sizes_large_height: numeric('sizes_large_height'),
-    sizes_large_mimeType: varchar('sizes_large_mime_type'),
-    sizes_large_filesize: numeric('sizes_large_filesize'),
-    sizes_large_filename: varchar('sizes_large_filename'),
-    sizes_xlarge_url: varchar('sizes_xlarge_url'),
-    sizes_xlarge_width: numeric('sizes_xlarge_width'),
-    sizes_xlarge_height: numeric('sizes_xlarge_height'),
-    sizes_xlarge_mimeType: varchar('sizes_xlarge_mime_type'),
-    sizes_xlarge_filesize: numeric('sizes_xlarge_filesize'),
-    sizes_xlarge_filename: varchar('sizes_xlarge_filename'),
-    sizes_og_url: varchar('sizes_og_url'),
-    sizes_og_width: numeric('sizes_og_width'),
-    sizes_og_height: numeric('sizes_og_height'),
-    sizes_og_mimeType: varchar('sizes_og_mime_type'),
-    sizes_og_filesize: numeric('sizes_og_filesize'),
-    sizes_og_filename: varchar('sizes_og_filename'),
-  },
-  (columns) => ({
-    logos_updated_at_idx: index('logos_updated_at_idx').on(columns.updatedAt),
-    logos_created_at_idx: index('logos_created_at_idx').on(columns.createdAt),
-    logos_filename_idx: uniqueIndex('logos_filename_idx').on(columns.filename),
-    logos_sizes_thumbnail_sizes_thumbnail_filename_idx: index(
-      'logos_sizes_thumbnail_sizes_thumbnail_filename_idx',
-    ).on(columns.sizes_thumbnail_filename),
-    logos_sizes_square_sizes_square_filename_idx: index(
-      'logos_sizes_square_sizes_square_filename_idx',
-    ).on(columns.sizes_square_filename),
-    logos_sizes_small_sizes_small_filename_idx: index(
-      'logos_sizes_small_sizes_small_filename_idx',
-    ).on(columns.sizes_small_filename),
-    logos_sizes_medium_sizes_medium_filename_idx: index(
-      'logos_sizes_medium_sizes_medium_filename_idx',
-    ).on(columns.sizes_medium_filename),
-    logos_sizes_large_sizes_large_filename_idx: index(
-      'logos_sizes_large_sizes_large_filename_idx',
-    ).on(columns.sizes_large_filename),
-    logos_sizes_xlarge_sizes_xlarge_filename_idx: index(
-      'logos_sizes_xlarge_sizes_xlarge_filename_idx',
-    ).on(columns.sizes_xlarge_filename),
-    logos_sizes_og_sizes_og_filename_idx: index('logos_sizes_og_sizes_og_filename_idx').on(
-      columns.sizes_og_filename,
-    ),
   }),
 )
 
@@ -1814,7 +1709,6 @@ export const payload_locked_documents_rels = pgTable(
     mediaID: integer('media_id'),
     categoriesID: integer('categories_id'),
     usersID: integer('users_id'),
-    logosID: integer('logos_id'),
     redirectsID: integer('redirects_id'),
     formsID: integer('forms_id'),
     'form-submissionsID': integer('form_submissions_id'),
@@ -1840,9 +1734,6 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_users_id_idx: index(
       'payload_locked_documents_rels_users_id_idx',
     ).on(columns.usersID),
-    payload_locked_documents_rels_logos_id_idx: index(
-      'payload_locked_documents_rels_logos_id_idx',
-    ).on(columns.logosID),
     payload_locked_documents_rels_redirects_id_idx: index(
       'payload_locked_documents_rels_redirects_id_idx',
     ).on(columns.redirectsID),
@@ -1887,11 +1778,6 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns['usersID']],
       foreignColumns: [users.id],
       name: 'payload_locked_documents_rels_users_fk',
-    }).onDelete('cascade'),
-    logosIdFk: foreignKey({
-      columns: [columns['logosID']],
-      foreignColumns: [logos.id],
-      name: 'payload_locked_documents_rels_logos_fk',
     }).onDelete('cascade'),
     redirectsIdFk: foreignKey({
       columns: [columns['redirectsID']],
@@ -2220,11 +2106,6 @@ export const relations_pages_rels = relations(pages_rels, ({ one }) => ({
     references: [categories.id],
     relationName: 'categories',
   }),
-  logosID: one(logos, {
-    fields: [pages_rels.logosID],
-    references: [logos.id],
-    relationName: 'logos',
-  }),
 }))
 export const relations_pages = relations(pages, ({ one, many }) => ({
   hero_links: many(pages_hero_links, {
@@ -2369,11 +2250,6 @@ export const relations__pages_v_rels = relations(_pages_v_rels, ({ one }) => ({
     fields: [_pages_v_rels.categoriesID],
     references: [categories.id],
     relationName: 'categories',
-  }),
-  logosID: one(logos, {
-    fields: [_pages_v_rels.logosID],
-    references: [logos.id],
-    relationName: 'logos',
   }),
 }))
 export const relations__pages_v = relations(_pages_v, ({ one, many }) => ({
@@ -2540,7 +2416,6 @@ export const relations_categories = relations(categories, ({ one, many }) => ({
   }),
 }))
 export const relations_users = relations(users, () => ({}))
-export const relations_logos = relations(logos, () => ({}))
 export const relations_redirects_rels = relations(redirects_rels, ({ one }) => ({
   parent: one(redirects, {
     fields: [redirects_rels.parent],
@@ -2775,11 +2650,6 @@ export const relations_payload_locked_documents_rels = relations(
       references: [users.id],
       relationName: 'users',
     }),
-    logosID: one(logos, {
-      fields: [payload_locked_documents_rels.logosID],
-      references: [logos.id],
-      relationName: 'logos',
-    }),
     redirectsID: one(redirects, {
       fields: [payload_locked_documents_rels.redirectsID],
       references: [redirects.id],
@@ -2963,7 +2833,6 @@ type DatabaseSchema = {
   categories_breadcrumbs: typeof categories_breadcrumbs
   categories: typeof categories
   users: typeof users
-  logos: typeof logos
   redirects: typeof redirects
   redirects_rels: typeof redirects_rels
   forms_blocks_checkbox: typeof forms_blocks_checkbox
@@ -3026,7 +2895,6 @@ type DatabaseSchema = {
   relations_categories_breadcrumbs: typeof relations_categories_breadcrumbs
   relations_categories: typeof relations_categories
   relations_users: typeof relations_users
-  relations_logos: typeof relations_logos
   relations_redirects_rels: typeof relations_redirects_rels
   relations_redirects: typeof relations_redirects
   relations_forms_blocks_checkbox: typeof relations_forms_blocks_checkbox
@@ -3061,7 +2929,7 @@ type DatabaseSchema = {
   relations_footer: typeof relations_footer
 }
 
-declare module '@payloadcms/db-postgres/types' {
+declare module '@payloadcms/db-vercel-postgres/types' {
   export interface GeneratedDatabaseSchema {
     schema: DatabaseSchema
   }
