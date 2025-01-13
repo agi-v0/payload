@@ -21,8 +21,8 @@ import {
   timestamp,
   type AnyPgColumn,
   pgEnum,
-} from '@payloadcms/db-vercel-postgres/drizzle/pg-core'
-import { sql, relations } from '@payloadcms/db-vercel-postgres/drizzle'
+} from '@payloadcms/db-postgres/drizzle/pg-core'
+import { sql, relations } from '@payloadcms/db-postgres/drizzle'
 export const enum_pages_hero_links_link_type = pgEnum('enum_pages_hero_links_link_type', [
   'reference',
   'custom',
@@ -973,7 +973,6 @@ export const media = pgTable(
     id: serial('id').primaryKey(),
     alt: varchar('alt'),
     caption: jsonb('caption'),
-    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -2929,7 +2928,7 @@ type DatabaseSchema = {
   relations_footer: typeof relations_footer
 }
 
-declare module '@payloadcms/db-vercel-postgres/types' {
+declare module '@payloadcms/db-postgres/types' {
   export interface GeneratedDatabaseSchema {
     schema: DatabaseSchema
   }
