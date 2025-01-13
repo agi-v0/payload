@@ -16,6 +16,7 @@ import { Logos } from './collections/Logos'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
+import { migrations } from './migrations'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 
@@ -65,6 +66,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+    prodMigrations: migrations,
   }),
 
   collections: [Pages, Posts, Media, Categories, Users],
