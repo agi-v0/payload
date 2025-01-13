@@ -67,7 +67,7 @@ export default buildConfig({
     },
   }),
 
-  collections: [Pages, Posts, Media, Categories, Users, Logos],
+  collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
@@ -77,9 +77,9 @@ export default buildConfig({
         media: {
           prefix: 'media',
         },
-        logos: {
-          prefix: 'logos',
-        },
+        // logos: {
+        //   prefix: 'logos',
+        // },
       },
       bucket: process.env.S3_BUCKET || '',
       config: {
