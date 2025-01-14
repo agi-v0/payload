@@ -76,12 +76,7 @@ export default buildConfig({
     ...plugins,
     s3Storage({
       collections: {
-        media: {
-          prefix: 'media',
-        },
-        // logos: {
-        //   prefix: 'logos',
-        // },
+        media: true,
       },
       bucket: process.env.S3_BUCKET || '',
       config: {
