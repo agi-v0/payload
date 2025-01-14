@@ -15,6 +15,7 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    'media-categories': MediaCategory;
     users: User;
     redirects: Redirect;
     forms: Form;
@@ -31,6 +32,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    'media-categories': MediaCategoriesSelect<false> | MediaCategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -204,7 +206,7 @@ export interface Post {
  */
 export interface Media {
   id: number;
-  alt?: string | null;
+  alt: string;
   caption?: {
     root: {
       type: string;
@@ -220,7 +222,7 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
-  prefix?: string | null;
+  Category?: (number | null) | MediaCategory;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -290,6 +292,18 @@ export interface Media {
       filename?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-categories".
+ */
+export interface MediaCategory {
+  id: number;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -860,6 +874,10 @@ export interface PayloadLockedDocument {
         value: number | Category;
       } | null)
     | ({
+        relationTo: 'media-categories';
+        value: number | MediaCategory;
+      } | null)
+    | ({
         relationTo: 'users';
         value: number | User;
       } | null)
@@ -1098,7 +1116,7 @@ export interface PostsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
-  prefix?: T;
+  Category?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1202,6 +1220,17 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-categories_select".
+ */
+export interface MediaCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
 }
