@@ -31,7 +31,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE INDEX IF NOT EXISTS "media_category_idx" ON "media" USING btree ("category_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_media_categories_id_idx" ON "payload_locked_documents_rels" USING btree ("media_categories_id");
-  ALTER TABLE "media" DROP COLUMN IF EXISTS "prefix";`)
+  `)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -45,7 +45,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP INDEX IF EXISTS "media_category_idx";
   DROP INDEX IF EXISTS "payload_locked_documents_rels_media_categories_id_idx";
   ALTER TABLE "media" ALTER COLUMN "alt" DROP NOT NULL;
-  ALTER TABLE "media" ADD COLUMN "prefix" varchar DEFAULT 'media';
   ALTER TABLE "media" DROP COLUMN IF EXISTS "category_id";
   ALTER TABLE "payload_locked_documents_rels" DROP COLUMN IF EXISTS "media_categories_id";`)
 }
