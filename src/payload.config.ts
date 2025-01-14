@@ -79,6 +79,9 @@ export default buildConfig({
         media: {
           prefix: 'media',
         },
+        logos: {
+          prefix: 'logos',
+        },
       },
       bucket: process.env.S3_BUCKET || '',
       config: {
