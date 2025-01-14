@@ -69,7 +69,7 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
 
-  collections: [Pages, Posts, Media, Categories, Users, Logos],
+  collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
@@ -79,9 +79,9 @@ export default buildConfig({
         media: {
           prefix: 'media',
         },
-        logos: {
-          prefix: 'logos',
-        },
+        // logos: {
+        //   prefix: 'logos',
+        // },
       },
       bucket: process.env.S3_BUCKET || '',
       config: {
@@ -93,7 +93,7 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
       },
-      enabled: process.env.NODE_ENV === 'production', // Use in production only
+      // enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,
