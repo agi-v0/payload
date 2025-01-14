@@ -971,8 +971,11 @@ export const media = pgTable(
   'media',
   {
     id: serial('id').primaryKey(),
-    alt: varchar('alt'),
+    alt: varchar('alt').notNull(),
     caption: jsonb('caption'),
+    Category: integer('category_id').references(() => media_categories.id, {
+      onDelete: 'set null',
+    }),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -1032,6 +1035,7 @@ export const media = pgTable(
     sizes_og_filename: varchar('sizes_og_filename'),
   },
   (columns) => ({
+    media_category_idx: index('media_category_idx').on(columns.Category),
     media_updated_at_idx: index('media_updated_at_idx').on(columns.updatedAt),
     media_created_at_idx: index('media_created_at_idx').on(columns.createdAt),
     media_filename_idx: uniqueIndex('media_filename_idx').on(columns.filename),
@@ -1108,6 +1112,27 @@ export const categories = pgTable(
   }),
 )
 
+export const media_categories = pgTable(
+  'media_categories',
+  {
+    id: serial('id').primaryKey(),
+    title: varchar('title').notNull(),
+    slug: varchar('slug'),
+    slugLock: boolean('slug_lock').default(true),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    media_categories_slug_idx: index('media_categories_slug_idx').on(columns.slug),
+    media_categories_updated_at_idx: index('media_categories_updated_at_idx').on(columns.updatedAt),
+    media_categories_created_at_idx: index('media_categories_created_at_idx').on(columns.createdAt),
+  }),
+)
+
 export const users = pgTable(
   'users',
   {
@@ -1135,98 +1160,6 @@ export const users = pgTable(
     users_updated_at_idx: index('users_updated_at_idx').on(columns.updatedAt),
     users_created_at_idx: index('users_created_at_idx').on(columns.createdAt),
     users_email_idx: uniqueIndex('users_email_idx').on(columns.email),
-  }),
-)
-
-export const logos = pgTable(
-  'logos',
-  {
-    id: serial('id').primaryKey(),
-    alt: varchar('alt'),
-    caption: jsonb('caption'),
-    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
-      .defaultNow()
-      .notNull(),
-    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
-      .defaultNow()
-      .notNull(),
-    url: varchar('url'),
-    thumbnailURL: varchar('thumbnail_u_r_l'),
-    filename: varchar('filename'),
-    mimeType: varchar('mime_type'),
-    filesize: numeric('filesize'),
-    width: numeric('width'),
-    height: numeric('height'),
-    focalX: numeric('focal_x'),
-    focalY: numeric('focal_y'),
-    sizes_thumbnail_url: varchar('sizes_thumbnail_url'),
-    sizes_thumbnail_width: numeric('sizes_thumbnail_width'),
-    sizes_thumbnail_height: numeric('sizes_thumbnail_height'),
-    sizes_thumbnail_mimeType: varchar('sizes_thumbnail_mime_type'),
-    sizes_thumbnail_filesize: numeric('sizes_thumbnail_filesize'),
-    sizes_thumbnail_filename: varchar('sizes_thumbnail_filename'),
-    sizes_square_url: varchar('sizes_square_url'),
-    sizes_square_width: numeric('sizes_square_width'),
-    sizes_square_height: numeric('sizes_square_height'),
-    sizes_square_mimeType: varchar('sizes_square_mime_type'),
-    sizes_square_filesize: numeric('sizes_square_filesize'),
-    sizes_square_filename: varchar('sizes_square_filename'),
-    sizes_small_url: varchar('sizes_small_url'),
-    sizes_small_width: numeric('sizes_small_width'),
-    sizes_small_height: numeric('sizes_small_height'),
-    sizes_small_mimeType: varchar('sizes_small_mime_type'),
-    sizes_small_filesize: numeric('sizes_small_filesize'),
-    sizes_small_filename: varchar('sizes_small_filename'),
-    sizes_medium_url: varchar('sizes_medium_url'),
-    sizes_medium_width: numeric('sizes_medium_width'),
-    sizes_medium_height: numeric('sizes_medium_height'),
-    sizes_medium_mimeType: varchar('sizes_medium_mime_type'),
-    sizes_medium_filesize: numeric('sizes_medium_filesize'),
-    sizes_medium_filename: varchar('sizes_medium_filename'),
-    sizes_large_url: varchar('sizes_large_url'),
-    sizes_large_width: numeric('sizes_large_width'),
-    sizes_large_height: numeric('sizes_large_height'),
-    sizes_large_mimeType: varchar('sizes_large_mime_type'),
-    sizes_large_filesize: numeric('sizes_large_filesize'),
-    sizes_large_filename: varchar('sizes_large_filename'),
-    sizes_xlarge_url: varchar('sizes_xlarge_url'),
-    sizes_xlarge_width: numeric('sizes_xlarge_width'),
-    sizes_xlarge_height: numeric('sizes_xlarge_height'),
-    sizes_xlarge_mimeType: varchar('sizes_xlarge_mime_type'),
-    sizes_xlarge_filesize: numeric('sizes_xlarge_filesize'),
-    sizes_xlarge_filename: varchar('sizes_xlarge_filename'),
-    sizes_og_url: varchar('sizes_og_url'),
-    sizes_og_width: numeric('sizes_og_width'),
-    sizes_og_height: numeric('sizes_og_height'),
-    sizes_og_mimeType: varchar('sizes_og_mime_type'),
-    sizes_og_filesize: numeric('sizes_og_filesize'),
-    sizes_og_filename: varchar('sizes_og_filename'),
-  },
-  (columns) => ({
-    logos_updated_at_idx: index('logos_updated_at_idx').on(columns.updatedAt),
-    logos_created_at_idx: index('logos_created_at_idx').on(columns.createdAt),
-    logos_filename_idx: uniqueIndex('logos_filename_idx').on(columns.filename),
-    logos_sizes_thumbnail_sizes_thumbnail_filename_idx: index(
-      'logos_sizes_thumbnail_sizes_thumbnail_filename_idx',
-    ).on(columns.sizes_thumbnail_filename),
-    logos_sizes_square_sizes_square_filename_idx: index(
-      'logos_sizes_square_sizes_square_filename_idx',
-    ).on(columns.sizes_square_filename),
-    logos_sizes_small_sizes_small_filename_idx: index(
-      'logos_sizes_small_sizes_small_filename_idx',
-    ).on(columns.sizes_small_filename),
-    logos_sizes_medium_sizes_medium_filename_idx: index(
-      'logos_sizes_medium_sizes_medium_filename_idx',
-    ).on(columns.sizes_medium_filename),
-    logos_sizes_large_sizes_large_filename_idx: index(
-      'logos_sizes_large_sizes_large_filename_idx',
-    ).on(columns.sizes_large_filename),
-    logos_sizes_xlarge_sizes_xlarge_filename_idx: index(
-      'logos_sizes_xlarge_sizes_xlarge_filename_idx',
-    ).on(columns.sizes_xlarge_filename),
-    logos_sizes_og_sizes_og_filename_idx: index('logos_sizes_og_sizes_og_filename_idx').on(
-      columns.sizes_og_filename,
-    ),
   }),
 )
 
@@ -1799,8 +1732,8 @@ export const payload_locked_documents_rels = pgTable(
     postsID: integer('posts_id'),
     mediaID: integer('media_id'),
     categoriesID: integer('categories_id'),
+    'media-categoriesID': integer('media_categories_id'),
     usersID: integer('users_id'),
-    logosID: integer('logos_id'),
     redirectsID: integer('redirects_id'),
     formsID: integer('forms_id'),
     'form-submissionsID': integer('form_submissions_id'),
@@ -1823,12 +1756,12 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_categories_id_idx: index(
       'payload_locked_documents_rels_categories_id_idx',
     ).on(columns.categoriesID),
+    payload_locked_documents_rels_media_categories_id_idx: index(
+      'payload_locked_documents_rels_media_categories_id_idx',
+    ).on(columns['media-categoriesID']),
     payload_locked_documents_rels_users_id_idx: index(
       'payload_locked_documents_rels_users_id_idx',
     ).on(columns.usersID),
-    payload_locked_documents_rels_logos_id_idx: index(
-      'payload_locked_documents_rels_logos_id_idx',
-    ).on(columns.logosID),
     payload_locked_documents_rels_redirects_id_idx: index(
       'payload_locked_documents_rels_redirects_id_idx',
     ).on(columns.redirectsID),
@@ -1869,15 +1802,15 @@ export const payload_locked_documents_rels = pgTable(
       foreignColumns: [categories.id],
       name: 'payload_locked_documents_rels_categories_fk',
     }).onDelete('cascade'),
+    'media-categoriesIdFk': foreignKey({
+      columns: [columns['media-categoriesID']],
+      foreignColumns: [media_categories.id],
+      name: 'payload_locked_documents_rels_media_categories_fk',
+    }).onDelete('cascade'),
     usersIdFk: foreignKey({
       columns: [columns['usersID']],
       foreignColumns: [users.id],
       name: 'payload_locked_documents_rels_users_fk',
-    }).onDelete('cascade'),
-    logosIdFk: foreignKey({
-      columns: [columns['logosID']],
-      foreignColumns: [logos.id],
-      name: 'payload_locked_documents_rels_logos_fk',
     }).onDelete('cascade'),
     redirectsIdFk: foreignKey({
       columns: [columns['redirectsID']],
@@ -2492,7 +2425,13 @@ export const relations__posts_v = relations(_posts_v, ({ one, many }) => ({
     relationName: '_rels',
   }),
 }))
-export const relations_media = relations(media, () => ({}))
+export const relations_media = relations(media, ({ one }) => ({
+  Category: one(media_categories, {
+    fields: [media.Category],
+    references: [media_categories.id],
+    relationName: 'Category',
+  }),
+}))
 export const relations_categories_breadcrumbs = relations(categories_breadcrumbs, ({ one }) => ({
   _parentID: one(categories, {
     fields: [categories_breadcrumbs._parentID],
@@ -2515,8 +2454,8 @@ export const relations_categories = relations(categories, ({ one, many }) => ({
     relationName: 'breadcrumbs',
   }),
 }))
+export const relations_media_categories = relations(media_categories, () => ({}))
 export const relations_users = relations(users, () => ({}))
-export const relations_logos = relations(logos, () => ({}))
 export const relations_redirects_rels = relations(redirects_rels, ({ one }) => ({
   parent: one(redirects, {
     fields: [redirects_rels.parent],
@@ -2746,15 +2685,15 @@ export const relations_payload_locked_documents_rels = relations(
       references: [categories.id],
       relationName: 'categories',
     }),
+    'media-categoriesID': one(media_categories, {
+      fields: [payload_locked_documents_rels['media-categoriesID']],
+      references: [media_categories.id],
+      relationName: 'media-categories',
+    }),
     usersID: one(users, {
       fields: [payload_locked_documents_rels.usersID],
       references: [users.id],
       relationName: 'users',
-    }),
-    logosID: one(logos, {
-      fields: [payload_locked_documents_rels.logosID],
-      references: [logos.id],
-      relationName: 'logos',
     }),
     redirectsID: one(redirects, {
       fields: [payload_locked_documents_rels.redirectsID],
@@ -2938,8 +2877,8 @@ type DatabaseSchema = {
   media: typeof media
   categories_breadcrumbs: typeof categories_breadcrumbs
   categories: typeof categories
+  media_categories: typeof media_categories
   users: typeof users
-  logos: typeof logos
   redirects: typeof redirects
   redirects_rels: typeof redirects_rels
   forms_blocks_checkbox: typeof forms_blocks_checkbox
@@ -3001,8 +2940,8 @@ type DatabaseSchema = {
   relations_media: typeof relations_media
   relations_categories_breadcrumbs: typeof relations_categories_breadcrumbs
   relations_categories: typeof relations_categories
+  relations_media_categories: typeof relations_media_categories
   relations_users: typeof relations_users
-  relations_logos: typeof relations_logos
   relations_redirects_rels: typeof relations_redirects_rels
   relations_redirects: typeof relations_redirects
   relations_forms_blocks_checkbox: typeof relations_forms_blocks_checkbox
