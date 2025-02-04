@@ -3,6 +3,7 @@ import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
+import { useLocale } from 'next-intl'
 
 import type { Post } from '@/payload-types'
 
@@ -18,6 +19,7 @@ export const Card: React.FC<{
   showCategories?: boolean
   title?: string
 }> = (props) => {
+  const locale = useLocale()
   const { card, link } = useClickableCard({})
   const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
@@ -27,7 +29,7 @@ export const Card: React.FC<{
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
   const titleToUse = titleFromProps || title
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
-  const href = `/${relationTo}/${slug}`
+  const href = `/${locale}/${relationTo}/${slug}`
 
   return (
     <article

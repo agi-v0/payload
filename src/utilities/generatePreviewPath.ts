@@ -9,14 +9,16 @@ type Props = {
   collection: keyof typeof collectionPrefixMap
   slug: string
   req: PayloadRequest
+  locale: string
 }
 
-export const generatePreviewPath = ({ collection, slug, req }: Props) => {
-  const path = `${collectionPrefixMap[collection]}/${slug}`
+export const generatePreviewPath = ({ collection, slug, req, locale }: Props) => {
+  const path = `/${locale}/${collectionPrefixMap[collection]}/${slug}`
 
   const params = {
     slug,
     collection,
+    locale,
     path,
   }
 
@@ -30,7 +32,7 @@ export const generatePreviewPath = ({ collection, slug, req }: Props) => {
     process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL_PROJECT_PRODUCTION_URL)
   const protocol = isProduction ? 'https:' : req.protocol
 
-  const url = `${protocol}//${req.host}/next/preview?${encodedParams.toString()}`
+  const url = `${protocol}//${req.host}/${locale}/next/preview?${encodedParams.toString()}`
 
   return url
 }

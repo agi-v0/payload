@@ -1,4 +1,7 @@
+'use client'
+
 import { Button, type ButtonProps } from '@/components/ui/button'
+import { useLocale } from 'next-intl'
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
@@ -33,9 +36,11 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     url,
   } = props
 
+  const locale = useLocale()
+
   const href =
     type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${
+      ? `${reference?.relationTo !== 'pages' ? `/${locale}/${reference?.relationTo}` : `/${locale}`}/${
           reference.value.slug
         }`
       : url

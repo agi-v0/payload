@@ -21,6 +21,9 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { MediaCategories } from './collections/MediaCategories'
 
+import { en } from '@payloadcms/translations/languages/en'
+import { ar } from '@payloadcms/translations/languages/ar'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -63,6 +66,32 @@ export default buildConfig({
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
+  i18n: {
+    supportedLanguages: { en, ar },
+  },
+  localization: {
+    locales: [
+      {
+        label: {
+          en: 'English',
+          ar: 'الإنجليزية',
+        },
+        code: 'en',
+      },
+      {
+        label: {
+          en: 'Arabic',
+          ar: 'العربية',
+        },
+        code: 'ar',
+        // opt-in to setting default text-alignment on Input fields to rtl (right-to-left)
+        // when current locale is rtl
+        rtl: true,
+      },
+    ],
+    defaultLocale: 'ar', // required
+    fallback: true, // defaults to true
+  },
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
@@ -91,7 +120,7 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
       },
-      enabled: process.env.NODE_ENV === 'production', // Use in production only
+      // enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,

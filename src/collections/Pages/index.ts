@@ -39,21 +39,23 @@ export const Pages: CollectionConfig<'pages'> = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data, req }) => {
+      url: ({ data, req, locale }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
           collection: 'pages',
           req,
+          locale,
         })
 
         return path
       },
     },
-    preview: (data, { req }) =>
+    preview: (data, { req, locale }) =>
       generatePreviewPath({
         slug: typeof data?.slug === 'string' ? data.slug : '',
         collection: 'pages',
         req,
+        locale,
       }),
     useAsTitle: 'title',
   },
@@ -62,9 +64,11 @@ export const Pages: CollectionConfig<'pages'> = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       type: 'tabs',
+
       tabs: [
         {
           fields: [hero],
@@ -77,6 +81,7 @@ export const Pages: CollectionConfig<'pages'> = {
               type: 'blocks',
               blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
               required: true,
+              localized: true,
               admin: {
                 initCollapsed: true,
               },
@@ -87,6 +92,7 @@ export const Pages: CollectionConfig<'pages'> = {
         {
           name: 'meta',
           label: 'SEO',
+          localized: true,
           fields: [
             OverviewField({
               titlePath: 'meta.title',

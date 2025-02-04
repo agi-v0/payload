@@ -2,31 +2,65 @@ import type { Block } from 'payload'
 
 import {
   FixedToolbarFeature,
-  HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
 export const Archive: Block = {
-  slug: 'archive',
-  interfaceName: 'ArchiveBlock',
+  slug: 'prototype',
+  interfaceName: 'Prototype Component',
   fields: [
     {
-      name: 'introContent',
+      name: 'Heading',
+      type: 'text',
+    },
+    {
+      name: 'Content',
       type: 'richText',
-      localized: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-          ]
+          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
         },
       }),
-      label: 'Intro Content',
+      label: 'Content',
     },
+    {
+      name: 'Theme Control',
+      type: 'select',
+      localized: true,
+      defaultValue: 'dark',
+      options: [
+        {
+          label: 'Dark Theme',
+          value: 'dark',
+        },
+        {
+          label: 'Light Theme',
+          value: 'light',
+        },
+      ],
+    },
+    {
+      name: 'Flex Box Order',
+      type: 'select',
+      localized: true,
+      defaultValue: 'order-none',
+      options: [
+        {
+          label: 'No order',
+          value: 'order-none',
+        },
+        {
+          label: 'First Order',
+          value: 'order-first',
+        },
+        {
+          label: 'Last Order',
+          value: 'order-last',
+        },
+      ],
+    },
+
     {
       name: 'populateBy',
       type: 'select',

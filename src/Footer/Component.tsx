@@ -5,6 +5,7 @@ import React from 'react'
 import type { Footer } from '@/payload-types'
 
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
+import { LanguageSwitcher } from '@/providers/LanguageSelector/index'
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 
@@ -22,6 +23,7 @@ export async function Footer() {
 
         <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
           <ThemeSelector />
+          <LanguageSwitcher />
           <nav className="flex flex-col md:flex-row gap-4">
             {navItems.map(({ link }, i) => {
               return <CMSLink className="text-white" key={i} {...link} />
