@@ -222,11 +222,8 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
-<<<<<<< Updated upstream
   Category?: (number | null) | MediaCategory;
-=======
   prefix?: string | null;
->>>>>>> Stashed changes
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1120,11 +1117,8 @@ export interface PostsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
-<<<<<<< Updated upstream
   Category?: T;
-=======
   prefix?: T;
->>>>>>> Stashed changes
   updatedAt?: T;
   createdAt?: T;
   url?: T;

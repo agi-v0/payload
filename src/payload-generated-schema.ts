@@ -23,6 +23,7 @@ import {
   pgEnum,
 } from '@payloadcms/db-postgres/drizzle/pg-core'
 import { sql, relations } from '@payloadcms/db-postgres/drizzle'
+export const enum__locales = pgEnum('enum__locales', ['en', 'ar'])
 export const enum_pages_hero_links_link_type = pgEnum('enum_pages_hero_links_link_type', [
   'reference',
   'custom',
@@ -112,11 +113,13 @@ export const enum__pages_v_version_status = pgEnum('enum__pages_v_version_status
   'draft',
   'published',
 ])
+export const enum__pages_v_published_locale = pgEnum('enum__pages_v_published_locale', ['en', 'ar'])
 export const enum_posts_status = pgEnum('enum_posts_status', ['draft', 'published'])
 export const enum__posts_v_version_status = pgEnum('enum__posts_v_version_status', [
   'draft',
   'published',
 ])
+export const enum__posts_v_published_locale = pgEnum('enum__posts_v_published_locale', ['en', 'ar'])
 export const enum_redirects_to_type = pgEnum('enum_redirects_to_type', ['reference', 'custom'])
 export const enum_forms_confirmation_type = pgEnum('enum_forms_confirmation_type', [
   'message',
@@ -148,6 +151,7 @@ export const pages_hero_links = pgTable(
   {
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     link_type: enum_pages_hero_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
@@ -158,6 +162,7 @@ export const pages_hero_links = pgTable(
   (columns) => ({
     _orderIdx: index('pages_hero_links_order_idx').on(columns._order),
     _parentIDIdx: index('pages_hero_links_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('pages_hero_links_locale_idx').on(columns._locale),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [pages.id],
@@ -171,6 +176,7 @@ export const pages_blocks_cta_links = pgTable(
   {
     _order: integer('_order').notNull(),
     _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     link_type: enum_pages_blocks_cta_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
@@ -182,6 +188,7 @@ export const pages_blocks_cta_links = pgTable(
   (columns) => ({
     _orderIdx: index('pages_blocks_cta_links_order_idx').on(columns._order),
     _parentIDIdx: index('pages_blocks_cta_links_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('pages_blocks_cta_links_locale_idx').on(columns._locale),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [pages_blocks_cta.id],
@@ -196,6 +203,7 @@ export const pages_blocks_cta = pgTable(
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     richText: jsonb('rich_text'),
     blockName: varchar('block_name'),
@@ -204,6 +212,7 @@ export const pages_blocks_cta = pgTable(
     _orderIdx: index('pages_blocks_cta_order_idx').on(columns._order),
     _parentIDIdx: index('pages_blocks_cta_parent_id_idx').on(columns._parentID),
     _pathIdx: index('pages_blocks_cta_path_idx').on(columns._path),
+    _localeIdx: index('pages_blocks_cta_locale_idx').on(columns._locale),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [pages.id],
@@ -217,6 +226,7 @@ export const pages_blocks_content_columns = pgTable(
   {
     _order: integer('_order').notNull(),
     _parentID: varchar('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     size: enum_pages_blocks_content_columns_size('size').default('oneThird'),
     richText: jsonb('rich_text'),
@@ -231,6 +241,7 @@ export const pages_blocks_content_columns = pgTable(
   (columns) => ({
     _orderIdx: index('pages_blocks_content_columns_order_idx').on(columns._order),
     _parentIDIdx: index('pages_blocks_content_columns_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('pages_blocks_content_columns_locale_idx').on(columns._locale),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [pages_blocks_content.id],
@@ -245,6 +256,7 @@ export const pages_blocks_content = pgTable(
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     blockName: varchar('block_name'),
   },
@@ -252,6 +264,7 @@ export const pages_blocks_content = pgTable(
     _orderIdx: index('pages_blocks_content_order_idx').on(columns._order),
     _parentIDIdx: index('pages_blocks_content_parent_id_idx').on(columns._parentID),
     _pathIdx: index('pages_blocks_content_path_idx').on(columns._path),
+    _localeIdx: index('pages_blocks_content_locale_idx').on(columns._locale),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [pages.id],
@@ -266,6 +279,7 @@ export const pages_blocks_media_block = pgTable(
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     media: integer('media_id').references(() => media.id, {
       onDelete: 'set null',
@@ -276,6 +290,7 @@ export const pages_blocks_media_block = pgTable(
     _orderIdx: index('pages_blocks_media_block_order_idx').on(columns._order),
     _parentIDIdx: index('pages_blocks_media_block_parent_id_idx').on(columns._parentID),
     _pathIdx: index('pages_blocks_media_block_path_idx').on(columns._path),
+    _localeIdx: index('pages_blocks_media_block_locale_idx').on(columns._locale),
     pages_blocks_media_block_media_idx: index('pages_blocks_media_block_media_idx').on(
       columns.media,
     ),
@@ -293,6 +308,7 @@ export const pages_blocks_archive = pgTable(
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     introContent: jsonb('intro_content'),
     populateBy: enum_pages_blocks_archive_populate_by('populate_by').default('collection'),
@@ -304,6 +320,7 @@ export const pages_blocks_archive = pgTable(
     _orderIdx: index('pages_blocks_archive_order_idx').on(columns._order),
     _parentIDIdx: index('pages_blocks_archive_parent_id_idx').on(columns._parentID),
     _pathIdx: index('pages_blocks_archive_path_idx').on(columns._path),
+    _localeIdx: index('pages_blocks_archive_locale_idx').on(columns._locale),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [pages.id],
@@ -318,6 +335,7 @@ export const pages_blocks_form_block = pgTable(
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     form: integer('form_id').references(() => forms.id, {
       onDelete: 'set null',
@@ -330,6 +348,7 @@ export const pages_blocks_form_block = pgTable(
     _orderIdx: index('pages_blocks_form_block_order_idx').on(columns._order),
     _parentIDIdx: index('pages_blocks_form_block_parent_id_idx').on(columns._parentID),
     _pathIdx: index('pages_blocks_form_block_path_idx').on(columns._path),
+    _localeIdx: index('pages_blocks_form_block_locale_idx').on(columns._locale),
     pages_blocks_form_block_form_idx: index('pages_blocks_form_block_form_idx').on(columns.form),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
@@ -343,17 +362,7 @@ export const pages = pgTable(
   'pages',
   {
     id: serial('id').primaryKey(),
-    title: varchar('title'),
     hero_type: enum_pages_hero_type('hero_type').default('lowImpact'),
-    hero_richText: jsonb('hero_rich_text'),
-    hero_media: integer('hero_media_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    meta_title: varchar('meta_title'),
-    meta_image: integer('meta_image_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    meta_description: varchar('meta_description'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
@@ -366,12 +375,45 @@ export const pages = pgTable(
     _status: enum_pages_status('_status').default('draft'),
   },
   (columns) => ({
-    pages_hero_hero_media_idx: index('pages_hero_hero_media_idx').on(columns.hero_media),
-    pages_meta_meta_image_idx: index('pages_meta_meta_image_idx').on(columns.meta_image),
     pages_slug_idx: index('pages_slug_idx').on(columns.slug),
     pages_updated_at_idx: index('pages_updated_at_idx').on(columns.updatedAt),
     pages_created_at_idx: index('pages_created_at_idx').on(columns.createdAt),
     pages__status_idx: index('pages__status_idx').on(columns._status),
+  }),
+)
+
+export const pages_locales = pgTable(
+  'pages_locales',
+  {
+    title: varchar('title'),
+    hero_richText: jsonb('hero_rich_text'),
+    hero_media: integer('hero_media_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    meta_title: varchar('meta_title'),
+    meta_image: integer('meta_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    meta_description: varchar('meta_description'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    pages_hero_hero_media_idx: index('pages_hero_hero_media_idx').on(
+      columns.hero_media,
+      columns._locale,
+    ),
+    pages_meta_meta_image_idx: index('pages_meta_meta_image_idx').on(columns.meta_image),
+    _localeParent: uniqueIndex('pages_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [pages.id],
+      name: 'pages_locales_parent_id_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -382,6 +424,7 @@ export const pages_rels = pgTable(
     order: integer('order'),
     parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
+    locale: enum__locales('locale'),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
     categoriesID: integer('categories_id'),
@@ -390,9 +433,13 @@ export const pages_rels = pgTable(
     order: index('pages_rels_order_idx').on(columns.order),
     parentIdx: index('pages_rels_parent_idx').on(columns.parent),
     pathIdx: index('pages_rels_path_idx').on(columns.path),
-    pages_rels_pages_id_idx: index('pages_rels_pages_id_idx').on(columns.pagesID),
-    pages_rels_posts_id_idx: index('pages_rels_posts_id_idx').on(columns.postsID),
-    pages_rels_categories_id_idx: index('pages_rels_categories_id_idx').on(columns.categoriesID),
+    localeIdx: index('pages_rels_locale_idx').on(columns.locale),
+    pages_rels_pages_id_idx: index('pages_rels_pages_id_idx').on(columns.pagesID, columns.locale),
+    pages_rels_posts_id_idx: index('pages_rels_posts_id_idx').on(columns.postsID, columns.locale),
+    pages_rels_categories_id_idx: index('pages_rels_categories_id_idx').on(
+      columns.categoriesID,
+      columns.locale,
+    ),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [pages.id],
@@ -421,6 +468,7 @@ export const _pages_v_version_hero_links = pgTable(
   {
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: serial('id').primaryKey(),
     link_type: enum__pages_v_version_hero_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
@@ -433,6 +481,7 @@ export const _pages_v_version_hero_links = pgTable(
   (columns) => ({
     _orderIdx: index('_pages_v_version_hero_links_order_idx').on(columns._order),
     _parentIDIdx: index('_pages_v_version_hero_links_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_pages_v_version_hero_links_locale_idx').on(columns._locale),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [_pages_v.id],
@@ -446,6 +495,7 @@ export const _pages_v_blocks_cta_links = pgTable(
   {
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: serial('id').primaryKey(),
     link_type: enum__pages_v_blocks_cta_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
@@ -458,6 +508,7 @@ export const _pages_v_blocks_cta_links = pgTable(
   (columns) => ({
     _orderIdx: index('_pages_v_blocks_cta_links_order_idx').on(columns._order),
     _parentIDIdx: index('_pages_v_blocks_cta_links_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_pages_v_blocks_cta_links_locale_idx').on(columns._locale),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [_pages_v_blocks_cta.id],
@@ -472,6 +523,7 @@ export const _pages_v_blocks_cta = pgTable(
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: serial('id').primaryKey(),
     richText: jsonb('rich_text'),
     _uuid: varchar('_uuid'),
@@ -481,6 +533,7 @@ export const _pages_v_blocks_cta = pgTable(
     _orderIdx: index('_pages_v_blocks_cta_order_idx').on(columns._order),
     _parentIDIdx: index('_pages_v_blocks_cta_parent_id_idx').on(columns._parentID),
     _pathIdx: index('_pages_v_blocks_cta_path_idx').on(columns._path),
+    _localeIdx: index('_pages_v_blocks_cta_locale_idx').on(columns._locale),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [_pages_v.id],
@@ -494,6 +547,7 @@ export const _pages_v_blocks_content_columns = pgTable(
   {
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: serial('id').primaryKey(),
     size: enum__pages_v_blocks_content_columns_size('size').default('oneThird'),
     richText: jsonb('rich_text'),
@@ -509,6 +563,7 @@ export const _pages_v_blocks_content_columns = pgTable(
   (columns) => ({
     _orderIdx: index('_pages_v_blocks_content_columns_order_idx').on(columns._order),
     _parentIDIdx: index('_pages_v_blocks_content_columns_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('_pages_v_blocks_content_columns_locale_idx').on(columns._locale),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [_pages_v_blocks_content.id],
@@ -523,6 +578,7 @@ export const _pages_v_blocks_content = pgTable(
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: serial('id').primaryKey(),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
@@ -531,6 +587,7 @@ export const _pages_v_blocks_content = pgTable(
     _orderIdx: index('_pages_v_blocks_content_order_idx').on(columns._order),
     _parentIDIdx: index('_pages_v_blocks_content_parent_id_idx').on(columns._parentID),
     _pathIdx: index('_pages_v_blocks_content_path_idx').on(columns._path),
+    _localeIdx: index('_pages_v_blocks_content_locale_idx').on(columns._locale),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [_pages_v.id],
@@ -545,6 +602,7 @@ export const _pages_v_blocks_media_block = pgTable(
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: serial('id').primaryKey(),
     media: integer('media_id').references(() => media.id, {
       onDelete: 'set null',
@@ -556,6 +614,7 @@ export const _pages_v_blocks_media_block = pgTable(
     _orderIdx: index('_pages_v_blocks_media_block_order_idx').on(columns._order),
     _parentIDIdx: index('_pages_v_blocks_media_block_parent_id_idx').on(columns._parentID),
     _pathIdx: index('_pages_v_blocks_media_block_path_idx').on(columns._path),
+    _localeIdx: index('_pages_v_blocks_media_block_locale_idx').on(columns._locale),
     _pages_v_blocks_media_block_media_idx: index('_pages_v_blocks_media_block_media_idx').on(
       columns.media,
     ),
@@ -573,6 +632,7 @@ export const _pages_v_blocks_archive = pgTable(
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: serial('id').primaryKey(),
     introContent: jsonb('intro_content'),
     populateBy: enum__pages_v_blocks_archive_populate_by('populate_by').default('collection'),
@@ -585,6 +645,7 @@ export const _pages_v_blocks_archive = pgTable(
     _orderIdx: index('_pages_v_blocks_archive_order_idx').on(columns._order),
     _parentIDIdx: index('_pages_v_blocks_archive_parent_id_idx').on(columns._parentID),
     _pathIdx: index('_pages_v_blocks_archive_path_idx').on(columns._path),
+    _localeIdx: index('_pages_v_blocks_archive_locale_idx').on(columns._locale),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [_pages_v.id],
@@ -599,6 +660,7 @@ export const _pages_v_blocks_form_block = pgTable(
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: serial('id').primaryKey(),
     form: integer('form_id').references(() => forms.id, {
       onDelete: 'set null',
@@ -612,6 +674,7 @@ export const _pages_v_blocks_form_block = pgTable(
     _orderIdx: index('_pages_v_blocks_form_block_order_idx').on(columns._order),
     _parentIDIdx: index('_pages_v_blocks_form_block_parent_id_idx').on(columns._parentID),
     _pathIdx: index('_pages_v_blocks_form_block_path_idx').on(columns._path),
+    _localeIdx: index('_pages_v_blocks_form_block_locale_idx').on(columns._locale),
     _pages_v_blocks_form_block_form_idx: index('_pages_v_blocks_form_block_form_idx').on(
       columns.form,
     ),
@@ -630,17 +693,7 @@ export const _pages_v = pgTable(
     parent: integer('parent_id').references(() => pages.id, {
       onDelete: 'set null',
     }),
-    version_title: varchar('version_title'),
     version_hero_type: enum__pages_v_version_hero_type('version_hero_type').default('lowImpact'),
-    version_hero_richText: jsonb('version_hero_rich_text'),
-    version_hero_media: integer('version_hero_media_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    version_meta_title: varchar('version_meta_title'),
-    version_meta_image: integer('version_meta_image_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    version_meta_description: varchar('version_meta_description'),
     version_publishedAt: timestamp('version_published_at', {
       mode: 'string',
       withTimezone: true,
@@ -665,17 +718,13 @@ export const _pages_v = pgTable(
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
+    snapshot: boolean('snapshot'),
+    publishedLocale: enum__pages_v_published_locale('published_locale'),
     latest: boolean('latest'),
     autosave: boolean('autosave'),
   },
   (columns) => ({
     _pages_v_parent_idx: index('_pages_v_parent_idx').on(columns.parent),
-    _pages_v_version_hero_version_hero_media_idx: index(
-      '_pages_v_version_hero_version_hero_media_idx',
-    ).on(columns.version_hero_media),
-    _pages_v_version_meta_version_meta_image_idx: index(
-      '_pages_v_version_meta_version_meta_image_idx',
-    ).on(columns.version_meta_image),
     _pages_v_version_version_slug_idx: index('_pages_v_version_version_slug_idx').on(
       columns.version_slug,
     ),
@@ -690,8 +739,48 @@ export const _pages_v = pgTable(
     ),
     _pages_v_created_at_idx: index('_pages_v_created_at_idx').on(columns.createdAt),
     _pages_v_updated_at_idx: index('_pages_v_updated_at_idx').on(columns.updatedAt),
+    _pages_v_snapshot_idx: index('_pages_v_snapshot_idx').on(columns.snapshot),
+    _pages_v_published_locale_idx: index('_pages_v_published_locale_idx').on(
+      columns.publishedLocale,
+    ),
     _pages_v_latest_idx: index('_pages_v_latest_idx').on(columns.latest),
     _pages_v_autosave_idx: index('_pages_v_autosave_idx').on(columns.autosave),
+  }),
+)
+
+export const _pages_v_locales = pgTable(
+  '_pages_v_locales',
+  {
+    version_title: varchar('version_title'),
+    version_hero_richText: jsonb('version_hero_rich_text'),
+    version_hero_media: integer('version_hero_media_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    version_meta_title: varchar('version_meta_title'),
+    version_meta_image: integer('version_meta_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    version_meta_description: varchar('version_meta_description'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _pages_v_version_hero_version_hero_media_idx: index(
+      '_pages_v_version_hero_version_hero_media_idx',
+    ).on(columns.version_hero_media, columns._locale),
+    _pages_v_version_meta_version_meta_image_idx: index(
+      '_pages_v_version_meta_version_meta_image_idx',
+    ).on(columns.version_meta_image),
+    _localeParent: uniqueIndex('_pages_v_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_pages_v.id],
+      name: '_pages_v_locales_parent_id_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -702,6 +791,7 @@ export const _pages_v_rels = pgTable(
     order: integer('order'),
     parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
+    locale: enum__locales('locale'),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
     categoriesID: integer('categories_id'),
@@ -710,10 +800,18 @@ export const _pages_v_rels = pgTable(
     order: index('_pages_v_rels_order_idx').on(columns.order),
     parentIdx: index('_pages_v_rels_parent_idx').on(columns.parent),
     pathIdx: index('_pages_v_rels_path_idx').on(columns.path),
-    _pages_v_rels_pages_id_idx: index('_pages_v_rels_pages_id_idx').on(columns.pagesID),
-    _pages_v_rels_posts_id_idx: index('_pages_v_rels_posts_id_idx').on(columns.postsID),
+    localeIdx: index('_pages_v_rels_locale_idx').on(columns.locale),
+    _pages_v_rels_pages_id_idx: index('_pages_v_rels_pages_id_idx').on(
+      columns.pagesID,
+      columns.locale,
+    ),
+    _pages_v_rels_posts_id_idx: index('_pages_v_rels_posts_id_idx').on(
+      columns.postsID,
+      columns.locale,
+    ),
     _pages_v_rels_categories_id_idx: index('_pages_v_rels_categories_id_idx').on(
       columns.categoriesID,
+      columns.locale,
     ),
     parentFk: foreignKey({
       columns: [columns['parent']],
@@ -761,17 +859,6 @@ export const posts = pgTable(
   'posts',
   {
     id: serial('id').primaryKey(),
-    title: varchar('title'),
-    heroImage: integer('hero_image_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    content: jsonb('content'),
-    meta_title: varchar('meta_title'),
-    meta_image: integer('meta_image_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    meta_description: varchar('meta_description'),
-    publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -783,12 +870,43 @@ export const posts = pgTable(
     _status: enum_posts_status('_status').default('draft'),
   },
   (columns) => ({
-    posts_hero_image_idx: index('posts_hero_image_idx').on(columns.heroImage),
-    posts_meta_meta_image_idx: index('posts_meta_meta_image_idx').on(columns.meta_image),
     posts_slug_idx: index('posts_slug_idx').on(columns.slug),
     posts_updated_at_idx: index('posts_updated_at_idx').on(columns.updatedAt),
     posts_created_at_idx: index('posts_created_at_idx').on(columns.createdAt),
     posts__status_idx: index('posts__status_idx').on(columns._status),
+  }),
+)
+
+export const posts_locales = pgTable(
+  'posts_locales',
+  {
+    title: varchar('title'),
+    heroImage: integer('hero_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    content: jsonb('content'),
+    meta_title: varchar('meta_title'),
+    meta_image: integer('meta_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    meta_description: varchar('meta_description'),
+    publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    posts_hero_image_idx: index('posts_hero_image_idx').on(columns.heroImage, columns._locale),
+    posts_meta_meta_image_idx: index('posts_meta_meta_image_idx').on(columns.meta_image),
+    _localeParent: uniqueIndex('posts_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [posts.id],
+      name: 'posts_locales_parent_id_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -799,6 +917,7 @@ export const posts_rels = pgTable(
     order: integer('order'),
     parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
+    locale: enum__locales('locale'),
     postsID: integer('posts_id'),
     categoriesID: integer('categories_id'),
     usersID: integer('users_id'),
@@ -807,9 +926,13 @@ export const posts_rels = pgTable(
     order: index('posts_rels_order_idx').on(columns.order),
     parentIdx: index('posts_rels_parent_idx').on(columns.parent),
     pathIdx: index('posts_rels_path_idx').on(columns.path),
-    posts_rels_posts_id_idx: index('posts_rels_posts_id_idx').on(columns.postsID),
-    posts_rels_categories_id_idx: index('posts_rels_categories_id_idx').on(columns.categoriesID),
-    posts_rels_users_id_idx: index('posts_rels_users_id_idx').on(columns.usersID),
+    localeIdx: index('posts_rels_locale_idx').on(columns.locale),
+    posts_rels_posts_id_idx: index('posts_rels_posts_id_idx').on(columns.postsID, columns.locale),
+    posts_rels_categories_id_idx: index('posts_rels_categories_id_idx').on(
+      columns.categoriesID,
+      columns.locale,
+    ),
+    posts_rels_users_id_idx: index('posts_rels_users_id_idx').on(columns.usersID, columns.locale),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [posts.id],
@@ -860,21 +983,6 @@ export const _posts_v = pgTable(
     parent: integer('parent_id').references(() => posts.id, {
       onDelete: 'set null',
     }),
-    version_title: varchar('version_title'),
-    version_heroImage: integer('version_hero_image_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    version_content: jsonb('version_content'),
-    version_meta_title: varchar('version_meta_title'),
-    version_meta_image: integer('version_meta_image_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    version_meta_description: varchar('version_meta_description'),
-    version_publishedAt: timestamp('version_published_at', {
-      mode: 'string',
-      withTimezone: true,
-      precision: 3,
-    }),
     version_slug: varchar('version_slug'),
     version_slugLock: boolean('version_slug_lock').default(true),
     version_updatedAt: timestamp('version_updated_at', {
@@ -894,17 +1002,13 @@ export const _posts_v = pgTable(
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
+    snapshot: boolean('snapshot'),
+    publishedLocale: enum__posts_v_published_locale('published_locale'),
     latest: boolean('latest'),
     autosave: boolean('autosave'),
   },
   (columns) => ({
     _posts_v_parent_idx: index('_posts_v_parent_idx').on(columns.parent),
-    _posts_v_version_version_hero_image_idx: index('_posts_v_version_version_hero_image_idx').on(
-      columns.version_heroImage,
-    ),
-    _posts_v_version_meta_version_meta_image_idx: index(
-      '_posts_v_version_meta_version_meta_image_idx',
-    ).on(columns.version_meta_image),
     _posts_v_version_version_slug_idx: index('_posts_v_version_version_slug_idx').on(
       columns.version_slug,
     ),
@@ -919,8 +1023,54 @@ export const _posts_v = pgTable(
     ),
     _posts_v_created_at_idx: index('_posts_v_created_at_idx').on(columns.createdAt),
     _posts_v_updated_at_idx: index('_posts_v_updated_at_idx').on(columns.updatedAt),
+    _posts_v_snapshot_idx: index('_posts_v_snapshot_idx').on(columns.snapshot),
+    _posts_v_published_locale_idx: index('_posts_v_published_locale_idx').on(
+      columns.publishedLocale,
+    ),
     _posts_v_latest_idx: index('_posts_v_latest_idx').on(columns.latest),
     _posts_v_autosave_idx: index('_posts_v_autosave_idx').on(columns.autosave),
+  }),
+)
+
+export const _posts_v_locales = pgTable(
+  '_posts_v_locales',
+  {
+    version_title: varchar('version_title'),
+    version_heroImage: integer('version_hero_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    version_content: jsonb('version_content'),
+    version_meta_title: varchar('version_meta_title'),
+    version_meta_image: integer('version_meta_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    version_meta_description: varchar('version_meta_description'),
+    version_publishedAt: timestamp('version_published_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _posts_v_version_version_hero_image_idx: index('_posts_v_version_version_hero_image_idx').on(
+      columns.version_heroImage,
+      columns._locale,
+    ),
+    _posts_v_version_meta_version_meta_image_idx: index(
+      '_posts_v_version_meta_version_meta_image_idx',
+    ).on(columns.version_meta_image),
+    _localeParent: uniqueIndex('_posts_v_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_posts_v.id],
+      name: '_posts_v_locales_parent_id_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -931,6 +1081,7 @@ export const _posts_v_rels = pgTable(
     order: integer('order'),
     parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
+    locale: enum__locales('locale'),
     postsID: integer('posts_id'),
     categoriesID: integer('categories_id'),
     usersID: integer('users_id'),
@@ -939,11 +1090,19 @@ export const _posts_v_rels = pgTable(
     order: index('_posts_v_rels_order_idx').on(columns.order),
     parentIdx: index('_posts_v_rels_parent_idx').on(columns.parent),
     pathIdx: index('_posts_v_rels_path_idx').on(columns.path),
-    _posts_v_rels_posts_id_idx: index('_posts_v_rels_posts_id_idx').on(columns.postsID),
+    localeIdx: index('_posts_v_rels_locale_idx').on(columns.locale),
+    _posts_v_rels_posts_id_idx: index('_posts_v_rels_posts_id_idx').on(
+      columns.postsID,
+      columns.locale,
+    ),
     _posts_v_rels_categories_id_idx: index('_posts_v_rels_categories_id_idx').on(
       columns.categoriesID,
+      columns.locale,
     ),
-    _posts_v_rels_users_id_idx: index('_posts_v_rels_users_id_idx').on(columns.usersID),
+    _posts_v_rels_users_id_idx: index('_posts_v_rels_users_id_idx').on(
+      columns.usersID,
+      columns.locale,
+    ),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [_posts_v.id],
@@ -976,6 +1135,7 @@ export const media = pgTable(
     Category: integer('category_id').references(() => media_categories.id, {
       onDelete: 'set null',
     }),
+    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -1068,6 +1228,7 @@ export const categories_breadcrumbs = pgTable(
   {
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     doc: integer('doc_id').references(() => categories.id, {
       onDelete: 'set null',
@@ -1078,6 +1239,7 @@ export const categories_breadcrumbs = pgTable(
   (columns) => ({
     _orderIdx: index('categories_breadcrumbs_order_idx').on(columns._order),
     _parentIDIdx: index('categories_breadcrumbs_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('categories_breadcrumbs_locale_idx').on(columns._locale),
     categories_breadcrumbs_doc_idx: index('categories_breadcrumbs_doc_idx').on(columns.doc),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
@@ -1091,7 +1253,6 @@ export const categories = pgTable(
   'categories',
   {
     id: serial('id').primaryKey(),
-    title: varchar('title').notNull(),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
     parent: integer('parent_id').references((): AnyPgColumn => categories.id, {
@@ -1109,6 +1270,27 @@ export const categories = pgTable(
     categories_parent_idx: index('categories_parent_idx').on(columns.parent),
     categories_updated_at_idx: index('categories_updated_at_idx').on(columns.updatedAt),
     categories_created_at_idx: index('categories_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const categories_locales = pgTable(
+  'categories_locales',
+  {
+    title: varchar('title').notNull(),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('categories_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [categories.id],
+      name: 'categories_locales_parent_id_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -1226,7 +1408,6 @@ export const forms_blocks_checkbox = pgTable(
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
-    label: varchar('label'),
     width: numeric('width'),
     required: boolean('required'),
     defaultValue: boolean('default_value'),
@@ -1244,6 +1425,27 @@ export const forms_blocks_checkbox = pgTable(
   }),
 )
 
+export const forms_blocks_checkbox_locales = pgTable(
+  'forms_blocks_checkbox_locales',
+  {
+    label: varchar('label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_blocks_checkbox_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_blocks_checkbox.id],
+      name: 'forms_blocks_checkbox_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms_blocks_country = pgTable(
   'forms_blocks_country',
   {
@@ -1252,7 +1454,6 @@ export const forms_blocks_country = pgTable(
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
-    label: varchar('label'),
     width: numeric('width'),
     required: boolean('required'),
     blockName: varchar('block_name'),
@@ -1269,6 +1470,27 @@ export const forms_blocks_country = pgTable(
   }),
 )
 
+export const forms_blocks_country_locales = pgTable(
+  'forms_blocks_country_locales',
+  {
+    label: varchar('label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_blocks_country_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_blocks_country.id],
+      name: 'forms_blocks_country_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms_blocks_email = pgTable(
   'forms_blocks_email',
   {
@@ -1277,7 +1499,6 @@ export const forms_blocks_email = pgTable(
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
-    label: varchar('label'),
     width: numeric('width'),
     required: boolean('required'),
     blockName: varchar('block_name'),
@@ -1294,6 +1515,27 @@ export const forms_blocks_email = pgTable(
   }),
 )
 
+export const forms_blocks_email_locales = pgTable(
+  'forms_blocks_email_locales',
+  {
+    label: varchar('label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_blocks_email_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_blocks_email.id],
+      name: 'forms_blocks_email_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms_blocks_message = pgTable(
   'forms_blocks_message',
   {
@@ -1301,7 +1543,6 @@ export const forms_blocks_message = pgTable(
     _parentID: integer('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
-    message: jsonb('message'),
     blockName: varchar('block_name'),
   },
   (columns) => ({
@@ -1316,6 +1557,27 @@ export const forms_blocks_message = pgTable(
   }),
 )
 
+export const forms_blocks_message_locales = pgTable(
+  'forms_blocks_message_locales',
+  {
+    message: jsonb('message'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_blocks_message_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_blocks_message.id],
+      name: 'forms_blocks_message_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms_blocks_number = pgTable(
   'forms_blocks_number',
   {
@@ -1324,7 +1586,6 @@ export const forms_blocks_number = pgTable(
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
-    label: varchar('label'),
     width: numeric('width'),
     defaultValue: numeric('default_value'),
     required: boolean('required'),
@@ -1342,13 +1603,33 @@ export const forms_blocks_number = pgTable(
   }),
 )
 
+export const forms_blocks_number_locales = pgTable(
+  'forms_blocks_number_locales',
+  {
+    label: varchar('label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_blocks_number_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_blocks_number.id],
+      name: 'forms_blocks_number_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms_blocks_select_options = pgTable(
   'forms_blocks_select_options',
   {
     _order: integer('_order').notNull(),
     _parentID: varchar('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
-    label: varchar('label').notNull(),
     value: varchar('value').notNull(),
   },
   (columns) => ({
@@ -1362,6 +1643,27 @@ export const forms_blocks_select_options = pgTable(
   }),
 )
 
+export const forms_blocks_select_options_locales = pgTable(
+  'forms_blocks_select_options_locales',
+  {
+    label: varchar('label').notNull(),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_blocks_select_options_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_blocks_select_options.id],
+      name: 'forms_blocks_select_options_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms_blocks_select = pgTable(
   'forms_blocks_select',
   {
@@ -1370,9 +1672,7 @@ export const forms_blocks_select = pgTable(
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
-    label: varchar('label'),
     width: numeric('width'),
-    defaultValue: varchar('default_value'),
     required: boolean('required'),
     blockName: varchar('block_name'),
   },
@@ -1388,6 +1688,28 @@ export const forms_blocks_select = pgTable(
   }),
 )
 
+export const forms_blocks_select_locales = pgTable(
+  'forms_blocks_select_locales',
+  {
+    label: varchar('label'),
+    defaultValue: varchar('default_value'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_blocks_select_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_blocks_select.id],
+      name: 'forms_blocks_select_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms_blocks_state = pgTable(
   'forms_blocks_state',
   {
@@ -1396,7 +1718,6 @@ export const forms_blocks_state = pgTable(
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
-    label: varchar('label'),
     width: numeric('width'),
     required: boolean('required'),
     blockName: varchar('block_name'),
@@ -1413,6 +1734,27 @@ export const forms_blocks_state = pgTable(
   }),
 )
 
+export const forms_blocks_state_locales = pgTable(
+  'forms_blocks_state_locales',
+  {
+    label: varchar('label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_blocks_state_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_blocks_state.id],
+      name: 'forms_blocks_state_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms_blocks_text = pgTable(
   'forms_blocks_text',
   {
@@ -1421,9 +1763,7 @@ export const forms_blocks_text = pgTable(
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
-    label: varchar('label'),
     width: numeric('width'),
-    defaultValue: varchar('default_value'),
     required: boolean('required'),
     blockName: varchar('block_name'),
   },
@@ -1439,6 +1779,28 @@ export const forms_blocks_text = pgTable(
   }),
 )
 
+export const forms_blocks_text_locales = pgTable(
+  'forms_blocks_text_locales',
+  {
+    label: varchar('label'),
+    defaultValue: varchar('default_value'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_blocks_text_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_blocks_text.id],
+      name: 'forms_blocks_text_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms_blocks_textarea = pgTable(
   'forms_blocks_textarea',
   {
@@ -1447,9 +1809,7 @@ export const forms_blocks_textarea = pgTable(
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
-    label: varchar('label'),
     width: numeric('width'),
-    defaultValue: varchar('default_value'),
     required: boolean('required'),
     blockName: varchar('block_name'),
   },
@@ -1465,6 +1825,28 @@ export const forms_blocks_textarea = pgTable(
   }),
 )
 
+export const forms_blocks_textarea_locales = pgTable(
+  'forms_blocks_textarea_locales',
+  {
+    label: varchar('label'),
+    defaultValue: varchar('default_value'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_blocks_textarea_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_blocks_textarea.id],
+      name: 'forms_blocks_textarea_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms_emails = pgTable(
   'forms_emails',
   {
@@ -1476,8 +1858,6 @@ export const forms_emails = pgTable(
     bcc: varchar('bcc'),
     replyTo: varchar('reply_to'),
     emailFrom: varchar('email_from'),
-    subject: varchar('subject').notNull().default("You''ve received a new message."),
-    message: jsonb('message'),
   },
   (columns) => ({
     _orderIdx: index('forms_emails_order_idx').on(columns._order),
@@ -1490,14 +1870,34 @@ export const forms_emails = pgTable(
   }),
 )
 
+export const forms_emails_locales = pgTable(
+  'forms_emails_locales',
+  {
+    subject: varchar('subject').notNull().default("You''ve received a new message."),
+    message: jsonb('message'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_emails_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms_emails.id],
+      name: 'forms_emails_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const forms = pgTable(
   'forms',
   {
     id: serial('id').primaryKey(),
     title: varchar('title').notNull(),
-    submitButtonLabel: varchar('submit_button_label'),
     confirmationType: enum_forms_confirmation_type('confirmation_type').default('message'),
-    confirmationMessage: jsonb('confirmation_message'),
     redirect_url: varchar('redirect_url'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
@@ -1509,6 +1909,28 @@ export const forms = pgTable(
   (columns) => ({
     forms_updated_at_idx: index('forms_updated_at_idx').on(columns.updatedAt),
     forms_created_at_idx: index('forms_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const forms_locales = pgTable(
+  'forms_locales',
+  {
+    submitButtonLabel: varchar('submit_button_label'),
+    confirmationMessage: jsonb('confirmation_message'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('forms_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [forms.id],
+      name: 'forms_locales_parent_id_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -1579,7 +2001,6 @@ export const search = pgTable(
   'search',
   {
     id: serial('id').primaryKey(),
-    title: varchar('title'),
     priority: numeric('priority'),
     slug: varchar('slug'),
     meta_title: varchar('meta_title'),
@@ -1599,6 +2020,27 @@ export const search = pgTable(
     search_meta_meta_image_idx: index('search_meta_meta_image_idx').on(columns.meta_image),
     search_updated_at_idx: index('search_updated_at_idx').on(columns.updatedAt),
     search_created_at_idx: index('search_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const search_locales = pgTable(
+  'search_locales',
+  {
+    title: varchar('title'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('search_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [search.id],
+      name: 'search_locales_parent_id_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -1921,6 +2363,7 @@ export const header_nav_items = pgTable(
   {
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     link_type: enum_header_nav_items_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
@@ -1930,6 +2373,7 @@ export const header_nav_items = pgTable(
   (columns) => ({
     _orderIdx: index('header_nav_items_order_idx').on(columns._order),
     _parentIDIdx: index('header_nav_items_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('header_nav_items_locale_idx').on(columns._locale),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [header.id],
@@ -1951,6 +2395,7 @@ export const header_rels = pgTable(
     order: integer('order'),
     parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
+    locale: enum__locales('locale'),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
   },
@@ -1958,8 +2403,9 @@ export const header_rels = pgTable(
     order: index('header_rels_order_idx').on(columns.order),
     parentIdx: index('header_rels_parent_idx').on(columns.parent),
     pathIdx: index('header_rels_path_idx').on(columns.path),
-    header_rels_pages_id_idx: index('header_rels_pages_id_idx').on(columns.pagesID),
-    header_rels_posts_id_idx: index('header_rels_posts_id_idx').on(columns.postsID),
+    localeIdx: index('header_rels_locale_idx').on(columns.locale),
+    header_rels_pages_id_idx: index('header_rels_pages_id_idx').on(columns.pagesID, columns.locale),
+    header_rels_posts_id_idx: index('header_rels_posts_id_idx').on(columns.postsID, columns.locale),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [header.id],
@@ -1983,6 +2429,7 @@ export const footer_nav_items = pgTable(
   {
     _order: integer('_order').notNull(),
     _parentID: integer('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     link_type: enum_footer_nav_items_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
@@ -1992,6 +2439,7 @@ export const footer_nav_items = pgTable(
   (columns) => ({
     _orderIdx: index('footer_nav_items_order_idx').on(columns._order),
     _parentIDIdx: index('footer_nav_items_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('footer_nav_items_locale_idx').on(columns._locale),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [footer.id],
@@ -2013,6 +2461,7 @@ export const footer_rels = pgTable(
     order: integer('order'),
     parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
+    locale: enum__locales('locale'),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
   },
@@ -2020,8 +2469,9 @@ export const footer_rels = pgTable(
     order: index('footer_rels_order_idx').on(columns.order),
     parentIdx: index('footer_rels_parent_idx').on(columns.parent),
     pathIdx: index('footer_rels_path_idx').on(columns.path),
-    footer_rels_pages_id_idx: index('footer_rels_pages_id_idx').on(columns.pagesID),
-    footer_rels_posts_id_idx: index('footer_rels_posts_id_idx').on(columns.postsID),
+    localeIdx: index('footer_rels_locale_idx').on(columns.locale),
+    footer_rels_pages_id_idx: index('footer_rels_pages_id_idx').on(columns.pagesID, columns.locale),
+    footer_rels_posts_id_idx: index('footer_rels_posts_id_idx').on(columns.postsID, columns.locale),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [footer.id],
@@ -2118,6 +2568,23 @@ export const relations_pages_blocks_form_block = relations(pages_blocks_form_blo
     relationName: 'form',
   }),
 }))
+export const relations_pages_locales = relations(pages_locales, ({ one }) => ({
+  _parentID: one(pages, {
+    fields: [pages_locales._parentID],
+    references: [pages.id],
+    relationName: '_locales',
+  }),
+  hero_media: one(media, {
+    fields: [pages_locales.hero_media],
+    references: [media.id],
+    relationName: 'hero_media',
+  }),
+  meta_image: one(media, {
+    fields: [pages_locales.meta_image],
+    references: [media.id],
+    relationName: 'meta_image',
+  }),
+}))
 export const relations_pages_rels = relations(pages_rels, ({ one }) => ({
   parent: one(pages, {
     fields: [pages_rels.parent],
@@ -2140,14 +2607,9 @@ export const relations_pages_rels = relations(pages_rels, ({ one }) => ({
     relationName: 'categories',
   }),
 }))
-export const relations_pages = relations(pages, ({ one, many }) => ({
+export const relations_pages = relations(pages, ({ many }) => ({
   hero_links: many(pages_hero_links, {
     relationName: 'hero_links',
-  }),
-  hero_media: one(media, {
-    fields: [pages.hero_media],
-    references: [media.id],
-    relationName: 'hero_media',
   }),
   _blocks_cta: many(pages_blocks_cta, {
     relationName: '_blocks_cta',
@@ -2164,10 +2626,8 @@ export const relations_pages = relations(pages, ({ one, many }) => ({
   _blocks_formBlock: many(pages_blocks_form_block, {
     relationName: '_blocks_formBlock',
   }),
-  meta_image: one(media, {
-    fields: [pages.meta_image],
-    references: [media.id],
-    relationName: 'meta_image',
+  _locales: many(pages_locales, {
+    relationName: '_locales',
   }),
   _rels: many(pages_rels, {
     relationName: '_rels',
@@ -2263,6 +2723,23 @@ export const relations__pages_v_blocks_form_block = relations(
     }),
   }),
 )
+export const relations__pages_v_locales = relations(_pages_v_locales, ({ one }) => ({
+  _parentID: one(_pages_v, {
+    fields: [_pages_v_locales._parentID],
+    references: [_pages_v.id],
+    relationName: '_locales',
+  }),
+  version_hero_media: one(media, {
+    fields: [_pages_v_locales.version_hero_media],
+    references: [media.id],
+    relationName: 'version_hero_media',
+  }),
+  version_meta_image: one(media, {
+    fields: [_pages_v_locales.version_meta_image],
+    references: [media.id],
+    relationName: 'version_meta_image',
+  }),
+}))
 export const relations__pages_v_rels = relations(_pages_v_rels, ({ one }) => ({
   parent: one(_pages_v, {
     fields: [_pages_v_rels.parent],
@@ -2294,11 +2771,6 @@ export const relations__pages_v = relations(_pages_v, ({ one, many }) => ({
   version_hero_links: many(_pages_v_version_hero_links, {
     relationName: 'version_hero_links',
   }),
-  version_hero_media: one(media, {
-    fields: [_pages_v.version_hero_media],
-    references: [media.id],
-    relationName: 'version_hero_media',
-  }),
   _blocks_cta: many(_pages_v_blocks_cta, {
     relationName: '_blocks_cta',
   }),
@@ -2314,10 +2786,8 @@ export const relations__pages_v = relations(_pages_v, ({ one, many }) => ({
   _blocks_formBlock: many(_pages_v_blocks_form_block, {
     relationName: '_blocks_formBlock',
   }),
-  version_meta_image: one(media, {
-    fields: [_pages_v.version_meta_image],
-    references: [media.id],
-    relationName: 'version_meta_image',
+  _locales: many(_pages_v_locales, {
+    relationName: '_locales',
   }),
   _rels: many(_pages_v_rels, {
     relationName: '_rels',
@@ -2328,6 +2798,23 @@ export const relations_posts_populated_authors = relations(posts_populated_autho
     fields: [posts_populated_authors._parentID],
     references: [posts.id],
     relationName: 'populatedAuthors',
+  }),
+}))
+export const relations_posts_locales = relations(posts_locales, ({ one }) => ({
+  _parentID: one(posts, {
+    fields: [posts_locales._parentID],
+    references: [posts.id],
+    relationName: '_locales',
+  }),
+  heroImage: one(media, {
+    fields: [posts_locales.heroImage],
+    references: [media.id],
+    relationName: 'heroImage',
+  }),
+  meta_image: one(media, {
+    fields: [posts_locales.meta_image],
+    references: [media.id],
+    relationName: 'meta_image',
   }),
 }))
 export const relations_posts_rels = relations(posts_rels, ({ one }) => ({
@@ -2352,19 +2839,12 @@ export const relations_posts_rels = relations(posts_rels, ({ one }) => ({
     relationName: 'users',
   }),
 }))
-export const relations_posts = relations(posts, ({ one, many }) => ({
-  heroImage: one(media, {
-    fields: [posts.heroImage],
-    references: [media.id],
-    relationName: 'heroImage',
-  }),
-  meta_image: one(media, {
-    fields: [posts.meta_image],
-    references: [media.id],
-    relationName: 'meta_image',
-  }),
+export const relations_posts = relations(posts, ({ many }) => ({
   populatedAuthors: many(posts_populated_authors, {
     relationName: 'populatedAuthors',
+  }),
+  _locales: many(posts_locales, {
+    relationName: '_locales',
   }),
   _rels: many(posts_rels, {
     relationName: '_rels',
@@ -2380,6 +2860,23 @@ export const relations__posts_v_version_populated_authors = relations(
     }),
   }),
 )
+export const relations__posts_v_locales = relations(_posts_v_locales, ({ one }) => ({
+  _parentID: one(_posts_v, {
+    fields: [_posts_v_locales._parentID],
+    references: [_posts_v.id],
+    relationName: '_locales',
+  }),
+  version_heroImage: one(media, {
+    fields: [_posts_v_locales.version_heroImage],
+    references: [media.id],
+    relationName: 'version_heroImage',
+  }),
+  version_meta_image: one(media, {
+    fields: [_posts_v_locales.version_meta_image],
+    references: [media.id],
+    relationName: 'version_meta_image',
+  }),
+}))
 export const relations__posts_v_rels = relations(_posts_v_rels, ({ one }) => ({
   parent: one(_posts_v, {
     fields: [_posts_v_rels.parent],
@@ -2408,18 +2905,11 @@ export const relations__posts_v = relations(_posts_v, ({ one, many }) => ({
     references: [posts.id],
     relationName: 'parent',
   }),
-  version_heroImage: one(media, {
-    fields: [_posts_v.version_heroImage],
-    references: [media.id],
-    relationName: 'version_heroImage',
-  }),
-  version_meta_image: one(media, {
-    fields: [_posts_v.version_meta_image],
-    references: [media.id],
-    relationName: 'version_meta_image',
-  }),
   version_populatedAuthors: many(_posts_v_version_populated_authors, {
     relationName: 'version_populatedAuthors',
+  }),
+  _locales: many(_posts_v_locales, {
+    relationName: '_locales',
   }),
   _rels: many(_posts_v_rels, {
     relationName: '_rels',
@@ -2444,6 +2934,13 @@ export const relations_categories_breadcrumbs = relations(categories_breadcrumbs
     relationName: 'doc',
   }),
 }))
+export const relations_categories_locales = relations(categories_locales, ({ one }) => ({
+  _parentID: one(categories, {
+    fields: [categories_locales._parentID],
+    references: [categories.id],
+    relationName: '_locales',
+  }),
+}))
 export const relations_categories = relations(categories, ({ one, many }) => ({
   parent: one(categories, {
     fields: [categories.parent],
@@ -2452,6 +2949,9 @@ export const relations_categories = relations(categories, ({ one, many }) => ({
   }),
   breadcrumbs: many(categories_breadcrumbs, {
     relationName: 'breadcrumbs',
+  }),
+  _locales: many(categories_locales, {
+    relationName: '_locales',
   }),
 }))
 export const relations_media_categories = relations(media_categories, () => ({}))
@@ -2478,48 +2978,139 @@ export const relations_redirects = relations(redirects, ({ many }) => ({
     relationName: '_rels',
   }),
 }))
-export const relations_forms_blocks_checkbox = relations(forms_blocks_checkbox, ({ one }) => ({
-  _parentID: one(forms, {
-    fields: [forms_blocks_checkbox._parentID],
-    references: [forms.id],
-    relationName: '_blocks_checkbox',
+export const relations_forms_blocks_checkbox_locales = relations(
+  forms_blocks_checkbox_locales,
+  ({ one }) => ({
+    _parentID: one(forms_blocks_checkbox, {
+      fields: [forms_blocks_checkbox_locales._parentID],
+      references: [forms_blocks_checkbox.id],
+      relationName: '_locales',
+    }),
   }),
-}))
-export const relations_forms_blocks_country = relations(forms_blocks_country, ({ one }) => ({
+)
+export const relations_forms_blocks_checkbox = relations(
+  forms_blocks_checkbox,
+  ({ one, many }) => ({
+    _parentID: one(forms, {
+      fields: [forms_blocks_checkbox._parentID],
+      references: [forms.id],
+      relationName: '_blocks_checkbox',
+    }),
+    _locales: many(forms_blocks_checkbox_locales, {
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_forms_blocks_country_locales = relations(
+  forms_blocks_country_locales,
+  ({ one }) => ({
+    _parentID: one(forms_blocks_country, {
+      fields: [forms_blocks_country_locales._parentID],
+      references: [forms_blocks_country.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_forms_blocks_country = relations(forms_blocks_country, ({ one, many }) => ({
   _parentID: one(forms, {
     fields: [forms_blocks_country._parentID],
     references: [forms.id],
     relationName: '_blocks_country',
   }),
+  _locales: many(forms_blocks_country_locales, {
+    relationName: '_locales',
+  }),
 }))
-export const relations_forms_blocks_email = relations(forms_blocks_email, ({ one }) => ({
+export const relations_forms_blocks_email_locales = relations(
+  forms_blocks_email_locales,
+  ({ one }) => ({
+    _parentID: one(forms_blocks_email, {
+      fields: [forms_blocks_email_locales._parentID],
+      references: [forms_blocks_email.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_forms_blocks_email = relations(forms_blocks_email, ({ one, many }) => ({
   _parentID: one(forms, {
     fields: [forms_blocks_email._parentID],
     references: [forms.id],
     relationName: '_blocks_email',
   }),
+  _locales: many(forms_blocks_email_locales, {
+    relationName: '_locales',
+  }),
 }))
-export const relations_forms_blocks_message = relations(forms_blocks_message, ({ one }) => ({
+export const relations_forms_blocks_message_locales = relations(
+  forms_blocks_message_locales,
+  ({ one }) => ({
+    _parentID: one(forms_blocks_message, {
+      fields: [forms_blocks_message_locales._parentID],
+      references: [forms_blocks_message.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_forms_blocks_message = relations(forms_blocks_message, ({ one, many }) => ({
   _parentID: one(forms, {
     fields: [forms_blocks_message._parentID],
     references: [forms.id],
     relationName: '_blocks_message',
   }),
+  _locales: many(forms_blocks_message_locales, {
+    relationName: '_locales',
+  }),
 }))
-export const relations_forms_blocks_number = relations(forms_blocks_number, ({ one }) => ({
+export const relations_forms_blocks_number_locales = relations(
+  forms_blocks_number_locales,
+  ({ one }) => ({
+    _parentID: one(forms_blocks_number, {
+      fields: [forms_blocks_number_locales._parentID],
+      references: [forms_blocks_number.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_forms_blocks_number = relations(forms_blocks_number, ({ one, many }) => ({
   _parentID: one(forms, {
     fields: [forms_blocks_number._parentID],
     references: [forms.id],
     relationName: '_blocks_number',
   }),
+  _locales: many(forms_blocks_number_locales, {
+    relationName: '_locales',
+  }),
 }))
+export const relations_forms_blocks_select_options_locales = relations(
+  forms_blocks_select_options_locales,
+  ({ one }) => ({
+    _parentID: one(forms_blocks_select_options, {
+      fields: [forms_blocks_select_options_locales._parentID],
+      references: [forms_blocks_select_options.id],
+      relationName: '_locales',
+    }),
+  }),
+)
 export const relations_forms_blocks_select_options = relations(
   forms_blocks_select_options,
-  ({ one }) => ({
+  ({ one, many }) => ({
     _parentID: one(forms_blocks_select, {
       fields: [forms_blocks_select_options._parentID],
       references: [forms_blocks_select.id],
       relationName: 'options',
+    }),
+    _locales: many(forms_blocks_select_options_locales, {
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_forms_blocks_select_locales = relations(
+  forms_blocks_select_locales,
+  ({ one }) => ({
+    _parentID: one(forms_blocks_select, {
+      fields: [forms_blocks_select_locales._parentID],
+      references: [forms_blocks_select.id],
+      relationName: '_locales',
     }),
   }),
 )
@@ -2529,36 +3120,98 @@ export const relations_forms_blocks_select = relations(forms_blocks_select, ({ o
     references: [forms.id],
     relationName: '_blocks_select',
   }),
+  _locales: many(forms_blocks_select_locales, {
+    relationName: '_locales',
+  }),
   options: many(forms_blocks_select_options, {
     relationName: 'options',
   }),
 }))
-export const relations_forms_blocks_state = relations(forms_blocks_state, ({ one }) => ({
+export const relations_forms_blocks_state_locales = relations(
+  forms_blocks_state_locales,
+  ({ one }) => ({
+    _parentID: one(forms_blocks_state, {
+      fields: [forms_blocks_state_locales._parentID],
+      references: [forms_blocks_state.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_forms_blocks_state = relations(forms_blocks_state, ({ one, many }) => ({
   _parentID: one(forms, {
     fields: [forms_blocks_state._parentID],
     references: [forms.id],
     relationName: '_blocks_state',
   }),
+  _locales: many(forms_blocks_state_locales, {
+    relationName: '_locales',
+  }),
 }))
-export const relations_forms_blocks_text = relations(forms_blocks_text, ({ one }) => ({
+export const relations_forms_blocks_text_locales = relations(
+  forms_blocks_text_locales,
+  ({ one }) => ({
+    _parentID: one(forms_blocks_text, {
+      fields: [forms_blocks_text_locales._parentID],
+      references: [forms_blocks_text.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_forms_blocks_text = relations(forms_blocks_text, ({ one, many }) => ({
   _parentID: one(forms, {
     fields: [forms_blocks_text._parentID],
     references: [forms.id],
     relationName: '_blocks_text',
   }),
-}))
-export const relations_forms_blocks_textarea = relations(forms_blocks_textarea, ({ one }) => ({
-  _parentID: one(forms, {
-    fields: [forms_blocks_textarea._parentID],
-    references: [forms.id],
-    relationName: '_blocks_textarea',
+  _locales: many(forms_blocks_text_locales, {
+    relationName: '_locales',
   }),
 }))
-export const relations_forms_emails = relations(forms_emails, ({ one }) => ({
+export const relations_forms_blocks_textarea_locales = relations(
+  forms_blocks_textarea_locales,
+  ({ one }) => ({
+    _parentID: one(forms_blocks_textarea, {
+      fields: [forms_blocks_textarea_locales._parentID],
+      references: [forms_blocks_textarea.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_forms_blocks_textarea = relations(
+  forms_blocks_textarea,
+  ({ one, many }) => ({
+    _parentID: one(forms, {
+      fields: [forms_blocks_textarea._parentID],
+      references: [forms.id],
+      relationName: '_blocks_textarea',
+    }),
+    _locales: many(forms_blocks_textarea_locales, {
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_forms_emails_locales = relations(forms_emails_locales, ({ one }) => ({
+  _parentID: one(forms_emails, {
+    fields: [forms_emails_locales._parentID],
+    references: [forms_emails.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations_forms_emails = relations(forms_emails, ({ one, many }) => ({
   _parentID: one(forms, {
     fields: [forms_emails._parentID],
     references: [forms.id],
     relationName: 'emails',
+  }),
+  _locales: many(forms_emails_locales, {
+    relationName: '_locales',
+  }),
+}))
+export const relations_forms_locales = relations(forms_locales, ({ one }) => ({
+  _parentID: one(forms, {
+    fields: [forms_locales._parentID],
+    references: [forms.id],
+    relationName: '_locales',
   }),
 }))
 export const relations_forms = relations(forms, ({ many }) => ({
@@ -2592,6 +3245,9 @@ export const relations_forms = relations(forms, ({ many }) => ({
   emails: many(forms_emails, {
     relationName: 'emails',
   }),
+  _locales: many(forms_locales, {
+    relationName: '_locales',
+  }),
 }))
 export const relations_form_submissions_submission_data = relations(
   form_submissions_submission_data,
@@ -2620,6 +3276,13 @@ export const relations_search_categories = relations(search_categories, ({ one }
     relationName: 'categories',
   }),
 }))
+export const relations_search_locales = relations(search_locales, ({ one }) => ({
+  _parentID: one(search, {
+    fields: [search_locales._parentID],
+    references: [search.id],
+    relationName: '_locales',
+  }),
+}))
 export const relations_search_rels = relations(search_rels, ({ one }) => ({
   parent: one(search, {
     fields: [search_rels.parent],
@@ -2640,6 +3303,9 @@ export const relations_search = relations(search, ({ one, many }) => ({
   }),
   categories: many(search_categories, {
     relationName: 'categories',
+  }),
+  _locales: many(search_locales, {
+    relationName: '_locales',
   }),
   _rels: many(search_rels, {
     relationName: '_rels',
@@ -2817,6 +3483,7 @@ export const relations_footer = relations(footer, ({ many }) => ({
 }))
 
 type DatabaseSchema = {
+  enum__locales: typeof enum__locales
   enum_pages_hero_links_link_type: typeof enum_pages_hero_links_link_type
   enum_pages_hero_links_link_appearance: typeof enum_pages_hero_links_link_appearance
   enum_pages_blocks_cta_links_link_type: typeof enum_pages_blocks_cta_links_link_type
@@ -2839,8 +3506,10 @@ type DatabaseSchema = {
   enum__pages_v_blocks_archive_relation_to: typeof enum__pages_v_blocks_archive_relation_to
   enum__pages_v_version_hero_type: typeof enum__pages_v_version_hero_type
   enum__pages_v_version_status: typeof enum__pages_v_version_status
+  enum__pages_v_published_locale: typeof enum__pages_v_published_locale
   enum_posts_status: typeof enum_posts_status
   enum__posts_v_version_status: typeof enum__posts_v_version_status
+  enum__posts_v_published_locale: typeof enum__posts_v_published_locale
   enum_redirects_to_type: typeof enum_redirects_to_type
   enum_forms_confirmation_type: typeof enum_forms_confirmation_type
   enum_payload_jobs_log_task_slug: typeof enum_payload_jobs_log_task_slug
@@ -2857,6 +3526,7 @@ type DatabaseSchema = {
   pages_blocks_archive: typeof pages_blocks_archive
   pages_blocks_form_block: typeof pages_blocks_form_block
   pages: typeof pages
+  pages_locales: typeof pages_locales
   pages_rels: typeof pages_rels
   _pages_v_version_hero_links: typeof _pages_v_version_hero_links
   _pages_v_blocks_cta_links: typeof _pages_v_blocks_cta_links
@@ -2867,36 +3537,53 @@ type DatabaseSchema = {
   _pages_v_blocks_archive: typeof _pages_v_blocks_archive
   _pages_v_blocks_form_block: typeof _pages_v_blocks_form_block
   _pages_v: typeof _pages_v
+  _pages_v_locales: typeof _pages_v_locales
   _pages_v_rels: typeof _pages_v_rels
   posts_populated_authors: typeof posts_populated_authors
   posts: typeof posts
+  posts_locales: typeof posts_locales
   posts_rels: typeof posts_rels
   _posts_v_version_populated_authors: typeof _posts_v_version_populated_authors
   _posts_v: typeof _posts_v
+  _posts_v_locales: typeof _posts_v_locales
   _posts_v_rels: typeof _posts_v_rels
   media: typeof media
   categories_breadcrumbs: typeof categories_breadcrumbs
   categories: typeof categories
+  categories_locales: typeof categories_locales
   media_categories: typeof media_categories
   users: typeof users
   redirects: typeof redirects
   redirects_rels: typeof redirects_rels
   forms_blocks_checkbox: typeof forms_blocks_checkbox
+  forms_blocks_checkbox_locales: typeof forms_blocks_checkbox_locales
   forms_blocks_country: typeof forms_blocks_country
+  forms_blocks_country_locales: typeof forms_blocks_country_locales
   forms_blocks_email: typeof forms_blocks_email
+  forms_blocks_email_locales: typeof forms_blocks_email_locales
   forms_blocks_message: typeof forms_blocks_message
+  forms_blocks_message_locales: typeof forms_blocks_message_locales
   forms_blocks_number: typeof forms_blocks_number
+  forms_blocks_number_locales: typeof forms_blocks_number_locales
   forms_blocks_select_options: typeof forms_blocks_select_options
+  forms_blocks_select_options_locales: typeof forms_blocks_select_options_locales
   forms_blocks_select: typeof forms_blocks_select
+  forms_blocks_select_locales: typeof forms_blocks_select_locales
   forms_blocks_state: typeof forms_blocks_state
+  forms_blocks_state_locales: typeof forms_blocks_state_locales
   forms_blocks_text: typeof forms_blocks_text
+  forms_blocks_text_locales: typeof forms_blocks_text_locales
   forms_blocks_textarea: typeof forms_blocks_textarea
+  forms_blocks_textarea_locales: typeof forms_blocks_textarea_locales
   forms_emails: typeof forms_emails
+  forms_emails_locales: typeof forms_emails_locales
   forms: typeof forms
+  forms_locales: typeof forms_locales
   form_submissions_submission_data: typeof form_submissions_submission_data
   form_submissions: typeof form_submissions
   search_categories: typeof search_categories
   search: typeof search
+  search_locales: typeof search_locales
   search_rels: typeof search_rels
   payload_jobs_log: typeof payload_jobs_log
   payload_jobs: typeof payload_jobs
@@ -2919,6 +3606,7 @@ type DatabaseSchema = {
   relations_pages_blocks_media_block: typeof relations_pages_blocks_media_block
   relations_pages_blocks_archive: typeof relations_pages_blocks_archive
   relations_pages_blocks_form_block: typeof relations_pages_blocks_form_block
+  relations_pages_locales: typeof relations_pages_locales
   relations_pages_rels: typeof relations_pages_rels
   relations_pages: typeof relations_pages
   relations__pages_v_version_hero_links: typeof relations__pages_v_version_hero_links
@@ -2929,36 +3617,53 @@ type DatabaseSchema = {
   relations__pages_v_blocks_media_block: typeof relations__pages_v_blocks_media_block
   relations__pages_v_blocks_archive: typeof relations__pages_v_blocks_archive
   relations__pages_v_blocks_form_block: typeof relations__pages_v_blocks_form_block
+  relations__pages_v_locales: typeof relations__pages_v_locales
   relations__pages_v_rels: typeof relations__pages_v_rels
   relations__pages_v: typeof relations__pages_v
   relations_posts_populated_authors: typeof relations_posts_populated_authors
+  relations_posts_locales: typeof relations_posts_locales
   relations_posts_rels: typeof relations_posts_rels
   relations_posts: typeof relations_posts
   relations__posts_v_version_populated_authors: typeof relations__posts_v_version_populated_authors
+  relations__posts_v_locales: typeof relations__posts_v_locales
   relations__posts_v_rels: typeof relations__posts_v_rels
   relations__posts_v: typeof relations__posts_v
   relations_media: typeof relations_media
   relations_categories_breadcrumbs: typeof relations_categories_breadcrumbs
+  relations_categories_locales: typeof relations_categories_locales
   relations_categories: typeof relations_categories
   relations_media_categories: typeof relations_media_categories
   relations_users: typeof relations_users
   relations_redirects_rels: typeof relations_redirects_rels
   relations_redirects: typeof relations_redirects
+  relations_forms_blocks_checkbox_locales: typeof relations_forms_blocks_checkbox_locales
   relations_forms_blocks_checkbox: typeof relations_forms_blocks_checkbox
+  relations_forms_blocks_country_locales: typeof relations_forms_blocks_country_locales
   relations_forms_blocks_country: typeof relations_forms_blocks_country
+  relations_forms_blocks_email_locales: typeof relations_forms_blocks_email_locales
   relations_forms_blocks_email: typeof relations_forms_blocks_email
+  relations_forms_blocks_message_locales: typeof relations_forms_blocks_message_locales
   relations_forms_blocks_message: typeof relations_forms_blocks_message
+  relations_forms_blocks_number_locales: typeof relations_forms_blocks_number_locales
   relations_forms_blocks_number: typeof relations_forms_blocks_number
+  relations_forms_blocks_select_options_locales: typeof relations_forms_blocks_select_options_locales
   relations_forms_blocks_select_options: typeof relations_forms_blocks_select_options
+  relations_forms_blocks_select_locales: typeof relations_forms_blocks_select_locales
   relations_forms_blocks_select: typeof relations_forms_blocks_select
+  relations_forms_blocks_state_locales: typeof relations_forms_blocks_state_locales
   relations_forms_blocks_state: typeof relations_forms_blocks_state
+  relations_forms_blocks_text_locales: typeof relations_forms_blocks_text_locales
   relations_forms_blocks_text: typeof relations_forms_blocks_text
+  relations_forms_blocks_textarea_locales: typeof relations_forms_blocks_textarea_locales
   relations_forms_blocks_textarea: typeof relations_forms_blocks_textarea
+  relations_forms_emails_locales: typeof relations_forms_emails_locales
   relations_forms_emails: typeof relations_forms_emails
+  relations_forms_locales: typeof relations_forms_locales
   relations_forms: typeof relations_forms
   relations_form_submissions_submission_data: typeof relations_form_submissions_submission_data
   relations_form_submissions: typeof relations_form_submissions
   relations_search_categories: typeof relations_search_categories
+  relations_search_locales: typeof relations_search_locales
   relations_search_rels: typeof relations_search_rels
   relations_search: typeof relations_search
   relations_payload_jobs_log: typeof relations_payload_jobs_log
