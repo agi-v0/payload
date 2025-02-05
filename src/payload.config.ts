@@ -66,7 +66,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
-    push: false, // disable push mode
+    // push: false, // disable push mode
   }),
 
   collections: [Pages, Posts, Media, Categories, MediaCategories, Users],
@@ -90,8 +90,7 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
       },
-      // enabled: process.env.NODE_ENV === 'production', // Use in production only
-      enabled: true,
+      enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,
