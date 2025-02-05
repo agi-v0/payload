@@ -32,7 +32,12 @@ export async function POST(
     await seed({ payload, req: payloadReq })
 
     return Response.json({ success: true })
-  } catch {
-    return new Response('Error seeding data.', { status: 500 })
+  } catch (error) {
+    console.error('Seeding error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name,
+    })
+    return new Response(`Error seeding data: ${error.message}`, { status: 500 })
   }
 }
