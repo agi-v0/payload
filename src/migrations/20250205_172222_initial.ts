@@ -1,5 +1,7 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
+//base database schema with media prefix column and media categories
+
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_pages_hero_links_link_type" AS ENUM('reference', 'custom');
@@ -347,6 +349,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"alt" varchar NOT NULL,
   	"caption" jsonb,
   	"category_id" integer,
+  	"prefix" varchar DEFAULT 'media',
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"url" varchar,
