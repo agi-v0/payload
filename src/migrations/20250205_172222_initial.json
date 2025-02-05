@@ -1,5 +1,5 @@
 {
-  "id": "9644f768-3bae-47b9-8acd-7e33b504f815",
+  "id": "e9ecb78c-92c0-41e7-bd67-0a562ef0dbc5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -4113,6 +4113,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false
+        },
+        "prefix": {
+          "name": "prefix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'media'"
         },
         "updated_at": {
           "name": "updated_at",
