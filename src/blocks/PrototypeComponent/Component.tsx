@@ -2,12 +2,12 @@ import React from 'react'
 
 import type { Page } from '@/payload-types'
 
-import { HighImpactHero } from '@/blocks/prototypeComponent/Variant1'
+import { Variant1 } from '@/blocks/PrototypeComponent/Variant1'
 import { LowImpactHero } from '@/heros/LowImpact'
 import { MediumImpactHero } from '@/heros/MediumImpact'
 
 const heroes = {
-  highImpact: HighImpactHero,
+  highImpact: Variant1,
   lowImpact: LowImpactHero,
   mediumImpact: MediumImpactHero,
 }
