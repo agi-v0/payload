@@ -19,12 +19,15 @@ const buttonVariants = cva(
         sm: 'h-9 rounded px-3',
       },
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        default: 'bg-button-brand-primary text-base-static-white  hover:bg-button-brand-primary/90',
+        primary: 'bg-button-brand-primary text-base-static-white hover:bg-button-brand-primary/90',
+        secondary:
+          'bg-button-brand-secondary border border-border-action-normal hover:border-border-action-hover text-base-static-white hover:bg-button-brand-secondary/90',
+        tertiary:
+          'bg-button-brand-tertiary/10 text-base-static-white hover:bg-button-brand-tertiary/20',
+        ghost: 'bg-button-brand-ghost/0 text-base-static-white hover:bg-button-brand-ghost/10',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-        ghost: 'hover:bg-card hover:text-accent-foreground',
         link: 'text-primary items-start justify-start underline-offset-4 hover:underline',
-        outline: 'border border-border bg-background hover:bg-card hover:text-accent-foreground',
-        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
       },
     },
   },
