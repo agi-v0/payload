@@ -35,7 +35,42 @@ export const hero: Field = {
           label: 'Low Impact',
           value: 'lowImpact',
         },
+        {
+          label: 'Hero 01',
+          value: 'hero01',
+        },
+        {
+          label: 'Hero 02',
+          value: 'hero02',
+        },
+        {
+          label: 'Hero 03',
+          value: 'hero03',
+        },
+        {
+          label: 'Hero 04',
+          value: 'hero04',
+        },
+        {
+          label: 'Hero 05',
+          value: 'hero05',
+        },
+        {
+          label: 'Hero 06',
+          value: 'hero06',
+        },
+        {
+          label: 'Hero 07',
+          value: 'hero07',
+        },
       ],
+      required: true,
+    },
+    {
+      name: 'title',
+      type: 'text',
+      label: 'title',
+      localized: true,
       required: true,
     },
     {
@@ -44,21 +79,52 @@ export const hero: Field = {
       localized: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-          ]
+          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
         },
       }),
-      label: false,
+      label: 'paragraph',
     },
     linkGroup({
       overrides: {
         maxRows: 2,
       },
     }),
+    {
+      name: 'caption',
+      type: 'text',
+      label: 'caption',
+      localized: true,
+      required: false,
+    },
+    {
+      name: 'logos',
+      type: 'group',
+
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'title',
+          localized: true,
+          required: true,
+        },
+        {
+          name: 'logos-images',
+          required: true,
+          type: 'array',
+          label: 'logos images',
+          maxRows: 6,
+          fields: [
+            {
+              name: 'logo',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'logo',
+            },
+          ],
+        },
+      ],
+    },
     {
       name: 'media',
       type: 'upload',
@@ -67,7 +133,8 @@ export const hero: Field = {
         condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
       },
       relationTo: 'media',
-      required: true,
+      required: false,
+      label: 'hero image',
     },
   ],
   label: false,

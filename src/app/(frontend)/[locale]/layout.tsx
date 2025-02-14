@@ -1,9 +1,6 @@
 import type { Metadata } from 'next'
 
-import { cn } from '@/utilities/ui'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
-import { IBM_Plex_Sans_Arabic } from 'next/font/google'
+import { Rubik } from 'next/font/google'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
@@ -22,9 +19,9 @@ import { notFound } from 'next/navigation'
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
-const ibmArabic = IBM_Plex_Sans_Arabic({
-  weight: ['400'],
-  subsets: ['latin'],
+const rubik = Rubik({
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  subsets: ['latin', 'arabic'],
 })
 
 export default async function RootLayout({
@@ -45,7 +42,7 @@ export default async function RootLayout({
 
   return (
     <html
-      className={locale === 'ar' ? ibmArabic.className : cn(GeistSans.variable, GeistMono.variable)}
+      className={rubik.className}
       lang={locale}
       dir={locale == 'ar' ? 'rtl' : 'ltr'}
       suppressHydrationWarning

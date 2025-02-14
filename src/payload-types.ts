@@ -95,7 +95,19 @@ export interface Page {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    type:
+      | 'none'
+      | 'highImpact'
+      | 'mediumImpact'
+      | 'lowImpact'
+      | 'hero01'
+      | 'hero02'
+      | 'hero03'
+      | 'hero04'
+      | 'hero05'
+      | 'hero06'
+      | 'hero07';
+    title: string;
     richText?: {
       root: {
         type: string;
@@ -130,11 +142,21 @@ export interface Page {
             /**
              * Choose how the link should be rendered.
              */
-            appearance?: ('default' | 'outline') | null;
+            appearance?:
+              | ('default' | 'outline' | 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'destructive' | 'link')
+              | null;
           };
           id?: string | null;
         }[]
       | null;
+    caption?: string | null;
+    logos: {
+      title: string;
+      'logos-images': {
+        logo?: (number | null) | Media;
+        id?: string | null;
+      }[];
+    };
     media?: (number | null) | Media;
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
@@ -434,7 +456,9 @@ export interface ContentBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline') | null;
+          appearance?:
+            | ('default' | 'outline' | 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'destructive' | 'link')
+            | null;
         };
         id?: string | null;
       }[]
@@ -954,6 +978,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        title?: T;
         richText?: T;
         links?:
           | T
@@ -969,6 +994,18 @@ export interface PagesSelect<T extends boolean = true> {
                     appearance?: T;
                   };
               id?: T;
+            };
+        caption?: T;
+        logos?:
+          | T
+          | {
+              title?: T;
+              'logos-images'?:
+                | T
+                | {
+                    logo?: T;
+                    id?: T;
+                  };
             };
         media?: T;
       };

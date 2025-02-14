@@ -8,27 +8,59 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 
-export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
+export const HighImpactHero: React.FC<Page['hero']> = ({
+  links,
+  media,
+  richText,
+  title,
+  caption,
+  logos,
+}) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
-    setHeaderTheme('dark')
+    setHeaderTheme('light')
   })
 
   return (
-    <div
-      className="relative -mt-[10.4rem] flex items-center justify-center text-white"
-      data-theme="dark"
-    >
-      <div className="container mb-8 z-10 relative flex items-center justify-center">
-        <div className="max-w-[36.5rem] md:text-center">
-          {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}
-          {Array.isArray(links) && links.length > 0 && (
-            <ul className="flex md:justify-center gap-4">
-              {links.map(({ link }, i) => {
+    <div className="container" data-theme="light">
+      <div className=" my-16 z-10 relative flex items-center justify-center flex-col">
+        <div className=" md:text-center">
+          <div className="flex gap-6 flex-col mb-10 max-w-4xl ">
+            <h1 className="text-7xl font-[600] text-primary leading-[93.6px]">{title}</h1>
+            {richText && (
+              <RichText
+                className=" text-2xl leading-8 font-normal text-primary"
+                data={richText}
+                enableGutter={false}
+              />
+            )}
+          </div>
+          <div className="flex flex-col gap-4">
+            {Array.isArray(links) && links.length > 0 && (
+              <ul className="flex md:justify-center gap-4">
+                {links.map(({ link }, i) => {
+                  return (
+                    <li key={i}>
+                      <CMSLink size={'lg'} {...link} />
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
+            <p className="text-sm font-normal text-primary">{caption}</p>
+          </div>
+        </div>
+        <div className="mt-16 flex flex-col gap-8 w-full">
+          <h5 className="text-xl text-primary leading-5 text-center">{logos.title}</h5>
+          {Array.isArray(logos['logos-images']) && logos['logos-images'].length > 0 && (
+            <ul className="flex justify-between gap-10 ">
+              {logos['logos-images'].map(({ logo }, i) => {
                 return (
                   <li key={i}>
-                    <CMSLink {...link} />
+                    {logo && typeof logo === 'object' && (
+                      <Media imgClassName="h-10  w-36 object-contain" priority resource={logo} />
+                    )}
                   </li>
                 )
               })}
@@ -36,9 +68,10 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
           )}
         </div>
       </div>
+
       <div className="min-h-[80vh] select-none">
         {media && typeof media === 'object' && (
-          <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
+          <Media imgClassName="rounded-3xl  object-cover " priority resource={media} />
         )}
       </div>
     </div>

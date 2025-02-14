@@ -190,10 +190,10 @@
     --color-button-neutral-primary-hover: var(--color-neutral-800);
     --color-button-neutral-secondary: var(--color-neutral-0);
     --color-button-neutral-secondary-hover: var(--color-neutral-50);
-    --color-button-neutral-tertiary: var(--color-neutral-10a);
-    --color-button-neutral-tertiary-hover: var(--color-neutral-20a);
-    --color-button-neutral-ghost: var(--color-neutral-0a);
-    --color-button-neutral-ghost-hover: var(--color-neutral-10a);
+    --color-button-neutral-tertiary: var(--color-neutral-100);
+    --color-button-neutral-tertiary-hover: var(--color-neutral-200);
+    --color-button-neutral-ghost: var(--color-neutral-00);
+    --color-button-neutral-ghost-hover: var(--color-neutral-100);
 
     --color-button-destructive: var(--color-negative-500);
     --color-button-destructive-hover: var(--color-negative-600);
@@ -201,7 +201,7 @@
     --color-button-destructive-secondary-hover: var(--color-negative-50);
     --color-button-destructive-tertiary: var(--color-negative-50);
     --color-button-destructive-tertiary-hover: var(--color-negative-100);
-    --color-button-destructive-ghost: var(--color-neutral-0a);
+    --color-button-destructive-ghost: var(--color-neutral-00);
     --color-button-destructive-ghost-hover: var(--color-negative-50);
 
     --color-input-normal: var(--color-neutral-0);
@@ -289,7 +289,7 @@
     --color-border-base-destructive: var(--color-negative-4);
     --color-border-base-brand: var(--color-brand-300);
     --color-border-base-divider: var(--color-neutral-200);
-    --color-border-base-alpha: var(--color-neutral-10a);
+    --color-border-base-alpha: var(--color-neutral-100);
     --color-border-base-alpha-white: var(--white-30);
     --color-border-base-surface: var(--color-neutral-0);
     --color-border-base-surface-neutral: var(--color-neutral-50);
@@ -302,13 +302,13 @@
 
     /* Text and Icon variables */
     --color-base-primary: var(--color-neutral-950);
-    --color-base-secondary: var(--color-neutral-70a);
-    --color-base-tertiary: var(--color-neutral-50a);
-    --color-base-quaternary: var(--color-neutral-30a);
+    --color-base-secondary: var(--color-neutral-700);
+    --color-base-tertiary: var(--color-neutral-500);
+    --color-base-quaternary: var(--color-neutral-300);
     --color-base-inverted: var(--color-neutral-0);
-    --color-base-inverted-secondary: var(--color-inverted-90a);
-    --color-base-inverted-tertiary: var(--color-inverted-70a);
-    --color-base-inverted-quaternary: var(--color-inverted-60a);
+    --color-base-inverted-secondary: var(--color-inverted-900);
+    --color-base-inverted-tertiary: var(--color-inverted-700);
+    --color-base-inverted-quaternary: var(--color-inverted-600);
 
     --color-base-static-dark: var(--gray-950);
     --color-base-static-dark-secondary: var(--gray-950-70);

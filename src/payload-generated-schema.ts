@@ -30,7 +30,7 @@ export const enum_pages_hero_links_link_type = pgEnum('enum_pages_hero_links_lin
 ])
 export const enum_pages_hero_links_link_appearance = pgEnum(
   'enum_pages_hero_links_link_appearance',
-  ['default', 'outline'],
+  ['default', 'undefined'],
 )
 export const enum_pages_blocks_cta_links_link_type = pgEnum(
   'enum_pages_blocks_cta_links_link_type',
@@ -38,7 +38,7 @@ export const enum_pages_blocks_cta_links_link_type = pgEnum(
 )
 export const enum_pages_blocks_cta_links_link_appearance = pgEnum(
   'enum_pages_blocks_cta_links_link_appearance',
-  ['default', 'outline'],
+  ['default', 'undefined'],
 )
 export const enum_pages_blocks_content_columns_size = pgEnum(
   'enum_pages_blocks_content_columns_size',
@@ -50,7 +50,7 @@ export const enum_pages_blocks_content_columns_link_type = pgEnum(
 )
 export const enum_pages_blocks_content_columns_link_appearance = pgEnum(
   'enum_pages_blocks_content_columns_link_appearance',
-  ['default', 'outline'],
+  ['default', 'undefined'],
 )
 export const enum_pages_blocks_archive_populate_by = pgEnum(
   'enum_pages_blocks_archive_populate_by',
@@ -73,7 +73,7 @@ export const enum__pages_v_version_hero_links_link_type = pgEnum(
 )
 export const enum__pages_v_version_hero_links_link_appearance = pgEnum(
   'enum__pages_v_version_hero_links_link_appearance',
-  ['default', 'outline'],
+  ['default', 'undefined'],
 )
 export const enum__pages_v_blocks_cta_links_link_type = pgEnum(
   'enum__pages_v_blocks_cta_links_link_type',
@@ -81,7 +81,7 @@ export const enum__pages_v_blocks_cta_links_link_type = pgEnum(
 )
 export const enum__pages_v_blocks_cta_links_link_appearance = pgEnum(
   'enum__pages_v_blocks_cta_links_link_appearance',
-  ['default', 'outline'],
+  ['default', 'undefined'],
 )
 export const enum__pages_v_blocks_content_columns_size = pgEnum(
   'enum__pages_v_blocks_content_columns_size',
@@ -93,7 +93,7 @@ export const enum__pages_v_blocks_content_columns_link_type = pgEnum(
 )
 export const enum__pages_v_blocks_content_columns_link_appearance = pgEnum(
   'enum__pages_v_blocks_content_columns_link_appearance',
-  ['default', 'outline'],
+  ['default', 'undefined'],
 )
 export const enum__pages_v_blocks_archive_populate_by = pgEnum(
   'enum__pages_v_blocks_archive_populate_by',
@@ -386,7 +386,9 @@ export const pages_locales = pgTable(
   'pages_locales',
   {
     title: varchar('title'),
+    hero_title: varchar('hero_title'),
     hero_richText: jsonb('hero_rich_text'),
+    hero_caption: varchar('hero_caption'),
     hero_media: integer('hero_media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
@@ -752,7 +754,9 @@ export const _pages_v_locales = pgTable(
   '_pages_v_locales',
   {
     version_title: varchar('version_title'),
+    version_hero_title: varchar('version_hero_title'),
     version_hero_richText: jsonb('version_hero_rich_text'),
+    version_hero_caption: varchar('version_hero_caption'),
     version_hero_media: integer('version_hero_media_id').references(() => media.id, {
       onDelete: 'set null',
     }),

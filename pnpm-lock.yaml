@@ -43,7 +43,7 @@ importers:
         version: 3.16.0(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.16.0(bufferutil@4.0.9)(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)(utf-8-validate@6.0.5))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)
       '@payloadcms/richtext-lexical':
         specifier: latest
-        version: 3.16.0(itjzll4xzwwwjwbzqy4q3yoice)
+        version: 3.16.0(9fe3122e81d9c9a7dcf9ceab2a2b538e)
       '@payloadcms/storage-s3':
         specifier: ^3.16.0
         version: 3.16.0(payload@3.16.0(bufferutil@4.0.9)(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)(utf-8-validate@6.0.5))
@@ -6633,7 +6633,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@payloadcms/richtext-lexical@3.16.0(itjzll4xzwwwjwbzqy4q3yoice)':
+  '@payloadcms/richtext-lexical@3.16.0(9fe3122e81d9c9a7dcf9ceab2a2b538e)':
     dependencies:
       '@faceless-ui/modal': 3.0.0-beta.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@faceless-ui/scroll-info': 2.0.0-beta.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)

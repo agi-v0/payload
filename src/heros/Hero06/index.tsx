@@ -8,7 +8,7 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 
-export const MediumImpactHero: React.FC<Page['hero']> = ({
+export const Hero06: React.FC<Page['hero']> = ({
   links,
   media,
   richText,
@@ -23,9 +23,9 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({
   })
 
   return (
-    <div className="container" data-theme="light">
-      <div className=" mb-16 z-10 relative flex  flex-col">
-        <div className="">
+    <div className="container px-0 flex flex-col items-center gap-4" data-theme="light">
+      <div className="flex  flex-col gap-4 w-full">
+        <div className="bg-base-static-white-primary dark:bg-base-static-dark-primary rounded-3xl p-8">
           <div className="flex gap-6 flex-col mb-10 ">
             <h1 className="text-7xl font-[600] text-primary leading-[93.6px]">{title}</h1>
             {richText && (
@@ -51,7 +51,7 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({
             <p className="text-sm font-normal text-primary">{caption}</p>
           </div>
         </div>
-        <div className="mt-16 flex flex-col gap-8 w-full">
+        <div className=" flex flex-col gap-8 w-full bg-base-static-white-primary dark:bg-base-static-dark-primary  rounded-3xl p-8">
           <h5 className="text-xl text-primary leading-5 ">{logos.title}</h5>
           {Array.isArray(logos['logos-images']) && logos['logos-images'].length > 0 && (
             <ul className="flex justify-between gap-10 ">

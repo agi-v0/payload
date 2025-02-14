@@ -15,17 +15,19 @@ const buttonVariants = cva(
         clear: '',
         default: 'h-10 px-4 py-2',
         icon: 'h-10 w-10',
-        lg: 'h-11 rounded px-8',
+        lg: 'h-14 rounded px-4 py-3 text-2xl font-medium',
         sm: 'h-9 rounded px-3',
       },
       variant: {
         default: 'bg-button-brand-primary text-base-static-white  hover:bg-button-brand-primary/90',
-        primary: 'bg-button-brand-primary text-base-static-white hover:bg-button-brand-primary/90',
+        primary:
+          'bg-button-brand-primary text-base-static-white-primary hover:bg-button-brand-primary/90 ',
         secondary:
-          'bg-button-brand-secondary border border-border-action-normal hover:border-border-action-hover text-base-static-white hover:bg-button-brand-secondary/90',
+          'bg-button-brand-secondary border border-border-action-normal hover:border-border-action-hover text-button-brand-secondary hover:bg-button-brand-secondary/90',
         tertiary:
           'bg-button-brand-tertiary/10 text-base-static-white hover:bg-button-brand-tertiary/20',
-        ghost: 'bg-button-brand-ghost/0 text-base-static-white hover:bg-button-brand-ghost/10',
+        ghost:
+          'bg-button-brand-ghost/0 text-button-brand-primary hover:bg-button-brand-ghost/10 text-2xl',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         link: 'text-primary items-start justify-start underline-offset-4 hover:underline',
       },
