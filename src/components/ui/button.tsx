@@ -30,6 +30,8 @@ const buttonVariants = cva(
           'bg-button-brand-ghost/0 text-button-brand-primary hover:bg-button-brand-ghost/10 text-2xl',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         link: 'text-primary items-start justify-start underline-offset-4 hover:underline',
+        outline:
+          'border border-button-brand-primary text-base-static-white-primary hover:bg-button-brand-primary/90 ',
       },
     },
   },
