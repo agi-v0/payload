@@ -30,36 +30,35 @@ const config = {
         DEFAULT: {
           css: [
             {
-              '--tw-prose-body': 'var(--text)',
-              '--tw-prose-headings': 'var(--text)',
+              // '--tw-prose-body': 'var(--text)',
+              // '--tw-prose-headings': 'var(--text)',
+              headings: { fontWeight: 600 },
               h1: {
-                fontWeight: 'normal',
                 marginBottom: '0.25em',
-              },
-            },
-          ],
-        },
-        base: {
-          css: [
-            {
-              h1: {
-                fontSize: '2.5rem',
+                fontSize: 'var(--text-h1)',
               },
               h2: {
-                fontSize: '1.25rem',
                 fontWeight: 600,
+                fontSize: 'var(--text-h2)',
               },
-            },
-          ],
-        },
-        md: {
-          css: [
-            {
-              h1: {
-                fontSize: '3.5rem',
+              h3: {
+                fontWeight: 600,
+                fontSize: 'var(--text-h3)',
               },
-              h2: {
-                fontSize: '1.5rem',
+              h4: {
+                fontWeight: 600,
+                fontSize: 'var(--text-h4)',
+              },
+              h5: {
+                fontWeight: 600,
+                fontSize: 'var(--text-h5)',
+              },
+              h6: {
+                fontWeight: 600,
+                fontSize: 'var(--text-h6)',
+              },
+              p: {
+                fontSize: 'var(--text-body)',
               },
             },
           ],

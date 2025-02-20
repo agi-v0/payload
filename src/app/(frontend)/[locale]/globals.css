@@ -36,7 +36,7 @@
   h5,
   h6 {
     font-size: unset;
-    font-weight: unset;
+    font-weight: 600;
   }
 }
 
@@ -104,6 +104,17 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   --font-sans: var(--font-rubik);
+
+  --text-display: clamp(3.73rem, 3.262rem + 2.34vw, 5.37rem);
+  --text-h1: clamp(3.11rem, 2.718rem + 1.96vw, 4.48rem);
+  --text-h2: clamp(2.59rem, 2.264rem + 1.63vw, 3.73rem);
+  --text-h3: clamp(2.16rem, 1.888rem + 1.36vw, 3.11rem);
+  --text-h4: clamp(1.8rem, 1.574rem + 1.13vw, 2.59rem);
+  --text-h5: clamp(1.5rem, 1.312rem + 0.94vw, 2.16rem);
+  --text-h6: clamp(1.25rem, 1.092rem + 0.79vw, 1.8rem);
+  --text-body-l: clamp(1.25rem, 1.178rem + 0.36vw, 1.5rem);
+  --text-body: clamp(1.04rem, 0.98rem + 0.3vw, 1.25rem);
+  --text-body-s: clamp(0.87rem, 0.822rem + 0.24vw, 1.04rem);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
