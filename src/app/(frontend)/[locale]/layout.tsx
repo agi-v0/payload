@@ -20,8 +20,9 @@ import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
 const rubik = Rubik({
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  weight: ['400', '500', '600'],
   subsets: ['latin', 'arabic'],
+  variable: '--font-rubik',
 })
 
 export default async function RootLayout({
@@ -42,7 +43,7 @@ export default async function RootLayout({
 
   return (
     <html
-      className={rubik.className}
+      className={`${rubik.variable}`}
       lang={locale}
       dir={locale == 'ar' ? 'rtl' : 'ltr'}
       suppressHydrationWarning
@@ -52,7 +53,7 @@ export default async function RootLayout({
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body>
+      <body className="">
         <Providers>
           <NextIntlClientProvider messages={messages}>
             <AdminBar
