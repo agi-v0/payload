@@ -24,13 +24,13 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({
 
   return (
     <div className="container" data-theme="light">
-      <div className=" mb-16 z-10 relative flex  flex-col">
+      <div className="relative z-10 mb-16 flex flex-col">
         <div className="">
-          <div className="flex gap-6 flex-col mb-10 ">
-            <h1 className="text-7xl font-[600] text-primary leading-[93.6px]">{title}</h1>
+          <div className="mb-10 flex flex-col gap-6">
+            <h1 className="text-primary text-7xl leading-[93.6px] font-[600]">{title}</h1>
             {richText && (
               <RichText
-                className=" text-2xl leading-8 font-normal text-primary max-w-4xl mx-0"
+                className="text-primary mx-0 max-w-4xl text-2xl leading-8 font-normal"
                 data={richText}
                 enableGutter={false}
               />
@@ -38,7 +38,7 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({
           </div>
           <div className="flex flex-col gap-4">
             {Array.isArray(links) && links.length > 0 && (
-              <ul className="flex  gap-4">
+              <ul className="flex gap-4">
                 {links.map(({ link }, i) => {
                   return (
                     <li key={i}>
@@ -48,13 +48,13 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({
                 })}
               </ul>
             )}
-            <p className="text-sm font-normal text-primary">{caption}</p>
+            <p className="text-primary text-sm font-normal">{caption}</p>
           </div>
         </div>
-        <div className="mt-16 flex flex-col gap-8 w-full">
-          <h5 className="text-xl text-primary leading-5 ">{logos.title}</h5>
+        <div className="mt-16 flex w-full flex-col gap-8">
+          <h5 className="text-primary text-xl leading-5">{logos.title}</h5>
           {Array.isArray(logos['logos-images']) && logos['logos-images'].length > 0 && (
-            <ul className="flex justify-between gap-10 ">
+            <ul className="flex justify-between gap-10">
               {logos['logos-images'].map(({ logo }, i) => {
                 return (
                   <li key={i}>
