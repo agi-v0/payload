@@ -24,7 +24,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--color-neutral-200, currentColor);
   }
 }
 
@@ -41,8 +41,8 @@
 }
 
 :root {
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(0 0% 3.9%);
+  /* --background: hsl(0 0% 100%);
+  --foreground: hsl(0 0% 3.9%); */
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(0 0% 3.9%);
   --popover: hsl(0 0% 100%);
@@ -66,11 +66,29 @@
   --chart-4: hsl(43 74% 66%);
   --chart-5: hsl(27 87% 67%);
   --radius: 0.6rem;
+
+  --brand: oklch(54.38% 0.191 267.01);
+  /* use for background */
+  --background: var(--color-white);
+  --background-light: var(--color-neutral-50);
+  --background-medium: var(--color-neutral-200);
+  --background-inverted: var(--color-neutral-950);
+
+  /*for foreground (text & icons) */
+  --neutral-primary: --alpha(var(--color-neutral-950) / 100%);
+  --neutral-secondary: --alpha(var(--color-neutral-950) / 70%);
+  --neutral-tertiary: --alpha(var(--color-neutral-950) / 50%);
+  --neutral-quaternary: --alpha(var(--color-neutral-950) / 30%);
+
+  --brand-primary: --alpha(var(--color-brand) / 100%);
+  --brand-secondary: --alpha(var(--color-brand) / 70%);
+  --brand-tertiary: --alpha(var(--color-brand) / 50%);
+  --brand-quaternary: --alpha(var(--color-brand) / 30%);
 }
 
 [data-theme='dark'] {
-  --background: hsl(0 0% 3.9%);
-  --foreground: hsl(0 0% 98%);
+  /* --background: hsl(0 0% 3.9%);
+  --foreground: hsl(0 0% 98%); */
   --card: hsl(0 0% 3.9%);
   --card-foreground: hsl(0 0% 98%);
   --popover: hsl(0 0% 3.9%);
@@ -93,6 +111,23 @@
   --chart-3: hsl(30 80% 55%);
   --chart-4: hsl(280 65% 60%);
   --chart-5: hsl(340 75% 55%);
+
+  /* use for background */
+  --background: var(--color-neutral-950);
+  --background-light: var(--color-neutral-900);
+  --background-medium: var(--color-neutral-700);
+  --background-inverted: var(--color-white);
+
+  /*for foreground (text & icons) */
+  --neutral-primary: --alpha(var(--color-white-950) / 100%);
+  --neutral-secondary: --alpha(var(--color-white-950) / 70%);
+  --neutral-tertiary: --alpha(var(--color-white-950) / 50%);
+  --neutral-quaternary: --alpha(var(--color-white-950) / 30%);
+
+  --brand-primary: --alpha(var(--color-brand) / 100%);
+  --brand-secondary: --alpha(var(--color-brand) / 70%);
+  --brand-tertiary: --alpha(var(--color-brand) / 50%);
+  --brand-quaternary: --alpha(var(--color-brand) / 30%);
 }
 
 @theme inline {
@@ -116,7 +151,26 @@
   --text-body: clamp(1.04rem, 0.98rem + 0.3vw, 1.25rem);
   --text-body-s: clamp(0.87rem, 0.822rem + 0.24vw, 1.04rem);
 
+  --color-brand: var(--brand);
+
+  /* use for background */
   --color-background: var(--background);
+  --color-background-light: var(--background-light);
+  --color-background-medium: var(--background-medium);
+  --color-background-inverted: var(--background-inverted);
+  --color-background-brand: var(--brand);
+
+  /* use for foreground (text & icons) */
+  --color-neutral-primary: var(--neutral-primary);
+  --color-neutral-secondary: var(--neutral-secondary);
+  --color-neutral-tertiary: var(--neutral-tertiary);
+  --color-neutral-quaternary: var(--neutral-quaternary);
+
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-tertiary: var(--brand-tertiary);
+  --color-brand-quaternary: var(--brand-quaternary);
+
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
