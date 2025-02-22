@@ -13,11 +13,11 @@ const buttonVariants = cva(
         primary: 'bg-button-neutral text-neutral-primary hover:bg-button-neutral/90',
         secondary:
           'border-input bg-button-neutral/0 hover:bg-button-neutral/10 text-neutral-primary border',
+        tertiary: 'bg-button-neutral/10 hover:bg-button-neutral-20 text-neutral-primary',
+        ghost: 'hover:bg-button-neutral/10 bg-button-neutral/0 text-neutral-primary',
         outline:
           'border-input bg-button-neutral/0 hover:bg-button-neutral/10 text-neutral-primary border',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-        tertiary: 'bg-button-neutral/10 hover:bg-button-neutral-20 text-neutral-primary',
-        ghost: 'hover:bg-button-neutral/10 bg-button-neutral/0 text-neutral-primary',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
@@ -25,6 +25,7 @@ const buttonVariants = cva(
         sm: 'h-8 rounded-md px-3 has-[>svg]:px-2.5',
         lg: 'h-12 rounded-md px-6 has-[>svg]:px-4',
         icon: 'size-9',
+        clear: '',
       },
     },
     defaultVariants: {
