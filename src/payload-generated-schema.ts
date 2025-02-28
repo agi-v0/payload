@@ -30,7 +30,7 @@ export const enum_pages_hero_links_link_type = pgEnum('enum_pages_hero_links_lin
 ])
 export const enum_pages_hero_links_link_appearance = pgEnum(
   'enum_pages_hero_links_link_appearance',
-  ['default', 'undefined'],
+  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'destructive', 'link'],
 )
 export const enum_pages_blocks_cta_links_link_type = pgEnum(
   'enum_pages_blocks_cta_links_link_type',
@@ -38,7 +38,7 @@ export const enum_pages_blocks_cta_links_link_type = pgEnum(
 )
 export const enum_pages_blocks_cta_links_link_appearance = pgEnum(
   'enum_pages_blocks_cta_links_link_appearance',
-  ['default', 'undefined'],
+  ['default', 'link'],
 )
 export const enum_pages_blocks_content_columns_size = pgEnum(
   'enum_pages_blocks_content_columns_size',
@@ -50,7 +50,7 @@ export const enum_pages_blocks_content_columns_link_type = pgEnum(
 )
 export const enum_pages_blocks_content_columns_link_appearance = pgEnum(
   'enum_pages_blocks_content_columns_link_appearance',
-  ['default', 'undefined'],
+  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'destructive', 'link'],
 )
 export const enum_pages_blocks_archive_populate_by = pgEnum(
   'enum_pages_blocks_archive_populate_by',
@@ -65,6 +65,13 @@ export const enum_pages_hero_type = pgEnum('enum_pages_hero_type', [
   'highImpact',
   'mediumImpact',
   'lowImpact',
+  'hero01',
+  'hero02',
+  'hero03',
+  'hero04',
+  'hero05',
+  'hero06',
+  'hero07',
 ])
 export const enum_pages_status = pgEnum('enum_pages_status', ['draft', 'published'])
 export const enum__pages_v_version_hero_links_link_type = pgEnum(
@@ -73,7 +80,7 @@ export const enum__pages_v_version_hero_links_link_type = pgEnum(
 )
 export const enum__pages_v_version_hero_links_link_appearance = pgEnum(
   'enum__pages_v_version_hero_links_link_appearance',
-  ['default', 'undefined'],
+  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'destructive', 'link'],
 )
 export const enum__pages_v_blocks_cta_links_link_type = pgEnum(
   'enum__pages_v_blocks_cta_links_link_type',
@@ -81,7 +88,7 @@ export const enum__pages_v_blocks_cta_links_link_type = pgEnum(
 )
 export const enum__pages_v_blocks_cta_links_link_appearance = pgEnum(
   'enum__pages_v_blocks_cta_links_link_appearance',
-  ['default', 'undefined'],
+  ['default', 'link'],
 )
 export const enum__pages_v_blocks_content_columns_size = pgEnum(
   'enum__pages_v_blocks_content_columns_size',
@@ -93,7 +100,7 @@ export const enum__pages_v_blocks_content_columns_link_type = pgEnum(
 )
 export const enum__pages_v_blocks_content_columns_link_appearance = pgEnum(
   'enum__pages_v_blocks_content_columns_link_appearance',
-  ['default', 'undefined'],
+  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'destructive', 'link'],
 )
 export const enum__pages_v_blocks_archive_populate_by = pgEnum(
   'enum__pages_v_blocks_archive_populate_by',
@@ -108,6 +115,13 @@ export const enum__pages_v_version_hero_type = pgEnum('enum__pages_v_version_her
   'highImpact',
   'mediumImpact',
   'lowImpact',
+  'hero01',
+  'hero02',
+  'hero03',
+  'hero04',
+  'hero05',
+  'hero06',
+  'hero07',
 ])
 export const enum__pages_v_version_status = pgEnum('enum__pages_v_version_status', [
   'draft',
@@ -155,6 +169,7 @@ export const pages_hero_links = pgTable(
     id: varchar('id').primaryKey(),
     link_type: enum_pages_hero_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
+    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
     link_appearance: enum_pages_hero_links_link_appearance('link_appearance').default('default'),
@@ -171,6 +186,30 @@ export const pages_hero_links = pgTable(
   }),
 )
 
+export const pages_hero_logos_logos_images = pgTable(
+  'pages_hero_logos_logos_images',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+    id: varchar('id').primaryKey(),
+    logo: integer('logo_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+  },
+  (columns) => ({
+    _orderIdx: index('pages_hero_logos_logos_images_order_idx').on(columns._order),
+    _parentIDIdx: index('pages_hero_logos_logos_images_parent_id_idx').on(columns._parentID),
+    pages_hero_logos_logos_images_logo_idx: index('pages_hero_logos_logos_images_logo_idx').on(
+      columns.logo,
+    ),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [pages.id],
+      name: 'pages_hero_logos_logos_images_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const pages_blocks_cta_links = pgTable(
   'pages_blocks_cta_links',
   {
@@ -180,6 +219,7 @@ export const pages_blocks_cta_links = pgTable(
     id: varchar('id').primaryKey(),
     link_type: enum_pages_blocks_cta_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
+    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
     link_appearance:
@@ -233,6 +273,7 @@ export const pages_blocks_content_columns = pgTable(
     enableLink: boolean('enable_link'),
     link_type: enum_pages_blocks_content_columns_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
+    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
     link_appearance:
@@ -389,6 +430,7 @@ export const pages_locales = pgTable(
     hero_title: varchar('hero_title'),
     hero_richText: jsonb('hero_rich_text'),
     hero_caption: varchar('hero_caption'),
+    hero_logos_title: varchar('hero_logos_title'),
     hero_media: integer('hero_media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
@@ -474,6 +516,7 @@ export const _pages_v_version_hero_links = pgTable(
     id: serial('id').primaryKey(),
     link_type: enum__pages_v_version_hero_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
+    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
     link_appearance:
@@ -492,6 +535,33 @@ export const _pages_v_version_hero_links = pgTable(
   }),
 )
 
+export const _pages_v_version_hero_logos_logos_images = pgTable(
+  '_pages_v_version_hero_logos_logos_images',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+    id: serial('id').primaryKey(),
+    logo: integer('logo_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_pages_v_version_hero_logos_logos_images_order_idx').on(columns._order),
+    _parentIDIdx: index('_pages_v_version_hero_logos_logos_images_parent_id_idx').on(
+      columns._parentID,
+    ),
+    _pages_v_version_hero_logos_logos_images_logo_idx: index(
+      '_pages_v_version_hero_logos_logos_images_logo_idx',
+    ).on(columns.logo),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_pages_v.id],
+      name: '_pages_v_version_hero_logos_logos_images_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const _pages_v_blocks_cta_links = pgTable(
   '_pages_v_blocks_cta_links',
   {
@@ -501,6 +571,7 @@ export const _pages_v_blocks_cta_links = pgTable(
     id: serial('id').primaryKey(),
     link_type: enum__pages_v_blocks_cta_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
+    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
     link_appearance:
@@ -556,6 +627,7 @@ export const _pages_v_blocks_content_columns = pgTable(
     enableLink: boolean('enable_link'),
     link_type: enum__pages_v_blocks_content_columns_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
+    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
     link_appearance:
@@ -757,6 +829,7 @@ export const _pages_v_locales = pgTable(
     version_hero_title: varchar('version_hero_title'),
     version_hero_richText: jsonb('version_hero_rich_text'),
     version_hero_caption: varchar('version_hero_caption'),
+    version_hero_logos_title: varchar('version_hero_logos_title'),
     version_hero_media: integer('version_hero_media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
@@ -1139,7 +1212,6 @@ export const media = pgTable(
     Category: integer('category_id').references(() => media_categories.id, {
       onDelete: 'set null',
     }),
-    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -2371,6 +2443,7 @@ export const header_nav_items = pgTable(
     id: varchar('id').primaryKey(),
     link_type: enum_header_nav_items_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
+    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label').notNull(),
   },
@@ -2437,6 +2510,7 @@ export const footer_nav_items = pgTable(
     id: varchar('id').primaryKey(),
     link_type: enum_footer_nav_items_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
+    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label').notNull(),
   },
@@ -2501,6 +2575,21 @@ export const relations_pages_hero_links = relations(pages_hero_links, ({ one }) 
     relationName: 'hero_links',
   }),
 }))
+export const relations_pages_hero_logos_logos_images = relations(
+  pages_hero_logos_logos_images,
+  ({ one }) => ({
+    _parentID: one(pages, {
+      fields: [pages_hero_logos_logos_images._parentID],
+      references: [pages.id],
+      relationName: 'hero_logos_logos-images',
+    }),
+    logo: one(media, {
+      fields: [pages_hero_logos_logos_images.logo],
+      references: [media.id],
+      relationName: 'logo',
+    }),
+  }),
+)
 export const relations_pages_blocks_cta_links = relations(pages_blocks_cta_links, ({ one }) => ({
   _parentID: one(pages_blocks_cta, {
     fields: [pages_blocks_cta_links._parentID],
@@ -2615,6 +2704,9 @@ export const relations_pages = relations(pages, ({ many }) => ({
   hero_links: many(pages_hero_links, {
     relationName: 'hero_links',
   }),
+  'hero_logos_logos-images': many(pages_hero_logos_logos_images, {
+    relationName: 'hero_logos_logos-images',
+  }),
   _blocks_cta: many(pages_blocks_cta, {
     relationName: '_blocks_cta',
   }),
@@ -2644,6 +2736,21 @@ export const relations__pages_v_version_hero_links = relations(
       fields: [_pages_v_version_hero_links._parentID],
       references: [_pages_v.id],
       relationName: 'version_hero_links',
+    }),
+  }),
+)
+export const relations__pages_v_version_hero_logos_logos_images = relations(
+  _pages_v_version_hero_logos_logos_images,
+  ({ one }) => ({
+    _parentID: one(_pages_v, {
+      fields: [_pages_v_version_hero_logos_logos_images._parentID],
+      references: [_pages_v.id],
+      relationName: 'version_hero_logos_logos-images',
+    }),
+    logo: one(media, {
+      fields: [_pages_v_version_hero_logos_logos_images.logo],
+      references: [media.id],
+      relationName: 'logo',
     }),
   }),
 )
@@ -2774,6 +2881,9 @@ export const relations__pages_v = relations(_pages_v, ({ one, many }) => ({
   }),
   version_hero_links: many(_pages_v_version_hero_links, {
     relationName: 'version_hero_links',
+  }),
+  'version_hero_logos_logos-images': many(_pages_v_version_hero_logos_logos_images, {
+    relationName: 'version_hero_logos_logos-images',
   }),
   _blocks_cta: many(_pages_v_blocks_cta, {
     relationName: '_blocks_cta',
@@ -3522,6 +3632,7 @@ type DatabaseSchema = {
   enum_header_nav_items_link_type: typeof enum_header_nav_items_link_type
   enum_footer_nav_items_link_type: typeof enum_footer_nav_items_link_type
   pages_hero_links: typeof pages_hero_links
+  pages_hero_logos_logos_images: typeof pages_hero_logos_logos_images
   pages_blocks_cta_links: typeof pages_blocks_cta_links
   pages_blocks_cta: typeof pages_blocks_cta
   pages_blocks_content_columns: typeof pages_blocks_content_columns
@@ -3533,6 +3644,7 @@ type DatabaseSchema = {
   pages_locales: typeof pages_locales
   pages_rels: typeof pages_rels
   _pages_v_version_hero_links: typeof _pages_v_version_hero_links
+  _pages_v_version_hero_logos_logos_images: typeof _pages_v_version_hero_logos_logos_images
   _pages_v_blocks_cta_links: typeof _pages_v_blocks_cta_links
   _pages_v_blocks_cta: typeof _pages_v_blocks_cta
   _pages_v_blocks_content_columns: typeof _pages_v_blocks_content_columns
@@ -3603,6 +3715,7 @@ type DatabaseSchema = {
   footer: typeof footer
   footer_rels: typeof footer_rels
   relations_pages_hero_links: typeof relations_pages_hero_links
+  relations_pages_hero_logos_logos_images: typeof relations_pages_hero_logos_logos_images
   relations_pages_blocks_cta_links: typeof relations_pages_blocks_cta_links
   relations_pages_blocks_cta: typeof relations_pages_blocks_cta
   relations_pages_blocks_content_columns: typeof relations_pages_blocks_content_columns
@@ -3614,6 +3727,7 @@ type DatabaseSchema = {
   relations_pages_rels: typeof relations_pages_rels
   relations_pages: typeof relations_pages
   relations__pages_v_version_hero_links: typeof relations__pages_v_version_hero_links
+  relations__pages_v_version_hero_logos_logos_images: typeof relations__pages_v_version_hero_logos_logos_images
   relations__pages_v_blocks_cta_links: typeof relations__pages_v_blocks_cta_links
   relations__pages_v_blocks_cta: typeof relations__pages_v_blocks_cta
   relations__pages_v_blocks_content_columns: typeof relations__pages_v_blocks_content_columns

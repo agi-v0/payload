@@ -1,10 +1,12 @@
 import type { Field } from 'payload'
 
+import lucideIcons from './iconPickerField/lucide-icons.json'
 import deepMerge from '@/utilities/deepMerge'
+
+import { iconPickerField } from './iconPickerField/iconPickerField'
 
 export type LinkAppearances =
   | 'default'
-  | 'outline'
   | 'primary'
   | 'secondary'
   | 'tertiary'
@@ -16,10 +18,6 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
   default: {
     label: 'Default',
     value: 'default',
-  },
-  outline: {
-    label: 'Outline',
-    value: 'outline',
   },
   primary: {
     label: 'Primary',
@@ -41,7 +39,6 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
     label: 'Destructive',
     value: 'destructive',
   },
-
   link: {
     label: 'Link',
     value: 'link',
@@ -53,6 +50,21 @@ type LinkType = (options?: {
   disableLabel?: boolean
   overrides?: Record<string, unknown>
 }) => Field
+
+export const Icons = Object.entries(lucideIcons).reduce(
+  (acc, [key, value]) => {
+    if (
+      typeof value === 'object' &&
+      value !== null &&
+      '$$typeof' in value &&
+      key === (value as { displayName?: string }).displayName
+    ) {
+      acc[key] = key
+    }
+    return acc
+  },
+  {} as Record<string, string>,
+)
 
 export const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
   const linkResult: Field = {
@@ -97,6 +109,24 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
           },
         ],
       },
+      iconPickerField({
+        name: 'Icon',
+        label: 'Icon',
+        icons: lucideIcons,
+      }),
+      // {
+      //   name: 'icon',
+      //   label: 'Icon',
+      //   type: 'text',
+      //   required: true,
+      //   admin: {
+      //     components: {
+      //       Field: {
+      //         path: '@/components/LucideIconSelect#LucideIconSelect',
+      //       },
+      //     },
+      //   },
+      // },
     ],
   }
 
@@ -153,7 +183,6 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
   if (appearances !== false) {
     let appearanceOptionsToUse = [
       appearanceOptions.default,
-      appearanceOptions.outline,
       appearanceOptions.primary,
       appearanceOptions.secondary,
       appearanceOptions.tertiary,
