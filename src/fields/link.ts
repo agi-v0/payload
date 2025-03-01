@@ -11,7 +11,7 @@ export type LinkAppearances =
   | 'secondary'
   | 'tertiary'
   | 'ghost'
-  | 'destructive'
+  // | 'destructive'
   | 'link'
 
 export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
@@ -35,10 +35,10 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
     label: 'Ghost',
     value: 'ghost',
   },
-  destructive: {
-    label: 'Destructive',
-    value: 'destructive',
-  },
+  // destructive: {
+  //   label: 'Destructive',
+  //   value: 'destructive',
+  // },
   link: {
     label: 'Link',
     value: 'link',
@@ -50,21 +50,6 @@ type LinkType = (options?: {
   disableLabel?: boolean
   overrides?: Record<string, unknown>
 }) => Field
-
-export const Icons = Object.entries(lucideIcons).reduce(
-  (acc, [key, value]) => {
-    if (
-      typeof value === 'object' &&
-      value !== null &&
-      '$$typeof' in value &&
-      key === (value as { displayName?: string }).displayName
-    ) {
-      acc[key] = key
-    }
-    return acc
-  },
-  {} as Record<string, string>,
-)
 
 export const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
   const linkResult: Field = {
@@ -109,24 +94,6 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
           },
         ],
       },
-      iconPickerField({
-        name: 'Icon',
-        label: 'Icon',
-        icons: lucideIcons,
-      }),
-      // {
-      //   name: 'icon',
-      //   label: 'Icon',
-      //   type: 'text',
-      //   required: true,
-      //   admin: {
-      //     components: {
-      //       Field: {
-      //         path: '@/components/LucideIconSelect#LucideIconSelect',
-      //       },
-      //     },
-      //   },
-      // },
     ],
   }
 
@@ -187,7 +154,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       appearanceOptions.secondary,
       appearanceOptions.tertiary,
       appearanceOptions.ghost,
-      appearanceOptions.destructive,
+      // appearanceOptions.destructive,
       appearanceOptions.link,
     ]
 
@@ -195,15 +162,31 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       appearanceOptionsToUse = appearances.map((appearance) => appearanceOptions[appearance])
     }
 
-    linkResult.fields.push({
-      name: 'appearance',
-      type: 'select',
-      admin: {
-        description: 'Choose how the link should be rendered.',
+    linkResult.fields.push(
+      {
+        name: 'description',
+        label: 'Description',
+        type: 'text',
       },
-      defaultValue: 'default',
-      options: appearanceOptionsToUse,
-    })
+      iconPickerField({
+        name: 'icon',
+        label: 'Icon',
+        icons: lucideIcons,
+        admin: {
+          description:
+            'Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/',
+        },
+      }),
+      {
+        name: 'appearance',
+        type: 'select',
+        admin: {
+          description: 'Choose how the link should be rendered.',
+        },
+        defaultValue: 'default',
+        options: appearanceOptionsToUse,
+      },
+    )
   }
 
   return deepMerge(linkResult, overrides)

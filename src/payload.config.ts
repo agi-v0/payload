@@ -75,20 +75,20 @@ export default buildConfig({
           en: 'English',
           ar: 'الإنجليزية',
         },
-        code: 'en',
+        code: 'EN',
       },
       {
         label: {
           en: 'Arabic',
           ar: 'العربية',
         },
-        code: 'ar',
+        code: 'AR',
         // opt-in to setting default text-alignment on Input fields to rtl (right-to-left)
         // when current locale is rtl
         rtl: true,
       },
     ],
-    defaultLocale: 'ar', // required
+    defaultLocale: 'AR', // required
     fallback: true, // defaults to true
   },
   db: postgresAdapter({

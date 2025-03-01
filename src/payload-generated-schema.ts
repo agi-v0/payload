@@ -23,14 +23,14 @@ import {
   pgEnum,
 } from '@payloadcms/db-postgres/drizzle/pg-core'
 import { sql, relations } from '@payloadcms/db-postgres/drizzle'
-export const enum__locales = pgEnum('enum__locales', ['en', 'ar'])
+export const enum__locales = pgEnum('enum__locales', ['EN', 'AR'])
 export const enum_pages_hero_links_link_type = pgEnum('enum_pages_hero_links_link_type', [
   'reference',
   'custom',
 ])
 export const enum_pages_hero_links_link_appearance = pgEnum(
   'enum_pages_hero_links_link_appearance',
-  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'destructive', 'link'],
+  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'link'],
 )
 export const enum_pages_blocks_cta_links_link_type = pgEnum(
   'enum_pages_blocks_cta_links_link_type',
@@ -50,7 +50,7 @@ export const enum_pages_blocks_content_columns_link_type = pgEnum(
 )
 export const enum_pages_blocks_content_columns_link_appearance = pgEnum(
   'enum_pages_blocks_content_columns_link_appearance',
-  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'destructive', 'link'],
+  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'link'],
 )
 export const enum_pages_blocks_archive_populate_by = pgEnum(
   'enum_pages_blocks_archive_populate_by',
@@ -80,7 +80,7 @@ export const enum__pages_v_version_hero_links_link_type = pgEnum(
 )
 export const enum__pages_v_version_hero_links_link_appearance = pgEnum(
   'enum__pages_v_version_hero_links_link_appearance',
-  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'destructive', 'link'],
+  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'link'],
 )
 export const enum__pages_v_blocks_cta_links_link_type = pgEnum(
   'enum__pages_v_blocks_cta_links_link_type',
@@ -100,7 +100,7 @@ export const enum__pages_v_blocks_content_columns_link_type = pgEnum(
 )
 export const enum__pages_v_blocks_content_columns_link_appearance = pgEnum(
   'enum__pages_v_blocks_content_columns_link_appearance',
-  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'destructive', 'link'],
+  ['default', 'primary', 'secondary', 'tertiary', 'ghost', 'link'],
 )
 export const enum__pages_v_blocks_archive_populate_by = pgEnum(
   'enum__pages_v_blocks_archive_populate_by',
@@ -127,13 +127,13 @@ export const enum__pages_v_version_status = pgEnum('enum__pages_v_version_status
   'draft',
   'published',
 ])
-export const enum__pages_v_published_locale = pgEnum('enum__pages_v_published_locale', ['en', 'ar'])
+export const enum__pages_v_published_locale = pgEnum('enum__pages_v_published_locale', ['EN', 'AR'])
 export const enum_posts_status = pgEnum('enum_posts_status', ['draft', 'published'])
 export const enum__posts_v_version_status = pgEnum('enum__posts_v_version_status', [
   'draft',
   'published',
 ])
-export const enum__posts_v_published_locale = pgEnum('enum__posts_v_published_locale', ['en', 'ar'])
+export const enum__posts_v_published_locale = pgEnum('enum__posts_v_published_locale', ['EN', 'AR'])
 export const enum_redirects_to_type = pgEnum('enum_redirects_to_type', ['reference', 'custom'])
 export const enum_forms_confirmation_type = pgEnum('enum_forms_confirmation_type', [
   'message',
@@ -169,9 +169,10 @@ export const pages_hero_links = pgTable(
     id: varchar('id').primaryKey(),
     link_type: enum_pages_hero_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
-    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
+    link_description: varchar('link_description'),
+    link_icon: varchar('link_icon'),
     link_appearance: enum_pages_hero_links_link_appearance('link_appearance').default('default'),
   },
   (columns) => ({
@@ -219,9 +220,10 @@ export const pages_blocks_cta_links = pgTable(
     id: varchar('id').primaryKey(),
     link_type: enum_pages_blocks_cta_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
-    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
+    link_description: varchar('link_description'),
+    link_icon: varchar('link_icon'),
     link_appearance:
       enum_pages_blocks_cta_links_link_appearance('link_appearance').default('default'),
   },
@@ -273,9 +275,10 @@ export const pages_blocks_content_columns = pgTable(
     enableLink: boolean('enable_link'),
     link_type: enum_pages_blocks_content_columns_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
-    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
+    link_description: varchar('link_description'),
+    link_icon: varchar('link_icon'),
     link_appearance:
       enum_pages_blocks_content_columns_link_appearance('link_appearance').default('default'),
   },
@@ -516,9 +519,10 @@ export const _pages_v_version_hero_links = pgTable(
     id: serial('id').primaryKey(),
     link_type: enum__pages_v_version_hero_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
-    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
+    link_description: varchar('link_description'),
+    link_icon: varchar('link_icon'),
     link_appearance:
       enum__pages_v_version_hero_links_link_appearance('link_appearance').default('default'),
     _uuid: varchar('_uuid'),
@@ -571,9 +575,10 @@ export const _pages_v_blocks_cta_links = pgTable(
     id: serial('id').primaryKey(),
     link_type: enum__pages_v_blocks_cta_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
-    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
+    link_description: varchar('link_description'),
+    link_icon: varchar('link_icon'),
     link_appearance:
       enum__pages_v_blocks_cta_links_link_appearance('link_appearance').default('default'),
     _uuid: varchar('_uuid'),
@@ -627,9 +632,10 @@ export const _pages_v_blocks_content_columns = pgTable(
     enableLink: boolean('enable_link'),
     link_type: enum__pages_v_blocks_content_columns_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
-    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
+    link_description: varchar('link_description'),
+    link_icon: varchar('link_icon'),
     link_appearance:
       enum__pages_v_blocks_content_columns_link_appearance('link_appearance').default('default'),
     _uuid: varchar('_uuid'),
@@ -2443,7 +2449,6 @@ export const header_nav_items = pgTable(
     id: varchar('id').primaryKey(),
     link_type: enum_header_nav_items_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
-    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label').notNull(),
   },
@@ -2510,7 +2515,6 @@ export const footer_nav_items = pgTable(
     id: varchar('id').primaryKey(),
     link_type: enum_footer_nav_items_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
-    link_Icon: varchar('link_icon'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label').notNull(),
   },

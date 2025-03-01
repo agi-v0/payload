@@ -54,7 +54,7 @@ export interface Config {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
-  locale: 'en' | 'ar';
+  locale: 'EN' | 'AR';
   user: User & {
     collection: 'users';
   };
@@ -128,7 +128,6 @@ export interface Page {
           link: {
             type?: ('reference' | 'custom') | null;
             newTab?: boolean | null;
-            Icon?: string | null;
             reference?:
               | ({
                   relationTo: 'pages';
@@ -140,10 +139,15 @@ export interface Page {
                 } | null);
             url?: string | null;
             label: string;
+            description?: string | null;
+            /**
+             * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+             */
+            icon?: string | null;
             /**
              * Choose how the link should be rendered.
              */
-            appearance?: ('default' | 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'destructive' | 'link') | null;
+            appearance?: ('default' | 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
           };
           id?: string | null;
         }[]
@@ -390,7 +394,6 @@ export interface CallToActionBlock {
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
-          Icon?: string | null;
           reference?:
             | ({
                 relationTo: 'pages';
@@ -402,6 +405,11 @@ export interface CallToActionBlock {
               } | null);
           url?: string | null;
           label: string;
+          description?: string | null;
+          /**
+           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+           */
+          icon?: string | null;
           /**
            * Choose how the link should be rendered.
            */
@@ -441,7 +449,6 @@ export interface ContentBlock {
         link?: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
-          Icon?: string | null;
           reference?:
             | ({
                 relationTo: 'pages';
@@ -453,10 +460,15 @@ export interface ContentBlock {
               } | null);
           url?: string | null;
           label: string;
+          description?: string | null;
+          /**
+           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+           */
+          icon?: string | null;
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'destructive' | 'link') | null;
+          appearance?: ('default' | 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
         };
         id?: string | null;
       }[]
@@ -986,10 +998,11 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     type?: T;
                     newTab?: T;
-                    Icon?: T;
                     reference?: T;
                     url?: T;
                     label?: T;
+                    description?: T;
+                    icon?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -1045,10 +1058,11 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
           | {
               type?: T;
               newTab?: T;
-              Icon?: T;
               reference?: T;
               url?: T;
               label?: T;
+              description?: T;
+              icon?: T;
               appearance?: T;
             };
         id?: T;
@@ -1072,10 +1086,11 @@ export interface ContentBlockSelect<T extends boolean = true> {
           | {
               type?: T;
               newTab?: T;
-              Icon?: T;
               reference?: T;
               url?: T;
               label?: T;
+              description?: T;
+              icon?: T;
               appearance?: T;
             };
         id?: T;
@@ -1553,7 +1568,6 @@ export interface Header {
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
-          Icon?: string | null;
           reference?:
             | ({
                 relationTo: 'pages';
@@ -1583,7 +1597,6 @@ export interface Footer {
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
-          Icon?: string | null;
           reference?:
             | ({
                 relationTo: 'pages';
@@ -1615,7 +1628,6 @@ export interface HeaderSelect<T extends boolean = true> {
           | {
               type?: T;
               newTab?: T;
-              Icon?: T;
               reference?: T;
               url?: T;
               label?: T;
@@ -1639,7 +1651,6 @@ export interface FooterSelect<T extends boolean = true> {
           | {
               type?: T;
               newTab?: T;
-              Icon?: T;
               reference?: T;
               url?: T;
               label?: T;
