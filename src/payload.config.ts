@@ -12,7 +12,6 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
-import { Logos } from './collections/Logos'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -75,20 +74,20 @@ export default buildConfig({
           en: 'English',
           ar: 'الإنجليزية',
         },
-        code: 'EN',
+        code: 'en',
       },
       {
         label: {
           en: 'Arabic',
           ar: 'العربية',
         },
-        code: 'AR',
+        code: 'ar',
         // opt-in to setting default text-alignment on Input fields to rtl (right-to-left)
         // when current locale is rtl
         rtl: true,
       },
     ],
-    defaultLocale: 'AR', // required
+    defaultLocale: 'ar', // required
     fallback: true, // defaults to true
   },
   db: postgresAdapter({

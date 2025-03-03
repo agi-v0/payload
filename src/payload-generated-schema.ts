@@ -23,7 +23,7 @@ import {
   pgEnum,
 } from '@payloadcms/db-postgres/drizzle/pg-core'
 import { sql, relations } from '@payloadcms/db-postgres/drizzle'
-export const enum__locales = pgEnum('enum__locales', ['EN', 'AR'])
+export const enum__locales = pgEnum('enum__locales', ['en', 'ar'])
 export const enum_pages_hero_links_link_type = pgEnum('enum_pages_hero_links_link_type', [
   'reference',
   'custom',
@@ -127,13 +127,13 @@ export const enum__pages_v_version_status = pgEnum('enum__pages_v_version_status
   'draft',
   'published',
 ])
-export const enum__pages_v_published_locale = pgEnum('enum__pages_v_published_locale', ['EN', 'AR'])
+export const enum__pages_v_published_locale = pgEnum('enum__pages_v_published_locale', ['en', 'ar'])
 export const enum_posts_status = pgEnum('enum_posts_status', ['draft', 'published'])
 export const enum__posts_v_version_status = pgEnum('enum__posts_v_version_status', [
   'draft',
   'published',
 ])
-export const enum__posts_v_published_locale = pgEnum('enum__posts_v_published_locale', ['EN', 'AR'])
+export const enum__posts_v_published_locale = pgEnum('enum__posts_v_published_locale', ['en', 'ar'])
 export const enum_redirects_to_type = pgEnum('enum_redirects_to_type', ['reference', 'custom'])
 export const enum_forms_confirmation_type = pgEnum('enum_forms_confirmation_type', [
   'message',

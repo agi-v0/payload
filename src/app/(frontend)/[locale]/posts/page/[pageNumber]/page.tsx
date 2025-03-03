@@ -14,12 +14,12 @@ export const revalidate = 600
 type Args = {
   params: Promise<{
     pageNumber: string
-    locale?: 'AR' | 'EN' | undefined
+    locale?: 'ar' | 'en' | undefined
   }>
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
-  const { pageNumber, locale = 'AR' } = await paramsPromise
+  const { pageNumber, locale = 'ar' } = await paramsPromise
   const payload = await getPayload({ config: configPromise })
 
   const sanitizedPageNumber = Number(pageNumber)
@@ -65,7 +65,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { pageNumber, locale = 'AR' } = await paramsPromise
+  const { pageNumber, locale = 'ar' } = await paramsPromise
   return {
     title: `Payload Website Template Posts Page ${pageNumber || ''}`,
   }
@@ -74,7 +74,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 export async function generateStaticParams({
   params: { locale },
 }: {
-  params: { locale?: 'AR' | 'EN' | undefined }
+  params: { locale?: 'ar' | 'en' | undefined }
 }) {
   const payload = await getPayload({ config: configPromise })
   const { totalDocs } = await payload.count({

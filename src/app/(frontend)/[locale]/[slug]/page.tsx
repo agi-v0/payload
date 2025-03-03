@@ -17,7 +17,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 export async function generateStaticParams({
   params: { locale },
 }: {
-  params: { locale?: 'AR' | 'EN' | undefined }
+  params: { locale?: 'ar' | 'en' | undefined }
 }) {
   const payload = await getPayload({ config: configPromise })
   const pages = await payload.find({
@@ -46,13 +46,13 @@ export async function generateStaticParams({
 type Args = {
   params: Promise<{
     slug?: string
-    locale?: 'AR' | 'EN' | undefined
+    locale?: 'ar' | 'en' | undefined
   }>
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug = 'home', locale = 'AR' } = await paramsPromise
+  const { slug = 'home', locale = 'ar' } = await paramsPromise
   const url = `/${locale}/` + slug
 
   let page: PageType | null
@@ -88,7 +88,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }): Promise<Metadata> {
-  const { slug = 'home', locale = 'AR' } = await paramsPromise
+  const { slug = 'home', locale = 'ar' } = await paramsPromise
   const page = await queryPageBySlug({
     slug,
     locale,
@@ -98,7 +98,7 @@ export async function generateMetadata({ params: paramsPromise }): Promise<Metad
 }
 
 const queryPageBySlug = cache(
-  async ({ slug, locale }: { slug: string; locale?: 'AR' | 'EN' | undefined }) => {
+  async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' | undefined }) => {
     const { isEnabled: draft } = await draftMode()
 
     const payload = await getPayload({ config: configPromise })

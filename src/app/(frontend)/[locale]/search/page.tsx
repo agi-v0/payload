@@ -12,7 +12,7 @@ import { CardPostData } from '@/components/Card'
 type Args = {
   searchParams: Promise<{
     q: string
-    locale?: 'AR' | 'EN' | undefined
+    locale?: 'ar' | 'en' | undefined
   }>
 }
 export default async function Page({ searchParams: searchParamsPromise }: Args) {

@@ -18,7 +18,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 export async function generateStaticParams({
   params: { locale },
 }: {
-  params: { locale?: 'AR' | 'EN' | undefined }
+  params: { locale?: 'ar' | 'en' | undefined }
 }) {
   const payload = await getPayload({ config: configPromise })
   const posts = await payload.find({
@@ -43,13 +43,13 @@ export async function generateStaticParams({
 type Args = {
   params: Promise<{
     slug?: string
-    locale?: 'AR' | 'EN' | undefined
+    locale?: 'ar' | 'en' | undefined
   }>
 }
 
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug = '', locale = 'AR' } = await paramsPromise
+  const { slug = '', locale = 'ar' } = await paramsPromise
   const url = `/${locale}/posts/` + slug
   const post = await queryPostBySlug({ slug, locale })
 
@@ -82,13 +82,13 @@ export default async function Post({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug = '', locale = 'AR' } = await paramsPromise
+  const { slug = '', locale = 'ar' } = await paramsPromise
   const post = await queryPostBySlug({ slug, locale })
   return generateMeta({ doc: post })
 }
 
 const queryPostBySlug = cache(
-  async ({ slug, locale }: { slug: string; locale?: 'AR' | 'EN' | undefined }) => {
+  async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' | undefined }) => {
     const { isEnabled: draft } = await draftMode()
 
     const payload = await getPayload({ config: configPromise })
