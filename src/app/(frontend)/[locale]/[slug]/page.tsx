@@ -17,7 +17,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 export async function generateStaticParams({
   params: { locale },
 }: {
-  params: { locale?: 'EN' | 'AR' | undefined }
+  params: { locale?: 'AR' | 'EN' | undefined }
 }) {
   const payload = await getPayload({ config: configPromise })
   const pages = await payload.find({
@@ -88,7 +88,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }): Promise<Metadata> {
-  const { slug = 'home', locale = 'ar' } = await paramsPromise
+  const { slug = 'home', locale = 'AR' } = await paramsPromise
   const page = await queryPageBySlug({
     slug,
     locale,
@@ -98,7 +98,7 @@ export async function generateMetadata({ params: paramsPromise }): Promise<Metad
 }
 
 const queryPageBySlug = cache(
-  async ({ slug, locale }: { slug: string; locale?: 'EN' | 'AR' | undefined }) => {
+  async ({ slug, locale }: { slug: string; locale?: 'AR' | 'EN' | undefined }) => {
     const { isEnabled: draft } = await draftMode()
 
     const payload = await getPayload({ config: configPromise })

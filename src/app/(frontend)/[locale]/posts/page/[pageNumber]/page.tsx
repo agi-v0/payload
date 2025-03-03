@@ -19,7 +19,7 @@ type Args = {
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
-  const { pageNumber, locale = 'ar' } = await paramsPromise
+  const { pageNumber, locale = 'AR' } = await paramsPromise
   const payload = await getPayload({ config: configPromise })
 
   const sanitizedPageNumber = Number(pageNumber)
@@ -65,7 +65,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { pageNumber, locale = 'ar' } = await paramsPromise
+  const { pageNumber, locale = 'AR' } = await paramsPromise
   return {
     title: `Payload Website Template Posts Page ${pageNumber || ''}`,
   }
