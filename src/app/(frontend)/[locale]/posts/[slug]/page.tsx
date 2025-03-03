@@ -18,7 +18,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 export async function generateStaticParams({
   params: { locale },
 }: {
-  params: { locale?: 'ar' | 'en' | undefined }
+  params: { locale?: 'AR' | 'EN' | undefined }
 }) {
   const payload = await getPayload({ config: configPromise })
   const posts = await payload.find({
@@ -43,13 +43,13 @@ export async function generateStaticParams({
 type Args = {
   params: Promise<{
     slug?: string
-    locale?: 'ar' | 'en' | undefined
+    locale?: 'AR' | 'EN' | undefined
   }>
 }
 
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug = '', locale = 'ar' } = await paramsPromise
+  const { slug = '', locale = 'AR' } = await paramsPromise
   const url = `/${locale}/posts/` + slug
   const post = await queryPostBySlug({ slug, locale })
 
@@ -68,10 +68,10 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">
-          <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
+          <RichText className="mx-auto max-w-[48rem]" data={post.content} enableGutter={false} />
           {post.relatedPosts && post.relatedPosts.length > 0 && (
             <RelatedPosts
-              className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
+              className="col-span-3 col-start-1 mt-12 max-w-[52rem] grid-rows-[2fr] lg:grid lg:grid-cols-subgrid"
               docs={post.relatedPosts.filter((post) => typeof post === 'object')}
             />
           )}
@@ -82,14 +82,13 @@ export default async function Post({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug = '', locale = 'ar' } = await paramsPromise
+  const { slug = '', locale = 'AR' } = await paramsPromise
   const post = await queryPostBySlug({ slug, locale })
-
   return generateMeta({ doc: post })
 }
 
 const queryPostBySlug = cache(
-  async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' | undefined }) => {
+  async ({ slug, locale }: { slug: string; locale?: 'AR' | 'EN' | undefined }) => {
     const { isEnabled: draft } = await draftMode()
 
     const payload = await getPayload({ config: configPromise })

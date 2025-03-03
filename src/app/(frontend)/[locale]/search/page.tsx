@@ -12,7 +12,7 @@ import { CardPostData } from '@/components/Card'
 type Args = {
   searchParams: Promise<{
     q: string
-    locale?: 'ar' | 'en' | undefined
+    locale?: 'AR' | 'EN' | undefined
   }>
 }
 export default async function Page({ searchParams: searchParamsPromise }: Args) {
@@ -69,7 +69,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
         <div className="prose dark:prose-invert max-w-none text-center">
           <h1 className="mb-8 lg:mb-16">Search</h1>
 
-          <div className="max-w-[50rem] mx-auto">
+          <div className="mx-auto max-w-[50rem]">
             <Search />
           </div>
         </div>

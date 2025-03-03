@@ -14,7 +14,7 @@ export const revalidate = 600
 type Args = {
   params: Promise<{
     pageNumber: string
-    locale?: 'ar' | 'en' | undefined
+    locale?: 'AR' | 'EN' | undefined
   }>
 }
 
@@ -74,7 +74,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 export async function generateStaticParams({
   params: { locale },
 }: {
-  params: { locale?: 'ar' | 'en' | undefined }
+  params: { locale?: 'AR' | 'EN' | undefined }
 }) {
   const payload = await getPayload({ config: configPromise })
   const { totalDocs } = await payload.count({
