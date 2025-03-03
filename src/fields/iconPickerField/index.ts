@@ -20,7 +20,7 @@ export const iconPickerField = (
           clientProps: {
             icons: icons,
           },
-          path: '@/fields/IconPickerField/IconPicker#IconPickerFieldComponent',
+          path: '@/fields/iconPickerField/iconPicker#IconPickerFieldComponent',
         },
       },
     },

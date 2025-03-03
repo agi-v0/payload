@@ -3,7 +3,7 @@ import type { Field } from 'payload'
 import lucideIcons from './iconPickerField/lucide-icons.json'
 import deepMerge from '@/utilities/deepMerge'
 
-import { iconPickerField } from './iconPickerField/iconPickerField'
+import { iconPickerField } from './iconPickerField'
 
 export type LinkAppearances =
   | 'default'
