@@ -14,13 +14,13 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
   const locale = useLocale()
 
   return (
-    <nav className="flex gap-3 items-center">
+    <nav className="flex items-center gap-3">
       {navItems.map(({ link }, i) => {
-        return <CMSLink key={i} {...link} appearance="link" />
+        return <CMSLink key={i} {...link} linkStyle="brand" appearance="link" />
       })}
       <Link href={`/${locale}/search`}>
         <span className="sr-only">Search</span>
-        <SearchIcon className="w-5 text-primary" />
+        <SearchIcon className="text-primary w-5" />
       </Link>
     </nav>
   )

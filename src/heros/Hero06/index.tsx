@@ -8,14 +8,7 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 
-export const Hero06: React.FC<Page['hero']> = ({
-  links,
-  media,
-  richText,
-  title,
-  caption,
-  logos,
-}) => {
+export const Hero06: React.FC<Page['hero']> = ({ linksGroup, media, richText, title, logos }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
@@ -23,23 +16,23 @@ export const Hero06: React.FC<Page['hero']> = ({
   })
 
   return (
-    <div className="container px-0 flex flex-col items-center gap-4" data-theme="light">
-      <div className="flex  flex-col gap-4 w-full">
+    <div className="container flex flex-col items-center gap-4 px-0" data-theme="light">
+      <div className="flex w-full flex-col gap-4">
         <div className="bg-base-static-white-primary dark:bg-base-static-dark-primary rounded-3xl p-8">
-          <div className="flex gap-6 flex-col mb-10 ">
-            <h1 className="text-7xl font-[600] text-primary leading-[93.6px]">{title}</h1>
+          <div className="mb-10 flex flex-col gap-6">
+            <h1 className="text-primary text-7xl leading-[93.6px] font-[600]">{title}</h1>
             {richText && (
               <RichText
-                className=" text-2xl leading-8 font-normal text-primary max-w-4xl mx-0"
+                className="text-primary mx-0 max-w-4xl text-2xl leading-8 font-normal"
                 data={richText}
                 enableGutter={false}
               />
             )}
           </div>
           <div className="flex flex-col gap-4">
-            {Array.isArray(links) && links.length > 0 && (
-              <ul className="flex  gap-4">
-                {links.map(({ link }, i) => {
+            {Array.isArray(linksGroup?.links) && linksGroup?.links.length > 0 && (
+              <ul className="flex gap-4">
+                {linksGroup?.links.map(({ link }, i) => {
                   return (
                     <li key={i}>
                       <CMSLink size={'lg'} {...link} />
@@ -48,14 +41,14 @@ export const Hero06: React.FC<Page['hero']> = ({
                 })}
               </ul>
             )}
-            <p className="text-sm font-normal text-primary">{caption}</p>
+            <p className="text-primary text-sm font-normal">{linksGroup?.links_caption}</p>
           </div>
         </div>
-        <div className=" flex flex-col gap-8 w-full bg-base-static-white-primary dark:bg-base-static-dark-primary  rounded-3xl p-8">
-          <h5 className="text-xl text-primary leading-5 ">{logos.title}</h5>
-          {Array.isArray(logos['logos-images']) && logos['logos-images'].length > 0 && (
-            <ul className="flex justify-between gap-10 ">
-              {logos['logos-images'].map(({ logo }, i) => {
+        <div className="bg-base-static-white-primary dark:bg-base-static-dark-primary flex w-full flex-col gap-8 rounded-3xl p-8">
+          <h5 className="text-primary text-xl leading-5">{logos?.title}</h5>
+          {Array.isArray(logos?.['logos-images']) && logos?.['logos-images'].length > 0 && (
+            <ul className="flex justify-between gap-10">
+              {logos?.['logos-images'].map(({ logo }, i) => {
                 return (
                   <li key={i}>
                     {logo && typeof logo === 'object' && (

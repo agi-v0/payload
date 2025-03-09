@@ -8,6 +8,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '@/fields/linkGroup'
+import { console } from 'inspector'
 
 export const hero: Field = {
   name: 'hero',
@@ -16,24 +17,12 @@ export const hero: Field = {
     {
       name: 'type',
       type: 'select',
-      defaultValue: 'lowImpact',
+      defaultValue: 'hero01',
       label: 'Type',
       options: [
         {
           label: 'None',
           value: 'none',
-        },
-        {
-          label: 'High Impact',
-          value: 'highImpact',
-        },
-        {
-          label: 'Medium Impact',
-          value: 'mediumImpact',
-        },
-        {
-          label: 'Low Impact',
-          value: 'lowImpact',
         },
         {
           label: 'Hero 01',
@@ -89,37 +78,34 @@ export const hero: Field = {
         maxRows: 2,
       },
     }),
-    {
-      name: 'caption',
-      type: 'text',
-      label: 'caption',
-      localized: true,
-      required: false,
-    },
+
     {
       name: 'logos',
       type: 'group',
-
+      label: 'Logos',
       fields: [
         {
           name: 'title',
           type: 'text',
           label: 'title',
           localized: true,
-          required: true,
         },
         {
           name: 'logos-images',
-          required: true,
           type: 'array',
           label: 'logos images',
           maxRows: 6,
           fields: [
             {
               name: 'logo',
-              type: 'upload',
+              type: 'relationship',
+              label: 'Logo',
               relationTo: 'media',
-              label: 'logo',
+              filterOptions: () => {
+                return {
+                  'Category.slug': { equals: 'logo' },
+                }
+              },
             },
           ],
         },
@@ -129,9 +115,6 @@ export const hero: Field = {
       name: 'media',
       type: 'upload',
       localized: true,
-      admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
-      },
       relationTo: 'media',
       required: false,
       label: 'hero image',

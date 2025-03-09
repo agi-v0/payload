@@ -8,14 +8,7 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 
-export const Hero02: React.FC<Page['hero']> = ({
-  links,
-  media,
-  richText,
-  title,
-  caption,
-  logos,
-}) => {
+export const Hero02: React.FC<Page['hero']> = ({ linksGroup, media, richText, title, logos }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
@@ -24,38 +17,42 @@ export const Hero02: React.FC<Page['hero']> = ({
 
   return (
     <div className="container" data-theme="light">
-      <div className=" mb-16 z-10 relative flex  flex-col">
+      <div className="relative z-10 mb-16 flex flex-col">
         <div className="">
-          <div className="flex gap-6 flex-col mb-10 ">
-            <h1 className="text-7xl font-[600] text-primary leading-[93.6px]">{title}</h1>
+          <div className="mb-10 flex flex-col gap-6">
+            <h1 className="text-primary text-5xl leading-[1.3] font-[600] md:text-7xl md:leading-[93.6px]">
+              {title}
+            </h1>
             {richText && (
               <RichText
-                className=" text-2xl leading-8 font-normal text-primary max-w-4xl mx-0"
+                className="text-primary mx-0 max-w-4xl text-lg leading-8 font-normal md:text-2xl"
                 data={richText}
                 enableGutter={false}
               />
             )}
           </div>
           <div className="flex flex-col gap-4">
-            {Array.isArray(links) && links.length > 0 && (
-              <ul className="flex  gap-4">
-                {links.map(({ link }, i) => {
+            {Array.isArray(linksGroup?.links) && linksGroup?.links.length > 0 && (
+              <ul className="flex flex-col gap-4 md:flex-row">
+                {linksGroup?.links.map(({ link }, i) => {
                   return (
                     <li key={i}>
-                      <CMSLink size={'lg'} {...link} />
+                      <CMSLink className="w-full md:w-auto" size={'lg'} {...link} />
                     </li>
                   )
                 })}
               </ul>
             )}
-            <p className="text-sm font-normal text-primary">{caption}</p>
+            <p className="text-primary text-center text-sm font-normal ltr:md:text-left rtl:md:text-right">
+              {linksGroup?.links_caption}
+            </p>
           </div>
         </div>
-        <div className="mt-16 flex flex-col gap-8 w-full">
-          <h5 className="text-xl text-primary leading-5 ">{logos.title}</h5>
-          {Array.isArray(logos['logos-images']) && logos['logos-images'].length > 0 && (
-            <ul className="flex justify-between gap-10 ">
-              {logos['logos-images'].map(({ logo }, i) => {
+        <div className="mt-16 flex w-full flex-col gap-6 md:gap-8">
+          <h5 className="text-primary text-base leading-5 md:text-xl">{logos?.title}</h5>
+          {Array.isArray(logos?.['logos-images']) && logos?.['logos-images'].length > 0 && (
+            <ul className="flex justify-between gap-10">
+              {logos?.['logos-images'].map(({ logo }, i) => {
                 return (
                   <li key={i}>
                     {logo && typeof logo === 'object' && (

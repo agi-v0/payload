@@ -15,6 +15,7 @@ export const Footer: GlobalConfig = {
       localized: true,
       fields: [
         link({
+          linkStyles: false,
           appearances: false,
         }),
       ],

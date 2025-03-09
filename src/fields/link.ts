@@ -2,25 +2,10 @@ import type { Field } from 'payload'
 
 import deepMerge from '@/utilities/deepMerge'
 
-export type LinkAppearances =
-  | 'default'
-  | 'outline'
-  | 'primary'
-  | 'secondary'
-  | 'tertiary'
-  | 'ghost'
-  | 'destructive'
-  | 'link'
+export type LinkAppearances = 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link'
+export type LinkStyles = 'brand' | 'neutral'
 
 export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
-  default: {
-    label: 'Default',
-    value: 'default',
-  },
-  outline: {
-    label: 'Outline',
-    value: 'outline',
-  },
   primary: {
     label: 'Primary',
     value: 'primary',
@@ -37,24 +22,36 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
     label: 'Ghost',
     value: 'ghost',
   },
-  destructive: {
-    label: 'Destructive',
-    value: 'destructive',
-  },
 
   link: {
     label: 'Link',
     value: 'link',
   },
 }
+export const linkStylesOptions: Record<LinkStyles, { label: string; value: string }> = {
+  brand: {
+    label: 'Brand',
+    value: 'brand',
+  },
+  neutral: {
+    label: 'Neutral',
+    value: 'neutral',
+  },
+}
 
 type LinkType = (options?: {
   appearances?: LinkAppearances[] | false
+  linkStyles?: LinkStyles[] | false
   disableLabel?: boolean
   overrides?: Record<string, unknown>
 }) => Field
 
-export const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
+export const link: LinkType = ({
+  appearances,
+  linkStyles,
+  disableLabel = false,
+  overrides = {},
+} = {}) => {
   const linkResult: Field = {
     name: 'link',
     type: 'group',
@@ -150,15 +147,29 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
     linkResult.fields = [...linkResult.fields, ...linkTypes]
   }
 
+  if (linkStyles !== false) {
+    let linkStylesOptionsToUse = [linkStylesOptions.brand, linkStylesOptions.neutral]
+
+    if (linkStyles) {
+      linkStylesOptionsToUse = linkStyles.map((linkStyle) => linkStylesOptions[linkStyle])
+    }
+
+    linkResult.fields.push({
+      name: 'linkStyle',
+      type: 'select',
+      admin: {
+        description: 'Choose the button style.',
+      },
+      defaultValue: 'brand',
+      options: linkStylesOptionsToUse,
+    })
+  }
   if (appearances !== false) {
     let appearanceOptionsToUse = [
-      appearanceOptions.default,
-      appearanceOptions.outline,
       appearanceOptions.primary,
       appearanceOptions.secondary,
       appearanceOptions.tertiary,
       appearanceOptions.ghost,
-      appearanceOptions.destructive,
       appearanceOptions.link,
     ]
 
@@ -172,9 +183,29 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       admin: {
         description: 'Choose how the link should be rendered.',
       },
-      defaultValue: 'default',
+      defaultValue: 'primary',
       options: appearanceOptionsToUse,
     })
+    // linkResult.fields.push({
+    //   name: 'icon',
+    //   type: 'group',
+    //   fields: [
+    //     iconPickerField({
+    //       name: 'icon',
+    //       label: 'React Icons',
+    //       reactIconPack: lucideIcons,
+    //     }),
+    //     {
+    //       name: 'iconDir',
+    //       label: 'Icon Direction',
+    //       type: 'select',
+    //       options: [
+    //         { label: 'Left', value: 'row' },
+    //         { label: 'Right', value: 'row-reverse' },
+    //       ],
+    //     },
+    //   ],
+    // })
   }
 
   return deepMerge(linkResult, overrides)
