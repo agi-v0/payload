@@ -79,7 +79,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_logos_logos_images_order_idx" ON "_pages_v_version_hero_logos_logos_images" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_logos_logos_images_parent_id_idx" ON "_pages_v_version_hero_logos_logos_images" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_logos_logos_images_logo_idx" ON "_pages_v_version_hero_logos_logos_images" USING btree ("logo_id");
-  ALTER TABLE "media" DROP COLUMN IF EXISTS "prefix";
+
   ALTER TABLE "public"."pages_hero_links" ALTER COLUMN "link_appearance" SET DATA TYPE text;
   DROP TYPE "public"."enum_pages_hero_links_link_appearance" CASCADE;
   CREATE TYPE "public"."enum_pages_hero_links_link_appearance" AS ENUM('default', 'primary', 'secondary', 'tertiary', 'ghost', 'link');
@@ -110,7 +110,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.execute(sql`
    DROP TABLE "pages_hero_logos_logos_images" CASCADE;
   DROP TABLE "_pages_v_version_hero_logos_logos_images" CASCADE;
-  ALTER TABLE "media" ADD COLUMN "prefix" varchar DEFAULT 'media';
+
   ALTER TABLE "pages_hero_links" DROP COLUMN IF EXISTS "link_description";
   ALTER TABLE "pages_hero_links" DROP COLUMN IF EXISTS "link_icon";
   ALTER TABLE "pages_blocks_cta_links" DROP COLUMN IF EXISTS "link_description";
