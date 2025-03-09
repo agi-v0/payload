@@ -167,39 +167,50 @@ export interface Page {
       };
       [k: string]: unknown;
     } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?:
-              | ('default' | 'outline' | 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'destructive' | 'link')
-              | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    caption?: string | null;
-    logos: {
-      title: string;
-      'logos-images': {
-        logo?: (number | null) | Media;
-        id?: string | null;
-      }[];
+    linksGroup?: {
+      links?:
+        | {
+            link: {
+              type?: ('reference' | 'custom') | null;
+              newTab?: boolean | null;
+              reference?:
+                | ({
+                    relationTo: 'pages';
+                    value: number | Page;
+                  } | null)
+                | ({
+                    relationTo: 'posts';
+                    value: number | Post;
+                  } | null);
+              url?: string | null;
+              label: string;
+              /**
+               * Choose the button style.
+               */
+              linkStyle?: ('brand' | 'neutral') | null;
+              description?: string | null;
+              /**
+               * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+               */
+              icon?: string | null;
+              /**
+               * Choose how the link should be rendered.
+               */
+              appearance?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+            };
+            id?: string | null;
+          }[]
+        | null;
+      links_caption?: string | null;
+    };
+    logos?: {
+      title?: string | null;
+      'logos-images'?:
+        | {
+            logo?: (number | null) | Media;
+            id?: string | null;
+          }[]
+        | null;
     };
     media?: (number | null) | Media;
   };
@@ -430,30 +441,42 @@ export interface CallToActionBlock {
     };
     [k: string]: unknown;
   } | null;
-  links?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'link') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
+  linksGroup?: {
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            linkStyle?: ('brand' | 'neutral') | null;
+            description?: string | null;
+            /**
+             * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+             */
+            icon?: string | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    links_caption?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -497,11 +520,18 @@ export interface ContentBlock {
           url?: string | null;
           label: string;
           /**
+           * Choose the button style.
+           */
+          linkStyle?: ('brand' | 'neutral') | null;
+          description?: string | null;
+          /**
+           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+           */
+          icon?: string | null;
+          /**
            * Choose how the link should be rendered.
            */
-          appearance?:
-            | ('default' | 'outline' | 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'destructive' | 'link')
-            | null;
+          appearance?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
         };
         id?: string | null;
       }[]
@@ -1023,22 +1053,29 @@ export interface PagesSelect<T extends boolean = true> {
         type?: T;
         title?: T;
         richText?: T;
-        links?:
+        linksGroup?:
           | T
           | {
-              link?:
+              links?:
                 | T
                 | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          linkStyle?: T;
+                          description?: T;
+                          icon?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
                   };
-              id?: T;
+              links_caption?: T;
             };
-        caption?: T;
         logos?:
           | T
           | {
@@ -1081,20 +1118,28 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface CallToActionBlockSelect<T extends boolean = true> {
   richText?: T;
-  links?:
+  linksGroup?:
     | T
     | {
-        link?:
+        links?:
           | T
           | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              appearance?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    linkStyle?: T;
+                    description?: T;
+                    icon?: T;
+                    appearance?: T;
+                  };
+              id?: T;
             };
-        id?: T;
+        links_caption?: T;
       };
   id?: T;
   blockName?: T;
@@ -1118,6 +1163,9 @@ export interface ContentBlockSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              linkStyle?: T;
+              description?: T;
+              icon?: T;
               appearance?: T;
             };
         id?: T;
@@ -1606,10 +1654,6 @@ export interface Header {
               } | null);
           url?: string | null;
           label: string;
-          /**
-           * Choose the button style.
-           */
-          linkStyle?: ('brand' | 'neutral') | null;
         };
         id?: string | null;
       }[]
@@ -1639,10 +1683,6 @@ export interface Footer {
               } | null);
           url?: string | null;
           label: string;
-          /**
-           * Choose the button style.
-           */
-          linkStyle?: ('brand' | 'neutral') | null;
         };
         id?: string | null;
       }[]
@@ -1666,7 +1706,6 @@ export interface HeaderSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
-              linkStyle?: T;
             };
         id?: T;
       };
@@ -1690,7 +1729,6 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
-              linkStyle?: T;
             };
         id?: T;
       };
