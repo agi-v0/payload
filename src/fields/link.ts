@@ -1,6 +1,9 @@
 import type { Field } from 'payload'
 
+import lucideIcons from './iconPickerField/lucide-icons.json'
 import deepMerge from '@/utilities/deepMerge'
+
+import { iconPickerField } from './iconPickerField'
 
 export type LinkAppearances = 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link'
 export type LinkStyles = 'brand' | 'neutral'
@@ -177,15 +180,31 @@ export const link: LinkType = ({
       appearanceOptionsToUse = appearances.map((appearance) => appearanceOptions[appearance])
     }
 
-    linkResult.fields.push({
-      name: 'appearance',
-      type: 'select',
-      admin: {
-        description: 'Choose how the link should be rendered.',
+    linkResult.fields.push(
+      {
+        name: 'description',
+        label: 'Description',
+        type: 'text',
       },
-      defaultValue: 'primary',
-      options: appearanceOptionsToUse,
-    })
+      iconPickerField({
+        name: 'icon',
+        label: 'Icon',
+        icons: lucideIcons,
+        admin: {
+          description:
+            'Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/',
+        },
+      }),
+      {
+        name: 'appearance',
+        type: 'select',
+        admin: {
+          description: 'Choose how the link should be rendered.',
+        },
+        defaultValue: 'primary',
+        options: appearanceOptionsToUse,
+      },
+    )
     // linkResult.fields.push({
     //   name: 'icon',
     //   type: 'group',

@@ -12,7 +12,6 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
-import { Logos } from './collections/Logos'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -119,7 +118,7 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
       },
-      // enabled: process.env.NODE_ENV === 'production', // Use in production only
+      enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,
