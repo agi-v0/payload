@@ -52,9 +52,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "link_variant": {
-          "name": "link_variant",
-          "type": "enum_pages_hero_links_link_variant",
+        "link_appearance": {
+          "name": "link_appearance",
+          "type": "enum_pages_hero_links_link_appearance",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
@@ -158,9 +158,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "link_variant": {
-          "name": "link_variant",
-          "type": "enum_pages_blocks_cta_links_link_variant",
+        "link_appearance": {
+          "name": "link_appearance",
+          "type": "enum_pages_blocks_cta_links_link_appearance",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
@@ -389,9 +389,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "link_variant": {
-          "name": "link_variant",
-          "type": "enum_pages_blocks_content_columns_link_variant",
+        "link_appearance": {
+          "name": "link_appearance",
+          "type": "enum_pages_blocks_content_columns_link_appearance",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
@@ -1389,9 +1389,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "link_variant": {
-          "name": "link_variant",
-          "type": "enum__pages_v_version_hero_links_link_variant",
+        "link_appearance": {
+          "name": "link_appearance",
+          "type": "enum__pages_v_version_hero_links_link_appearance",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
@@ -1501,9 +1501,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "link_variant": {
-          "name": "link_variant",
-          "type": "enum__pages_v_blocks_cta_links_link_variant",
+        "link_appearance": {
+          "name": "link_appearance",
+          "type": "enum__pages_v_blocks_cta_links_link_appearance",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
@@ -1744,9 +1744,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "link_variant": {
-          "name": "link_variant",
-          "type": "enum__pages_v_blocks_content_columns_link_variant",
+        "link_appearance": {
+          "name": "link_appearance",
+          "type": "enum__pages_v_blocks_content_columns_link_appearance",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
@@ -8814,8 +8814,8 @@
       "schema": "public",
       "values": ["reference", "custom"]
     },
-    "public.enum_pages_hero_links_link_variant": {
-      "name": "enum_pages_hero_links_link_variant",
+    "public.enum_pages_hero_links_link_appearance": {
+      "name": "enum_pages_hero_links_link_appearance",
       "schema": "public",
       "values": ["default", "outline"]
     },
@@ -8824,8 +8824,8 @@
       "schema": "public",
       "values": ["reference", "custom"]
     },
-    "public.enum_pages_blocks_cta_links_link_variant": {
-      "name": "enum_pages_blocks_cta_links_link_variant",
+    "public.enum_pages_blocks_cta_links_link_appearance": {
+      "name": "enum_pages_blocks_cta_links_link_appearance",
       "schema": "public",
       "values": ["default", "outline"]
     },
@@ -8839,8 +8839,8 @@
       "schema": "public",
       "values": ["reference", "custom"]
     },
-    "public.enum_pages_blocks_content_columns_link_variant": {
-      "name": "enum_pages_blocks_content_columns_link_variant",
+    "public.enum_pages_blocks_content_columns_link_appearance": {
+      "name": "enum_pages_blocks_content_columns_link_appearance",
       "schema": "public",
       "values": ["default", "outline"]
     },
@@ -8869,8 +8869,8 @@
       "schema": "public",
       "values": ["reference", "custom"]
     },
-    "public.enum__pages_v_version_hero_links_link_variant": {
-      "name": "enum__pages_v_version_hero_links_link_variant",
+    "public.enum__pages_v_version_hero_links_link_appearance": {
+      "name": "enum__pages_v_version_hero_links_link_appearance",
       "schema": "public",
       "values": ["default", "outline"]
     },
@@ -8879,8 +8879,8 @@
       "schema": "public",
       "values": ["reference", "custom"]
     },
-    "public.enum__pages_v_blocks_cta_links_link_variant": {
-      "name": "enum__pages_v_blocks_cta_links_link_variant",
+    "public.enum__pages_v_blocks_cta_links_link_appearance": {
+      "name": "enum__pages_v_blocks_cta_links_link_appearance",
       "schema": "public",
       "values": ["default", "outline"]
     },
@@ -8894,8 +8894,8 @@
       "schema": "public",
       "values": ["reference", "custom"]
     },
-    "public.enum__pages_v_blocks_content_columns_link_variant": {
-      "name": "enum__pages_v_blocks_content_columns_link_variant",
+    "public.enum__pages_v_blocks_content_columns_link_appearance": {
+      "name": "enum__pages_v_blocks_content_columns_link_appearance",
       "schema": "public",
       "values": ["default", "outline"]
     },

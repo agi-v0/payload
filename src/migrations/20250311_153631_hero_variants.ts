@@ -8,6 +8,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__pages_v_version_hero_links_link_color" AS ENUM('brand', 'neutral');
   CREATE TYPE "public"."enum__pages_v_blocks_cta_links_link_color" AS ENUM('brand', 'neutral');
   CREATE TYPE "public"."enum__pages_v_blocks_content_columns_link_color" AS ENUM('brand', 'neutral');
+  ALTER TYPE "public"."enum_pages_hero_links_link_appearance" RENAME TO "enum_pages_hero_links_link_variant";
+  ALTER TYPE "public"."enum_pages_blocks_cta_links_link_appearance" RENAME TO "enum_pages_blocks_cta_links_link_variant";
+  ALTER TYPE "public"."enum_pages_blocks_content_columns_link_appearance" RENAME TO "enum_pages_blocks_content_columns_link_variant";
+  ALTER TYPE "public"."enum__pages_v_version_hero_links_link_appearance" RENAME TO "enum__pages_v_version_hero_links_link_variant";
+  ALTER TYPE "public"."enum__pages_v_blocks_cta_links_link_appearance" RENAME TO "enum__pages_v_blocks_cta_links_link_variant";
+  ALTER TYPE "public"."enum__pages_v_blocks_content_columns_link_appearance" RENAME TO "enum__pages_v_blocks_content_columns_link_variant";
   CREATE TABLE IF NOT EXISTS "pages_hero_logos" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -23,13 +29,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_uuid" varchar
   );
   
-  ALTER TABLE "pages_hero_links" ALTER COLUMN "link_variant" SET DEFAULT 'primary';
-  ALTER TABLE "pages_blocks_cta_links" ALTER COLUMN "link_variant" SET DEFAULT 'primary';
-  ALTER TABLE "pages_blocks_content_columns" ALTER COLUMN "link_variant" SET DEFAULT 'primary';
+  ALTER TABLE "pages_hero_links" RENAME COLUMN "link_appearance" TO "link_variant";
+  ALTER TABLE "pages_blocks_cta_links" RENAME COLUMN "link_appearance" TO "link_variant";
+  ALTER TABLE "pages_blocks_content_columns" RENAME COLUMN "link_appearance" TO "link_variant";
+  ALTER TABLE "_pages_v_version_hero_links" RENAME COLUMN "link_appearance" TO "link_variant";
+  ALTER TABLE "_pages_v_blocks_cta_links" RENAME COLUMN "link_appearance" TO "link_variant";
+  ALTER TABLE "_pages_v_blocks_content_columns" RENAME COLUMN "link_appearance" TO "link_variant";
   ALTER TABLE "pages" ALTER COLUMN "hero_type" SET DEFAULT 'hero01';
-  ALTER TABLE "_pages_v_version_hero_links" ALTER COLUMN "link_variant" SET DEFAULT 'primary';
-  ALTER TABLE "_pages_v_blocks_cta_links" ALTER COLUMN "link_variant" SET DEFAULT 'primary';
-  ALTER TABLE "_pages_v_blocks_content_columns" ALTER COLUMN "link_variant" SET DEFAULT 'primary';
   ALTER TABLE "_pages_v" ALTER COLUMN "version_hero_type" SET DEFAULT 'hero01';
   ALTER TABLE "pages_hero_links" ADD COLUMN "link_color" "enum_pages_hero_links_link_color" DEFAULT 'brand';
   ALTER TABLE "pages_blocks_cta_links" ADD COLUMN "link_color" "enum_pages_blocks_cta_links_link_color" DEFAULT 'brand';
@@ -206,29 +212,41 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
-   ALTER TABLE "pages_hero_logos" DISABLE ROW LEVEL SECURITY;
+   CREATE TYPE "public"."enum_pages_hero_links_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum_pages_blocks_cta_links_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum_pages_blocks_content_columns_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum__pages_v_version_hero_links_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum__pages_v_blocks_cta_links_link_appearance" AS ENUM('default', 'outline');
+  CREATE TYPE "public"."enum__pages_v_blocks_content_columns_link_appearance" AS ENUM('default', 'outline');
+  ALTER TABLE "pages_hero_logos" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "_pages_v_version_hero_logos" DISABLE ROW LEVEL SECURITY;
   DROP TABLE "pages_hero_logos" CASCADE;
   DROP TABLE "_pages_v_version_hero_logos" CASCADE;
-  ALTER TABLE "pages_hero_links" ALTER COLUMN "link_variant" SET DEFAULT 'default';
-  ALTER TABLE "pages_blocks_cta_links" ALTER COLUMN "link_variant" SET DEFAULT 'default';
-  ALTER TABLE "pages_blocks_content_columns" ALTER COLUMN "link_variant" SET DEFAULT 'default';
   ALTER TABLE "pages" ALTER COLUMN "hero_type" SET DEFAULT 'lowImpact';
-  ALTER TABLE "_pages_v_version_hero_links" ALTER COLUMN "link_variant" SET DEFAULT 'default';
-  ALTER TABLE "_pages_v_blocks_cta_links" ALTER COLUMN "link_variant" SET DEFAULT 'default';
-  ALTER TABLE "_pages_v_blocks_content_columns" ALTER COLUMN "link_variant" SET DEFAULT 'default';
   ALTER TABLE "_pages_v" ALTER COLUMN "version_hero_type" SET DEFAULT 'lowImpact';
+  ALTER TABLE "pages_hero_links" ADD COLUMN "link_appearance" "enum_pages_hero_links_link_appearance" DEFAULT 'default';
+  ALTER TABLE "pages_blocks_cta_links" ADD COLUMN "link_appearance" "enum_pages_blocks_cta_links_link_appearance" DEFAULT 'default';
+  ALTER TABLE "pages_blocks_content_columns" ADD COLUMN "link_appearance" "enum_pages_blocks_content_columns_link_appearance" DEFAULT 'default';
+  ALTER TABLE "_pages_v_version_hero_links" ADD COLUMN "link_appearance" "enum__pages_v_version_hero_links_link_appearance" DEFAULT 'default';
+  ALTER TABLE "_pages_v_blocks_cta_links" ADD COLUMN "link_appearance" "enum__pages_v_blocks_cta_links_link_appearance" DEFAULT 'default';
+  ALTER TABLE "_pages_v_blocks_content_columns" ADD COLUMN "link_appearance" "enum__pages_v_blocks_content_columns_link_appearance" DEFAULT 'default';
   ALTER TABLE "media" ADD COLUMN "prefix" varchar DEFAULT 'media';
   ALTER TABLE "pages_hero_links" DROP COLUMN IF EXISTS "link_color";
+  ALTER TABLE "pages_hero_links" DROP COLUMN IF EXISTS "link_variant";
   ALTER TABLE "pages_blocks_cta_links" DROP COLUMN IF EXISTS "link_color";
+  ALTER TABLE "pages_blocks_cta_links" DROP COLUMN IF EXISTS "link_variant";
   ALTER TABLE "pages_blocks_cta" DROP COLUMN IF EXISTS "supporting_text";
   ALTER TABLE "pages_blocks_content_columns" DROP COLUMN IF EXISTS "link_color";
+  ALTER TABLE "pages_blocks_content_columns" DROP COLUMN IF EXISTS "link_variant";
   ALTER TABLE "pages" DROP COLUMN IF EXISTS "hero_supporting_text";
   ALTER TABLE "pages_locales" DROP COLUMN IF EXISTS "hero_logos_headline";
   ALTER TABLE "_pages_v_version_hero_links" DROP COLUMN IF EXISTS "link_color";
+  ALTER TABLE "_pages_v_version_hero_links" DROP COLUMN IF EXISTS "link_variant";
   ALTER TABLE "_pages_v_blocks_cta_links" DROP COLUMN IF EXISTS "link_color";
+  ALTER TABLE "_pages_v_blocks_cta_links" DROP COLUMN IF EXISTS "link_variant";
   ALTER TABLE "_pages_v_blocks_cta" DROP COLUMN IF EXISTS "supporting_text";
   ALTER TABLE "_pages_v_blocks_content_columns" DROP COLUMN IF EXISTS "link_color";
+  ALTER TABLE "_pages_v_blocks_content_columns" DROP COLUMN IF EXISTS "link_variant";
   ALTER TABLE "_pages_v" DROP COLUMN IF EXISTS "version_hero_supporting_text";
   ALTER TABLE "_pages_v_locales" DROP COLUMN IF EXISTS "version_hero_logos_headline";
   ALTER TABLE "public"."pages_hero_links" ALTER COLUMN "_locale" SET DATA TYPE text;
@@ -319,34 +337,10 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   ALTER TABLE "public"."header_rels" ALTER COLUMN "locale" SET DATA TYPE "public"."_locales" USING "locale"::"public"."_locales";
   ALTER TABLE "public"."footer_nav_items" ALTER COLUMN "_locale" SET DATA TYPE "public"."_locales" USING "_locale"::"public"."_locales";
   ALTER TABLE "public"."footer_rels" ALTER COLUMN "locale" SET DATA TYPE "public"."_locales" USING "locale"::"public"."_locales";
-  ALTER TABLE "public"."pages_hero_links" ALTER COLUMN "link_variant" SET DATA TYPE text;
-  DROP TYPE "public"."enum_pages_hero_links_link_variant";
-  CREATE TYPE "public"."enum_pages_hero_links_link_variant" AS ENUM('default', 'outline');
-  ALTER TABLE "public"."pages_hero_links" ALTER COLUMN "link_variant" SET DATA TYPE "public"."enum_pages_hero_links_link_variant" USING "link_variant"::"public"."enum_pages_hero_links_link_variant";
-  ALTER TABLE "public"."pages_blocks_cta_links" ALTER COLUMN "link_variant" SET DATA TYPE text;
-  DROP TYPE "public"."enum_pages_blocks_cta_links_link_variant";
-  CREATE TYPE "public"."enum_pages_blocks_cta_links_link_variant" AS ENUM('default', 'outline');
-  ALTER TABLE "public"."pages_blocks_cta_links" ALTER COLUMN "link_variant" SET DATA TYPE "public"."enum_pages_blocks_cta_links_link_variant" USING "link_variant"::"public"."enum_pages_blocks_cta_links_link_variant";
-  ALTER TABLE "public"."pages_blocks_content_columns" ALTER COLUMN "link_variant" SET DATA TYPE text;
-  DROP TYPE "public"."enum_pages_blocks_content_columns_link_variant";
-  CREATE TYPE "public"."enum_pages_blocks_content_columns_link_variant" AS ENUM('default', 'outline');
-  ALTER TABLE "public"."pages_blocks_content_columns" ALTER COLUMN "link_variant" SET DATA TYPE "public"."enum_pages_blocks_content_columns_link_variant" USING "link_variant"::"public"."enum_pages_blocks_content_columns_link_variant";
   ALTER TABLE "public"."pages" ALTER COLUMN "hero_type" SET DATA TYPE text;
   DROP TYPE "public"."enum_pages_hero_type";
   CREATE TYPE "public"."enum_pages_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
   ALTER TABLE "public"."pages" ALTER COLUMN "hero_type" SET DATA TYPE "public"."enum_pages_hero_type" USING "hero_type"::"public"."enum_pages_hero_type";
-  ALTER TABLE "public"."_pages_v_version_hero_links" ALTER COLUMN "link_variant" SET DATA TYPE text;
-  DROP TYPE "public"."enum__pages_v_version_hero_links_link_variant";
-  CREATE TYPE "public"."enum__pages_v_version_hero_links_link_variant" AS ENUM('default', 'outline');
-  ALTER TABLE "public"."_pages_v_version_hero_links" ALTER COLUMN "link_variant" SET DATA TYPE "public"."enum__pages_v_version_hero_links_link_variant" USING "link_variant"::"public"."enum__pages_v_version_hero_links_link_variant";
-  ALTER TABLE "public"."_pages_v_blocks_cta_links" ALTER COLUMN "link_variant" SET DATA TYPE text;
-  DROP TYPE "public"."enum__pages_v_blocks_cta_links_link_variant";
-  CREATE TYPE "public"."enum__pages_v_blocks_cta_links_link_variant" AS ENUM('default', 'outline');
-  ALTER TABLE "public"."_pages_v_blocks_cta_links" ALTER COLUMN "link_variant" SET DATA TYPE "public"."enum__pages_v_blocks_cta_links_link_variant" USING "link_variant"::"public"."enum__pages_v_blocks_cta_links_link_variant";
-  ALTER TABLE "public"."_pages_v_blocks_content_columns" ALTER COLUMN "link_variant" SET DATA TYPE text;
-  DROP TYPE "public"."enum__pages_v_blocks_content_columns_link_variant";
-  CREATE TYPE "public"."enum__pages_v_blocks_content_columns_link_variant" AS ENUM('default', 'outline');
-  ALTER TABLE "public"."_pages_v_blocks_content_columns" ALTER COLUMN "link_variant" SET DATA TYPE "public"."enum__pages_v_blocks_content_columns_link_variant" USING "link_variant"::"public"."enum__pages_v_blocks_content_columns_link_variant";
   ALTER TABLE "public"."_pages_v" ALTER COLUMN "version_hero_type" SET DATA TYPE text;
   DROP TYPE "public"."enum__pages_v_version_hero_type";
   CREATE TYPE "public"."enum__pages_v_version_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
@@ -360,9 +354,15 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   CREATE TYPE "public"."enum__posts_v_published_locale" AS ENUM('EN', 'AR');
   ALTER TABLE "public"."_posts_v" ALTER COLUMN "published_locale" SET DATA TYPE "public"."enum__posts_v_published_locale" USING "published_locale"::"public"."enum__posts_v_published_locale";
   DROP TYPE "public"."enum_pages_hero_links_link_color";
+  DROP TYPE "public"."enum_pages_hero_links_link_variant";
   DROP TYPE "public"."enum_pages_blocks_cta_links_link_color";
+  DROP TYPE "public"."enum_pages_blocks_cta_links_link_variant";
   DROP TYPE "public"."enum_pages_blocks_content_columns_link_color";
+  DROP TYPE "public"."enum_pages_blocks_content_columns_link_variant";
   DROP TYPE "public"."enum__pages_v_version_hero_links_link_color";
+  DROP TYPE "public"."enum__pages_v_version_hero_links_link_variant";
   DROP TYPE "public"."enum__pages_v_blocks_cta_links_link_color";
-  DROP TYPE "public"."enum__pages_v_blocks_content_columns_link_color";`)
+  DROP TYPE "public"."enum__pages_v_blocks_cta_links_link_variant";
+  DROP TYPE "public"."enum__pages_v_blocks_content_columns_link_color";
+  DROP TYPE "public"."enum__pages_v_blocks_content_columns_link_variant";`)
 }
