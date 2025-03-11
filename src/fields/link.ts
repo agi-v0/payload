@@ -5,10 +5,10 @@ import deepMerge from '@/utilities/deepMerge'
 
 import { iconPickerField } from './iconPickerField'
 
-export type LinkAppearances = 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link'
+export type LinkVariants = 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link'
 export type LinkColors = 'brand' | 'neutral'
 
-export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
+export const variantOptions: Record<LinkVariants, { label: string; value: string }> = {
   primary: {
     label: 'Primary',
     value: 'primary',
@@ -42,7 +42,7 @@ export const colorOptions: Record<LinkColors, { label: string; value: string }> 
 }
 
 type LinkType = (options?: {
-  appearances?: LinkAppearances[] | false
+  variants?: LinkVariants[] | false
   colors?: LinkColors[] | false
   icon?: boolean
   description?: boolean
@@ -51,7 +51,7 @@ type LinkType = (options?: {
 }) => Field
 
 export const link: LinkType = ({
-  appearances,
+  variants,
   colors,
   icon = false,
   description = false,
@@ -209,27 +209,27 @@ export const link: LinkType = ({
     })
   }
 
-  if (appearances !== false) {
-    let appearanceOptionsToUse = [
-      appearanceOptions.primary,
-      appearanceOptions.secondary,
-      appearanceOptions.tertiary,
-      appearanceOptions.ghost,
-      appearanceOptions.link,
+  if (variants !== false) {
+    let variantOptionsToUse = [
+      variantOptions.primary,
+      variantOptions.secondary,
+      variantOptions.tertiary,
+      variantOptions.ghost,
+      variantOptions.link,
     ]
 
-    if (appearances) {
-      appearanceOptionsToUse = appearances.map((appearance) => appearanceOptions[appearance])
+    if (variants) {
+      variantOptionsToUse = variants.map((variant) => variantOptions[variant])
     }
 
     linkResult.fields.push({
-      name: 'appearance',
+      name: 'variant',
       type: 'select',
       admin: {
         description: 'Choose how the link should be rendered.',
       },
       defaultValue: 'primary',
-      options: appearanceOptionsToUse,
+      options: variantOptionsToUse,
     })
   }
 

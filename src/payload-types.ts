@@ -189,7 +189,7 @@ export interface Page {
             /**
              * Choose how the link should be rendered.
              */
-            appearance?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
           };
           id?: string | null;
         }[]
@@ -454,7 +454,7 @@ export interface CallToActionBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
         };
         id?: string | null;
       }[]
@@ -509,7 +509,7 @@ export interface ContentBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
         };
         id?: string | null;
       }[]
@@ -1042,7 +1042,7 @@ export interface PagesSelect<T extends boolean = true> {
                     url?: T;
                     label?: T;
                     color?: T;
-                    appearance?: T;
+                    variant?: T;
                   };
               id?: T;
             };
@@ -1097,7 +1097,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               url?: T;
               label?: T;
               color?: T;
-              appearance?: T;
+              variant?: T;
             };
         id?: T;
       };
@@ -1125,7 +1125,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               url?: T;
               label?: T;
               color?: T;
-              appearance?: T;
+              variant?: T;
             };
         id?: T;
       };

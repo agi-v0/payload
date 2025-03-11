@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utilities/ui'
 
-const appearances = {
+const variants = {
   brand: {
     primary:
       'bg-button-brand-primary text-base-static-white-primary hover:bg-button-brand-primary/90',
@@ -57,7 +57,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
   ref?: React.Ref<HTMLButtonElement>
-  variant?: keyof (typeof appearances)['brand'] | null
+  variant?: keyof (typeof variants)['brand'] | null
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -72,9 +72,7 @@ const Button: React.FC<ButtonProps> = ({
   const Comp = asChild ? Slot : 'button'
 
   const selectedStyle =
-    color && variant && appearances[color]?.[variant]
-      ? appearances[color][variant]
-      : ''
+    color && variant && variants[color]?.[variant] ? variants[color][variant] : ''
 
   return (
     <Comp className={cn(buttonVariants({ className, size }), selectedStyle)} ref={ref} {...props} />

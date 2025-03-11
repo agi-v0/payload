@@ -9,7 +9,7 @@ import React from 'react'
 import type { Page, Post } from '@/payload-types'
 
 type CMSLinkType = {
-  appearance?: 'link' | ButtonProps['variant'] | null
+  variant?: 'link' | ButtonProps['variant'] | null
   color?: ButtonProps['color']
   children?: React.ReactNode
   className?: string
@@ -28,7 +28,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const {
     type,
     color,
-    appearance,
+    variant,
     children,
     className,
     label,
@@ -37,6 +37,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     size: sizeFromProps,
     url,
   } = props
+  console.log(color, variant)
 
   const locale = useLocale()
 
@@ -49,11 +50,11 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   if (!href) return null
 
-  const size = appearance === 'link' ? 'clear' : sizeFromProps
+  const size = variant === 'link' ? 'clear' : sizeFromProps
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
   /* Ensure we don't break any styles set by richText */
-  if (appearance === 'link') {
+  if (variant === 'link') {
     return (
       <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
         {label && label}
@@ -63,7 +64,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   }
 
   return (
-    <Button asChild className={className} size={size} variant={appearance} color={color}>
+    <Button asChild className={className} size={size} variant={'primary'} color={'brand'}>
       <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
         {label && label}
         {children && children}
