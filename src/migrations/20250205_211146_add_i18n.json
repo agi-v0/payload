@@ -10718,7 +10718,7 @@
     "public._locales": {
       "name": "_locales",
       "schema": "public",
-      "values": ["EN", "AR"]
+      "values": ["en", "ar"]
     },
     "public.enum_pages_hero_links_link_type": {
       "name": "enum_pages_hero_links_link_type",
@@ -10833,7 +10833,7 @@
     "public.enum__pages_v_published_locale": {
       "name": "enum__pages_v_published_locale",
       "schema": "public",
-      "values": ["EN", "AR"]
+      "values": ["en", "ar"]
     },
     "public.enum_posts_status": {
       "name": "enum_posts_status",
@@ -10848,7 +10848,7 @@
     "public.enum__posts_v_published_locale": {
       "name": "enum__posts_v_published_locale",
       "schema": "public",
-      "values": ["EN", "AR"]
+      "values": ["en", "ar"]
     },
     "public.enum_redirects_to_type": {
       "name": "enum_redirects_to_type",
