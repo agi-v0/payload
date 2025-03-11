@@ -13,9 +13,9 @@ export const migrations = [
     down: migration_20250205_211146_add_i18n.down,
     name: '20250205_211146_add_i18n',
   },
-  // {
-  //   up: migration_20250311_152506_hero_variants.up,
-  //   down: migration_20250311_152506_hero_variants.down,
-  //   name: '20250311_152506_hero_variants'
-  // },
+  {
+    up: migration_20250311_152506_hero_variants.up,
+    down: migration_20250311_152506_hero_variants.down,
+    name: '20250311_152506_hero_variants',
+  },
 ]
