@@ -6,10 +6,65 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
+
 export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     pages: Page;
     posts: Post;
@@ -95,19 +150,7 @@ export interface Page {
   id: number;
   title: string;
   hero: {
-    type:
-      | 'none'
-      | 'highImpact'
-      | 'mediumImpact'
-      | 'lowImpact'
-      | 'hero01'
-      | 'hero02'
-      | 'hero03'
-      | 'hero04'
-      | 'hero05'
-      | 'hero06'
-      | 'hero07';
-    title: string;
+    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07';
     richText?: {
       root: {
         type: string;
@@ -139,27 +182,26 @@ export interface Page {
                 } | null);
             url?: string | null;
             label: string;
-            description?: string | null;
             /**
-             * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+             * Choose the button style.
              */
-            icon?: string | null;
+            color?: ('brand' | 'neutral') | null;
             /**
              * Choose how the link should be rendered.
              */
-            appearance?: ('default' | 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
           };
           id?: string | null;
         }[]
       | null;
-    caption?: string | null;
-    logos: {
-      title: string;
-      'logos-images': {
-        logo?: (number | null) | Media;
-        id?: string | null;
-      }[];
-    };
+    supportingText?: string | null;
+    logosHeadline?: string | null;
+    logos?:
+      | {
+          logo?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
     media?: (number | null) | Media;
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
@@ -405,19 +447,19 @@ export interface CallToActionBlock {
               } | null);
           url?: string | null;
           label: string;
-          description?: string | null;
           /**
-           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+           * Choose the button style.
            */
-          icon?: string | null;
+          color?: ('brand' | 'neutral') | null;
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'link') | null;
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
         };
         id?: string | null;
       }[]
     | null;
+  supportingText?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -460,15 +502,14 @@ export interface ContentBlock {
               } | null);
           url?: string | null;
           label: string;
-          description?: string | null;
           /**
-           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+           * Choose the button style.
            */
-          icon?: string | null;
+          color?: ('brand' | 'neutral') | null;
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
         };
         id?: string | null;
       }[]
@@ -988,7 +1029,6 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
-        title?: T;
         richText?: T;
         links?:
           | T
@@ -1001,23 +1041,18 @@ export interface PagesSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
-                    description?: T;
-                    icon?: T;
-                    appearance?: T;
+                    color?: T;
+                    variant?: T;
                   };
               id?: T;
             };
-        caption?: T;
+        supportingText?: T;
+        logosHeadline?: T;
         logos?:
           | T
           | {
-              title?: T;
-              'logos-images'?:
-                | T
-                | {
-                    logo?: T;
-                    id?: T;
-                  };
+              logo?: T;
+              id?: T;
             };
         media?: T;
       };
@@ -1061,12 +1096,12 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
-              description?: T;
-              icon?: T;
-              appearance?: T;
+              color?: T;
+              variant?: T;
             };
         id?: T;
       };
+  supportingText?: T;
   id?: T;
   blockName?: T;
 }
@@ -1089,9 +1124,8 @@ export interface ContentBlockSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
-              description?: T;
-              icon?: T;
-              appearance?: T;
+              color?: T;
+              variant?: T;
             };
         id?: T;
       };

@@ -8,33 +8,20 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '@/fields/linkGroup'
+import { link } from '@/fields/link'
+import { console } from 'inspector'
 
 export const hero: Field = {
   name: 'hero',
   type: 'group',
+  label: false,
   fields: [
     {
       name: 'type',
       type: 'select',
-      defaultValue: 'lowImpact',
+      defaultValue: 'hero01',
       label: 'Type',
       options: [
-        {
-          label: 'None',
-          value: 'none',
-        },
-        {
-          label: 'High Impact',
-          value: 'highImpact',
-        },
-        {
-          label: 'Medium Impact',
-          value: 'mediumImpact',
-        },
-        {
-          label: 'Low Impact',
-          value: 'lowImpact',
-        },
         {
           label: 'Hero 01',
           value: 'hero01',
@@ -67,22 +54,20 @@ export const hero: Field = {
       required: true,
     },
     {
-      name: 'title',
-      type: 'text',
-      label: 'title',
-      localized: true,
-      required: true,
-    },
-    {
       name: 'richText',
       type: 'richText',
-      localized: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
+          return [
+            ...rootFeatures,
+            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+            FixedToolbarFeature(),
+            InlineToolbarFeature(),
+          ]
         },
       }),
-      label: 'paragraph',
+      label: false,
+      localized: true,
     },
     linkGroup({
       overrides: {
@@ -90,36 +75,38 @@ export const hero: Field = {
       },
     }),
     {
-      name: 'caption',
-      type: 'text',
-      label: 'caption',
-      localized: true,
-      required: false,
-    },
-    {
-      name: 'logos',
-      type: 'group',
-
+      type: 'collapsible',
+      label: 'Logos',
+      admin: {
+        initCollapsed: true,
+      },
       fields: [
         {
-          name: 'title',
+          name: 'logosHeadline',
           type: 'text',
-          label: 'title',
+          label: 'Logos headline',
+          required: false,
           localized: true,
-          required: true,
+          admin: {
+            placeholder: 'e.g., As Featured In, Our Partners',
+          },
         },
         {
-          name: 'logos-images',
-          required: true,
+          name: 'logos',
           type: 'array',
-          label: 'logos images',
+          label: 'Logos',
           maxRows: 6,
           fields: [
             {
               name: 'logo',
-              type: 'upload',
+              type: 'relationship',
+              label: 'Logo',
               relationTo: 'media',
-              label: 'logo',
+              filterOptions: () => {
+                return {
+                  'Category.slug': { equals: 'logo' },
+                }
+              },
             },
           ],
         },
@@ -129,13 +116,8 @@ export const hero: Field = {
       name: 'media',
       type: 'upload',
       localized: true,
-      admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
-      },
       relationTo: 'media',
       required: false,
-      label: 'hero image',
     },
   ],
-  label: false,
 }

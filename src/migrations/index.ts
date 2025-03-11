@@ -1,6 +1,6 @@
-import * as migration_20250205_172222_initial from './20250205_172222_initial';
-import * as migration_20250205_211146_add_i18n from './20250205_211146_add_i18n';
-import * as migration_20250303_064940_hero_variants from './20250303_064940_hero_variants';
+import * as migration_20250205_172222_initial from './20250205_172222_initial'
+import * as migration_20250205_211146_add_i18n from './20250205_211146_add_i18n'
+import * as migration_20250311_152506_hero_variants from './20250311_152506_hero_variants'
 
 export const migrations = [
   {
@@ -13,9 +13,9 @@ export const migrations = [
     down: migration_20250205_211146_add_i18n.down,
     name: '20250205_211146_add_i18n',
   },
-  {
-    up: migration_20250303_064940_hero_variants.up,
-    down: migration_20250303_064940_hero_variants.down,
-    name: '20250303_064940_hero_variants'
-  },
-];
+  // {
+  //   up: migration_20250311_152506_hero_variants.up,
+  //   down: migration_20250311_152506_hero_variants.down,
+  //   name: '20250311_152506_hero_variants'
+  // },
+]

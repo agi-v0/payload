@@ -15,7 +15,8 @@ export const Header: GlobalConfig = {
       localized: true,
       fields: [
         link({
-          appearances: false,
+          colors: false,
+          variants: false,
         }),
       ],
       maxRows: 6,

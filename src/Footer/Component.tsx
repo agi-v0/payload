@@ -26,7 +26,7 @@ export async function Footer() {
           <LanguageSwitcher />
           <nav className="flex flex-col gap-4 md:flex-row">
             {navItems.map(({ link }, i) => {
-              return <CMSLink className="text-neutral-primary" key={i} {...link} />
+              return <CMSLink className="text-neutral-primary" key={i} {...(link as any)} />
             })}
           </nav>
         </div>

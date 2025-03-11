@@ -8,7 +8,7 @@ const config = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
-  plugins: [typography],
+  // plugins: [typography],
   prefix: '',
   safelist: [
     'lg:col-span-4',
@@ -26,44 +26,44 @@ const config = {
   ],
   theme: {
     extend: {
-      typography: () => ({
-        DEFAULT: {
-          css: [
-            {
-              // '--tw-prose-body': 'var(--text)',
-              // '--tw-prose-headings': 'var(--text)',
-              headings: { fontWeight: 600 },
-              h1: {
-                marginBottom: '0.25em',
-                fontSize: 'var(--text-h1)',
-              },
-              h2: {
-                fontWeight: 600,
-                fontSize: 'var(--text-h2)',
-              },
-              h3: {
-                fontWeight: 600,
-                fontSize: 'var(--text-h3)',
-              },
-              h4: {
-                fontWeight: 600,
-                fontSize: 'var(--text-h4)',
-              },
-              h5: {
-                fontWeight: 600,
-                fontSize: 'var(--text-h5)',
-              },
-              h6: {
-                fontWeight: 600,
-                fontSize: 'var(--text-h6)',
-              },
-              p: {
-                fontSize: 'var(--text-body)',
-              },
-            },
-          ],
-        },
-      }),
+      // typography: () => ({
+      //   DEFAULT: {
+      //     css: [
+      //       {
+      //         // '--tw-prose-body': 'var(--text)',
+      //         // '--tw-prose-headings': 'var(--text)',
+      //         headings: { fontWeight: 600 },
+      //         h1: {
+      //           marginBottom: '0.25em',
+      //           fontSize: 'var(--text-h1)',
+      //         },
+      //         h2: {
+      //           fontWeight: 600,
+      //           fontSize: 'var(--text-h2)',
+      //         },
+      //         h3: {
+      //           fontWeight: 600,
+      //           fontSize: 'var(--text-h3)',
+      //         },
+      //         h4: {
+      //           fontWeight: 600,
+      //           fontSize: 'var(--text-h4)',
+      //         },
+      //         h5: {
+      //           fontWeight: 600,
+      //           fontSize: 'var(--text-h5)',
+      //         },
+      //         h6: {
+      //           fontWeight: 600,
+      //           fontSize: 'var(--text-h6)',
+      //         },
+      //         p: {
+      //           fontSize: 'var(--text-body)',
+      //         },
+      //       },
+      //     ],
+      //   },
+      // }),
     },
   },
 }

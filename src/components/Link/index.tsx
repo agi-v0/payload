@@ -7,9 +7,11 @@ import Link from 'next/link'
 import React from 'react'
 
 import type { Page, Post } from '@/payload-types'
+import { ArrowLeft } from 'lucide-react'
 
 type CMSLinkType = {
-  appearance?: 'inline' | ButtonProps['variant']
+  variant?: 'inline' | ButtonProps['variant'] | null
+  color?: ButtonProps['color']
   children?: React.ReactNode
   className?: string
   label?: string | null
@@ -26,7 +28,8 @@ type CMSLinkType = {
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const {
     type,
-    appearance = 'outline',
+    color,
+    variant,
     children,
     className,
     label,
@@ -47,11 +50,11 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   if (!href) return null
 
-  const size = appearance === 'link' ? 'clear' : sizeFromProps
+  const size = variant === 'inline' ? 'clear' : sizeFromProps
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
   /* Ensure we don't break any styles set by richText */
-  if (appearance === 'inline') {
+  if (variant === 'inline') {
     return (
       <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
         {label && label}
@@ -61,7 +64,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   }
 
   return (
-    <Button asChild className={className} size={size} variant={appearance}>
+    <Button asChild className={className} size={size} variant={variant} color={color}>
       <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
         {label && label}
         {children && children}
