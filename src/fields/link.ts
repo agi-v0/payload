@@ -6,7 +6,7 @@ import deepMerge from '@/utilities/deepMerge'
 import { iconPickerField } from './iconPickerField'
 
 export type LinkAppearances = 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'link'
-export type LinkStyles = 'brand' | 'neutral'
+export type LinkColors = 'brand' | 'neutral'
 
 export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
   primary: {
@@ -25,13 +25,12 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
     label: 'Ghost',
     value: 'ghost',
   },
-
   link: {
     label: 'Link',
     value: 'link',
   },
 }
-export const linkStylesOptions: Record<LinkStyles, { label: string; value: string }> = {
+export const colorOptions: Record<LinkColors, { label: string; value: string }> = {
   brand: {
     label: 'Brand',
     value: 'brand',
@@ -44,14 +43,18 @@ export const linkStylesOptions: Record<LinkStyles, { label: string; value: strin
 
 type LinkType = (options?: {
   appearances?: LinkAppearances[] | false
-  linkStyles?: LinkStyles[] | false
+  colors?: LinkColors[] | false
+  icon?: boolean
+  description?: boolean
   disableLabel?: boolean
   overrides?: Record<string, unknown>
 }) => Field
 
 export const link: LinkType = ({
   appearances,
-  linkStyles,
+  colors,
+  icon = false,
+  description = false,
   disableLabel = false,
   overrides = {},
 } = {}) => {
@@ -131,42 +134,81 @@ export const link: LinkType = ({
       },
     }))
 
-    linkResult.fields.push({
-      type: 'row',
-      fields: [
-        ...linkTypes,
-        {
-          name: 'label',
-          type: 'text',
-          admin: {
-            width: '50%',
+    linkResult.fields.push(
+      {
+        type: 'row',
+        fields: [
+          ...linkTypes,
+          {
+            name: 'label',
+            type: 'text',
+            admin: {
+              width: '50%',
+            },
+            label: 'Label',
+            required: true,
           },
-          label: 'Label',
-          required: true,
-        },
-      ],
-    })
+        ],
+      },
+      // {
+      //   name: 'description',
+      //   label: 'Description',
+      //   type: 'text',
+      // },
+      // iconPickerField({
+      //   name: 'icon',
+      //   label: 'Icon',
+      //   icons: lucideIcons,
+      //   admin: {
+      //     description:
+      //       'Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/',
+      //   },
+      // }),
+    )
   } else {
     linkResult.fields = [...linkResult.fields, ...linkTypes]
   }
 
-  if (linkStyles !== false) {
-    let linkStylesOptionsToUse = [linkStylesOptions.brand, linkStylesOptions.neutral]
+  if (description) {
+    linkResult.fields.push({
+      name: 'description',
+      label: 'Description',
+      type: 'text',
+    })
+  }
 
-    if (linkStyles) {
-      linkStylesOptionsToUse = linkStyles.map((linkStyle) => linkStylesOptions[linkStyle])
+  if (icon) {
+    linkResult.fields.push(
+      iconPickerField({
+        name: 'icon',
+        label: 'Icon',
+        icons: lucideIcons,
+        admin: {
+          description:
+            'Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/',
+        },
+      }),
+    )
+  }
+
+  if (colors !== false) {
+    let colorOptionsToUse = [colorOptions.brand, colorOptions.neutral]
+
+    if (colors) {
+      colorOptionsToUse = colors.map((color) => colorOptions[color])
     }
 
     linkResult.fields.push({
-      name: 'linkStyle',
+      name: 'color',
       type: 'select',
       admin: {
         description: 'Choose the button style.',
       },
       defaultValue: 'brand',
-      options: linkStylesOptionsToUse,
+      options: colorOptionsToUse,
     })
   }
+
   if (appearances !== false) {
     let appearanceOptionsToUse = [
       appearanceOptions.primary,
@@ -180,51 +222,15 @@ export const link: LinkType = ({
       appearanceOptionsToUse = appearances.map((appearance) => appearanceOptions[appearance])
     }
 
-    linkResult.fields.push(
-      {
-        name: 'description',
-        label: 'Description',
-        type: 'text',
+    linkResult.fields.push({
+      name: 'appearance',
+      type: 'select',
+      admin: {
+        description: 'Choose how the link should be rendered.',
       },
-      iconPickerField({
-        name: 'icon',
-        label: 'Icon',
-        icons: lucideIcons,
-        admin: {
-          description:
-            'Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/',
-        },
-      }),
-      {
-        name: 'appearance',
-        type: 'select',
-        admin: {
-          description: 'Choose how the link should be rendered.',
-        },
-        defaultValue: 'primary',
-        options: appearanceOptionsToUse,
-      },
-    )
-    // linkResult.fields.push({
-    //   name: 'icon',
-    //   type: 'group',
-    //   fields: [
-    //     iconPickerField({
-    //       name: 'icon',
-    //       label: 'React Icons',
-    //       reactIconPack: lucideIcons,
-    //     }),
-    //     {
-    //       name: 'iconDir',
-    //       label: 'Icon Direction',
-    //       type: 'select',
-    //       options: [
-    //         { label: 'Left', value: 'row' },
-    //         { label: 'Right', value: 'row-reverse' },
-    //       ],
-    //     },
-    //   ],
-    // })
+      defaultValue: 'primary',
+      options: appearanceOptionsToUse,
+    })
   }
 
   return deepMerge(linkResult, overrides)

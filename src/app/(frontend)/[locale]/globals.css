@@ -150,7 +150,7 @@
   --text-h5: clamp(1.62rem, 1.528rem + 0.46vw, 1.94rem);
   --text-h6: clamp(1.35rem, 1.272rem + 0.39vw, 1.62rem);
   --text-body-l: clamp(1.13rem, 1.068rem + 0.31vw, 1.35rem);
-  --text-body: clamp(0.94rem, 0.888rem + 0.26vw, 1.125rem);
+  --text-body-m: clamp(0.94rem, 0.888rem + 0.26vw, 1.125rem);
   --text-body-s: clamp(0.78rem, 0.734rem + 0.23vw, 0.94rem);
 
   --color-brand: var(--brand);

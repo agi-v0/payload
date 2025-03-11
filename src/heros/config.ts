@@ -8,11 +8,13 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '@/fields/linkGroup'
+import { link } from '@/fields/link'
 import { console } from 'inspector'
 
 export const hero: Field = {
   name: 'hero',
   type: 'group',
+  label: false,
   fields: [
     {
       name: 'type',
@@ -20,10 +22,6 @@ export const hero: Field = {
       defaultValue: 'hero01',
       label: 'Type',
       options: [
-        {
-          label: 'None',
-          value: 'none',
-        },
         {
           label: 'Hero 01',
           value: 'hero01',
@@ -56,44 +54,47 @@ export const hero: Field = {
       required: true,
     },
     {
-      name: 'title',
-      type: 'text',
-      label: 'title',
-      localized: true,
-      required: true,
-    },
-    {
       name: 'richText',
       type: 'richText',
-      localized: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
+          return [
+            ...rootFeatures,
+            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+            FixedToolbarFeature(),
+            InlineToolbarFeature(),
+          ]
         },
       }),
-      label: 'paragraph',
+      label: false,
+      localized: true,
     },
     linkGroup({
       overrides: {
         maxRows: 2,
       },
     }),
-
     {
-      name: 'logos',
-      type: 'group',
+      type: 'collapsible',
       label: 'Logos',
+      admin: {
+        initCollapsed: true,
+      },
       fields: [
         {
-          name: 'title',
+          name: 'logosHeadline',
           type: 'text',
-          label: 'title',
+          label: 'Logos headline',
+          required: false,
           localized: true,
+          admin: {
+            placeholder: 'e.g., As Featured In, Our Partners',
+          },
         },
         {
-          name: 'logos-images',
+          name: 'logos',
           type: 'array',
-          label: 'logos images',
+          label: 'Logos',
           maxRows: 6,
           fields: [
             {
@@ -117,8 +118,6 @@ export const hero: Field = {
       localized: true,
       relationTo: 'media',
       required: false,
-      label: 'hero image',
     },
   ],
-  label: false,
 }

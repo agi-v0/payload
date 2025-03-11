@@ -8,7 +8,14 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 
-export const Hero01: React.FC<Page['hero']> = ({ linksGroup, media, richText, title, logos }) => {
+export const Hero01: React.FC<Page['hero']> = ({
+  richText,
+  media,
+  links,
+  supportingText,
+  logos,
+  logosHeadline,
+}) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
@@ -20,9 +27,6 @@ export const Hero01: React.FC<Page['hero']> = ({ linksGroup, media, richText, ti
       <div className="mt-14 flex flex-col items-center justify-center md:mt-16">
         <div className="md:text-center">
           <div className="mb-10 flex max-w-4xl flex-col gap-6">
-            <h1 className="text-primary text-center text-5xl leading-[62.4px] font-[600] md:text-7xl md:leading-[93.6px]">
-              {title}
-            </h1>
             {richText && (
               <RichText
                 className="text-primary text-center text-lg font-normal md:text-2xl md:leading-8"
@@ -32,9 +36,9 @@ export const Hero01: React.FC<Page['hero']> = ({ linksGroup, media, richText, ti
             )}
           </div>
           <div className="flex flex-col gap-4">
-            {Array.isArray(linksGroup?.links) && linksGroup?.links.length > 0 && (
+            {Array.isArray(links) && links.length > 0 && (
               <ul className="flex flex-col gap-4 md:flex-row md:justify-center">
-                {linksGroup?.links.map(({ link }, i) => {
+                {links.map(({ link }, i) => {
                   return (
                     <li key={i}>
                       <CMSLink className="w-full" size={'lg'} {...link} />
@@ -43,22 +47,18 @@ export const Hero01: React.FC<Page['hero']> = ({ linksGroup, media, richText, ti
                 })}
               </ul>
             )}
-            <p className="text-primary text-center text-sm font-normal">
-              {linksGroup?.links_caption}
-            </p>
+            <p className="text-secondary text-center text-sm font-normal">{supportingText}</p>
           </div>
         </div>
         <div className="mt-8 flex w-full flex-col gap-6 md:mt-16 md:gap-8">
-          <h5 className="text-primary text-center text-base leading-5 md:text-xl">
-            {logos?.title}
-          </h5>
+          <p className="text-secondary text-body-m text-center">{logosHeadline}</p>
           {Array.isArray(logos?.['logos-images']) && logos?.['logos-images'].length > 0 && (
             <ul className="flex justify-between gap-10">
               {logos?.['logos-images'].map(({ logo }, i) => {
                 return (
                   <li key={i}>
                     {logo && typeof logo === 'object' && (
-                      <Media imgClassName="h-10  w-36 object-contain" priority resource={logo} />
+                      <Media imgClassName="h-10 w-36 object-contain" priority resource={logo} />
                     )}
                   </li>
                 )

@@ -34,7 +34,7 @@ const buttonVariants = cva(
   {
     defaultVariants: {
       size: 'default',
-      buttonStyle: 'brand',
+      color: 'brand',
     },
     variants: {
       size: {
@@ -44,7 +44,7 @@ const buttonVariants = cva(
         icon: 'size-9',
         clear: '',
       },
-      buttonStyle: {
+      color: {
         brand: 'brand',
         neutral: 'neutral',
       },
@@ -65,15 +65,15 @@ const Button: React.FC<ButtonProps> = ({
   className,
   size,
   variant,
-  buttonStyle,
+  color,
   ref,
   ...props
 }) => {
   const Comp = asChild ? Slot : 'button'
 
   const selectedStyle =
-    buttonStyle && variant && appearances[buttonStyle]?.[variant]
-      ? appearances[buttonStyle][variant]
+    color && variant && appearances[color]?.[variant]
+      ? appearances[color][variant]
       : ''
 
   return (

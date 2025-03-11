@@ -150,8 +150,7 @@ export interface Page {
   id: number;
   title: string;
   hero: {
-    type: 'none' | 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07';
-    title: string;
+    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07';
     richText?: {
       root: {
         type: string;
@@ -167,51 +166,42 @@ export interface Page {
       };
       [k: string]: unknown;
     } | null;
-    linksGroup?: {
-      links?:
-        | {
-            link: {
-              type?: ('reference' | 'custom') | null;
-              newTab?: boolean | null;
-              reference?:
-                | ({
-                    relationTo: 'pages';
-                    value: number | Page;
-                  } | null)
-                | ({
-                    relationTo: 'posts';
-                    value: number | Post;
-                  } | null);
-              url?: string | null;
-              label: string;
-              /**
-               * Choose the button style.
-               */
-              linkStyle?: ('brand' | 'neutral') | null;
-              description?: string | null;
-              /**
-               * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-               */
-              icon?: string | null;
-              /**
-               * Choose how the link should be rendered.
-               */
-              appearance?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-            };
-            id?: string | null;
-          }[]
-        | null;
-      links_caption?: string | null;
-    };
-    logos?: {
-      title?: string | null;
-      'logos-images'?:
-        | {
-            logo?: (number | null) | Media;
-            id?: string | null;
-          }[]
-        | null;
-    };
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    supportingText?: string | null;
+    logosHeadline?: string | null;
+    logos?:
+      | {
+          logo?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
     media?: (number | null) | Media;
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
@@ -441,42 +431,35 @@ export interface CallToActionBlock {
     };
     [k: string]: unknown;
   } | null;
-  linksGroup?: {
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            linkStyle?: ('brand' | 'neutral') | null;
-            description?: string | null;
-            /**
-             * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-             */
-            icon?: string | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    links_caption?: string | null;
-  };
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose the button style.
+           */
+          color?: ('brand' | 'neutral') | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  supportingText?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -522,12 +505,7 @@ export interface ContentBlock {
           /**
            * Choose the button style.
            */
-          linkStyle?: ('brand' | 'neutral') | null;
-          description?: string | null;
-          /**
-           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-           */
-          icon?: string | null;
+          color?: ('brand' | 'neutral') | null;
           /**
            * Choose how the link should be rendered.
            */
@@ -1051,41 +1029,30 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
-        title?: T;
         richText?: T;
-        linksGroup?:
+        links?:
           | T
           | {
-              links?:
+              link?:
                 | T
                 | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          linkStyle?: T;
-                          description?: T;
-                          icon?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    color?: T;
+                    appearance?: T;
                   };
-              links_caption?: T;
+              id?: T;
             };
+        supportingText?: T;
+        logosHeadline?: T;
         logos?:
           | T
           | {
-              title?: T;
-              'logos-images'?:
-                | T
-                | {
-                    logo?: T;
-                    id?: T;
-                  };
+              logo?: T;
+              id?: T;
             };
         media?: T;
       };
@@ -1118,29 +1085,23 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface CallToActionBlockSelect<T extends boolean = true> {
   richText?: T;
-  linksGroup?:
+  links?:
     | T
     | {
-        links?:
+        link?:
           | T
           | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    linkStyle?: T;
-                    description?: T;
-                    icon?: T;
-                    appearance?: T;
-                  };
-              id?: T;
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              color?: T;
+              appearance?: T;
             };
-        links_caption?: T;
+        id?: T;
       };
+  supportingText?: T;
   id?: T;
   blockName?: T;
 }
@@ -1163,9 +1124,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
-              linkStyle?: T;
-              description?: T;
-              icon?: T;
+              color?: T;
               appearance?: T;
             };
         id?: T;

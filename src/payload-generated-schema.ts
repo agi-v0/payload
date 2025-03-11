@@ -28,8 +28,8 @@ export const enum_pages_hero_links_group_links_link_type = pgEnum(
   'enum_pages_hero_links_group_links_link_type',
   ['reference', 'custom'],
 )
-export const enum_pages_hero_links_group_links_link_link_style = pgEnum(
-  'enum_pages_hero_links_group_links_link_link_style',
+export const enum_pages_hero_links_group_links_link_color = pgEnum(
+  'enum_pages_hero_links_group_links_link_color',
   ['brand', 'neutral'],
 )
 export const enum_pages_hero_links_group_links_link_appearance = pgEnum(
@@ -40,8 +40,8 @@ export const enum_pages_blocks_cta_links_group_links_link_type = pgEnum(
   'enum_pages_blocks_cta_links_group_links_link_type',
   ['reference', 'custom'],
 )
-export const enum_pages_blocks_cta_links_group_links_link_link_style = pgEnum(
-  'enum_pages_blocks_cta_links_group_links_link_link_style',
+export const enum_pages_blocks_cta_links_group_links_link_color = pgEnum(
+  'enum_pages_blocks_cta_links_group_links_link_color',
   ['brand', 'neutral'],
 )
 export const enum_pages_blocks_cta_links_group_links_link_appearance = pgEnum(
@@ -56,8 +56,8 @@ export const enum_pages_blocks_content_columns_link_type = pgEnum(
   'enum_pages_blocks_content_columns_link_type',
   ['reference', 'custom'],
 )
-export const enum_pages_blocks_content_columns_link_link_style = pgEnum(
-  'enum_pages_blocks_content_columns_link_link_style',
+export const enum_pages_blocks_content_columns_link_color = pgEnum(
+  'enum_pages_blocks_content_columns_link_color',
   ['brand', 'neutral'],
 )
 export const enum_pages_blocks_content_columns_link_appearance = pgEnum(
@@ -87,8 +87,8 @@ export const enum__pages_v_version_hero_links_group_links_link_type = pgEnum(
   'enum__pages_v_version_hero_links_group_links_link_type',
   ['reference', 'custom'],
 )
-export const enum__pages_v_version_hero_links_group_links_link_link_style = pgEnum(
-  'enum__pages_v_version_hero_links_group_links_link_link_style',
+export const enum__pages_v_version_hero_links_group_links_link_color = pgEnum(
+  'enum__pages_v_version_hero_links_group_links_link_color',
   ['brand', 'neutral'],
 )
 export const enum__pages_v_version_hero_links_group_links_link_appearance = pgEnum(
@@ -99,8 +99,8 @@ export const enum__pages_v_blocks_cta_links_group_links_link_type = pgEnum(
   'enum__pages_v_blocks_cta_links_group_links_link_type',
   ['reference', 'custom'],
 )
-export const enum__pages_v_blocks_cta_links_group_links_link_link_style = pgEnum(
-  'enum__pages_v_blocks_cta_links_group_links_link_link_style',
+export const enum__pages_v_blocks_cta_links_group_links_link_color = pgEnum(
+  'enum__pages_v_blocks_cta_links_group_links_link_color',
   ['brand', 'neutral'],
 )
 export const enum__pages_v_blocks_cta_links_group_links_link_appearance = pgEnum(
@@ -115,8 +115,8 @@ export const enum__pages_v_blocks_content_columns_link_type = pgEnum(
   'enum__pages_v_blocks_content_columns_link_type',
   ['reference', 'custom'],
 )
-export const enum__pages_v_blocks_content_columns_link_link_style = pgEnum(
-  'enum__pages_v_blocks_content_columns_link_link_style',
+export const enum__pages_v_blocks_content_columns_link_color = pgEnum(
+  'enum__pages_v_blocks_content_columns_link_color',
   ['brand', 'neutral'],
 )
 export const enum__pages_v_blocks_content_columns_link_appearance = pgEnum(
@@ -189,10 +189,7 @@ export const pages_hero_links_group_links = pgTable(
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
-    link_linkStyle:
-      enum_pages_hero_links_group_links_link_link_style('link_link_style').default('brand'),
-    link_description: varchar('link_description'),
-    link_icon: varchar('link_icon'),
+    link_color: enum_pages_hero_links_group_links_link_color('link_color').default('brand'),
     link_appearance:
       enum_pages_hero_links_group_links_link_appearance('link_appearance').default('primary'),
   },
@@ -243,10 +240,7 @@ export const pages_blocks_cta_links_group_links = pgTable(
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
-    link_linkStyle:
-      enum_pages_blocks_cta_links_group_links_link_link_style('link_link_style').default('brand'),
-    link_description: varchar('link_description'),
-    link_icon: varchar('link_icon'),
+    link_color: enum_pages_blocks_cta_links_group_links_link_color('link_color').default('brand'),
     link_appearance:
       enum_pages_blocks_cta_links_group_links_link_appearance('link_appearance').default('primary'),
   },
@@ -301,10 +295,7 @@ export const pages_blocks_content_columns = pgTable(
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
-    link_linkStyle:
-      enum_pages_blocks_content_columns_link_link_style('link_link_style').default('brand'),
-    link_description: varchar('link_description'),
-    link_icon: varchar('link_icon'),
+    link_color: enum_pages_blocks_content_columns_link_color('link_color').default('brand'),
     link_appearance:
       enum_pages_blocks_content_columns_link_appearance('link_appearance').default('primary'),
   },
@@ -433,6 +424,7 @@ export const pages = pgTable(
   {
     id: serial('id').primaryKey(),
     hero_type: enum_pages_hero_type('hero_type').default('hero01'),
+    hero_richText: jsonb('hero_rich_text'),
     hero_linksGroup_links_caption: varchar('hero_links_group_links_caption'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     slug: varchar('slug'),
@@ -457,8 +449,6 @@ export const pages_locales = pgTable(
   'pages_locales',
   {
     title: varchar('title'),
-    hero_title: varchar('hero_title'),
-    hero_richText: jsonb('hero_rich_text'),
     hero_logos_title: varchar('hero_logos_title'),
     hero_media: integer('hero_media_id').references(() => media.id, {
       onDelete: 'set null',
@@ -548,12 +538,8 @@ export const _pages_v_version_hero_links_group_links = pgTable(
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
-    link_linkStyle:
-      enum__pages_v_version_hero_links_group_links_link_link_style('link_link_style').default(
-        'brand',
-      ),
-    link_description: varchar('link_description'),
-    link_icon: varchar('link_icon'),
+    link_color:
+      enum__pages_v_version_hero_links_group_links_link_color('link_color').default('brand'),
     link_appearance:
       enum__pages_v_version_hero_links_group_links_link_appearance('link_appearance').default(
         'primary',
@@ -613,12 +599,8 @@ export const _pages_v_blocks_cta_links_group_links = pgTable(
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
-    link_linkStyle:
-      enum__pages_v_blocks_cta_links_group_links_link_link_style('link_link_style').default(
-        'brand',
-      ),
-    link_description: varchar('link_description'),
-    link_icon: varchar('link_icon'),
+    link_color:
+      enum__pages_v_blocks_cta_links_group_links_link_color('link_color').default('brand'),
     link_appearance:
       enum__pages_v_blocks_cta_links_group_links_link_appearance('link_appearance').default(
         'primary',
@@ -679,10 +661,7 @@ export const _pages_v_blocks_content_columns = pgTable(
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
-    link_linkStyle:
-      enum__pages_v_blocks_content_columns_link_link_style('link_link_style').default('brand'),
-    link_description: varchar('link_description'),
-    link_icon: varchar('link_icon'),
+    link_color: enum__pages_v_blocks_content_columns_link_color('link_color').default('brand'),
     link_appearance:
       enum__pages_v_blocks_content_columns_link_appearance('link_appearance').default('primary'),
     _uuid: varchar('_uuid'),
@@ -821,6 +800,7 @@ export const _pages_v = pgTable(
       onDelete: 'set null',
     }),
     version_hero_type: enum__pages_v_version_hero_type('version_hero_type').default('hero01'),
+    version_hero_richText: jsonb('version_hero_rich_text'),
     version_hero_linksGroup_links_caption: varchar('version_hero_links_group_links_caption'),
     version_publishedAt: timestamp('version_published_at', {
       mode: 'string',
@@ -880,8 +860,6 @@ export const _pages_v_locales = pgTable(
   '_pages_v_locales',
   {
     version_title: varchar('version_title'),
-    version_hero_title: varchar('version_hero_title'),
-    version_hero_richText: jsonb('version_hero_rich_text'),
     version_hero_logos_title: varchar('version_hero_logos_title'),
     version_hero_media: integer('version_hero_media_id').references(() => media.id, {
       onDelete: 'set null',
@@ -3656,28 +3634,28 @@ export const relations_footer = relations(footer, ({ many }) => ({
 type DatabaseSchema = {
   enum__locales: typeof enum__locales
   enum_pages_hero_links_group_links_link_type: typeof enum_pages_hero_links_group_links_link_type
-  enum_pages_hero_links_group_links_link_link_style: typeof enum_pages_hero_links_group_links_link_link_style
+  enum_pages_hero_links_group_links_link_color: typeof enum_pages_hero_links_group_links_link_color
   enum_pages_hero_links_group_links_link_appearance: typeof enum_pages_hero_links_group_links_link_appearance
   enum_pages_blocks_cta_links_group_links_link_type: typeof enum_pages_blocks_cta_links_group_links_link_type
-  enum_pages_blocks_cta_links_group_links_link_link_style: typeof enum_pages_blocks_cta_links_group_links_link_link_style
+  enum_pages_blocks_cta_links_group_links_link_color: typeof enum_pages_blocks_cta_links_group_links_link_color
   enum_pages_blocks_cta_links_group_links_link_appearance: typeof enum_pages_blocks_cta_links_group_links_link_appearance
   enum_pages_blocks_content_columns_size: typeof enum_pages_blocks_content_columns_size
   enum_pages_blocks_content_columns_link_type: typeof enum_pages_blocks_content_columns_link_type
-  enum_pages_blocks_content_columns_link_link_style: typeof enum_pages_blocks_content_columns_link_link_style
+  enum_pages_blocks_content_columns_link_color: typeof enum_pages_blocks_content_columns_link_color
   enum_pages_blocks_content_columns_link_appearance: typeof enum_pages_blocks_content_columns_link_appearance
   enum_pages_blocks_archive_populate_by: typeof enum_pages_blocks_archive_populate_by
   enum_pages_blocks_archive_relation_to: typeof enum_pages_blocks_archive_relation_to
   enum_pages_hero_type: typeof enum_pages_hero_type
   enum_pages_status: typeof enum_pages_status
   enum__pages_v_version_hero_links_group_links_link_type: typeof enum__pages_v_version_hero_links_group_links_link_type
-  enum__pages_v_version_hero_links_group_links_link_link_style: typeof enum__pages_v_version_hero_links_group_links_link_link_style
+  enum__pages_v_version_hero_links_group_links_link_color: typeof enum__pages_v_version_hero_links_group_links_link_color
   enum__pages_v_version_hero_links_group_links_link_appearance: typeof enum__pages_v_version_hero_links_group_links_link_appearance
   enum__pages_v_blocks_cta_links_group_links_link_type: typeof enum__pages_v_blocks_cta_links_group_links_link_type
-  enum__pages_v_blocks_cta_links_group_links_link_link_style: typeof enum__pages_v_blocks_cta_links_group_links_link_link_style
+  enum__pages_v_blocks_cta_links_group_links_link_color: typeof enum__pages_v_blocks_cta_links_group_links_link_color
   enum__pages_v_blocks_cta_links_group_links_link_appearance: typeof enum__pages_v_blocks_cta_links_group_links_link_appearance
   enum__pages_v_blocks_content_columns_size: typeof enum__pages_v_blocks_content_columns_size
   enum__pages_v_blocks_content_columns_link_type: typeof enum__pages_v_blocks_content_columns_link_type
-  enum__pages_v_blocks_content_columns_link_link_style: typeof enum__pages_v_blocks_content_columns_link_link_style
+  enum__pages_v_blocks_content_columns_link_color: typeof enum__pages_v_blocks_content_columns_link_color
   enum__pages_v_blocks_content_columns_link_appearance: typeof enum__pages_v_blocks_content_columns_link_appearance
   enum__pages_v_blocks_archive_populate_by: typeof enum__pages_v_blocks_archive_populate_by
   enum__pages_v_blocks_archive_relation_to: typeof enum__pages_v_blocks_archive_relation_to

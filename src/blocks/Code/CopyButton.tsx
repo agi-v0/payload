@@ -20,7 +20,7 @@ export function CopyButton({ code }: { code: string }) {
       <Button
         className="flex gap-1"
         variant="primary"
-        buttonStyle="brand"
+        color="brand"
         onClick={async () => {
           await navigator.clipboard.writeText(code)
           updateCopyStatus()

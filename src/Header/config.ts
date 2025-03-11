@@ -15,7 +15,7 @@ export const Header: GlobalConfig = {
       localized: true,
       fields: [
         link({
-          linkStyles: false,
+          colors: false,
           appearances: false,
         }),
       ],
