@@ -25,23 +25,15 @@ export const Hero01: React.FC<Page['hero']> = ({
   return (
     <div className="container flex flex-col gap-8 md:gap-16" data-theme="light">
       <div className="mt-14 flex flex-col items-center justify-center md:mt-16">
-        <div className="md:text-center">
-          <div className="mb-10 flex max-w-4xl flex-col gap-6">
-            {richText && (
-              <RichText
-                className="text-primary text-center text-lg font-normal md:text-2xl md:leading-8"
-                data={richText}
-                enableGutter={false}
-              />
-            )}
-          </div>
+        <div className="flex max-w-4xl flex-col gap-12">
+          {richText && <RichText className="text-center" data={richText} enableGutter={false} />}
           <div className="flex flex-col gap-4">
             {Array.isArray(links) && links.length > 0 && (
-              <ul className="flex flex-col gap-4 md:flex-row md:justify-center">
+              <ul className="flex flex-col gap-2 md:flex-row md:justify-center">
                 {links.map(({ link }, i) => {
                   return (
                     <li key={i}>
-                      <CMSLink className="w-full" size={'lg'} {...link} />
+                      <CMSLink className="w-full" size={'lg'} {...(link as any)} />
                     </li>
                   )
                 })}
@@ -67,7 +59,6 @@ export const Hero01: React.FC<Page['hero']> = ({
           )}
         </div>
       </div>
-
       <div className="min-h-[80vh] select-none">
         {media && typeof media === 'object' && (
           <Media imgClassName="rounded-3xl  object-cover " priority resource={media} />

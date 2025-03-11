@@ -8,7 +8,14 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 
-export const Hero03: React.FC<Page['hero']> = ({ linksGroup, media, richText, title, logos }) => {
+export const Hero03: React.FC<Page['hero']> = ({
+  richText,
+  media,
+  links,
+  supportingText,
+  logos,
+  logosHeadline,
+}) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
@@ -32,24 +39,24 @@ export const Hero03: React.FC<Page['hero']> = ({ linksGroup, media, richText, ti
             )}
           </div>
           <div className="flex flex-col gap-4">
-            {Array.isArray(linksGroup?.links) && linksGroup?.links.length > 0 && (
+            {Array.isArray(links) && links.length > 0 && (
               <ul className="flex flex-col gap-1 md:flex-row md:gap-4">
-                {linksGroup?.links.map(({ link }, i) => {
+                {links.map(({ link }, i) => {
                   return (
                     <li key={i}>
-                      <CMSLink className="w-full md:w-auto" size={'lg'} {...link} />
+                      <CMSLink className="w-full md:w-auto" size={'lg'} {...(link as any)} />
                     </li>
                   )
                 })}
               </ul>
             )}
             <p className="text-primary text-center text-sm font-normal ltr:md:text-left rtl:md:text-right">
-              {linksGroup?.links_caption}
+              {supportingText}
             </p>
           </div>
         </div>
         <div className="flex w-full flex-col gap-8">
-          <h5 className="text-primary text-xl leading-5">{logos?.title}</h5>
+          <h5 className="text-primary text-xl leading-5">{logosHeadline}</h5>
           {Array.isArray(logos?.['logos-images']) && logos?.['logos-images'].length > 0 && (
             <ul className="flex justify-between gap-10">
               {logos?.['logos-images'].map(({ logo }, i) => {

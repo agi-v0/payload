@@ -1,14 +1,11 @@
 @import 'tailwindcss';
-/*
-  ---break---
-*/
+@import './typography.css' layer(components);
+
 @plugin 'tailwindcss-animate';
-/*
-  ---break---
-*/
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-@config '../../../../tailwind.config.mjs';
+/* @config '../../../../tailwind.config.mjs'; */
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4;
@@ -18,6 +15,7 @@
   If we ever want to remove these styles; we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
+
 @layer base {
   *,
   ::after,
@@ -26,9 +24,7 @@
   ::file-selector-button {
     border-color: var(--color-neutral-200, currentColor);
   }
-}
 
-@layer base {
   h1,
   h2,
   h3,
@@ -38,6 +34,11 @@
     font-size: unset;
     font-weight: 600;
   }
+}
+
+[lang='ar'] {
+  direction: rtl;
+  letter-spacing: 0;
 }
 
 :root {
@@ -167,15 +168,20 @@
   --color-button-brand: var(--brand);
 
   /* use for foreground (text & icons) */
-  --color-neutral-primary: var(--neutral-primary);
-  --color-neutral-secondary: var(--neutral-secondary);
-  --color-neutral-tertiary: var(--neutral-tertiary);
-  --color-neutral-quaternary: var(--neutral-quaternary);
+  --color-base-primary: var(--neutral-primary);
+  --color-base-secondary: var(--neutral-secondary);
+  --color-base-tertiary: var(--neutral-tertiary);
+  --color-base-quaternary: var(--neutral-quaternary);
 
   --color-brand-primary: var(--brand-primary);
   --color-brand-secondary: var(--brand-secondary);
   --color-brand-tertiary: var(--brand-tertiary);
   --color-brand-quaternary: var(--brand-quaternary);
+
+  --spacing-site: clamp(1rem, 0.714rem + 1.43vw, 2rem);
+  --spacing-lg: clamp(1.5rem, 1.358rem + 0.71vw, 2rem);
+  --spacing-md: clamp(1rem, 0.858rem + 0.71vw, 1.5rem);
+  --spacing-sm: clamp(0.5rem, 0.358rem + 0.71vw, 1rem);
 
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -236,21 +242,20 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    opacity: 0;
+  }
+  html[data-theme='dark'],
+  html[data-theme='light'] {
+    opacity: initial;
+  }
   body {
     @apply bg-background text-foreground flex min-h-[100vh] flex-col;
   }
 }
 
-html {
-  opacity: 0;
-}
-html[data-theme='dark'],
-html[data-theme='light'] {
-  opacity: initial;
-}
-
 @utility container {
   margin-inline: auto;
-  padding-inline: 2rem;
+  padding-inline: theme(--spacing-site);
   max-width: theme(--breakpoint-2xl);
 }

@@ -4,50 +4,87 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utilities/ui'
 
-const variants = {
-  brand: {
-    primary:
-      'bg-button-brand-primary text-base-static-white-primary hover:bg-button-brand-primary/90',
-    secondary:
-      'bg-button-brand-secondary border border-border-action-normal hover:border-border-action-hover text-button-brand-secondary hover:bg-button-brand-secondary/90',
-    tertiary:
-      'bg-button-brand-tertiary/10 text-base-static-white hover:bg-button-brand-tertiary/20',
-    ghost:
-      'bg-button-brand-ghost/0 text-button-brand-primary hover:bg-button-brand-ghost/10 text-2xl',
-    link: 'text-primary items-start justify-start underline-offset-4 hover:underline',
-  },
-  neutral: {
-    primary:
-      'bg-button-neutral-primary text-base-static-black-primary hover:bg-button-neutral-primary/90',
-    secondary:
-      'bg-button-neutral-secondary border border-border-neutral-normal hover:border-border-neutral-hover text-button-neutral-secondary hover:bg-button-neutral-secondary/90',
-    tertiary:
-      'bg-button-neutral-tertiary/10 text-base-static-black hover:bg-button-neutral-tertiary/20',
-    ghost:
-      'bg-button-neutral-ghost/0 text-button-neutral-primary hover:bg-button-neutral-ghost/10 text-2xl',
-    link: 'text-neutral items-start justify-start underline-offset-4 hover:underline',
-  },
-}
-
 const buttonVariants = cva(
-  "ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 inline-flex items-center justify-center gap-2 rounded-md text-(length:--text-body) font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-4 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 aria-invalid:focus-visible:ring-0 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  'ring-offset-background focus-visible:ring-ring focus-visible:secondary-none -[&_svg]:size-4 inline-flex items-center justify-center gap-2 rounded-sm text-(length:--text-body-l) font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rtl:tracking-normal [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
-    defaultVariants: {
-      size: 'default',
-      color: 'brand',
-    },
     variants: {
-      size: {
-        default: 'px-(length:--text-body) py-3 has-[>svg]:px-3',
-        sm: 'h-8 rounded-md px-3 has-[>svg]:px-2.5',
-        lg: 'h-12 rounded-md px-6 has-[>svg]:px-4',
-        icon: 'size-9',
-        clear: '',
+      variant: {
+        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        secondary: 'border-input bg-background hover:bg-accent hover:text-accent-foreground border',
+        tertiary: '',
+        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+        ghost: 'bg-transparent',
+        link: 'text-base-primary underline-offset-4 hover:underline',
       },
       color: {
-        brand: 'brand',
-        neutral: 'neutral',
+        brand: '',
+        neutral: '',
       },
+      size: {
+        clear: '',
+        default: 'h-10 px-4 py-2',
+        sm: 'h-9 rounded-sm px-3',
+        lg: 'h-[52px] rounded-lg px-5',
+        icon: 'h-10 w-10',
+      },
+    },
+    compoundVariants: [
+      {
+        color: 'brand',
+        variant: 'primary',
+        className: 'bg-brand hover:bg-brand/90 text-white',
+      },
+      {
+        color: 'brand',
+        variant: 'secondary',
+        className: 'hover:bg-background-light bg-background text-base-primary border-input',
+      },
+      {
+        color: 'brand',
+        variant: 'tertiary',
+        className: 'bg-brand/30 hover:bg-brand/60 text-brand-secondary',
+      },
+      {
+        color: 'brand',
+        variant: 'ghost',
+        className: 'text-brand-secondary hover:bg-brand/10',
+      },
+      {
+        color: 'brand',
+        variant: 'link',
+        className: 'text-brand-primary hover:text-brand-primary/90',
+      },
+      {
+        color: 'neutral',
+        variant: 'primary',
+        className: 'bg-neutral hover:bg-neutral/90 text-white',
+      },
+      {
+        color: 'neutral',
+        variant: 'secondary',
+        className: 'hover:bg-background-light bg-background text-base-primary border-input',
+      },
+      {
+        color: 'neutral',
+        variant: 'tertiary',
+        className: 'bg-neutral/30 hover:bg-neutral/60 text-base-secondary',
+      },
+      {
+        color: 'neutral',
+        variant: 'ghost',
+        className: 'text-base-secondary hover:bg-neutral/10',
+      },
+      {
+        color: 'neutral',
+        variant: 'link',
+        className: 'text-base-primary hover:text-base-primary/90',
+      },
+    ],
+    defaultVariants: {
+      variant: 'primary',
+      size: 'lg',
+      color: 'brand',
     },
   },
 )
@@ -56,27 +93,21 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
-  ref?: React.Ref<HTMLButtonElement>
-  variant?: keyof (typeof variants)['brand'] | null
+  color?: 'brand' | 'neutral'
 }
 
-const Button: React.FC<ButtonProps> = ({
-  asChild = false,
-  className,
-  size,
-  variant,
-  color,
-  ref,
-  ...props
-}) => {
-  const Comp = asChild ? Slot : 'button'
-
-  const selectedStyle =
-    color && variant && variants[color]?.[variant] ? variants[color][variant] : ''
-
-  return (
-    <Comp className={cn(buttonVariants({ className, size }), selectedStyle)} ref={ref} {...props} />
-  )
-}
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, color, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : 'button'
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, color, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  },
+)
+Button.displayName = 'Button'
 
 export { Button, buttonVariants }
