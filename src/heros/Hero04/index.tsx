@@ -28,7 +28,6 @@ export const Hero04: React.FC<Page['hero']> = ({
         <div className="flex w-1/2 flex-col justify-between ltr:pr-12 rtl:pl-12">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-6">
-              <h1 className="text-primary text-7xl leading-[93.6px] font-[600]">{title}</h1>
               {richText && (
                 <RichText
                   className="text-primary mx-0 max-w-4xl text-2xl leading-8 font-normal"
