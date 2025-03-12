@@ -7,6 +7,7 @@ import type { Page } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
+import { Badge } from '@/components/ui/badge'
 
 export const Hero01: React.FC<Page['hero']> = ({
   richText,
@@ -15,6 +16,7 @@ export const Hero01: React.FC<Page['hero']> = ({
   supportingText,
   logos,
   logosHeadline,
+  badge,
 }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
@@ -26,6 +28,14 @@ export const Hero01: React.FC<Page['hero']> = ({
     <div className="container flex flex-col gap-8 md:gap-16" data-theme="light">
       <div className="mt-14 flex flex-col items-center justify-center md:mt-16">
         <div className="flex max-w-4xl flex-col gap-12">
+          {/* TODO: Hide all elements when their value is null */}
+          <Badge
+            label={badge?.label}
+            icon={badge?.icon}
+            icon_dir={badge?.icon_dir}
+            variant={badge?.color}
+          />
+
           {richText && <RichText className="text-center" data={richText} enableGutter={false} />}
           <div className="flex flex-col gap-4">
             {Array.isArray(links) && links.length > 0 && (

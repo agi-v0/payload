@@ -203,6 +203,18 @@ export interface Page {
         }[]
       | null;
     media?: (number | null) | Media;
+    badge?: {
+      label?: string | null;
+      /**
+       * Choose the badge color.
+       */
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
+    };
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
   meta?: {
@@ -1055,6 +1067,14 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        badge?:
+          | T
+          | {
+              label?: T;
+              color?: T;
+              icon?: T;
+              icon_dir?: T;
+            };
       };
   layout?:
     | T

@@ -84,6 +84,12 @@ export const enum_pages_hero_type = pgEnum('enum_pages_hero_type', [
   'hero06',
   'hero07',
 ])
+export const enum_pages_hero_color = pgEnum('enum_pages_hero_color', [
+  'blue',
+  'red',
+  'green',
+  'yellow',
+])
 export const enum_pages_status = pgEnum('enum_pages_status', ['draft', 'published'])
 export const enum__pages_v_version_hero_links_link_type = pgEnum(
   'enum__pages_v_version_hero_links_link_type',
@@ -141,6 +147,12 @@ export const enum__pages_v_version_hero_type = pgEnum('enum__pages_v_version_her
   'hero05',
   'hero06',
   'hero07',
+])
+export const enum__pages_v_version_hero_color = pgEnum('enum__pages_v_version_hero_color', [
+  'blue',
+  'red',
+  'green',
+  'yellow',
 ])
 export const enum__pages_v_version_status = pgEnum('enum__pages_v_version_status', [
   'draft',
@@ -421,6 +433,8 @@ export const pages = pgTable(
     id: serial('id').primaryKey(),
     hero_type: enum_pages_hero_type('hero_type').default('hero01'),
     hero_supportingText: varchar('hero_supporting_text'),
+    hero_label: varchar('hero_label'),
+    hero_color: enum_pages_hero_color('hero_color').default('blue'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
@@ -781,6 +795,8 @@ export const _pages_v = pgTable(
     }),
     version_hero_type: enum__pages_v_version_hero_type('version_hero_type').default('hero01'),
     version_hero_supportingText: varchar('version_hero_supporting_text'),
+    version_hero_label: varchar('version_hero_label'),
+    version_hero_color: enum__pages_v_version_hero_color('version_hero_color').default('blue'),
     version_publishedAt: timestamp('version_published_at', {
       mode: 'string',
       withTimezone: true,
@@ -3617,6 +3633,7 @@ type DatabaseSchema = {
   enum_pages_blocks_archive_populate_by: typeof enum_pages_blocks_archive_populate_by
   enum_pages_blocks_archive_relation_to: typeof enum_pages_blocks_archive_relation_to
   enum_pages_hero_type: typeof enum_pages_hero_type
+  enum_pages_hero_color: typeof enum_pages_hero_color
   enum_pages_status: typeof enum_pages_status
   enum__pages_v_version_hero_links_link_type: typeof enum__pages_v_version_hero_links_link_type
   enum__pages_v_version_hero_links_link_color: typeof enum__pages_v_version_hero_links_link_color
@@ -3631,6 +3648,7 @@ type DatabaseSchema = {
   enum__pages_v_blocks_archive_populate_by: typeof enum__pages_v_blocks_archive_populate_by
   enum__pages_v_blocks_archive_relation_to: typeof enum__pages_v_blocks_archive_relation_to
   enum__pages_v_version_hero_type: typeof enum__pages_v_version_hero_type
+  enum__pages_v_version_hero_color: typeof enum__pages_v_version_hero_color
   enum__pages_v_version_status: typeof enum__pages_v_version_status
   enum__pages_v_published_locale: typeof enum__pages_v_published_locale
   enum_posts_status: typeof enum_posts_status
