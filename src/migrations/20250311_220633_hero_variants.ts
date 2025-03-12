@@ -2,6 +2,10 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
+    ALTER TABLE "public"."_pages_v" ALTER COLUMN "version_hero_type" SET DATA TYPE text;
+  DROP TYPE "public"."enum__pages_v_version_hero_type";
+  CREATE TYPE "public"."enum__pages_v_version_hero_type" AS ENUM('hero01', 'hero02', 'hero03', 'hero04', 'hero05', 'hero06', 'hero07');
+  ALTER TABLE "public"."_pages_v" ALTER COLUMN "version_hero_type" SET DATA TYPE "public"."enum__pages_v_version_hero_type" USING "version_hero_type"::"public"."enum__pages_v_version_hero_type";
    CREATE TYPE "public"."enum_pages_hero_links_link_color" AS ENUM('brand', 'neutral');
   CREATE TYPE "public"."enum_pages_blocks_cta_links_link_color" AS ENUM('brand', 'neutral');
   CREATE TYPE "public"."enum_pages_blocks_content_columns_link_color" AS ENUM('brand', 'neutral');
@@ -108,10 +112,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   DROP TYPE "public"."enum__pages_v_blocks_content_columns_link_variant";
   CREATE TYPE "public"."enum__pages_v_blocks_content_columns_link_variant" AS ENUM('primary', 'secondary', 'tertiary', 'ghost', 'link');
   ALTER TABLE "public"."_pages_v_blocks_content_columns" ALTER COLUMN "link_variant" SET DATA TYPE "public"."enum__pages_v_blocks_content_columns_link_variant" USING "link_variant"::"public"."enum__pages_v_blocks_content_columns_link_variant";
-  ALTER TABLE "public"."_pages_v" ALTER COLUMN "version_hero_type" SET DATA TYPE text;
-  DROP TYPE "public"."enum__pages_v_version_hero_type";
-  CREATE TYPE "public"."enum__pages_v_version_hero_type" AS ENUM('hero01', 'hero02', 'hero03', 'hero04', 'hero05', 'hero06', 'hero07');
-  ALTER TABLE "public"."_pages_v" ALTER COLUMN "version_hero_type" SET DATA TYPE "public"."enum__pages_v_version_hero_type" USING "version_hero_type"::"public"."enum__pages_v_version_hero_type";`)
+  `)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
