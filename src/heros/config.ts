@@ -50,6 +50,10 @@ export const hero: Field = {
           label: 'Hero 07',
           value: 'hero07',
         },
+        {
+          label: 'None',
+          value: 'none',
+        },
       ],
       required: true,
     },

@@ -150,7 +150,7 @@ export interface Page {
   id: number;
   title: string;
   hero: {
-    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07';
+    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07' | 'None';
     richText?: {
       root: {
         type: string;
