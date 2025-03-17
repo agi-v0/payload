@@ -33,9 +33,9 @@ function Badge({
   label,
   ...props
 }: BadgeProps & {
-  icon?: keyof typeof dynamicIconImports
-  icon_dir?: string
-  label?: string
+  icon?: keyof typeof dynamicIconImports | string | null
+  icon_dir?: string | null
+  label?: string | null
 }) {
   return (
     <div className={cn(badgeVariants({ variant }), icon_dir, className)} {...props}>

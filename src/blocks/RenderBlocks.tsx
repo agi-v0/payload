@@ -8,6 +8,7 @@ import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { RenderBlockHeader } from '@/blocks/BlockHeader/RenderBlockHeader'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -35,13 +36,17 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className="my-16" key={index}>
+                <div className="my-20" key={index}>
+                  {block.blockHeader && (
+                    <RenderBlockHeader type={block.blockHeader.type} {...block.blockHeader} />
+                  )}
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>
               )
             }
           }
+
           return null
         })}
       </Fragment>
