@@ -1,6 +1,6 @@
 import React from 'react'
 
-import type { Page } from '@/payload-types'
+import { BlockHeaderProps, BlockHeaderType } from '@/types/blockHeader'
 
 import { BlockHeader01 } from '@/blocks/BlockHeader/BlockHeader01'
 import { BlockHeader02 } from '@/blocks/BlockHeader/BlockHeader02'
@@ -14,7 +14,7 @@ const blockHeaders = {
   blockheader04: BlockHeader04,
 }
 
-export const RenderBlockHeader: React.FC<Page['layout'][0]> = (props) => {
+export const RenderBlockHeader: React.FC<BlockHeaderType> = (props) => {
   const { type } = props || {}
 
   if (!type || type === 'none') return null
@@ -23,5 +23,5 @@ export const RenderBlockHeader: React.FC<Page['layout'][0]> = (props) => {
 
   if (!BlockHeaderToRender) return null
 
-  return <BlockHeaderToRender {...props} />
+  return <BlockHeaderToRender {...(props.blockHeader as BlockHeaderProps)} />
 }

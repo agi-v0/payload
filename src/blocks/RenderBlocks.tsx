@@ -1,14 +1,14 @@
-import { cn } from '@/utilities/ui'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 
-import type { Page } from '@/payload-types'
-
+import { Page } from '@/payload-types'
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
-import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
+import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { StyledListBlock } from '@/blocks/StyledList/Component'
 import { RenderBlockHeader } from '@/blocks/BlockHeader/RenderBlockHeader'
+import { BlockHeaderType } from '@/types/blockHeader'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -18,8 +18,11 @@ const blockComponents = {
   mediaBlock: MediaBlock,
 }
 
+// Define a type for our blocks that includes the blockHeader property
+type BlockWithHeader = Page['layout'][0] & BlockHeaderType
+
 export const RenderBlocks: React.FC<{
-  blocks: Page['layout'][0][]
+  blocks: BlockWithHeader[]
 }> = (props) => {
   const { blocks } = props
 
@@ -32,26 +35,27 @@ export const RenderBlocks: React.FC<{
           const { blockType } = block
 
           if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
+            const Block = blockComponents[blockType as keyof typeof blockComponents]
 
             if (Block) {
               return (
                 <div className="my-20" key={index}>
                   {block.blockHeader && (
-                    <RenderBlockHeader type={block.blockHeader.type} {...block.blockHeader} />
+                    <RenderBlockHeader
+                      type={block.blockHeader.type}
+                      blockHeader={block.blockHeader}
+                    />
                   )}
-                  {/* @ts-expect-error there may be some mismatch between the expected types here */}
-                  <Block {...block} disableInnerContainer />
+
+                  <Block {...(block as any)} />
                 </div>
               )
             }
           }
-
           return null
         })}
       </Fragment>
     )
   }
-
   return null
 }

@@ -8,12 +8,22 @@ import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 
-export const BlockHeader04: React.FC<Page['hero']> = ({ richText, links, badge }) => {
+type BlockHeader04Props = {
+  richText?: any
+  richTextWithStyledList?: any
+  links?: any
+  badge?: any
+}
+
+export const BlockHeader04: React.FC<BlockHeader04Props> = (props) => {
+  const { richTextWithStyledList, richText, links, badge } = props
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
     setHeaderTheme('light')
   })
+
+  const contentToRender = richTextWithStyledList || richText
 
   return (
     <div className="container flex flex-col gap-6" data-theme="light">
@@ -26,7 +36,7 @@ export const BlockHeader04: React.FC<Page['hero']> = ({ richText, links, badge }
         />
       )}
 
-      {richText && <RichText className="m-0" data={richText} enableGutter={false} />}
+      {contentToRender && <RichText className="m-0" data={contentToRender} enableGutter={false} />}
       {links && (
         <div className="flex flex-col gap-4 md:pt-6">
           {Array.isArray(links) && links.length > 0 && (

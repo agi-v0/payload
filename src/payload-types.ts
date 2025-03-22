@@ -216,7 +216,7 @@ export interface Page {
       icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | StyledListBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -442,7 +442,7 @@ export interface CallToActionBlock {
       icon?: string | null;
       icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
-    richText?: {
+    richTextWithStyledList?: {
       root: {
         type: string;
         children: {
@@ -834,6 +834,20 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StyledListBlock".
+ */
+export interface StyledListBlock {
+  listStyle?: ('bullet' | 'check' | 'numbered' | 'feature') | null;
+  items: {
+    text: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'styledList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1143,6 +1157,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        styledList?: T | StyledListBlockSelect<T>;
       };
   meta?:
     | T
@@ -1175,7 +1190,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               icon?: T;
               icon_dir?: T;
             };
-        richText?: T;
+        richTextWithStyledList?: T;
         links?:
           | T
           | {
@@ -1273,6 +1288,21 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StyledListBlock_select".
+ */
+export interface StyledListBlockSelect<T extends boolean = true> {
+  listStyle?: T;
+  items?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

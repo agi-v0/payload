@@ -3,6 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utilities/ui'
 import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
+import type { LucideIcon } from 'lucide-react'
 
 const badgeVariants = cva(
   'focus:ring-ring inline-flex max-w-max items-center gap-1 rounded-md px-1.5 py-1 text-sm font-medium transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none',
@@ -33,14 +34,16 @@ function Badge({
   label,
   ...props
 }: BadgeProps & {
-  icon?: keyof typeof dynamicIconImports | string | null
+  icon?: string | null
   icon_dir?: string | null
   label?: string | null
 }) {
+  const iconName = icon ? (icon as keyof typeof dynamicIconImports) : undefined
+
   return (
     <div className={cn(badgeVariants({ variant }), icon_dir, className)} {...props}>
       <p>{label}</p>
-      {icon && <DynamicIcon name={icon} color="currentColor" size={16} />}
+      {iconName && <DynamicIcon name={iconName} color="currentColor" size={16} />}
     </div>
   )
 }
