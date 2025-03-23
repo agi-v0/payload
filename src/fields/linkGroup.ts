@@ -12,6 +12,7 @@ type LinkGroupType = (options?: {
   icon?: boolean
   description?: boolean
   overrides?: Partial<ArrayField>
+  supportingText?: boolean
 }) => Field
 
 export const linkGroup: LinkGroupType = ({
@@ -20,6 +21,7 @@ export const linkGroup: LinkGroupType = ({
   description,
   icon,
   overrides = {},
+  supportingText = false,
 } = {}) => {
   const generatedLinkGroup: Field = {
     // name: 'links',
@@ -42,16 +44,17 @@ export const linkGroup: LinkGroupType = ({
           }),
         ],
       },
-      {
-        name: 'supportingText',
-        type: 'text',
-        label: 'Supporting text',
-        required: false,
-        admin: {
-          placeholder: 'e.g., 30-day refund',
-        },
-      },
     ],
   }
+  supportingText &&
+    generatedLinkGroup.fields.push({
+      name: 'supportingText',
+      type: 'text',
+      label: 'Supporting text',
+      required: false,
+      admin: {
+        placeholder: 'e.g., 30-day refund',
+      },
+    })
   return deepMerge(generatedLinkGroup, overrides)
 }
