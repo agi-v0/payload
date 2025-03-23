@@ -8,8 +8,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '@/fields/linkGroup'
-import { link } from '@/fields/link'
-import { console } from 'inspector'
+import { badge } from '@/fields/badge'
 
 export const hero: Field = {
   name: 'hero',
@@ -123,5 +122,6 @@ export const hero: Field = {
       relationTo: 'media',
       required: false,
     },
+    badge({}),
   ],
 }

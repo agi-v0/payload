@@ -1,6 +1,7 @@
 import React from 'react'
 
-import type { Page } from '@/payload-types'
+import { HeroProps } from '@/types/hero'
+import { Page } from '@/payload-types'
 
 import { Hero01 } from '@/heros/Hero01'
 import { Hero02 } from '@/heros/Hero02'
@@ -20,14 +21,15 @@ const heroes = {
   hero07: Hero07,
 }
 
-export const RenderHero: React.FC<Page['hero']> = (props) => {
+export const RenderHero: React.FC<HeroProps> = (props) => {
   const { type } = props || {}
 
   if (!type || type === 'none') return null
 
-  const HeroToRender = heroes[type]
+  const HeroToRender = heroes[type as keyof typeof heroes]
 
   if (!HeroToRender) return null
 
-  return <HeroToRender {...props} />
+  // Type assertion to ensure props match the expected type
+  return <HeroToRender {...(props as Page['hero'])} />
 }
