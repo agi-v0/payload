@@ -1,32 +1,18 @@
-'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import type { Page } from '@/payload-types'
+import { BlockHeaderProps } from '@/types/blockHeader'
 
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
-
-type BlockHeaderProps = {
-  richText?: any
-  richTextStandard?: any
-  links?: any
-  badge?: any
-}
+import { cn } from '@/utilities/ui'
 
 export const BlockHeader01: React.FC<BlockHeaderProps> = (props) => {
-  const { richTextStandard, richText, links, badge } = props
-  const { setHeaderTheme } = useHeaderTheme()
-
-  useEffect(() => {
-    setHeaderTheme('light')
-  })
-
-  const contentToRender = richTextStandard || richText
+  const { headerText, links, badge } = props
 
   return (
-    <div className="container flex flex-col gap-6" data-theme="light">
+    <div className={cn('container flex flex-col gap-6')} data-theme="light">
       {badge && (
         <Badge
           label={badge?.label}
@@ -35,10 +21,7 @@ export const BlockHeader01: React.FC<BlockHeaderProps> = (props) => {
           variant={badge?.color}
         />
       )}
-
-      {contentToRender && (
-        <RichText className="text-center" data={contentToRender} enableGutter={false} />
-      )}
+      {headerText && <RichText className="text-center" data={headerText} enableGutter={false} />}
       {links && (
         <div className="flex flex-col gap-4">
           {Array.isArray(links) && links.length > 0 && (

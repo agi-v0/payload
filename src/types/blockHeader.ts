@@ -7,6 +7,7 @@ export type BlockHeaderType = {
     richText?: SerializedEditorState
     richTextStandard?: SerializedEditorState
     richTextWithStyledList?: SerializedEditorState
+    headerText?: SerializedEditorState
     badge?: any
     links?: any
   }
@@ -16,6 +17,7 @@ export type BlockHeaderProps = {
   richText?: SerializedEditorState
   richTextStandard?: SerializedEditorState
   richTextWithStyledList?: SerializedEditorState
+  headerText?: SerializedEditorState
   links?: any
   badge?: any
 }

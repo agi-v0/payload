@@ -5,9 +5,10 @@ import RichText from '@/components/RichText'
 import type { ContentBlock as ContentBlockProps } from '@/payload-types'
 
 import { CMSLink } from '../../components/Link'
+import { RenderBlockHeader } from '../BlockHeader/RenderBlockHeader'
 
 export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
-  const { columns } = props
+  const { blockHeader, columns } = props
 
   const colsSpanClasses = {
     full: '12',
@@ -18,6 +19,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
 
   return (
     <div className="container my-16">
+      <RenderBlockHeader {...blockHeader} />
       <div className="grid grid-cols-4 gap-x-16 gap-y-8 lg:grid-cols-12">
         {columns &&
           columns.length > 0 &&

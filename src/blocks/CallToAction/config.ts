@@ -15,22 +15,22 @@ export const CallToAction: Block = {
   interfaceName: 'CallToActionBlock',
   fields: [
     blockHeader,
-    {
-      name: 'richText',
-      type: 'richText',
-      localized: true,
-      editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-          ]
-        },
-      }),
-      label: false,
-    },
+    // {
+    //   name: 'richText',
+    //   type: 'richText',
+    //   localized: true,
+    //   editor: lexicalEditor({
+    //     features: ({ rootFeatures }) => {
+    //       return [
+    //         ...rootFeatures,
+    //         HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+    //         FixedToolbarFeature(),
+    //         InlineToolbarFeature(),
+    //       ]
+    //     },
+    //   }),
+    //   label: false,
+    // },
     linkGroup({
       overrides: {
         maxRows: 2,

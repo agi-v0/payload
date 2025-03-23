@@ -28,7 +28,7 @@ const editorWithStyledList = lexicalEditor({
   features: ({ rootFeatures }) => {
     return [
       ...rootFeatures,
-      HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+      HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
       FixedToolbarFeature(),
       InlineToolbarFeature(),
       BlocksFeature({ blocks: [StyledList] }),
@@ -37,73 +37,55 @@ const editorWithStyledList = lexicalEditor({
 })
 
 export const blockHeader: Field = {
+  name: 'blockHeader',
+  type: 'group',
   label: 'Block Header',
-  type: 'collapsible',
-  admin: {
-    initCollapsed: true,
-  },
   fields: [
     {
-      name: 'blockHeader',
-      type: 'group',
-      label: 'Block Header',
-      fields: [
+      name: 'type',
+      type: 'select',
+      defaultValue: 'blockheader01',
+      label: 'Type',
+      options: [
         {
-          name: 'type',
-          type: 'select',
-          defaultValue: 'blockheader01',
-          label: 'Type',
-          options: [
-            {
-              label: 'Varient 1',
-              value: 'blockheader01',
-            },
-            {
-              label: 'Varient 2',
-              value: 'blockheader02',
-            },
-            {
-              label: 'Varient 3',
-              value: 'blockheader03',
-            },
-            {
-              label: 'Varient 4',
-              value: 'blockheader04',
-            },
-          ],
-          required: true,
+          label: 'Center',
+          value: 'blockheader01',
         },
-        badge({}),
-        // {
-        //   name: 'richTextStandard',
-        //   type: 'richText',
-        //   editor: standardEditor,
-        //   label: 'Content',
-        //   localized: true,
-        //   admin: {
-        //     condition: (_, siblingData) => {
-        //       return siblingData?.type !== 'blockheader04'
-        //     },
-        //   },
-        // },
         {
-          name: 'richTextWithStyledList',
-          type: 'richText',
-          editor: editorWithStyledList,
-          label: 'Content',
-          localized: true,
-          // admin: {
-          //   condition: (_, siblingData) => {
-          //     return siblingData?.type === 'blockheader04'
-          //   },
-          // },
+          label: 'Split',
+          value: 'blockheader02',
         },
-        linkGroup({
-          overrides: {
-            maxRows: 2,
-          },
-        }),
+        {
+          label: 'Start',
+          value: 'blockheader03',
+        },
       ],
+      required: true,
     },
+    badge({}),
+    // {
+    //   name: 'richTextStandard',
+    //   type: 'richText',
+    //   editor: standardEditor,
+    //   label: 'Content',
+    //   localized: true,
+    //   admin: {
+    //     condition: (_, siblingData) => {
+    //       return siblingData?.type !== 'blockheader04'
+    //     },
+    //   },
+    // },
+    {
+      name: 'headerText',
+      type: 'richText',
+      editor: editorWithStyledList,
+      label: false,
+      localized: true,
+    },
+    linkGroup({
+      overrides: {
+        maxRows: 2,
+      },
+    }),
   ],
 }
