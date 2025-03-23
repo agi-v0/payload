@@ -46,6 +46,7 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
   const badge: Field = {
     name: 'badge',
     type: 'group',
+    label: false,
     admin: {
       hideGutter: true,
     },
@@ -60,6 +61,7 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
             admin: {
               width: '50%',
             },
+            localized: true,
           },
           {
             name: 'color',
