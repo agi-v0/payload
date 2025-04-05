@@ -23,7 +23,7 @@ export const BlockHeader01: React.FC<BlockHeaderProps> = (props) => {
       )}
       {headerText && <RichText className="text-center" data={headerText} enableGutter={false} />}
       {links && (
-        <div className="flex flex-col gap-4">
+        <div id="links" className="flex flex-col gap-4">
           {Array.isArray(links) && links.length > 0 && (
             <ul className="flex flex-col gap-2 md:flex-row md:justify-center">
               {links.map(({ link }, i) => {

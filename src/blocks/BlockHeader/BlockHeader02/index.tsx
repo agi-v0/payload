@@ -7,26 +7,28 @@ import type { Page } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
+import { cn } from '@/utilities/ui'
 
 type BlockHeaderProps = {
-  richText?: any
-  richTextStandard?: any
+  headerText?: any
   links?: any
   badge?: any
+  className?: string
 }
 
 export const BlockHeader02: React.FC<BlockHeaderProps> = (props) => {
-  const { richTextStandard, richText, links, badge } = props
+  const { headerText, links, badge } = props
+
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
     setHeaderTheme('light')
   })
 
-  const contentToRender = richTextStandard || richText
+  // const contentToRender = richTextStandard || richText
 
   return (
-    <div className="container flex flex-col md:gap-6" data-theme="light">
+    <div className={cn('gap-site container grid grid-cols-2', className)} data-theme="light">
       {/* TODO: Hide all elements when their value is null */}
       {badge && (
         <Badge
@@ -37,15 +39,15 @@ export const BlockHeader02: React.FC<BlockHeaderProps> = (props) => {
         />
       )}
 
-      {contentToRender && (
+      {headerText && (
         <RichText
-          className="flex gap-4 [&>*]:basis-1/2"
-          data={contentToRender}
+          className="col-span-2 row-start-2 mx-0 grid grid-cols-subgrid gap-4"
+          data={headerText}
           enableGutter={false}
         />
       )}
       {links && (
-        <div className="mr-auto w-1/2 pr-2">
+        <div className="col-start-2 row-start-3">
           {Array.isArray(links) && links.length > 0 && (
             <ul className="flex flex-col gap-2 md:flex-row">
               {links.map(({ link }, i) => {
