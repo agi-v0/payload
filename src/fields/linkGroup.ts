@@ -46,7 +46,7 @@ export const linkGroup: LinkGroupType = ({
       },
     ],
   }
-  supportingText &&
+  if (supportingText) {
     generatedLinkGroup.fields.push({
       name: 'supportingText',
       type: 'text',
@@ -56,5 +56,6 @@ export const linkGroup: LinkGroupType = ({
         placeholder: 'e.g., 30-day refund',
       },
     })
+  }
   return deepMerge(generatedLinkGroup, overrides)
 }
