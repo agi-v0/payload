@@ -7,7 +7,7 @@ import React from 'react'
 import type { Page, Post } from '@/payload-types'
 import { ArrowLeft } from 'lucide-react'
 
-type CMSLinkType = {
+export type CMSLinkType = {
   variant?: 'inline' | ButtonProps['variant'] | null
   color?: ButtonProps['color']
   children?: React.ReactNode
