@@ -12,18 +12,6 @@ import { linkGroup } from '@/fields/linkGroup'
 import { badge } from '@/fields/badge'
 import { StyledList } from '@/blocks/StyledList/config'
 
-// TODO: FIX Starndard Editor
-// const standardEditor = lexicalEditor({
-//   features: ({ rootFeatures }) => {
-//     return [
-//       ...rootFeatures,
-//       HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-//       FixedToolbarFeature(),
-//       InlineToolbarFeature(),
-//     ]
-//   },
-// })
-
 const editorWithStyledList = lexicalEditor({
   features: ({ rootFeatures }) => {
     return [
@@ -44,7 +32,7 @@ export const blockHeader: Field = {
     {
       name: 'type',
       type: 'select',
-      defaultValue: 'start',
+      defaultValue: 'center',
       label: 'Type',
       options: [
         {
@@ -63,18 +51,7 @@ export const blockHeader: Field = {
       required: true,
     },
     badge({}),
-    // {
-    //   name: 'richTextStandard',
-    //   type: 'richText',
-    //   editor: standardEditor,
-    //   label: 'Content',
-    //   localized: true,
-    //   admin: {
-    //     condition: (_, siblingData) => {
-    //       return siblingData?.type !== 'blockheader04'
-    //     },
-    //   },
-    // },
+
     {
       name: 'headerText',
       type: 'richText',
