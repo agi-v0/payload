@@ -9,7 +9,9 @@ import { fileURLToPath } from 'url'
 
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
+import { AppIcons } from './collections/AppIcons'
 import { Pages } from './collections/Pages'
+import { Apps } from './collections/Apps'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
@@ -97,7 +99,7 @@ export default buildConfig({
     // push: false, // disable push mode
   }),
 
-  collections: [Pages, Posts, Media, Categories, MediaCategories, Users],
+  collections: [Pages, Posts, Apps, AppIcons, Media, Categories, MediaCategories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
@@ -106,6 +108,9 @@ export default buildConfig({
       collections: {
         media: {
           prefix: 'media',
+        },
+        'app-icons': {
+          prefix: 'app-icons',
         },
       },
       bucket: process.env.S3_BUCKET || '',
