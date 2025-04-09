@@ -40,7 +40,6 @@ export const colorOptions: Record<LinkColors, { label: string; value: string }> 
     value: 'neutral',
   },
 }
-
 type LinkType = (options?: {
   variants?: LinkVariants[] | false
   colors?: LinkColors[] | false
@@ -134,38 +133,22 @@ export const link: LinkType = ({
       },
     }))
 
-    linkResult.fields.push(
-      {
-        type: 'row',
-        fields: [
-          ...linkTypes,
-          {
-            name: 'label',
-            type: 'text',
-            admin: {
-              width: '50%',
-            },
-            label: 'Label',
-            required: true,
-            localized: true,
+    linkResult.fields.push({
+      type: 'row',
+      fields: [
+        ...linkTypes,
+        {
+          name: 'label',
+          type: 'text',
+          admin: {
+            width: '50%',
           },
-        ],
-      },
-      // {
-      //   name: 'description',
-      //   label: 'Description',
-      //   type: 'text',
-      // },
-      // iconPickerField({
-      //   name: 'icon',
-      //   label: 'Icon',
-      //   icons: lucideIcons,
-      //   admin: {
-      //     description:
-      //       'Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/',
-      //   },
-      // }),
-    )
+          label: 'Label',
+          required: true,
+          localized: true,
+        },
+      ],
+    })
   } else {
     linkResult.fields = [...linkResult.fields, ...linkTypes]
   }
