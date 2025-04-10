@@ -44,20 +44,20 @@ export const blockHeader: Field = {
     {
       name: 'type',
       type: 'select',
-      defaultValue: 'blockheader01',
+      defaultValue: 'start',
       label: 'Type',
       options: [
         {
           label: 'Center',
-          value: 'blockheader01',
+          value: 'center',
         },
         {
           label: 'Split',
-          value: 'blockheader02',
+          value: 'split',
         },
         {
           label: 'Start',
-          value: 'blockheader03',
+          value: 'start',
         },
       ],
       required: true,

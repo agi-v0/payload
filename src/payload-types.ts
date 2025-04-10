@@ -210,9 +210,6 @@ export interface Page {
     media?: (number | null) | Media;
     badge?: {
       label?: string | null;
-      /**
-       * Choose the badge color.
-       */
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -434,12 +431,9 @@ export interface User {
  */
 export interface CallToActionBlock {
   blockHeader: {
-    type: 'blockheader01' | 'blockheader02' | 'blockheader03';
+    type: 'center' | 'split' | 'start';
     badge?: {
       label?: string | null;
-      /**
-       * Choose the badge color.
-       */
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -529,12 +523,9 @@ export interface CallToActionBlock {
  */
 export interface ContentBlock {
   blockHeader: {
-    type: 'blockheader01' | 'blockheader02' | 'blockheader03';
+    type: 'center' | 'split' | 'start';
     badge?: {
       label?: string | null;
-      /**
-       * Choose the badge color.
-       */
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -992,9 +983,6 @@ export interface App {
     media?: (number | null) | Media;
     badge?: {
       label?: string | null;
-      /**
-       * Choose the badge color.
-       */
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/

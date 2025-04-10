@@ -124,7 +124,7 @@ export const Apps: CollectionConfig<'apps'> = {
                 }),
               ],
               admin: {
-                description: 'Link to page/developer site',
+                description: 'Link to page on Marn.com or alternative site',
               },
             },
           ],

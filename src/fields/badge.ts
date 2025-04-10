@@ -67,7 +67,6 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
             name: 'color',
             type: 'select',
             admin: {
-              description: 'Choose the badge color.',
               width: '50%',
             },
             defaultValue: 'blue',
