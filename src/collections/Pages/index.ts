@@ -43,20 +43,19 @@ export const Pages: CollectionConfig<'pages'> = {
       url: ({ data, req, locale }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
+          locale: locale as any,
           collection: 'pages',
           req,
-          locale,
         })
-
         return path
       },
     },
     preview: (data, { req, locale }) =>
       generatePreviewPath({
         slug: typeof data?.slug === 'string' ? data.slug : '',
+        locale,
         collection: 'pages',
         req,
-        locale,
       }),
     useAsTitle: 'title',
   },
