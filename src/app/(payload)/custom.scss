@@ -2,6 +2,40 @@
 
 :root {
   --font-body: 'Rubik', sans-serif;
+  --style-radius-s: 8px;
+  --style-radius-m: 12px;
+  --style-radius-l: 16px;
+}
+
+// .btn {
+//   border-radius: var(--style-radius-s);
+// }
+
+.collapsible {
+  border-radius: var(--style-radius-s);
+  overflow: hidden;
+}
+.collapsible__content {
+  border-bottom-left-radius: var(--style-radius-s);
+  border-bottom-right-radius: var(--style-radius-s);
+}
+.collapsible__toggle {
+  border-top-left-radius: var(--style-radius-s);
+  border-top-right-radius: var(--style-radius-s);
+}
+
+.fixed-toolbar {
+  border-radius: var(--style-radius-s);
+  overflow: hidden;
+}
+
+.rich-text-lexical .editor-container {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+}
+
+.rich-text-lexical .editor-container h1 {
+  margin-block: 0.5rem 1.5rem;
 }
 
 .nav__link {
@@ -13,4 +47,7 @@
     text-decoration: none;
     transition: background-color 0.2s ease-in-out;
   }
+}
+.nav__link:has(.nav__link-indicator) {
+  background-color: var(--theme-elevation-100);
 }
