@@ -143,16 +143,27 @@
 
   --font-sans: var(--font-rubik);
 
-  --text-display: clamp(4.04rem, 3.812rem + 1.14vw, 4.84rem);
-  --text-h1: clamp(3.37rem, 3.182rem + 0.94vw, 4.03rem);
-  --text-h2: clamp(2.81rem, 2.652rem + 0.79vw, 3.36rem);
-  --text-h3: clamp(2.34rem, 2.208rem + 0.66vw, 2.8rem);
-  --text-h4: clamp(1.95rem, 1.842rem + 0.54vw, 2.33rem);
-  --text-h5: clamp(1.62rem, 1.528rem + 0.46vw, 1.94rem);
-  --text-h6: clamp(1.35rem, 1.272rem + 0.39vw, 1.62rem);
-  --text-body-l: clamp(1.13rem, 1.068rem + 0.31vw, 1.35rem);
-  --text-body-m: clamp(0.94rem, 0.888rem + 0.26vw, 1.125rem);
-  --text-body-s: clamp(0.78rem, 0.734rem + 0.23vw, 0.94rem);
+  --spacing-space-site: clamp(1rem, -0.6rem + 4vw, 3rem); /* 16px - 48px site margin */
+  --spacing-space-xs: clamp(0.5rem, 0.1rem + 1vw, 1rem); /* 8px - 16px smaller element spacing */
+  --spacing-space-sm: clamp(1rem, 0.6rem + 1vw, 1.5rem); /* 16px - 24px main element spacing */
+  --spacing-space-md: clamp(1.5rem, 1.1rem + 1vw, 2rem); /* 24px - 32px main card padding */
+  --spacing-space-lg: clamp(2rem, 1.6rem + 1vw, 2.5rem); /* 32px - 40px larger element spacing */
+  --spacing-space-xl: clamp(
+    2.5rem,
+    2.1rem + 1vw,
+    3rem
+  ); /* 40px - 48px extra large element spacing*/
+
+  --text-display: clamp(2.4rem, 1.32rem + 2.7vw, 3.75rem); /* 32px - 56px display text */
+  --text-h1: clamp(1.92rem, 1.056rem + 2.16vw, 3rem); /* 31px - 48px heading 1 */
+  --text-h2: clamp(1.54rem, 0.852rem + 1.72vw, 2.4rem); /* 24px - 38px heading 2 */
+  --text-h3: clamp(1.23rem, 0.678rem + 1.38vw, 1.92rem); /* 20px - 31px heading 3 */
+  --text-h4: clamp(0.98rem, 0.532rem + 1.12vw, 1.54rem); /* 16px - 24px heading 4 */
+  --text-h5: clamp(0.79rem, 0.438rem + 0.88vw, 1.23rem); /* 13px - 20px heading 5 */
+  --text-h6: clamp(0.63rem, 0.35rem + 0.7vw, 0.98rem); /* 10px - 16px heading 6 */
+  --text-body-lg: clamp(1.125rem, 1.025rem + 0.25vw, 1.25rem); /* 18px - 20px body large */
+  --text-body-md: clamp(1.01rem, 0.914rem + 0.24vw, 1.13rem); /* 16px - 18px body medium */
+  --text-body-sm: clamp(0.91rem, 0.83rem + 0.2vw, 1.01rem); /* 14px - 16px body small */
 
   --color-brand: var(--brand);
   --color-neutral: var(--neutral);
@@ -256,6 +267,7 @@
 
 @utility container {
   margin-inline: auto;
-  padding-inline: theme(--spacing-site);
+  padding-inline: theme(--spacing-space-site);
+  width: 100%;
   max-width: theme(--breakpoint-2xl);
 }
