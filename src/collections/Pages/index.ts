@@ -6,6 +6,7 @@ import { Archive } from '@/blocks/ArchiveBlock/config'
 import { AppsBlock } from '@/blocks/AppsBlock/config'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { Content } from '@/blocks/Content/config'
+import { Features } from '@/blocks/Features/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { StyledList } from '@/blocks/StyledList/config'
@@ -90,6 +91,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 FormBlock,
                 StyledList,
                 TestimonialsBlock,
+                Features,
               ],
               required: true,
               localized: true,
