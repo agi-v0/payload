@@ -6,6 +6,7 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { FeaturesBlockComponent } from '@/blocks/Features/Component'
 import { BlockHeader } from '@/blocks/BlockHeader'
 import { BlockHeaderType } from '@/types/blockHeader'
 import { RenderAppsBlock } from './AppsBlock/RenderAppsBlock'
@@ -19,6 +20,7 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   testimonials: RenderTestimonialsBlock,
+  features: FeaturesBlockComponent,
 }
 
 // Define a type for our blocks that includes the blockHeader property
