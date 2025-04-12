@@ -10,20 +10,27 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNavigation,
+  CarouselNext,
+  CarouselPrevious,
 } from '@/components/ui/carousel'
 import { Media } from '@/components/Media'
 
 export const CarouselVariant: React.FC<FeaturesBlock> = ({ columns }) => {
+  const locale = useLocale()
   if (!columns || columns.length === 0) return null
 
   return (
-    <Carousel className="w-full">
-      {/* <div className="relative hidden gap-2 md:mb-8 md:flex">
+    <Carousel
+      opts={{
+        align: 'start',
+        direction: locale === 'ar' ? 'rtl' : 'ltr',
+      }}
+      className="w-full"
+    >
+      <div className="relative hidden gap-2 md:mb-8 md:flex">
         <CarouselPrevious className="static translate-0 border border-gray-400" />
         <CarouselNext className="static translate-0 border border-gray-400" />
-      </div> */}
-      <CarouselNavigation alwaysShow />
+      </div>
       <CarouselContent>
         {columns.map((column, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
