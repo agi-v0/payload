@@ -1,6 +1,4 @@
 'use client'
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import { Button } from '@/components/ui/button'
 
 import React, { useState } from 'react'
 import { FeaturesBlock } from '@/payload-types'
@@ -11,65 +9,91 @@ import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
 
 export const TabsVariant: React.FC<FeaturesBlock> = ({ columns }) => {
-  const [carouselIndex, setCarouselIndex] = useState(0)
+  const [activeTab, setActiveTab] = useState(0)
 
   if (!columns || columns.length === 0) return null
 
-  const activeColumn = columns[carouselIndex]
+  const activeColumn = columns[activeTab]
 
   return (
     <div className="py-12">
-      <div className="mb-8 overflow-x-auto [scrollbar-width:none]">
-        <div className="flex min-w-max items-center justify-center space-x-4">
-          {columns.map(({ tabLabel }, index) => {
-            return (
-              <Button
-                key={index}
-                type="button"
-                onClick={() => setCarouselIndex(index)}
-                className={cn(
-                  'relative inline-flex rounded-sm bg-zinc-100 px-1.5 py-0.5 text-sm text-zinc-900 transition-colors duration-200 sm:px-4 sm:text-base dark:bg-zinc-800 dark:text-zinc-50',
-                  index === carouselIndex
-                    ? 'bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900'
-                    : '',
-                )}
-              >
-                {tabLabel}
-              </Button>
-            )
-          })}
-        </div>
+      {/* Tabs navigation */}
+      <div className="mb-8 flex flex-wrap gap-2 border-b border-gray-200 dark:border-gray-800">
+        {columns.map((column, index) => (
+          <button
+            key={index}
+            className={cn(
+              '-mb-px rounded-t-lg px-4 py-2 text-sm font-medium',
+              activeTab === index
+                ? 'border-x border-t border-gray-200 border-b-white bg-white dark:border-gray-800 dark:border-b-gray-900 dark:bg-gray-900'
+                : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300',
+            )}
+            onClick={() => setActiveTab(index)}
+          >
+            {/* {column.title} */}
+
+            {/* {showBadge && badgeConfig?.badge && index === activeTab && (
+              <span className="ml-2">
+                <Badge {...badgeConfig.badge} />
+              </span>
+            )} */}
+          </button>
+        ))}
       </div>
 
-      <Carousel index={carouselIndex} onIndexChange={setCarouselIndex} disableDrag>
-        <CarouselContent
-          className="w-full md:-me-5"
-          transition={{
-            ease: [0.77, 0, 0.175, 1],
-            duration: 1,
-          }}
-        >
-          {columns.map(({ image, content, badge, link }, index) => (
-            <CarouselItem
-              key={index}
-              className="bg-background-light p-space-md rounded-space-md flex w-full flex-col items-center justify-center gap-4 lg:flex-row"
-            >
-              <div className="lg:pe-space-md w-full">
-                {badge?.label && <Badge className="mb-4">{badge.label}</Badge>}
-                {content && (
-                  <RichText data={content} enableGutter={false} className="mx-0 text-start" />
-                )}
-                {link && <CMSLink {...link} className="mt-4" />}
+      {/* Active tab content */}
+      <div className="flex flex-col gap-10 md:flex-row">
+        <div className="w-full md:w-1/2 lg:w-3/5">
+          {activeColumn.content && (
+            <div className="mb-6">
+              <h3 className="mb-4 text-2xl font-bold">{activeColumn.title}</h3>
+              <RichText data={activeColumn.content} />
+            </div>
+          )}
+
+          {activeColumn.showFeatureList &&
+            activeColumn.features &&
+            activeColumn.features.length > 0 && (
+              <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+                {activeColumn.features.map((feature, featureIndex) => (
+                  <div
+                    key={featureIndex}
+                    className="flex items-start gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
+                  >
+                    {feature.icon && (
+                      <span className="text-brand-600 dark:text-brand-400 mt-1 flex-shrink-0">
+                        <i className={feature.icon} />
+                      </span>
+                    )}
+                    <div>
+                      <RichText data={feature.content} />
+                    </div>
+                  </div>
+                ))}
               </div>
-              {image && (
-                <div className={cn('rounded-space-md overflow-hidden', {})}>
-                  <Media resource={image} className="aspect-[4/3] h-auto w-full" />
-                </div>
-              )}
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
+            )}
+
+          {activeColumn.enableCta && activeColumn.link && (
+            <div className="mt-4">
+              <CMSLink {...(activeColumn.link as CMSLinkType)} />
+            </div>
+          )}
+        </div>
+
+        <div className="w-full md:w-1/2 lg:w-2/5">
+          {activeColumn.image && (
+            <div className="mb-6 overflow-hidden rounded-xl">
+              <Media resource={activeColumn.image} className="h-auto w-full" />
+            </div>
+          )}
+
+          {activeColumn.appReference && !activeColumn.image && (
+            <div className="overflow-hidden rounded-xl bg-gray-100 p-8 dark:bg-gray-800">
+              <Media resource={activeColumn.appReference} className="h-auto w-full" />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

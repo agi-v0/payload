@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
 import RichText from '@/components/RichText'
@@ -8,55 +10,60 @@ import { cn } from '@/utilities/ui'
 import { extractHeading, getContentWithoutHeading } from '@/utilities/extractRichTextContent'
 
 export const GridVariant: React.FC<FeaturesBlock> = ({ columns }) => {
-  // Return null if columns are not provided or empty
-  if (!columns?.length) return null
-
+  if (!columns || columns.length === 0) return null
   return (
-    // Main grid container with responsive column layout
-    <div className="bg-background grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-12">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-12">
       {columns.map((column, index) => {
-        const { content, image, size = 'oneThird' } = column
+        const { content, image, appReference, link, size = 'oneThird' } = column
 
-        // Determine column span classes based on size
-        const lgColSpanClass =
-          size === 'full' ? 'lg:col-span-12' : size === 'half' ? 'lg:col-span-6' : ''
+        const headingText = extractHeading(content)
+        const contentWithoutHeading = getContentWithoutHeading(content)
+
+        // Define column span classes
+        const lgColSpanClass = {
+          'lg:col-span-12': size === 'full',
+          'lg:col-span-6': size === 'half',
+        }
 
         return (
-          // Individual column container with styling and dynamic column span
-          <div
-            key={index}
-            className={cn(
-              'bg-background-light rounded-space-md p-space-md col-span-4',
-              lgColSpanClass,
-            )}
-          >
+          <div key={index} className={cn('col-span-4 lg:p-8', lgColSpanClass)}>
+            {/* {appReference && (
+              <div className="mb-6 overflow-hidden rounded-lg">
+                <Media resource={appReference} className="h-auto w-full" />
+              </div>
+            )} */}
             <div
               className={cn('flex flex-col gap-4', {
-                'lg:flex-row': size === 'full', // Adjust layout for full-size columns
+                'lg:flex-row lg:gap-8': size === 'full',
               })}
             >
               <div
-                className={cn('flex flex-col gap-6', {
-                  'pe-space-md w-full lg:basis-1/2': size === 'full', // Adjust width for full-size columns
+                className={cn('flex flex-col gap-4', {
+                  'lg:basis-1/2': size === 'full',
+                  'w-full': size !== 'full',
                 })}
               >
-                {/* Render content if available */}
-                {content && (
-                  <RichText enableGutter={false} data={content} className="prose-h3:text-h3" />
+                {headingText && <h3 className="text-3xl font-medium">{headingText}</h3>}
+                {contentWithoutHeading && (
+                  <RichText enableGutter={false} data={contentWithoutHeading} />
                 )}
               </div>
-              {/* Render image if available */}
-              {image && (
+              {column.image && (
                 <div
-                  className={cn('rounded-space-md overflow-hidden', {
-                    'lg:basis-1/2': size === 'full', // Adjust width for full-size columns
-                    'w-full': size !== 'full', // Full width for non-full-size columns
+                  className={cn('mb-6 overflow-hidden rounded-lg', {
+                    'lg:basis-1/2': size === 'full',
+                    'w-full': size !== 'full',
                   })}
                 >
-                  <Media resource={image} className="aspect-[4/3] h-auto w-full" />
+                  <Media resource={column.image} className="h-[232.5px] w-full lg:h-[486px]" />
                 </div>
               )}
             </div>
+            {/* {image && (
+              <div className="aspect-video overflow-hidden rounded-lg">
+                <Media resource={image} className="h-full w-full object-cover" />
+              </div>
+            )} */}
           </div>
         )
       })}
