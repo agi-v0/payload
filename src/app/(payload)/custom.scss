@@ -13,7 +13,9 @@
 
 .collapsible {
   border-radius: var(--style-radius-s);
+  // overflow: hidden;
 }
+
 .collapsible__content {
   border-bottom-left-radius: var(--style-radius-s);
   border-bottom-right-radius: var(--style-radius-s);
@@ -22,9 +24,9 @@
   border-top-left-radius: var(--style-radius-s);
   border-top-right-radius: var(--style-radius-s);
 }
-.collapsible__toggle-wrap {
-  border-top-left-radius: var(--style-radius-s);
-  border-top-right-radius: var(--style-radius-s);
+.collapsible__toggle--collapsed {
+  border-bottom-left-radius: var(--style-radius-s);
+  border-bottom-right-radius: var(--style-radius-s);
 }
 
 .fixed-toolbar {

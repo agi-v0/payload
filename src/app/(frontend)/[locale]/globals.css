@@ -75,8 +75,8 @@
   --brand: oklch(54.38% 0.191 267.01);
   --neutral: var(--color-neutral-950);
   /* use for background */
-  --background: var(--color-white);
-  --background-light: var(--color-neutral-50);
+  --background: var(--color-neutral-50);
+  --background-light: var(--color-white);
   --background-medium: var(--color-neutral-200);
   --background-inverted: var(--color-neutral-950);
 
@@ -169,6 +169,8 @@
     2.1rem + 1vw,
     3rem
   ); /* 40px - 48px extra large element spacing*/
+
+  --radius-space-md: clamp(1rem, 0.6rem + 1vw, 1.5rem);
 
   --text-display: clamp(2.4rem, 1.32rem + 2.7vw, 3.75rem); /* 32px - 56px display text */
   --text-h1: clamp(1.92rem, 1.056rem + 2.16vw, 3rem); /* 31px - 48px heading 1 */
