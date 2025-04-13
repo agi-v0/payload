@@ -24,7 +24,7 @@ export const FeaturesBlockComponent: React.FC<FeaturesBlock> = (props) => {
 
     carousel: CarouselVariant,
 
-    iconGrid: IconGridVariant,
+    // iconGrid: IconGridVariant,
 
     horizontal: HorizontalVariant,
     masonry: MasonryVariant,
@@ -36,8 +36,7 @@ export const FeaturesBlockComponent: React.FC<FeaturesBlock> = (props) => {
   const Component = VariantComponent || GridVariant
 
   return (
-    <div className="container my-16">
-      {blockHeader && <BlockHeader {...blockHeader} className="pt-12 md:pt-20" />}
+    <div className="container">
       {layout === 'accordion' ? (
         <Component columns={columns || []} />
       ) : (
