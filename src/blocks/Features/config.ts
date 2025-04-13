@@ -155,6 +155,14 @@ export const Features: Block = {
           },
         },
         {
+          name: 'tabLabel',
+          type: 'text',
+          label: 'Tab Label',
+          admin: {
+            condition: (_, siblingData, { blockData }) => ['tabs'].includes(blockData?.layout),
+          },
+        },
+        {
           name: 'showBadge',
           label: 'Show Badge',
           type: 'checkbox',
@@ -163,14 +171,21 @@ export const Features: Block = {
               ['grid', 'masonry', 'tabs'].includes(blockData?.layout),
           },
         },
-        {
-          type: 'collapsible',
-          label: 'Badge',
-          admin: {
-            condition: (_, siblingData) => Boolean(siblingData?.showBadge),
+        // {
+        //   type: 'collapsible',
+        //   label: 'Badge',
+        //   admin: {
+        //     condition: (_, siblingData) => Boolean(siblingData?.showBadge),
+        //   },
+        //   fields: [badge({})],
+        // },
+        badge({
+          overrides: {
+            admin: {
+              condition: (_, siblingData) => Boolean(siblingData?.showBadge),
+            },
           },
-          fields: [badge({})],
-        },
+        }),
         {
           name: 'showFeatureList',
           label: 'Show Feature List',

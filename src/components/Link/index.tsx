@@ -9,7 +9,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export type CMSLinkType = {
   variant?: 'inline' | ButtonProps['variant'] | null
-  color?: ButtonProps['color']
+  color?: ButtonProps['color'] | null
   children?: React.ReactNode
   className?: string
   label?: string | null
@@ -61,7 +61,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   }
 
   return (
-    <Button asChild className={className} size={size} variant={variant} color={color}>
+    <Button asChild className={className} size={size} variant={variant} color={color || 'neutral'}>
       <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
         {label && label}
         {children && children}
