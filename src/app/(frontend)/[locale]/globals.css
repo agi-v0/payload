@@ -187,9 +187,9 @@
   --color-neutral: var(--neutral);
 
   /* use for background */
-  --color-background: var(--background);
-  --color-background-light: var(--background-light);
-  --color-background-medium: var(--background-medium);
+  --color-background: var(--background); /* default */
+  --color-background-neutral: var(--background-light);
+  --color-background-neutral-subtle: var(--background-medium);
   --color-background-inverted: var(--background-inverted);
   --color-background-brand: var(--brand);
 
