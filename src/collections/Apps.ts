@@ -93,6 +93,9 @@ export const Apps: CollectionConfig<'apps'> = {
               name: 'icon',
               type: 'upload',
               relationTo: 'app-icons',
+              admin: {
+                description: 'Upload an icon for the app. 500x500px recommended.',
+              },
             },
             {
               name: 'name',
@@ -120,7 +123,7 @@ export const Apps: CollectionConfig<'apps'> = {
                   variants: false,
                   colors: false,
                   description: false,
-                  icon: true,
+                  icon: false,
                 }),
               ],
               admin: {

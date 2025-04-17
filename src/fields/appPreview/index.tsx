@@ -39,7 +39,7 @@ export const AppPreview: React.FC = () => {
   return (
     <div className="app-preview-container" data-rtl={locale.rtl}>
       <img className="app-preview-container__icon" src={data?.url} alt={name} />
-      <span className="app-preview-container__name">{name || 'App Name?'}</span>
+      <span className="app-preview-container__name">{name || ''}</span>
     </div>
   )
 }
