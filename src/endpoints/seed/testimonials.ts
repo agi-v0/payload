@@ -1,0 +1,279 @@
+import type { Media } from '@/payload-types'
+import { Payload } from 'payload'
+
+type TestimonialsArgs = {
+  placeholder: Media
+}
+
+export const seedTestimonials = async (
+  payload: Payload,
+  { placeholder }: TestimonialsArgs,
+): Promise<void> => {
+  payload.logger.info('Seeding testimonials...')
+
+  const format = '' as '' | 'left' | 'start' | 'center' | 'right' | 'end' | 'justify'
+
+  const testimonials = [
+    {
+      name: 'أحمد المنصوري',
+      company: 'شركة التقنية العربية',
+      role: 'مدير تقني',
+      avatar: placeholder.id,
+      quote: {
+        root: {
+          type: 'root',
+          format,
+          indent: 0,
+          version: 1,
+          children: [
+            {
+              type: 'paragraph',
+              format,
+              indent: 0,
+              version: 1,
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'لقد ساعدنا مارن في تحسين عملياتنا التقنية بشكل كبير. الدعم الفني ممتاز والمنصة سهلة الاستخدام وقوية في نفس الوقت.',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: 'rtl' as 'rtl' | 'ltr' | null,
+              textFormat: 0,
+            },
+          ],
+          direction: 'rtl' as 'rtl' | 'ltr' | null,
+        },
+      },
+      stats: [
+        {
+          label: 'زيادة في الإنتاجية',
+          value: 42,
+          isPercentage: true,
+          isIncrease: true,
+        },
+        {
+          label: 'توفير الوقت',
+          value: 35,
+          isPercentage: true,
+          isIncrease: true,
+        },
+      ],
+      rating: 5,
+      featured: true,
+    },
+    {
+      name: 'فاطمة الزهراء',
+      company: 'مؤسسة الابتكار الرقمي',
+      role: 'مديرة المشاريع',
+      avatar: placeholder.id,
+      quote: {
+        root: {
+          type: 'root',
+          format,
+          indent: 0,
+          version: 1,
+          children: [
+            {
+              type: 'paragraph',
+              format,
+              indent: 0,
+              version: 1,
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'أنا سعيدة جدًا بالتعاون مع مارن. لقد تمكنا من تنفيذ مشاريعنا بسرعة أكبر وبجودة عالية. الخدمات المقدمة متميزة جدًا.',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: 'rtl' as 'rtl' | 'ltr' | null,
+              textFormat: 0,
+            },
+          ],
+          direction: 'rtl' as 'rtl' | 'ltr' | null,
+        },
+      },
+      stats: [
+        {
+          label: 'تقليل التكاليف',
+          value: 28,
+          isPercentage: true,
+          isIncrease: true,
+        },
+      ],
+      rating: 4,
+      featured: false,
+    },
+    {
+      name: 'محمد العتيبي',
+      company: 'مجموعة الخليج للاستثمار',
+      role: 'الرئيس التنفيذي',
+      avatar: placeholder.id,
+      quote: {
+        root: {
+          type: 'root',
+          format,
+          indent: 0,
+          version: 1,
+          children: [
+            {
+              type: 'paragraph',
+              format,
+              indent: 0,
+              version: 1,
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'لم أكن أتوقع هذا المستوى من الاحترافية والكفاءة. تقنيات مارن ساهمت في تسريع نمو أعمالنا ووسعت آفاق استثماراتنا بشكل ملحوظ.',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: 'rtl' as 'rtl' | 'ltr' | null,
+              textFormat: 0,
+            },
+          ],
+          direction: 'rtl' as 'rtl' | 'ltr' | null,
+        },
+      },
+      stats: [
+        {
+          label: 'زيادة في الإيرادات',
+          value: 65,
+          isPercentage: true,
+          isIncrease: true,
+        },
+        {
+          label: 'توسع في قاعدة العملاء',
+          value: 120,
+          isPercentage: false,
+          isIncrease: true,
+        },
+      ],
+      rating: 5,
+      featured: true,
+    },
+    {
+      name: 'نورة القحطاني',
+      company: 'شركة الإعمار والتطوير',
+      role: 'مديرة التسويق',
+      avatar: placeholder.id,
+      quote: {
+        root: {
+          type: 'root',
+          format,
+          indent: 0,
+          version: 1,
+          children: [
+            {
+              type: 'paragraph',
+              format,
+              indent: 0,
+              version: 1,
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'لقد كانت تجربتي مع مارن رائعة جدًا. ساعدتنا المنصة في تطوير استراتيجيات تسويقية فعالة وزيادة تفاعل العملاء مع منتجاتنا.',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: 'rtl' as 'rtl' | 'ltr' | null,
+              textFormat: 0,
+            },
+          ],
+          direction: 'rtl' as 'rtl' | 'ltr' | null,
+        },
+      },
+      stats: [
+        {
+          label: 'زيادة في معدل التحويل',
+          value: 45,
+          isPercentage: true,
+          isIncrease: true,
+        },
+      ],
+      rating: 4,
+      featured: false,
+    },
+    {
+      name: 'عبدالله السعدون',
+      company: 'مستشفى الشفاء التخصصي',
+      role: 'مدير تقنية المعلومات',
+      avatar: placeholder.id,
+      quote: {
+        root: {
+          type: 'root',
+          format,
+          indent: 0,
+          version: 1,
+          children: [
+            {
+              type: 'paragraph',
+              format,
+              indent: 0,
+              version: 1,
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'ساعدتنا حلول مارن على تحسين خدماتنا الصحية الرقمية وتطوير بنيتنا التحتية التقنية. نحن ممتنون للدعم المستمر والحلول المبتكرة.',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: 'rtl' as 'rtl' | 'ltr' | null,
+              textFormat: 0,
+            },
+          ],
+          direction: 'rtl' as 'rtl' | 'ltr' | null,
+        },
+      },
+      stats: [
+        {
+          label: 'تقليل وقت الانتظار',
+          value: 38,
+          isPercentage: true,
+          isIncrease: true,
+        },
+        {
+          label: 'تحسين تجربة المرضى',
+          value: 52,
+          isPercentage: true,
+          isIncrease: true,
+        },
+      ],
+      rating: 5,
+      featured: false,
+    },
+  ]
+
+  // Add testimonials to database
+  for (const testimonial of testimonials) {
+    await payload.create({
+      collection: 'testimonials',
+      data: {
+        ...testimonial,
+        _status: 'published',
+      },
+    })
+  }
+
+  payload.logger.info('Seeding testimonials complete!')
+}
