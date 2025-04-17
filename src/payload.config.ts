@@ -20,6 +20,7 @@ import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { MediaCategories } from './collections/MediaCategories'
+import { Testimonials } from './collections/Testimonials'
 
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
@@ -99,7 +100,17 @@ export default buildConfig({
     // push: false, // disable push mode
   }),
 
-  collections: [Pages, Posts, Apps, AppIcons, Media, Categories, MediaCategories, Users],
+  collections: [
+    Pages,
+    Posts,
+    Apps,
+    AppIcons,
+    Media,
+    Categories,
+    MediaCategories,
+    Users,
+    Testimonials,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

@@ -75,6 +75,7 @@ export interface Config {
     categories: Category;
     'media-categories': MediaCategory;
     users: User;
+    testimonials: Testimonial;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -94,6 +95,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'media-categories': MediaCategoriesSelect<false> | MediaCategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1205,6 +1207,78 @@ export interface StyledListBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  name: string;
+  company?: string | null;
+  role?: string | null;
+  /**
+   * Avatar image for the testimonial. 300x300px recommended.
+   */
+  avatar?: (number | null) | Media;
+  /**
+   * Logo of the company. Optional.
+   */
+  companyLogo?: (number | null) | Media;
+  quote: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  stats?:
+    | {
+        /**
+         * Label for the stat
+         */
+        label: string;
+        /**
+         * Value for the stat
+         */
+        value: number;
+        /**
+         * Whether the value is a percentage
+         */
+        isPercentage?: boolean | null;
+        /**
+         * Whether the value is an increase or decrease
+         */
+        isIncrease?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Rating out of 5 stars (optional)
+   */
+  rating?: number | null;
+  group?: {
+    /**
+     * Whether this testimonial should be featured prominently
+     */
+    featured?: boolean | null;
+    /**
+     * Categories to help organize testimonials
+     */
+    categories?: (number | Category)[] | null;
+  };
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1406,6 +1480,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2055,6 +2133,38 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  name?: T;
+  company?: T;
+  role?: T;
+  avatar?: T;
+  companyLogo?: T;
+  quote?: T;
+  stats?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        isPercentage?: T;
+        isIncrease?: T;
+        id?: T;
+      };
+  rating?: T;
+  group?:
+    | T
+    | {
+        featured?: T;
+        categories?: T;
+      };
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
