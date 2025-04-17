@@ -72,7 +72,7 @@ export default function RichText(props: Props) {
       converters={jsxConverters}
       className={cn(
         {
-          container: enableGutter,
+          'container px-0': enableGutter,
           'max-w-none': !enableGutter,
           'prose md:prose-md dark:prose-invert mx-auto': enableProse,
         },

@@ -1,17 +1,18 @@
 import type { CollectionConfig } from 'payload'
 
-import { authenticated } from '../../access/authenticated'
-import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { Archive } from '../../blocks/ArchiveBlock/config'
-import { CallToAction } from '../../blocks/CallToAction/config'
-import { Content } from '../../blocks/Content/config'
-import { FormBlock } from '../../blocks/Form/config'
-import { MediaBlock } from '../../blocks/MediaBlock/config'
-import { StyledList } from '../../blocks/StyledList/config'
+import { authenticated } from '@/access/authenticated'
+import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
+import { Archive } from '@/blocks/ArchiveBlock/config'
+import { AppsBlock } from '@/blocks/AppsBlock/config'
+import { CallToAction } from '@/blocks/CallToAction/config'
+import { Content } from '@/blocks/Content/config'
+import { FormBlock } from '@/blocks/Form/config'
+import { MediaBlock } from '@/blocks/MediaBlock/config'
+import { StyledList } from '@/blocks/StyledList/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
-import { populatePublishedAt } from '../../hooks/populatePublishedAt'
-import { generatePreviewPath } from '../../utilities/generatePreviewPath'
+import { populatePublishedAt } from '@/hooks/populatePublishedAt'
+import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 
 import {
@@ -79,7 +80,15 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, StyledList],
+              blocks: [
+                AppsBlock,
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+                StyledList,
+              ],
               required: true,
               localized: true,
               admin: {

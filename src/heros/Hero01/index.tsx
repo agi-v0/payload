@@ -71,7 +71,7 @@ export const Hero01: React.FC<Page['hero']> = ({
       </div>
       <div className="min-h-[80vh] select-none">
         {media && typeof media === 'object' && (
-          <Media imgClassName="rounded-3xl  object-cover " priority resource={media} />
+          <Media imgClassName="rounded-3xl object-cover" priority resource={media} />
         )}
       </div>
     </div>

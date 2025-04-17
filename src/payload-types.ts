@@ -218,7 +218,7 @@ export interface Page {
       icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | StyledListBlock)[];
+  layout: (AppsBlock | CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | StyledListBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -424,6 +424,325 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AppsBlock".
+ */
+export interface AppsBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  type: 'appsBlock01' | 'appsBlock02' | 'appsBlock03' | 'appsBlock04' | 'appsBlockHero';
+  body?: {
+    badge?: {
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  media?: (number | null) | Media;
+  /**
+   * Select the apps to link to. Leave blank to show 10 last updated apps.
+   */
+  reference?:
+    | {
+        relationTo: 'apps';
+        value: number | App;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'apps';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apps".
+ */
+export interface App {
+  id: number;
+  /**
+   * Upload an icon for the app. 500x500px recommended.
+   */
+  icon?: (number | null) | AppIcon;
+  name?: string | null;
+  tagline?: string | null;
+  overview?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
+  hero: {
+    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07' | 'none';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    supportingText?: string | null;
+    logosHeadline?: string | null;
+    logos?:
+      | {
+          logo?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+    media?: (number | null) | Media;
+    badge?: {
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+  };
+  gallery?: (number | Media)[] | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  features?:
+    | {
+        title: string;
+        description?: string | null;
+        /**
+         * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+         */
+        icon?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app-icons".
+ */
+export interface AppIcon {
+  id: number;
+  alt: string;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  Category?: ('App' | 'Website') | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    square?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -886,197 +1205,6 @@ export interface StyledListBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "apps".
- */
-export interface App {
-  id: number;
-  icon?: (number | null) | AppIcon;
-  name?: string | null;
-  tagline?: string | null;
-  overview?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  link: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: number | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: number | Post;
-        } | null);
-    url?: string | null;
-    label: string;
-    /**
-     * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-     */
-    icon?: string | null;
-  };
-  hero: {
-    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07' | 'none';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    supportingText?: string | null;
-    logosHeadline?: string | null;
-    logos?:
-      | {
-          logo?: (number | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-    media?: (number | null) | Media;
-    badge?: {
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-  };
-  gallery?: (number | Media)[] | null;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  features?:
-    | {
-        title: string;
-        description?: string | null;
-        /**
-         * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-         */
-        icon?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "app-icons".
- */
-export interface AppIcon {
-  id: number;
-  alt: string;
-  caption?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  Category?: ('App' | 'Website') | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    square?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1389,6 +1517,7 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
+        apps?: T | AppsBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
@@ -1409,6 +1538,76 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AppsBlock_select".
+ */
+export interface AppsBlockSelect<T extends boolean = true> {
+  blockHeader?:
+    | T
+    | {
+        type?: T;
+        badge?:
+          | T
+          | {
+              label?: T;
+              color?: T;
+              icon?: T;
+              icon_dir?: T;
+            };
+        headerText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    color?: T;
+                    variant?: T;
+                  };
+              id?: T;
+            };
+      };
+  type?: T;
+  body?:
+    | T
+    | {
+        badge?:
+          | T
+          | {
+              label?: T;
+              color?: T;
+              icon?: T;
+              icon_dir?: T;
+            };
+        headerText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    color?: T;
+                    variant?: T;
+                  };
+              id?: T;
+            };
+      };
+  media?: T;
+  reference?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1618,7 +1817,6 @@ export interface AppsSelect<T extends boolean = true> {
         reference?: T;
         url?: T;
         label?: T;
-        icon?: T;
       };
   hero?:
     | T

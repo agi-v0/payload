@@ -1,9 +1,7 @@
-'use client'
-
 import { Button, type ButtonProps } from '@/components/ui/button'
-import { useLocale } from 'next-intl'
+
 import { cn } from '@/utilities/ui'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import React from 'react'
 
 import type { Page, Post } from '@/payload-types'
@@ -28,8 +26,8 @@ type CMSLinkType = {
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const {
     type,
-    color,
-    variant,
+    color = 'neutral',
+    variant = 'ghost',
     children,
     className,
     label,
@@ -39,15 +37,14 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     url,
   } = props
 
-  const locale = useLocale()
-
+  // console.log('reference ', reference)
   const href =
     type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `${reference?.relationTo !== 'pages' ? `/${locale}/${reference?.relationTo}` : `/${locale}`}/${
+      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ``}/${
           reference.value.slug
         }`
       : url
-
+  // console.log(href)
   if (!href) return null
 
   const size = variant === 'inline' ? 'clear' : sizeFromProps
