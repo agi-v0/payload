@@ -1,23 +1,14 @@
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import React, { useEffect } from 'react'
-
-import type { Page } from '@/payload-types'
-
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
+import { BlockHeaderType } from '@/types/blockHeader'
 
-type BlockHeaderProps = {
-  headerText?: any
-  links?: any
-  badge?: any
-  className?: string
-}
-
-export const BlockHeader02: React.FC<BlockHeaderProps> = (props) => {
-  const { headerText, links, badge } = props
+export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
+  const { headerText, links, badge, className, type } = props
 
   const { setHeaderTheme } = useHeaderTheme()
 
@@ -25,13 +16,19 @@ export const BlockHeader02: React.FC<BlockHeaderProps> = (props) => {
     setHeaderTheme('light')
   })
 
-  // const contentToRender = richTextStandard || richText
-
   return (
-    <div className={cn('gap-site container grid grid-cols-2', className)} data-theme="light">
+    <div
+      className={cn(
+        'gap-md container grid grid-cols-2',
+        type === 'center' ? 'justify-items-center' : '',
+        className,
+      )}
+      data-theme="light"
+    >
       {/* TODO: Hide all elements when their value is null */}
-      {badge && (
+      {badge?.label && (
         <Badge
+          className="col-span-2"
           label={badge?.label}
           icon={badge?.icon}
           icon_dir={badge?.icon_dir}
@@ -41,15 +38,25 @@ export const BlockHeader02: React.FC<BlockHeaderProps> = (props) => {
 
       {headerText && (
         <RichText
-          className="col-span-2 row-start-2 mx-0 grid grid-cols-subgrid gap-4"
+          className={cn(
+            'col-span-2 mx-0 md:row-start-2',
+            type === 'split' ? 'md:grid md:grid-cols-subgrid' : '',
+            type === 'center' ? 'mx-auto text-center' : '',
+          )}
           data={headerText}
           enableGutter={false}
         />
       )}
       {links && (
-        <div className="col-start-2 row-start-3">
+        <div
+          className={cn(
+            'col-span-2 row-start-3 justify-self-stretch md:col-span-1 md:justify-self-auto',
+            type === 'split' ? 'md:col-start-2' : '',
+            type === 'center' ? 'md:col-span-2' : '',
+          )}
+        >
           {Array.isArray(links) && links.length > 0 && (
-            <ul className="flex flex-col gap-2 md:flex-row">
+            <ul className="flex flex-col gap-1 md:flex-row md:gap-4">
               {links.map(({ link }, i) => {
                 return (
                   <li key={i}>
