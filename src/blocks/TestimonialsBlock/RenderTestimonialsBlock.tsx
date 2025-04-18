@@ -6,10 +6,13 @@ import config from '@payload-config'
 import type { Page, TestimonialsBlock as TestimonialsBlockType, Testimonial } from '@/payload-types'
 import { TestimonialsBlock01 } from './TestimonialsBlock01'
 import { TestimonialsBlock02 } from './TestimonialsBlock02'
+import { TestimonialsModularGrid } from './TestimonialsModularGrid'
+
 // Map block types to components
 const blockComponents = {
   TestimonialsBlock01: TestimonialsBlock01,
   TestimonialsBlock02: TestimonialsBlock02,
+  testimonialsModularGrid: TestimonialsModularGrid,
 }
 
 export const RenderTestimonialsBlock: React.FC<TestimonialsBlockType> = async (props) => {
