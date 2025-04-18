@@ -9,6 +9,7 @@ import { Content } from '@/blocks/Content/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { StyledList } from '@/blocks/StyledList/config'
+import { TestimonialsBlock } from '@/blocks/TestimonialsBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
@@ -88,6 +89,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 Archive,
                 FormBlock,
                 StyledList,
+                TestimonialsBlock,
               ],
               required: true,
               localized: true,

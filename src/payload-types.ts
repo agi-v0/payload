@@ -220,7 +220,16 @@ export interface Page {
       icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
   };
-  layout: (AppsBlock | CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | StyledListBlock)[];
+  layout: (
+    | AppsBlock
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | StyledListBlock
+    | TestimonialsBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -1207,21 +1216,101 @@ export interface StyledListBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock".
+ */
+export interface TestimonialsBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  type: 'TestimonialsBlock01' | 'TestimonialsBlock02';
+  /**
+   * Select specific testimonials to display. Leave blank to show the 5 most recently updated testimonials.
+   */
+  selectedTestimonials?:
+    | {
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonials';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
   id: number;
-  name: string;
-  company?: string | null;
-  role?: string | null;
+  company: string;
   /**
-   * Avatar image for the testimonial. 300x300px recommended.
+   * Hero image for the testimonial. 4:3 aspect ratio recommended.
    */
-  avatar?: (number | null) | Media;
+  media?: (number | null) | Media;
   /**
-   * Logo of the company. Optional.
+   * Logo of the company.
    */
   companyLogo?: (number | null) | Media;
+  authorInfo: {
+    name: string;
+    title?: string | null;
+    /**
+     * Avatar image for the testimonial author. 300x300px recommended.
+     */
+    avatar?: (number | null) | Media;
+  };
   quote: {
     root: {
       type: string;
@@ -1602,6 +1691,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         styledList?: T | StyledListBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1844,6 +1934,46 @@ export interface StyledListBlockSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock_select".
+ */
+export interface TestimonialsBlockSelect<T extends boolean = true> {
+  blockHeader?:
+    | T
+    | {
+        type?: T;
+        badge?:
+          | T
+          | {
+              label?: T;
+              color?: T;
+              icon?: T;
+              icon_dir?: T;
+            };
+        headerText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    color?: T;
+                    variant?: T;
+                  };
+              id?: T;
+            };
+      };
+  type?: T;
+  selectedTestimonials?: T;
   id?: T;
   blockName?: T;
 }
@@ -2139,11 +2269,16 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "testimonials_select".
  */
 export interface TestimonialsSelect<T extends boolean = true> {
-  name?: T;
   company?: T;
-  role?: T;
-  avatar?: T;
+  media?: T;
   companyLogo?: T;
+  authorInfo?:
+    | T
+    | {
+        name?: T;
+        title?: T;
+        avatar?: T;
+      };
   quote?: T;
   stats?:
     | T

@@ -188,6 +188,7 @@ export const link: LinkType = ({
       admin: {
         description: 'Choose the button style.',
       },
+      dbName: 'link_color',
       defaultValue: 'brand',
       options: colorOptionsToUse,
     })
@@ -209,6 +210,7 @@ export const link: LinkType = ({
     linkResult.fields.push({
       name: 'variant',
       type: 'select',
+      dbName: 'link_variant',
       admin: {
         description: 'Choose how the link should be rendered.',
       },

@@ -86,6 +86,11 @@
   --brand-secondary: --alpha(var(--color-brand) / 70%);
   --brand-tertiary: --alpha(var(--color-brand) / 50%);
   --brand-quaternary: --alpha(var(--color-brand) / 30%);
+
+  --inverted-primary: --alpha(var(--color-white) / 100%);
+  --inverted-secondary: --alpha(var(--color-white) / 70%);
+  --inverted-tertiary: --alpha(var(--color-white) / 50%);
+  --inverted-quaternary: --alpha(var(--color-white) / 30%);
 }
 
 [data-theme='dark'] {
@@ -131,6 +136,11 @@
   --brand-secondary: --alpha(var(--color-brand) / 70%);
   --brand-tertiary: --alpha(var(--color-brand) / 50%);
   --brand-quaternary: --alpha(var(--color-brand) / 30%);
+
+  --inverted-primary: --alpha(var(--color-neutral-950) / 100%);
+  --inverted-secondary: --alpha(var(--color-neutral-950) / 70%);
+  --inverted-tertiary: --alpha(var(--color-neutral-950) / 50%);
+  --inverted-quaternary: --alpha(var(--color-neutral-950) / 30%);
 }
 
 @theme inline {
@@ -141,9 +151,11 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
+  --radius-space-sm: clamp(1rem, 0.6rem + 1vw, 1.5rem);
+
   --font-sans: var(--font-rubik);
 
-  --spacing-space-site: clamp(1rem, -0.6rem + 4vw, 3rem); /* 16px - 48px site margin */
+  --spacing-space-site: clamp(1rem, 0.2rem + 2vw, 2rem); /* 16px - 32px site margin */
   --spacing-space-xs: clamp(0.5rem, 0.1rem + 1vw, 1rem); /* 8px - 16px smaller element spacing */
   --spacing-space-sm: clamp(1rem, 0.6rem + 1vw, 1.5rem); /* 16px - 24px main element spacing */
   --spacing-space-md: clamp(1.5rem, 1.1rem + 1vw, 2rem); /* 24px - 32px main card padding */
@@ -188,6 +200,8 @@
   --color-brand-secondary: var(--brand-secondary);
   --color-brand-tertiary: var(--brand-tertiary);
   --color-brand-quaternary: var(--brand-quaternary);
+
+  --color-inverted-primary: var(--inverted-primary);
 
   --spacing-site: clamp(1rem, 0.714rem + 1.43vw, 2rem);
   --spacing-lg: clamp(1.5rem, 1.358rem + 0.71vw, 2rem);
