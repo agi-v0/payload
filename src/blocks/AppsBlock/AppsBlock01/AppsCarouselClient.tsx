@@ -75,7 +75,7 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
           <Media
             resource={gallery[0] as MediaType}
             className="aspect-[4/3] h-auto w-full"
-            imgClassName="rounded-3xl"
+            imgClassName="rounded-space-sm"
           />
         )}
       </div>

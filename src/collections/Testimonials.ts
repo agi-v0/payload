@@ -9,6 +9,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { link } from '@/fields/link'
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -19,8 +20,8 @@ export const Testimonials: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ['name', 'company', 'role', 'updatedAt'],
-    useAsTitle: 'name',
+    defaultColumns: ['company', 'authorInfo.name', 'authorInfo.title', 'updatedAt'],
+    useAsTitle: 'company',
   },
   fields: [
     {
@@ -30,27 +31,17 @@ export const Testimonials: CollectionConfig = {
           label: 'Basic Info',
           fields: [
             {
-              name: 'name',
-              type: 'text',
-              required: true,
-              localized: true,
-            },
-            {
               name: 'company',
               type: 'text',
               localized: true,
+              required: true,
             },
             {
-              name: 'role',
-              type: 'text',
-              localized: true,
-            },
-            {
-              name: 'avatar',
+              name: 'media',
               type: 'upload',
               relationTo: 'media',
               admin: {
-                description: 'Avatar image for the testimonial. 300x300px recommended.',
+                description: 'Hero image for the testimonial. 4:3 aspect ratio recommended.',
               },
             },
             {
@@ -58,8 +49,49 @@ export const Testimonials: CollectionConfig = {
               type: 'upload',
               relationTo: 'media',
               admin: {
-                description: 'Logo of the company. Optional.',
+                description: 'Logo of the company.',
               },
+            },
+            {
+              type: 'group',
+              label: 'Author Info',
+              name: 'authorInfo',
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'name',
+                      label: 'Author Name',
+
+                      type: 'text',
+                      required: true,
+                      localized: true,
+                      admin: {
+                        width: '50%',
+                      },
+                    },
+                    {
+                      name: 'title',
+                      label: 'Author Title',
+                      type: 'text',
+                      localized: true,
+                      admin: {
+                        width: '50%',
+                      },
+                    },
+                  ],
+                },
+
+                {
+                  name: 'avatar',
+                  type: 'upload',
+                  relationTo: 'media',
+                  admin: {
+                    description: 'Avatar image for the testimonial author. 300x300px recommended.',
+                  },
+                },
+              ],
             },
           ],
         },
@@ -156,6 +188,18 @@ export const Testimonials: CollectionConfig = {
             description: 'Whether this testimonial should be featured prominently',
           },
         },
+        // link({
+        //   variants: false,
+        //   colors: false,
+        //   description: false,
+        //   icon: false,
+        //   overrides: {
+        //     admin: {
+        //       position: 'sidebar',
+        //       description: 'Link to the customer story page. ',
+        //     },
+        //   },
+        // }),
         {
           name: 'categories',
           type: 'relationship',

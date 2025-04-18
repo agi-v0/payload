@@ -9,6 +9,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { BlockHeader } from '@/blocks/BlockHeader'
 import { BlockHeaderType } from '@/types/blockHeader'
 import { RenderAppsBlock } from './AppsBlock/RenderAppsBlock'
+import { RenderTestimonialsBlock } from './TestimonialsBlock/RenderTestimonialsBlock'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -17,6 +18,7 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
+  testimonials: RenderTestimonialsBlock,
 }
 
 // Define a type for our blocks that includes the blockHeader property

@@ -15,10 +15,13 @@ export const seedTestimonials = async (
 
   const testimonials = [
     {
-      name: 'أحمد المنصوري',
+      authorInfo: {
+        title: 'مدير تقني',
+        name: 'أحمد المنصوري',
+        avatar: placeholder.id,
+      },
       company: 'شركة التقنية العربية',
-      role: 'مدير تقني',
-      avatar: placeholder.id,
+      media: placeholder.id,
       quote: {
         root: {
           type: 'root',
@@ -67,10 +70,13 @@ export const seedTestimonials = async (
       featured: true,
     },
     {
-      name: 'فاطمة الزهراء',
+      authorInfo: {
+        title: 'مديرة المشاريع',
+        name: 'فاطمة الزهراء',
+        avatar: placeholder.id,
+      },
       company: 'مؤسسة الابتكار الرقمي',
-      role: 'مديرة المشاريع',
-      avatar: placeholder.id,
+      media: placeholder.id,
       quote: {
         root: {
           type: 'root',
@@ -113,10 +119,13 @@ export const seedTestimonials = async (
       featured: false,
     },
     {
-      name: 'محمد العتيبي',
+      authorInfo: {
+        title: 'الرئيس التنفيذي',
+        name: 'محمد العتيبي',
+        avatar: placeholder.id,
+      },
       company: 'مجموعة الخليج للاستثمار',
-      role: 'الرئيس التنفيذي',
-      avatar: placeholder.id,
+      media: placeholder.id,
       quote: {
         root: {
           type: 'root',
@@ -165,10 +174,13 @@ export const seedTestimonials = async (
       featured: true,
     },
     {
-      name: 'نورة القحطاني',
+      authorInfo: {
+        title: 'مديرة التسويق',
+        name: 'نورة القحطاني',
+        avatar: placeholder.id,
+      },
       company: 'شركة الإعمار والتطوير',
-      role: 'مديرة التسويق',
-      avatar: placeholder.id,
+      media: placeholder.id,
       quote: {
         root: {
           type: 'root',
@@ -211,10 +223,13 @@ export const seedTestimonials = async (
       featured: false,
     },
     {
-      name: 'عبدالله السعدون',
+      authorInfo: {
+        title: 'مدير تقنية المعلومات',
+        name: 'عبدالله السعدون',
+        avatar: placeholder.id,
+      },
       company: 'مستشفى الشفاء التخصصي',
-      role: 'مدير تقنية المعلومات',
-      avatar: placeholder.id,
+      media: placeholder.id,
       quote: {
         root: {
           type: 'root',
