@@ -3,11 +3,12 @@ import { Payload } from 'payload'
 
 type TestimonialsArgs = {
   placeholder: Media
+  logo: Media
 }
 
 export const seedTestimonials = async (
   payload: Payload,
-  { placeholder }: TestimonialsArgs,
+  { placeholder, logo }: TestimonialsArgs,
 ): Promise<void> => {
   payload.logger.info('Seeding testimonials...')
 
@@ -21,7 +22,9 @@ export const seedTestimonials = async (
         avatar: placeholder.id,
       },
       company: 'شركة التقنية العربية',
+      companyLogo: logo.id,
       media: placeholder.id,
+
       quote: {
         root: {
           type: 'root',
@@ -77,6 +80,8 @@ export const seedTestimonials = async (
       },
       company: 'مؤسسة الابتكار الرقمي',
       media: placeholder.id,
+      companyLogo: logo.id,
+
       quote: {
         root: {
           type: 'root',
@@ -126,6 +131,8 @@ export const seedTestimonials = async (
       },
       company: 'مجموعة الخليج للاستثمار',
       media: placeholder.id,
+      companyLogo: logo.id,
+
       quote: {
         root: {
           type: 'root',
@@ -181,6 +188,8 @@ export const seedTestimonials = async (
       },
       company: 'شركة الإعمار والتطوير',
       media: placeholder.id,
+      companyLogo: logo.id,
+
       quote: {
         root: {
           type: 'root',
@@ -230,6 +239,8 @@ export const seedTestimonials = async (
       },
       company: 'مستشفى الشفاء التخصصي',
       media: placeholder.id,
+      companyLogo: logo.id,
+
       quote: {
         root: {
           type: 'root',

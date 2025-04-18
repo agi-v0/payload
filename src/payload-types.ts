@@ -1274,7 +1274,7 @@ export interface TestimonialsBlock {
         }[]
       | null;
   };
-  type: 'TestimonialsBlock01' | 'TestimonialsBlock02';
+  type: 'TestimonialsBlock01' | 'TestimonialsBlock02' | 'testimonialsModularGrid';
   /**
    * Select specific testimonials to display. Leave blank to show the 5 most recently updated testimonials.
    */

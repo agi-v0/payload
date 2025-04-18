@@ -5,6 +5,7 @@ import { contact as contactPageData } from './contact-page'
 import { home } from './home'
 import { image1 } from './image-1'
 import { image2 } from './image-2'
+import { imageLogo } from './image-logo'
 import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
@@ -82,7 +83,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding media...`)
 
-  const [image1Buffer, image2Buffer, image3Buffer, hero1Buffer] = await Promise.all([
+  const [image1Buffer, image2Buffer, image3Buffer, logoBuffer, hero1Buffer] = await Promise.all([
     fetchFileByURL(
       'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
     ),
@@ -92,116 +93,123 @@ export const seed = async ({
     fetchFileByURL(
       'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
     ),
+    fetchFileByURL('http://localhost:3000/media/logo.png'),
     fetchFileByURL('http://localhost:3000/media/marn-placeholder.png'),
   ])
 
-  const [demoAuthor, image1Doc, image2Doc, image3Doc, imageHomeDoc] = await Promise.all([
-    payload.create({
-      collection: 'users',
-      data: {
-        name: 'Demo Author',
-        email: 'demo-author@example.com',
-        password: 'password',
-      },
-    }),
-    payload.create({
-      collection: 'media',
-      data: image1,
-      file: image1Buffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: image2,
-      file: image2Buffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: image2,
-      file: image3Buffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: imageHero1,
-      file: hero1Buffer,
-    }),
+  const [demoAuthor, image1Doc, image2Doc, image3Doc, imageLogoDoc, imageHomeDoc] =
+    await Promise.all([
+      payload.create({
+        collection: 'users',
+        data: {
+          name: 'Demo Author',
+          email: 'demo-author@example.com',
+          password: 'password',
+        },
+      }),
+      payload.create({
+        collection: 'media',
+        data: image1,
+        file: image1Buffer,
+      }),
+      payload.create({
+        collection: 'media',
+        data: image2,
+        file: image2Buffer,
+      }),
+      payload.create({
+        collection: 'media',
+        data: image2,
+        file: image3Buffer,
+      }),
+      payload.create({
+        collection: 'media',
+        data: imageLogo,
+        file: logoBuffer,
+      }),
+      payload.create({
+        collection: 'media',
+        data: imageHero1,
+        file: hero1Buffer,
+      }),
 
-    payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Technology',
-        breadcrumbs: [
-          {
-            label: 'Technology',
-            url: '/technology',
-          },
-        ],
-      },
-    }),
+      payload.create({
+        collection: 'categories',
+        data: {
+          title: 'Technology',
+          breadcrumbs: [
+            {
+              label: 'Technology',
+              url: '/technology',
+            },
+          ],
+        },
+      }),
 
-    payload.create({
-      collection: 'categories',
-      data: {
-        title: 'News',
-        breadcrumbs: [
-          {
-            label: 'News',
-            url: '/news',
-          },
-        ],
-      },
-    }),
+      payload.create({
+        collection: 'categories',
+        data: {
+          title: 'News',
+          breadcrumbs: [
+            {
+              label: 'News',
+              url: '/news',
+            },
+          ],
+        },
+      }),
 
-    payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Finance',
-        breadcrumbs: [
-          {
-            label: 'Finance',
-            url: '/finance',
-          },
-        ],
-      },
-    }),
-    payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Design',
-        breadcrumbs: [
-          {
-            label: 'Design',
-            url: '/design',
-          },
-        ],
-      },
-    }),
+      payload.create({
+        collection: 'categories',
+        data: {
+          title: 'Finance',
+          breadcrumbs: [
+            {
+              label: 'Finance',
+              url: '/finance',
+            },
+          ],
+        },
+      }),
+      payload.create({
+        collection: 'categories',
+        data: {
+          title: 'Design',
+          breadcrumbs: [
+            {
+              label: 'Design',
+              url: '/design',
+            },
+          ],
+        },
+      }),
 
-    payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Software',
-        breadcrumbs: [
-          {
-            label: 'Software',
-            url: '/software',
-          },
-        ],
-      },
-    }),
+      payload.create({
+        collection: 'categories',
+        data: {
+          title: 'Software',
+          breadcrumbs: [
+            {
+              label: 'Software',
+              url: '/software',
+            },
+          ],
+        },
+      }),
 
-    payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Engineering',
-        breadcrumbs: [
-          {
-            label: 'Engineering',
-            url: '/engineering',
-          },
-        ],
-      },
-    }),
-  ])
+      payload.create({
+        collection: 'categories',
+        data: {
+          title: 'Engineering',
+          breadcrumbs: [
+            {
+              label: 'Engineering',
+              url: '/engineering',
+            },
+          ],
+        },
+      }),
+    ])
 
   payload.logger.info(`— Seeding posts...`)
 
@@ -284,7 +292,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding testimonials...`)
 
-  await seedTestimonials(payload, { placeholder: imageHomeDoc })
+  await seedTestimonials(payload, { placeholder: imageHomeDoc, logo: imageLogoDoc })
 
   payload.logger.info(`— Seeding globals...`)
 
