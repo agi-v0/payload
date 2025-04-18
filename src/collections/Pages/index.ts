@@ -91,6 +91,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 FormBlock,
                 StyledList,
                 TestimonialsBlock,
+                TestimonialsBlock,
                 Features,
               ],
               required: true,
