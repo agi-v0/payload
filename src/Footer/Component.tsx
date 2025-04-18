@@ -15,7 +15,7 @@ export async function Footer() {
   const navItems = footerData?.navItems || []
 
   return (
-    <footer className="border-border bg-surface-light text-neutral-primary mt-auto border-t">
+    <footer className="border-border bg-background text-base-primary mt-auto border-t">
       <div className="container flex flex-col gap-8 py-8 md:flex-row md:justify-between">
         <Link className="flex items-center" href="/">
           <Logo className="invert dark:invert-0" />
@@ -26,7 +26,7 @@ export async function Footer() {
           <LanguageSwitcher />
           <nav className="flex flex-col gap-4 md:flex-row">
             {navItems.map(({ link }, i) => {
-              return <CMSLink className="text-neutral-primary" key={i} {...(link as any)} />
+              return <CMSLink className="text-base-primary" key={i} {...(link as any)} />
             })}
           </nav>
         </div>
