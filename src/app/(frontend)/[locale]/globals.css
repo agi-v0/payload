@@ -208,6 +208,18 @@
   --spacing-md: clamp(1rem, 0.858rem + 0.71vw, 1.5rem);
   --spacing-sm: clamp(0.5rem, 0.358rem + 0.71vw, 1rem);
 
+  --color-tomato-50: #fdf0ed;
+  --color-tomato-100: #fae0db;
+  --color-tomato-200: #f7c5bb;
+  --color-tomato-300: #f2a697;
+  --color-tomato-400: #ee8772;
+  --color-tomato-500: #ea6c53;
+  --color-tomato-600: #e54d2e;
+  --color-tomato-700: #c33518;
+  --color-tomato-800: #912712;
+  --color-tomato-900: #5f1a0c;
+  --color-tomato-950: #441208;
+
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
