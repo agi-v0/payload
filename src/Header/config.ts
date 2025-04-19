@@ -4,7 +4,6 @@ import { revalidatePath } from 'next/cache'
 
 import { authenticated } from '../access/authenticated'
 import { link } from '../fields/link'
-import { linkGroup } from '@/fields/linkGroup'
 
 export const Header: GlobalConfig = {
   slug: 'header',
@@ -14,7 +13,6 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
-      label: 'Header Menu Tabs',
       name: 'tabs',
       type: 'array',
       admin: {
@@ -27,7 +25,6 @@ export const Header: GlobalConfig = {
           name: 'label',
           type: 'text',
           required: true,
-          localized: true,
         },
         {
           type: 'row',
@@ -35,12 +32,10 @@ export const Header: GlobalConfig = {
             {
               name: 'enableDirectLink',
               type: 'checkbox',
-              defaultValue: true,
             },
             {
               name: 'enableDropdown',
               type: 'checkbox',
-              defaultValue: false,
             },
           ],
         },
@@ -69,7 +64,6 @@ export const Header: GlobalConfig = {
             {
               name: 'description',
               type: 'textarea',
-              localized: true,
             },
             {
               name: 'descriptionLinks',
@@ -202,21 +196,18 @@ export const Header: GlobalConfig = {
           label: 'Dropdown Menu',
         },
       ],
+      label: 'Main Menu Items',
     },
-
-    {
-      name: 'cta',
-      label: 'Header CTA Buttons',
-      type: 'array',
-      fields: [
-        link({
-          icon: false,
-          overrides: {
-            label: false,
-          },
-        }),
-      ],
-    },
+    link({
+      variants: false,
+      colors: false,
+      icon: false,
+      description: false,
+      overrides: {
+        name: 'menuCta',
+        label: 'Menu CTA Button',
+      },
+    }),
   ],
   hooks: {
     afterChange: [() => revalidatePath('/', 'layout')],

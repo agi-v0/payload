@@ -217,7 +217,7 @@ export interface Page {
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
       icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
   };
   layout: (
@@ -229,7 +229,6 @@ export interface Page {
     | FormBlock
     | StyledListBlock
     | TestimonialsBlock
-    | FeaturesBlock
   )[];
   meta?: {
     title?: string | null;
@@ -242,15 +241,6 @@ export interface Page {
   publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
-  parent?: (number | null) | Page;
-  breadcrumbs?:
-    | {
-        doc?: (number | null) | Page;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -460,7 +450,7 @@ export interface AppsBlock {
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
       icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
     headerText?: {
       root: {
@@ -515,7 +505,7 @@ export interface AppsBlock {
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
       icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
     headerText?: {
       root: {
@@ -678,7 +668,7 @@ export interface App {
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
       icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
   };
   gallery?: (number | Media)[] | null;
@@ -779,7 +769,7 @@ export interface CallToActionBlock {
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
       icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
     headerText?: {
       root: {
@@ -825,21 +815,6 @@ export interface CallToActionBlock {
         }[]
       | null;
   };
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
   links?:
     | {
         link: {
@@ -886,7 +861,7 @@ export interface ContentBlock {
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
       icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
     headerText?: {
       root: {
@@ -1253,7 +1228,7 @@ export interface TestimonialsBlock {
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
       icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+      icon_dir?: ('flex-row' | 'flex-row-reverse') | null;
     };
     headerText?: {
       root: {
@@ -1390,129 +1365,6 @@ export interface Testimonial {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeaturesBlock".
- */
-export interface FeaturesBlock {
-  blockHeader: {
-    type: 'center' | 'split' | 'start';
-    badge?: {
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-    headerText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  layout:
-    | '01'
-    | '02'
-    | '03'
-    | '04'
-    | '05'
-    | '06'
-    | '07'
-    | '08'
-    | '09'
-    | '10'
-    | '11'
-    | '12'
-    | '13'
-    | '14'
-    | '15'
-    | '16'
-    | '17';
-  blockImage?: (number | null) | Media;
-  columns?:
-    | {
-        size?: ('half' | 'full' | 'oneThird' | 'twoThirds') | null;
-        appReference?: (number | null) | App;
-        image?: (number | null) | Media;
-        tabLabel?: string | null;
-        icon?: string | null;
-        content: {
-          title: string;
-          copy?: string | null;
-        };
-        enableBadge?: boolean | null;
-        enableCta?: boolean | null;
-        badge?: {
-          label?: string | null;
-          color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-          /**
-           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-           */
-          icon?: string | null;
-          icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-        };
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'features';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1826,7 +1678,7 @@ export interface PagesSelect<T extends boolean = true> {
               label?: T;
               color?: T;
               icon?: T;
-              icon_position?: T;
+              icon_dir?: T;
             };
       };
   layout?:
@@ -1840,7 +1692,6 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         styledList?: T | StyledListBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
-        features?: T | FeaturesBlockSelect<T>;
       };
   meta?:
     | T
@@ -1852,15 +1703,6 @@ export interface PagesSelect<T extends boolean = true> {
   publishedAt?: T;
   slug?: T;
   slugLock?: T;
-  parent?: T;
-  breadcrumbs?:
-    | T
-    | {
-        doc?: T;
-        url?: T;
-        label?: T;
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1880,7 +1722,7 @@ export interface AppsBlockSelect<T extends boolean = true> {
               label?: T;
               color?: T;
               icon?: T;
-              icon_position?: T;
+              icon_dir?: T;
             };
         headerText?: T;
         links?:
@@ -1910,7 +1752,7 @@ export interface AppsBlockSelect<T extends boolean = true> {
               label?: T;
               color?: T;
               icon?: T;
-              icon_position?: T;
+              icon_dir?: T;
             };
         headerText?: T;
         links?:
@@ -1950,7 +1792,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               label?: T;
               color?: T;
               icon?: T;
-              icon_position?: T;
+              icon_dir?: T;
             };
         headerText?: T;
         links?:
@@ -1970,7 +1812,6 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  richText?: T;
   links?:
     | T
     | {
@@ -2005,7 +1846,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               label?: T;
               color?: T;
               icon?: T;
-              icon_position?: T;
+              icon_dir?: T;
             };
         headerText?: T;
         links?:
@@ -2111,7 +1952,7 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
               label?: T;
               color?: T;
               icon?: T;
-              icon_position?: T;
+              icon_dir?: T;
             };
         headerText?: T;
         links?:
@@ -2133,81 +1974,6 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
       };
   type?: T;
   selectedTestimonials?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeaturesBlock_select".
- */
-export interface FeaturesBlockSelect<T extends boolean = true> {
-  blockHeader?:
-    | T
-    | {
-        type?: T;
-        badge?:
-          | T
-          | {
-              label?: T;
-              color?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  layout?: T;
-  blockImage?: T;
-  columns?:
-    | T
-    | {
-        size?: T;
-        appReference?: T;
-        image?: T;
-        tabLabel?: T;
-        icon?: T;
-        content?:
-          | T
-          | {
-              title?: T;
-              copy?: T;
-            };
-        enableBadge?: T;
-        enableCta?: T;
-        badge?:
-          | T
-          | {
-              label?: T;
-              color?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
-        id?: T;
-      };
   id?: T;
   blockName?: T;
 }
@@ -2296,7 +2062,7 @@ export interface AppsSelect<T extends boolean = true> {
               label?: T;
               color?: T;
               icon?: T;
-              icon_position?: T;
+              icon_dir?: T;
             };
       };
   gallery?: T;
@@ -2923,34 +2689,21 @@ export interface Header {
         id?: string | null;
       }[]
     | null;
-  cta?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose the button style.
-           */
-          color?: ('brand' | 'neutral') | null;
-          /**
-           * Choose how the link should be rendered.
-           */
-          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
+  menuCta: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3084,21 +2837,14 @@ export interface HeaderSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  cta?:
+  menuCta?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              color?: T;
-              variant?: T;
-            };
-        id?: T;
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
       };
   updatedAt?: T;
   createdAt?: T;
