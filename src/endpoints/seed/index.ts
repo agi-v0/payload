@@ -48,9 +48,7 @@ export const seed = async ({
     globals.map((global) =>
       payload.updateGlobal({
         slug: global,
-        data: {
-          navItems: [],
-        },
+        data: {},
         depth: 0,
         context: {
           disableRevalidate: true,
@@ -299,23 +297,435 @@ export const seed = async ({
   await Promise.all([
     payload.updateGlobal({
       slug: 'header',
+      locale: 'ar',
       data: {
-        navItems: [
+        tabs: [
+          {
+            enableDirectLink: false,
+            enableDropdown: true,
+            descriptionLinks: [],
+            navItems: [
+              {
+                style: 'list',
+                defaultLink: {
+                  link: {
+                    type: 'custom',
+                    newTab: false,
+
+                    url: '/solutions/cashier',
+                    label: 'الكاشير',
+                  },
+                  description: null,
+                },
+                featuredLink: {
+                  tag: null,
+                  label: null,
+                  links: [],
+                },
+                listLinks: {
+                  tag: 'بيع',
+                  links: [
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/cashier',
+                        label: 'الكاشير',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/paysync',
+                        label: 'شاشة السداد',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/kiosk',
+                        label: 'الطلب الذاتي',
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                style: 'list',
+                defaultLink: {
+                  link: {
+                    type: 'custom',
+                    newTab: false,
+
+                    url: '/solutions/cashier',
+                    label: 'الكاشير',
+                  },
+                  description: null,
+                },
+
+                featuredLink: {
+                  tag: null,
+                  label: null,
+
+                  links: [],
+                },
+
+                listLinks: {
+                  tag: 'تشغيل',
+
+                  links: [
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/orderstation',
+                        label: 'محطة الطلبات',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/inventory',
+                        label: 'المخزون',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/products',
+                        label: 'المنتجات',
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                style: 'list',
+
+                defaultLink: {
+                  link: {
+                    type: 'custom',
+                    newTab: false,
+
+                    url: '/solutions/cashier',
+                    label: 'الكاشير',
+                  },
+                  description: null,
+                },
+
+                listLinks: {
+                  tag: 'إدارة',
+
+                  links: [
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/analytics',
+                        label: 'التحليلات',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/branches',
+                        label: 'الفروع',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/customers',
+                        label: 'العملاء',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/accouting',
+                        label: 'المحاسبة',
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            label: 'الحلول',
+            description:
+              'كل أدواتك في منظومة مرنة. استكشف حلول البيع، التشغيل، والإدارة المصممة لتلبية احتياجاتك.',
+          },
+
+          {
+            enableDirectLink: false,
+            enableDropdown: true,
+            descriptionLinks: [],
+            navItems: [
+              {
+                style: 'list',
+
+                defaultLink: {
+                  link: {
+                    type: 'reference',
+                    newTab: false,
+                    url: null,
+                  },
+                  description: null,
+                },
+
+                featuredLink: {
+                  tag: null,
+                  label: null,
+
+                  links: [],
+                },
+
+                listLinks: {
+                  tag: 'الأنشطة',
+
+                  links: [
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/restaurants',
+                        label: 'للمطاعم',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/retail',
+                        label: 'للبيع بالتجزئة',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/express-services',
+                        label: 'للخدمات السريعة',
+                      },
+                    },
+                  ],
+                },
+              },
+
+              {
+                style: 'list',
+
+                defaultLink: {
+                  link: {
+                    type: 'reference',
+                    newTab: false,
+                    url: null,
+                  },
+                  description: null,
+                },
+
+                featuredLink: {
+                  tag: null,
+                  label: null,
+
+                  links: [],
+                },
+
+                listLinks: {
+                  tag: 'الميزات',
+
+                  links: [
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/features/control',
+                        label: 'للبساطة والتحكم',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/branches',
+                        label: 'لتعدد الفروع',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/integrations',
+                        label: 'للربط مع أدواتك',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/blog/increasing-profits-with-marnpos',
+                        label: 'للزيادة أرباحك',
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            label: 'لماذا مرن',
+            description:
+              'ليش أصحاب المشاريع يختارون مرن؟ اكتشف قيمنا وكيف نسهّل عليك الشغل وتكبير مشروعك.',
+          },
+
+          {
+            enableDirectLink: true,
+            enableDropdown: true,
+            descriptionLinks: [],
+            navItems: [],
+            label: 'التطبيقات',
+            link: {
+              type: 'custom',
+              newTab: false,
+              url: '/integrations',
+            },
+            description:
+              'اربط مرن مع تطبيقات الدفع، التوصيل، والمحاسبة. سهّل شغلك وربط كل شيء ببعضه.',
+          },
+          {
+            enableDirectLink: true,
+            enableDropdown: true,
+            descriptionLinks: [],
+            navItems: [
+              {
+                style: 'list',
+
+                defaultLink: {
+                  link: {
+                    type: 'reference',
+                    newTab: false,
+                    url: null,
+                  },
+                  description: null,
+                },
+
+                featuredLink: {
+                  tag: null,
+                  label: null,
+
+                  links: [],
+                },
+
+                listLinks: {
+                  tag: 'منشوراتنا',
+
+                  links: [
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/blog',
+                        label: 'المدونة',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/customers',
+                        label: 'قصص النجاح',
+                      },
+                    },
+                  ],
+                },
+              },
+
+              {
+                style: 'list',
+
+                defaultLink: {
+                  link: {
+                    type: 'reference',
+                    newTab: false,
+                    url: null,
+                  },
+                  description: null,
+                },
+
+                featuredLink: {
+                  tag: null,
+                  label: null,
+
+                  links: [],
+                },
+
+                listLinks: {
+                  tag: 'منشوراتنا',
+
+                  links: [
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/about',
+                        label: 'عن مرن',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/contact-us',
+                        label: 'تواصل معنا',
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: 'https://marn.gitbook.io/marn-developers/',
+                        label: 'المطورين',
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            label: 'الموارد',
+            link: {
+              type: 'custom',
+              url: '/contact',
+            },
+            description:
+              'كل ما تحتاج تعرفه عن مرن وأصحاب المشاريع اللي يستخدمونه—من مقالات ونصائح، إلى قصص وتجارب حقيقية، وحتى التواصل معنا',
+          },
+        ],
+        cta: [
           {
             link: {
               type: 'custom',
-              label: 'Posts',
-              url: '/posts',
-            },
-          },
-          {
-            link: {
-              type: 'reference',
-              label: 'Contact',
-              reference: {
-                relationTo: 'pages',
-                value: contactPage.id,
-              },
+              newTab: false,
+              url: '/contact-us',
+              label: 'تواصل معنا',
             },
           },
         ],
@@ -324,29 +734,60 @@ export const seed = async ({
     payload.updateGlobal({
       slug: 'footer',
       data: {
-        navItems: [
+        columns: [
           {
-            link: {
-              type: 'custom',
-              label: 'Admin',
-              url: '/admin',
-            },
+            label: 'Company',
+            navItems: [
+              {
+                link: {
+                  type: 'custom',
+                  label: 'About Us',
+                  url: '/about',
+                },
+              },
+              {
+                link: {
+                  type: 'custom',
+                  label: 'Blog',
+                  url: '/posts',
+                },
+              },
+              {
+                link: {
+                  type: 'custom',
+                  label: 'Contact',
+                  url: '/contact',
+                },
+              },
+            ],
           },
           {
-            link: {
-              type: 'custom',
-              label: 'Source Code',
-              newTab: true,
-              url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Payload',
-              newTab: true,
-              url: 'https://payloadcms.com/',
-            },
+            label: 'Resources',
+            navItems: [
+              {
+                link: {
+                  type: 'custom',
+                  label: 'Admin',
+                  url: '/admin',
+                },
+              },
+              {
+                link: {
+                  type: 'custom',
+                  label: 'Source Code',
+                  newTab: true,
+                  url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
+                },
+              },
+              {
+                link: {
+                  type: 'custom',
+                  label: 'Payload',
+                  newTab: true,
+                  url: 'https://payloadcms.com/',
+                },
+              },
+            ],
           },
         ],
       },

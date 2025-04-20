@@ -118,6 +118,7 @@ export const link: LinkType = ({
       type: 'text',
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'custom',
+        rtl: false,
       },
       label: 'Custom URL',
       required: true,
@@ -144,7 +145,7 @@ export const link: LinkType = ({
             width: '50%',
           },
           label: 'Label',
-          required: true,
+          required: !disableLabel,
           localized: true,
         },
       ],
