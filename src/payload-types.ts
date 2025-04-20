@@ -2723,6 +2723,14 @@ export interface Header {
               } | null);
           url?: string | null;
           label: string;
+          /**
+           * Choose the button style.
+           */
+          color?: ('brand' | 'neutral') | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
         };
         id?: string | null;
       }[]
@@ -2871,6 +2879,8 @@ export interface HeaderSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              color?: T;
+              variant?: T;
             };
         id?: T;
       };
