@@ -1,7 +1,6 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
 @import './typography.css' layer(components);
-
-@plugin 'tailwindcss-animate';
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
@@ -42,6 +41,8 @@
 }
 
 :root {
+  --header-height: 56px;
+
   /* --background: hsl(0 0% 100%);
   --foreground: hsl(0 0% 3.9%); */
   --card: hsl(0 0% 100%);

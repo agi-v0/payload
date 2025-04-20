@@ -210,9 +210,10 @@ export const Header: GlobalConfig = {
       type: 'array',
       fields: [
         link({
-          variants: false,
-          colors: false,
           icon: false,
+          overrides: {
+            label: false,
+          },
         }),
       ],
     },
