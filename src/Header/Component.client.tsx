@@ -1,72 +1,91 @@
 'use client'
-
+import React, { useEffect, useState } from 'react'
 import type { Header as HeaderType } from '@/payload-types'
 import type { Theme } from '@/providers/Theme/types' // Import Theme type if needed
-
-import { useEffect, useState } from 'react'
+import { Link } from '@/i18n/routing'
 import { usePathname } from 'next/navigation'
 import { useScrollInfo } from '@faceless-ui/scroll-info'
 import { useHeaderObserver } from '@/providers/HeaderIntersectionObserver'
 import { cn } from '@/utilities/ui'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
-import { Menu } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+import Logo from '@/components/ui/logo'
 
 // Assuming DesktopNav and MobileNav will be refactored similarly
 import { DesktopNav } from './DesktopNav'
 import { MobileNav } from './MobileNav'
 
 export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
-  // Keep mobile nav state
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
-  const pathname = usePathname()
+  const [hideBackground, setHideBackground] = React.useState(true)
 
-  // Use original hooks
+  const pathname = usePathname()
   const { y } = useScrollInfo()
   const { headerTheme } = useHeaderObserver()
 
-  // Effect to close mobile nav on pathname change
   useEffect(() => {
     setIsMobileNavOpen(false)
   }, [pathname])
 
-  // Determine background visibility based on scroll and mobile nav state
-  const hideBackground = y < 30 && !isMobileNavOpen
-  // Determine if background/blur should be shown (derived from hideBackground)
-  const showBgAndBlur = !hideBackground
+  React.useEffect(() => {
+    if (isMobileNavOpen) {
+      setHideBackground(false)
+    } else {
+      setHideBackground(y < 30)
+    }
+  }, [y, isMobileNavOpen])
 
   return (
     <header
-      // Optionally use headerTheme for data-theme attribute if needed for deeper CSS targeting
-      data-theme={headerTheme || 'light'}
+      data-theme={headerTheme}
       className={cn(
-        'fixed top-0 z-50 flex w-full max-w-screen items-center transition-colors duration-300',
-        // Apply bg and blur when background should be shown
-        showBgAndBlur ? 'bg-background/90 backdrop-blur-sm' : 'bg-transparent',
-        // Apply border *only* when mobile nav is open
-        isMobileNavOpen && 'border-b',
+        'bg-background fixed left-0 z-50 w-full max-w-screen transition-colors duration-300',
+        'top-0 md:top-[var(--admin-bar-height,0px)]',
+        hideBackground && 'before:opacity-0 after:opacity-0',
+        isMobileNavOpen && 'border-b border-b-neutral-200 before:opacity-100 after:opacity-100',
+        headerTheme && '',
       )}
     >
-      <div className="container flex items-center">
-        {/* Pass necessary props to Nav components */}
-        <div className="hidden md:flex md:w-full">
-          {/* Pass hideBackground or theme if needed by DesktopNav */}
-          <DesktopNav cta={cta} tabs={tabs} />
-        </div>
-        <div className="flex md:hidden">
-          <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle Menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-full sm:max-w-xs">
-              <MobileNav cta={cta} tabs={tabs} onLinkClick={() => setIsMobileNavOpen(false)} />
-            </SheetContent>
-          </Sheet>
+      {/* Main container with flex layout */}
+      <div className="container grid h-[var(--header-height)] grid-cols-4 items-center justify-between lg:grid-cols-10">
+        <Link href="/" className="col-span-2 flex-shrink-0">
+          <Logo className="text-base-primary" />
+        </Link>
+
+        <DesktopNav
+          cta={cta}
+          tabs={tabs}
+          className="col-span-8 hidden lg:grid lg:w-full lg:grid-cols-subgrid"
+        />
+
+        <div className="col-span-2 flex flex-shrink-0 justify-end lg:hidden">
+          <Button
+            variant="secondary"
+            size="icon"
+            color="neutral"
+            onClick={() => setIsMobileNavOpen((prev) => !prev)} // Toggle state on click
+            aria-expanded={isMobileNavOpen} // Accessibility
+            aria-controls="mobile-nav-content" // Accessibility
+          >
+            {isMobileNavOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <span className="sr-only">{isMobileNavOpen ? 'Close Menu' : 'Open Menu'}</span>
+          </Button>
         </div>
       </div>
+
+      {/* Conditionally rendered Mobile Nav Dropdown */}
+      {/* Animate presence will be added later with framer-motion */}
+      {isMobileNavOpen && (
+        <div
+          id="mobile-nav-content" // For aria-controls
+          className={cn(
+            'bg-background absolute inset-x-4 top-full z-40 my-4 rounded-2xl border md:hidden',
+            'animate-in slide-in-from-top-4 duration-300 ease-out',
+          )}
+        >
+          <MobileNav cta={cta} tabs={tabs} onLinkClick={() => setIsMobileNavOpen(false)} />
+        </div>
+      )}
     </header>
   )
 }
