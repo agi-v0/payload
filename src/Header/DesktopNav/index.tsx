@@ -18,7 +18,9 @@ import { Button } from '@/components/ui/button'
 import RichText from '@/components/RichText'
 import { ChevronDown } from 'lucide-react'
 
-interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {}
+interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
+  className?: string
+}
 
 // Define the type for a single nav item directly based on HeaderType structure
 type NavItem = NonNullable<NonNullable<HeaderType['tabs']>[number]['navItems']>[number]
@@ -35,13 +37,11 @@ interface ListItemProps {
   [key: string]: any // Allow other props temporarily
 }
 
-export function DesktopNav({ tabs, cta }: DesktopNavProps) {
+export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
   const validTabs = tabs || []
-  console.log(cta)
   return (
-    <div id="parent" className="grid h-(--header-height) w-full grid-cols-12">
-      <div className="col-span-2"></div>
-      <NavigationMenu className="col-span-8" dir="rtl">
+    <div id="parent" className={cn('grid w-full', className)}>
+      <NavigationMenu className="col-span-6" dir="rtl">
         <NavigationMenuList>
           {validTabs.map((tab, i) => {
             if (tab.enableDropdown) {
@@ -79,7 +79,7 @@ export function DesktopNav({ tabs, cta }: DesktopNavProps) {
                       {tab.navItems?.map((navItem) => (
                         <li key={navItem.id}>
                           {/* Use navItem.id as key */}
-                          <ListItem {...(navItem as NavItem)} />
+                          <ListItem {...navItem} />
                         </li>
                       ))}
                     </ul>
@@ -104,7 +104,7 @@ export function DesktopNav({ tabs, cta }: DesktopNavProps) {
           })}
         </NavigationMenuList>
       </NavigationMenu>
-      <div className="col-span-2 flex flex-row items-center gap-2">
+      <div className="col-span-2 flex flex-row items-center justify-end gap-2">
         {cta &&
           cta.map((ctaItem, id) => (
             <CMSLink key={id} {...ctaItem.link} size="sm" color={ctaItem.link.color ?? undefined} />
@@ -190,8 +190,3 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
   },
 )
 ListItem.displayName = 'ListItem'
-
-const ButtonVariants = ({ variant }: { variant: string }) => {
-  // Simplified - In real app, import { buttonVariants } from "@/components/ui/button"
-  return 'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90'
-}
