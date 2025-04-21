@@ -5,7 +5,7 @@ import type { PayloadAdminBarProps } from 'payload-admin-bar'
 import { cn } from '@/utilities/ui'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { PayloadAdminBar } from 'payload-admin-bar'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 import './index.scss'
@@ -13,6 +13,7 @@ import './index.scss'
 import { getClientSideURL } from '@/utilities/getURL'
 
 const baseClass = 'admin-bar'
+const adminBarHeight = '2.5rem'
 
 const collectionLabels = {
   pages: {
@@ -41,20 +42,32 @@ export const AdminBar: React.FC<{
   const router = useRouter()
 
   const onAuthChange = React.useCallback((user) => {
-    setShow(user?.id)
+    setShow(!!user?.id)
   }, [])
+
+  useEffect(() => {
+    if (show) {
+      document.documentElement.style.setProperty('--admin-bar-height', adminBarHeight)
+    } else {
+      document.documentElement.style.removeProperty('--admin-bar-height')
+    }
+
+    return () => {
+      document.documentElement.style.removeProperty('--admin-bar-height')
+    }
+  }, [show])
 
   return (
     <div
-      className={cn(baseClass, 'py-2 bg-black text-white', {
+      className={cn(baseClass, 'fixed top-0 left-0 z-[60] w-full bg-black text-white', 'h-10', {
         block: show,
         hidden: !show,
       })}
     >
-      <div className="container">
+      <div className="container h-full">
         <PayloadAdminBar
           {...adminBarProps}
-          className="py-2 text-white"
+          className="h-full py-0 text-white"
           classNames={{
             controls: 'font-medium text-white',
             logo: 'text-white',
