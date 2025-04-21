@@ -1,15 +1,14 @@
 import type { Metadata } from 'next'
-
 import { Rubik } from 'next/font/google'
 import React from 'react'
 
-import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
+import { DynamicAdminBarLoader } from '@/components/AdminBar/DynamicLoader.client'
 
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
@@ -56,7 +55,7 @@ export default async function RootLayout({
       <body>
         <Providers>
           <NextIntlClientProvider messages={messages}>
-            <AdminBar
+            <DynamicAdminBarLoader
               adminBarProps={{
                 preview: isEnabled,
               }}
