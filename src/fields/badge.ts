@@ -71,15 +71,12 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
             },
             defaultValue: 'blue',
             options: colorOptionsToUse,
+            dbName: 'badge_color',
           },
         ],
       },
     ],
   }
-
-  //  //   admin: {
-  //     condition: (_, siblingData) => siblingData?.type === 'reference',
-  // },
 
   if (icon) {
     badge.fields.push(
@@ -94,16 +91,18 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
       }),
     )
     badge.fields.push({
-      name: 'icon_dir',
-      label: 'Icon Direction',
+      name: 'icon_position',
+      label: 'Icon Position',
+      defaultValue: 'flex-row',
       type: 'select',
       admin: {
         width: '50%',
       },
       options: [
-        { label: 'Lead', value: 'flex-row' },
-        { label: 'Tail', value: 'flex-row-reverse' },
+        { label: 'Start', value: 'flex-row' },
+        { label: 'End', value: 'flex-row-reverse' },
       ],
+      dbName: 'badge_icon_position',
     })
   }
 
