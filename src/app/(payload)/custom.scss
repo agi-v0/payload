@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@layer theme, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
 
 :root {
   --font-body: 'Rubik', sans-serif;
@@ -59,4 +62,8 @@
 }
 .nav__link:has(.nav__link-indicator) {
   background-color: var(--theme-elevation-100);
+}
+
+.table {
+  display: block;
 }
