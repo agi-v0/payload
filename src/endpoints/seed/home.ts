@@ -4,11 +4,17 @@ import type { Media } from '@/payload-types'
 type HomeArgs = {
   heroImage: Media
   metaImage: Media
+  image169: Media
+  image43: Media
+  imageSquare: Media
 }
 
 export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
   heroImage,
   metaImage,
+  image169,
+  image43,
+  imageSquare,
 }) => {
   return {
     title: 'Home',
@@ -84,7 +90,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
       supportingText: null,
       logosHeadline: null,
       logos: [],
-      media: heroImage.id,
+      media: image169.id,
       badge: {
         label: null,
         color: 'blue',
@@ -95,234 +101,166 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
 
     layout: [
       {
-        id: '6800e695462e705cdaf2a9c6',
+        layout: '02',
+        blockimage: image169.id,
         blockName: null,
 
         columns: [
           {
-            id: '6800e6a8462e705cdaf2a9c8',
-            size: 'oneThird',
+            size: 'full',
+            appReference: null,
 
-            richText: {
-              root: {
-                type: 'root',
-                format: '',
-                indent: 0,
-                version: 1,
-
-                children: [
-                  {
-                    tag: 'h4',
-                    type: 'heading',
-                    format: '',
-                    indent: 0,
-                    version: 1,
-
-                    children: [
-                      {
-                        mode: 'normal',
-                        text: 'سهل زي السلام',
-                        type: 'text',
-                        style: '',
-                        detail: 0,
-                        format: 0,
-                        version: 1,
-                      },
-                    ],
-                    direction: 'rtl',
-                  },
-
-                  {
-                    type: 'paragraph',
-                    format: '',
-                    indent: 0,
-                    version: 1,
-
-                    children: [
-                      {
-                        mode: 'normal',
-                        text: 'تتعلم عليه بسرعة وتستخدمه بدون تعقيد',
-                        type: 'text',
-                        style: '',
-                        detail: 0,
-                        format: 0,
-                        version: 1,
-                      },
-                    ],
-                    direction: 'rtl',
-                    textStyle: '',
-                    textFormat: 0,
-                  },
-                ],
-                direction: 'rtl',
-              },
+            icon: null,
+            tabLabel: null,
+            enableBadge: false,
+            enableCta: false,
+            image: image43.id,
+            content: {
+              title: 'استخدمه عند الكاونتر، أو كمحطة متنقلة في المحل—الكاشير يتكيف مع مشروعك',
+              copy: 'توافق الأجهزة المتعددة يتيح لك أخذ الطلبات سواء أثناء التنقل أو من على الطاولة.',
             },
-            enableLink: null,
+
+            badge: {
+              label: null,
+              color: 'blue',
+              icon: null,
+              icon_position: 'flex-row',
+            },
 
             link: {
               type: 'reference',
               newTab: null,
               url: null,
               label: null,
-              color: 'brand',
-              variant: 'primary',
             },
           },
 
           {
-            id: '6800e6d9462e705cdaf2a9ca',
-            size: 'oneThird',
+            size: 'half',
+            appReference: null,
+            image: image43.id,
+            icon: null,
+            tabLabel: null,
+            enableBadge: false,
+            enableCta: false,
 
-            richText: {
-              root: {
-                type: 'root',
-                format: '',
-                indent: 0,
-                version: 1,
-
-                children: [
-                  {
-                    tag: 'h4',
-                    type: 'heading',
-                    format: '',
-                    indent: 0,
-                    version: 1,
-
-                    children: [
-                      {
-                        mode: 'normal',
-                        text: 'يركب على كيفك',
-                        type: 'text',
-                        style: '',
-                        detail: 0,
-                        format: 0,
-                        version: 1,
-                      },
-                    ],
-                    direction: 'rtl',
-                  },
-
-                  {
-                    type: 'paragraph',
-                    format: '',
-                    indent: 0,
-                    version: 1,
-
-                    children: [
-                      {
-                        mode: 'normal',
-                        text: 'يتكيف مع مطعمك أو محلك مهما كان شغلك',
-                        type: 'text',
-                        style: '',
-                        detail: 0,
-                        format: 0,
-                        version: 1,
-                      },
-                    ],
-                    direction: 'rtl',
-                    textStyle: '',
-                    textFormat: 0,
-                  },
-                ],
-                direction: 'rtl',
-              },
+            content: {
+              title: 'الربط مع 20+ تطبيق يعزز عملياتك',
+              copy: 'ادمج نظامنا مع تطبيقات التوصيل والأنظمة الأخرى لسهولة إدارة أعمالك وشحنها بإمكانيات إضافية.',
             },
-            enableLink: null,
 
-            links: [
-              {
-                link: {
-                  type: 'custom',
-                  newTab: null,
-                  url: 'google.com',
-                  label: 'تواصل معنا',
-                  color: 'brand',
-                  variant: 'primary',
-                },
-              },
-            ],
-          },
-
-          {
-            id: '6800e6f2462e705cdaf2a9cc',
-            size: 'oneThird',
-
-            richText: {
-              root: {
-                type: 'root',
-                format: '',
-                indent: 0,
-                version: 1,
-
-                children: [
-                  {
-                    tag: 'h4',
-                    type: 'heading',
-                    format: '',
-                    indent: 0,
-                    version: 1,
-
-                    children: [
-                      {
-                        mode: 'normal',
-                        text: 'سعره زين',
-                        type: 'text',
-                        style: '',
-                        detail: 0,
-                        format: 0,
-                        version: 1,
-                      },
-                    ],
-                    direction: 'rtl',
-                  },
-
-                  {
-                    type: 'paragraph',
-                    format: '',
-                    indent: 0,
-                    version: 1,
-
-                    children: [
-                      {
-                        mode: 'normal',
-                        text: 'ما يكسر ميزانيتك ويعطيك قيمة حقيقية',
-                        type: 'text',
-                        style: '',
-                        detail: 0,
-                        format: 0,
-                        version: 1,
-                      },
-                    ],
-                    direction: 'rtl',
-                    textStyle: '',
-                    textFormat: 0,
-                  },
-                ],
-                direction: 'rtl',
-              },
+            badge: {
+              label: null,
+              color: 'blue',
+              icon: null,
+              icon_position: 'flex-row',
             },
-            enableLink: null,
 
             link: {
               type: 'reference',
               newTab: null,
               url: null,
               label: null,
-              color: 'brand',
-              variant: 'primary',
+            },
+          },
+
+          {
+            size: 'half',
+            appReference: null,
+            image: image43.id,
+            icon: null,
+            tabLabel: null,
+            enableBadge: null,
+            enableCta: null,
+
+            content: {
+              title: 'استقبال المدفوعات بطرق متعددة بسلاسة',
+              copy: 'يقبل النقد أو البطاقات، ويحافظ على سرعة المعاملات بدون توقف.',
+            },
+
+            badge: {
+              label: null,
+              color: 'blue',
+              icon: null,
+              icon_position: 'flex-row',
+            },
+
+            link: {
+              type: 'reference',
+              newTab: null,
+              url: null,
+              label: null,
+            },
+          },
+
+          {
+            size: 'twoThirds',
+            appReference: null,
+            image: image43.id,
+            icon: null,
+            tabLabel: null,
+            enableBadge: null,
+            enableCta: null,
+
+            content: {
+              title: 'تابع مبيعاتك بدقة مع تقارير مفصلة وتحليلات',
+              copy: 'كل بيعة أو استرداد أو خصم يُسجل لحظة حدوثه، لتعرف الحصيلة اليومية بدقة—لا تخمين، فقط أرقام واضحة.',
+            },
+
+            badge: {
+              label: null,
+              color: 'blue',
+              icon: null,
+              icon_position: 'flex-row',
+            },
+
+            link: {
+              type: 'reference',
+              newTab: null,
+              url: null,
+              label: null,
+            },
+          },
+
+          {
+            size: 'oneThird',
+            appReference: null,
+            image: image43.id,
+            icon: null,
+            tabLabel: null,
+            enableBadge: null,
+            enableCta: null,
+
+            content: {
+              title: 'تواصل ذكي مع العملاء',
+              copy: 'اجمع معلومات قيمة عن عملائك لتعزيز استراتيجيات التسويق والعروض المخصصة.',
+            },
+
+            badge: {
+              label: null,
+              color: 'blue',
+              icon: null,
+              icon_position: 'flex-row',
+            },
+
+            link: {
+              type: 'reference',
+              newTab: null,
+              url: null,
+              label: null,
             },
           },
         ],
-        blockType: 'content',
+        blockType: 'features',
 
         blockHeader: {
-          type: 'start',
+          type: 'center',
 
           badge: {
             label: null,
             color: 'blue',
             icon: null,
-            icon_dir: null,
+            icon_position: 'flex-row',
           },
 
           headerText: {
@@ -343,7 +281,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
                   children: [
                     {
                       mode: 'normal',
-                      text: 'ليش تختار مرن؟',
+                      text: 'منظومة مصممة لتلبية احتياجاتك',
                       type: 'text',
                       style: '',
                       detail: 0,
@@ -353,19 +291,63 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
                   ],
                   direction: 'rtl',
                 },
+
+                {
+                  type: 'paragraph',
+                  format: '',
+                  indent: 0,
+                  version: 1,
+
+                  children: [
+                    {
+                      mode: 'normal',
+                      text: 'نظام نقاط بيع وإدارة عمليات تشغيلية مصمم ليناسب احتياجات النوعية للمطاعم والأنشطة التجارية المختلفة.',
+                      type: 'text',
+                      style: '',
+                      detail: 0,
+                      format: 0,
+                      version: 1,
+                    },
+                  ],
+                  direction: 'rtl',
+                  textStyle: '',
+                  textFormat: 0,
+                },
               ],
               direction: 'rtl',
             },
           },
 
-          links: [],
+          links: [
+            {
+              link: {
+                type: 'custom',
+                newTab: null,
+                url: '/',
+                label: 'تواصل معنا',
+                color: 'neutral',
+                variant: 'primary',
+              },
+            },
+
+            {
+              link: {
+                type: 'custom',
+                newTab: null,
+                url: '/',
+                label: 'تعرف المزيد',
+                color: 'neutral',
+                variant: 'ghost',
+              },
+            },
+          ],
         },
       },
     ],
 
     meta: {
       title: null,
-      image: null,
+      image: image169.id,
       description: null,
     },
     slug: 'home',
