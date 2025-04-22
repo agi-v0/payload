@@ -7,11 +7,9 @@ import { AppsBlock } from '@/blocks/AppsBlock/config'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { Content } from '@/blocks/Content/config'
 import { Features } from '@/blocks/Features/config'
-import { Features } from '@/blocks/Features/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { StyledList } from '@/blocks/StyledList/config'
-import { TestimonialsBlock } from '@/blocks/TestimonialsBlock/config'
 import { TestimonialsBlock } from '@/blocks/TestimonialsBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -92,6 +90,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 Archive,
                 FormBlock,
                 StyledList,
+                TestimonialsBlock,
                 TestimonialsBlock,
                 Features,
               ],
