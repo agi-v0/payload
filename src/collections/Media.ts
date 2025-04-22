@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
+import ImageCategoryGuide from '@/components/ImageCategoryGuide'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -41,6 +42,11 @@ export const Media: CollectionConfig = {
       name: 'Category',
       type: 'relationship',
       relationTo: 'media-categories',
+      admin: {
+        components: {
+          afterInput: ['@/components/ImageCategoryGuide'],
+        },
+      },
     },
   ],
   upload: {
