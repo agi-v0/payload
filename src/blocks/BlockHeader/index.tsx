@@ -8,7 +8,16 @@ import { cn } from '@/utilities/ui'
 import { BlockHeaderType } from '@/types/blockHeader'
 
 export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
-  const { headerText, links, badge, className, type } = props
+  const {
+    headerText,
+    links,
+    badge,
+    className,
+    badgeClassName,
+    richTextClassName,
+    linksClassName,
+    type,
+  } = props
 
   const { setHeaderTheme } = useHeaderTheme()
 
@@ -19,7 +28,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
   return (
     <div
       className={cn(
-        'gap-md container grid grid-cols-2',
+        'gap-md grid grid-cols-2',
         type === 'center' ? 'justify-items-center' : '',
         className,
       )}
@@ -28,7 +37,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
       {/* TODO: Hide all elements when their value is null */}
       {badge?.label && (
         <Badge
-          className="col-span-2"
+          className={cn('col-span-2', badgeClassName)}
           label={badge?.label}
           icon={badge?.icon}
           icon_dir={badge?.icon_dir}
@@ -42,6 +51,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
             'col-span-2 mx-0 md:row-start-2',
             type === 'split' ? 'md:grid md:grid-cols-subgrid' : '',
             type === 'center' ? 'mx-auto text-center' : '',
+            richTextClassName,
           )}
           data={headerText}
           enableGutter={false}
@@ -53,6 +63,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
             'col-span-2 row-start-3 justify-self-stretch md:col-span-1 md:justify-self-auto',
             type === 'split' ? 'md:col-start-2' : '',
             type === 'center' ? 'md:col-span-2' : '',
+            linksClassName,
           )}
         >
           {Array.isArray(links) && links.length > 0 && (

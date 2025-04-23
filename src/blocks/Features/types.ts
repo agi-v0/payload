@@ -22,13 +22,40 @@ export interface FeatureItem {
   }
 }
 
+// App reference data
+export interface AppReference {
+  id: string | number
+  icon?: number | Media
+  name?: string
+  tagline?: string
+  link?: {
+    type?: ('reference' | 'custom') | null
+    newTab?: boolean | null
+    reference?:
+      | {
+          relationTo: 'pages'
+          value: number
+        }
+      | {
+          relationTo: 'posts'
+          value: number
+        }
+    url?: string | null
+    label: string
+    color?: ('brand' | 'neutral') | null
+    variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null
+  }
+}
+
 // Column in the features block
 export interface FeatureColumn {
   title: string
   size?: 'oneThird' | 'half' | 'twoThirds' | 'full'
   icon?: string | null
   content?: {
-    root: {
+    title?: string
+    copy?: string
+    root?: {
       type: string
       children: {
         type: string
@@ -43,7 +70,7 @@ export interface FeatureColumn {
     [k: string]: unknown
   } | null
   image?: number | Media | null
-  appReference?: number | Media | null
+  appReference?: AppReference | null
   showBadge?: boolean
   badgeConfig?: BadgeConfig
   showFeatureList?: boolean
@@ -97,6 +124,7 @@ export interface FeaturesBlock {
     | 'masonry'
     | 'tabs'
     | 'accordion'
+  variant?: string
   showBadge?: boolean
   badgeConfig?: BadgeConfig
   columns?: FeatureColumn[]
