@@ -14,11 +14,14 @@ import { seedTestimonials } from './testimonials'
 import { image169 } from './image-16-9'
 import { image43 } from './image-4-3'
 import { imageSquare } from './image-square'
+import { app } from './app'
 
 const collections: CollectionSlug[] = [
   'categories',
   'media',
   'pages',
+  'apps',
+  'media-categories',
   'posts',
   'forms',
   'form-submissions',
@@ -82,95 +85,58 @@ export const seed = async ({
     },
   })
 
-  payload.logger.info(`— Seeding media...`)
+  payload.logger.info(`— Seeding categories...`)
 
-  const [
-    image1Buffer,
-    image2Buffer,
-    image3Buffer,
-    logoBuffer,
-    hero1Buffer,
-    image169Buffer,
-    image43Buffer,
-    imageSquareBuffer,
-  ] = await Promise.all([
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
-    ),
-    fetchFileByURL('http://localhost:3000/media/marn-logo.png'),
-    fetchFileByURL('http://localhost:3000/media/marn-placeholder.png'),
-    fetchFileByURL('http://localhost:3000/media/marn-placeholder-16x9.png'),
-    fetchFileByURL('http://localhost:3000/media/marn-placeholder-4x3.png'),
-    fetchFileByURL('http://localhost:3000/media/marn-placeholder-1x1.png'),
-  ])
-
-  const [
-    demoAuthor,
-    image1Doc,
-    image2Doc,
-    image3Doc,
-    imageLogoDoc,
-    imageHomeDoc,
-    image169Doc,
-    image43Doc,
-    imageSquareDoc,
-  ] = await Promise.all([
+  const categories = await Promise.all([
     payload.create({
-      collection: 'users',
+      collection: 'media-categories',
       data: {
-        name: 'Demo Author',
-        email: 'demo-author@example.com',
-        password: 'password',
+        title: 'App Icons',
+        slug: 'app-icon',
       },
     }),
-
     payload.create({
-      collection: 'media',
-      data: image1,
-      file: image1Buffer,
+      collection: 'media-categories',
+      data: {
+        title: 'Hero Images',
+      },
     }),
     payload.create({
-      collection: 'media',
-      data: image2,
-      file: image2Buffer,
+      collection: 'media-categories',
+      data: {
+        title: 'Feature Images',
+      },
     }),
     payload.create({
-      collection: 'media',
-      data: image2,
-      file: image3Buffer,
+      collection: 'media-categories',
+      data: {
+        title: 'Blog Images',
+      },
     }),
     payload.create({
-      collection: 'media',
-      data: imageLogo,
-      file: logoBuffer,
+      collection: 'media-categories',
+      data: {
+        title: 'OG Images',
+      },
     }),
     payload.create({
-      collection: 'media',
-      data: imageHero1,
-      file: hero1Buffer,
+      collection: 'media-categories',
+      data: {
+        title: 'Customer Logos',
+      },
     }),
     payload.create({
-      collection: 'media',
-      data: image169,
-      file: image169Buffer,
+      collection: 'media-categories',
+      data: {
+        title: 'Team Photos',
+      },
     }),
     payload.create({
-      collection: 'media',
-      data: image43,
-      file: image43Buffer,
+      collection: 'media-categories',
+      data: {
+        title: 'Background Textures',
+      },
     }),
-    payload.create({
-      collection: 'media',
-      data: imageSquare,
-      file: imageSquareBuffer,
-    }),
-
     payload.create({
       collection: 'categories',
       data: {
@@ -247,68 +213,105 @@ export const seed = async ({
         ],
       },
     }),
+  ])
 
+  payload.logger.info(`— Seeding media...`)
+
+  const [
+    image1Buffer,
+    image2Buffer,
+    image3Buffer,
+    logoBuffer,
+    hero1Buffer,
+    image169Buffer,
+    image43Buffer,
+    imageSquareBuffer,
+  ] = await Promise.all([
+    fetchFileByURL(
+      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
+    ),
+    fetchFileByURL(
+      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
+    ),
+    fetchFileByURL(
+      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
+    ),
+    fetchFileByURL('http://localhost:3000/media/marn-logo.png'),
+    fetchFileByURL('http://localhost:3000/media/marn-placeholder.png'),
+    fetchFileByURL('http://localhost:3000/media/marn-placeholder-16x9.png'),
+    fetchFileByURL('http://localhost:3000/media/marn-placeholder-4x3.png'),
+    fetchFileByURL('http://localhost:3000/media/marn-placeholder-1x1.png'),
+  ])
+
+  const [
+    demoAuthor,
+    image1Doc,
+    image2Doc,
+    image3Doc,
+    imageLogoDoc,
+    imageHomeDoc,
+    image169Doc,
+    image43Doc,
+    imageSquareDoc,
+  ] = await Promise.all([
     payload.create({
-      collection: 'media-categories',
+      collection: 'users',
       data: {
-        title: 'App Icons',
+        name: 'Demo Author',
+        email: 'demo-author@example.com',
+        password: 'password',
       },
     }),
     payload.create({
-      collection: 'media-categories',
-      data: {
-        title: 'App Icons',
-      },
+      collection: 'media',
+      data: image1,
+      file: image1Buffer,
     }),
     payload.create({
-      collection: 'media-categories',
-      data: {
-        title: 'Hero Images',
-      },
+      collection: 'media',
+      data: image2,
+      file: image2Buffer,
     }),
     payload.create({
-      collection: 'media-categories',
-      data: {
-        title: 'Feature Images',
-      },
+      collection: 'media',
+      data: image2,
+      file: image3Buffer,
     }),
     payload.create({
-      collection: 'media-categories',
-      data: {
-        title: 'Blog Images',
-      },
+      collection: 'media',
+      data: imageLogo,
+      file: logoBuffer,
     }),
     payload.create({
-      collection: 'media-categories',
-      data: {
-        title: 'OG Images',
-      },
+      collection: 'media',
+      data: imageHero1,
+      file: hero1Buffer,
     }),
     payload.create({
-      collection: 'media-categories',
-      data: {
-        title: 'Customer Logos',
-      },
+      collection: 'media',
+      data: image169,
+      file: image169Buffer,
     }),
     payload.create({
-      collection: 'media-categories',
-      data: {
-        title: 'App Icons',
-      },
+      collection: 'media',
+      data: image43,
+      file: image43Buffer,
     }),
     payload.create({
-      collection: 'media-categories',
-      data: {
-        title: 'Team Photos',
-      },
-    }),
-    payload.create({
-      collection: 'media-categories',
-      data: {
-        title: 'Background Textures',
-      },
+      collection: 'media',
+      data: imageSquare,
+      file: imageSquareBuffer,
     }),
   ])
+
+  // Update imageSquareDoc with its category after creation
+  await payload.update({
+    id: imageSquareDoc.id,
+    collection: 'media',
+    data: {
+      category: categories[0].id,
+    },
+  })
 
   payload.logger.info(`— Seeding posts...`)
 
@@ -371,6 +374,26 @@ export const seed = async ({
     depth: 0,
     data: contactFormData,
   })
+
+  payload.logger.info(`— Seeding apps...`)
+
+  const appPromises = Array.from({ length: 10 }).map((_, i) => {
+    const appData = app({ imageSquare: imageSquareDoc })
+    // Make each app unique
+    appData.title = `App ${i + 1}`
+    appData.name = `تطبيق ${i + 1}`
+    appData.slug = `app-${i + 1}`
+    // Optionally, slightly vary other fields like tagline or overview if needed
+    appData.tagline = `${appData.tagline} - ${i + 1}`
+
+    return payload.create({
+      collection: 'apps',
+      depth: 0,
+      data: appData,
+    })
+  })
+
+  await Promise.all(appPromises)
 
   payload.logger.info(`— Seeding pages...`)
 
@@ -900,7 +923,6 @@ export const seed = async ({
       },
     }),
   ])
-
   payload.logger.info('Seeded database successfully!')
 }
 

@@ -7,12 +7,10 @@ type AppArgs = {
 
 export const app: (args: AppArgs) => RequiredDataFromCollectionSlug<'apps'> = ({ imageSquare }) => {
   return {
-    id: 1,
     title: 'Jahez',
     icon: imageSquare,
     name: 'جاهز',
     tagline: 'إدارة رقمية للقسائم والخصومات',
-
     overview: {
       root: {
         type: 'root',
