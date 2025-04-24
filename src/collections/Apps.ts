@@ -77,12 +77,16 @@ export const Apps: CollectionConfig<'apps'> = {
     useAsTitle: 'name',
   },
   fields: [
-    // {
-    //   name: 'title',
-    //   type: 'text',
-    //   required: true,
-    //   localized: true,
-    // },
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
+      localized: false,
+      admin: {
+        rtl: false,
+        description: 'Title of the app in English for display purposes.',
+      },
+    },
     {
       type: 'tabs',
       tabs: [
@@ -92,9 +96,12 @@ export const Apps: CollectionConfig<'apps'> = {
             {
               name: 'icon',
               type: 'upload',
-              relationTo: 'app-icons',
+              relationTo: 'media',
               admin: {
                 description: 'Upload an icon for the app. 500x500px recommended.',
+              },
+              filterOptions: {
+                'category.slug': { equals: 'app-icon' },
               },
             },
             {
@@ -159,7 +166,6 @@ export const Apps: CollectionConfig<'apps'> = {
                 },
               }),
               label: 'About',
-              required: true,
             },
             {
               name: 'features',
@@ -225,20 +231,20 @@ export const Apps: CollectionConfig<'apps'> = {
       admin: {
         components: {
           Field: {
-            path: '@/fields/appPreview#AppPreview',
+            path: '@/components/AppPreview#AppPreview',
           },
         },
         position: 'sidebar',
       },
     },
-    // {
-    //   name: 'publishedAt',
-    //   type: 'date',
-    //   admin: {
-    //     position: 'sidebar',
-    //   },
-    // },
-    // ...slugField(),
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    ...slugField(),
   ],
 
   versions: {
