@@ -133,7 +133,7 @@ const ContentSection: React.FC<{ body: AppsBlockType['body'] }> = ({ body }) => 
 }
 
 // Main Client Component for the Carousel
-export const AppsCarouselClient: React.FC<AppsCarouselClientProps> = ({ apps, body }) => {
+export const AppsBlockGrid: React.FC<AppsCarouselClientProps> = ({ apps, body }) => {
   const [gridCells, setGridCells] = useState<GridCell[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)

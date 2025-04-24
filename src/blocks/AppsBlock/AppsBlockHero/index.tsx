@@ -3,7 +3,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import type { App, AppsBlock as AppsBlockProps } from '@/payload-types'
-import { AppsCarouselClient } from './AppsCarouselClient'
+import { AppsBlockGrid } from './AppsBlockGrid'
 
 import { ArrowLeftIcon } from 'lucide-react'
 
@@ -66,9 +66,7 @@ export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
   return (
     <div className="py-space-lg w-full">
       {fetchError && <p className="container text-center">{fetchError}</p>}
-      {!fetchError && fetchedApps.length > 0 && (
-        <AppsCarouselClient apps={fetchedApps} body={body} />
-      )}
+      {!fetchError && fetchedApps.length > 0 && <AppsBlockGrid apps={fetchedApps} body={body} />}
     </div>
   )
 }
