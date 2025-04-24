@@ -325,7 +325,7 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
-  Category?: (number | null) | MediaCategory;
+  category?: (number | null) | MediaCategory;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -583,6 +583,10 @@ export interface AppsBlock {
 export interface App {
   id: number;
   /**
+   * Title of the app in English for display purposes.
+   */
+  title: string;
+  /**
    * Upload an icon for the app. 500x500px recommended.
    */
   icon?: (number | null) | Media;
@@ -683,7 +687,7 @@ export interface App {
     };
   };
   gallery?: (number | Media)[] | null;
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -697,7 +701,7 @@ export interface App {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   features?:
     | {
         title: string;
@@ -709,6 +713,9 @@ export interface App {
         id?: string | null;
       }[]
     | null;
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -2248,6 +2255,7 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "apps_select".
  */
 export interface AppsSelect<T extends boolean = true> {
+  title?: T;
   icon?: T;
   name?: T;
   tagline?: T;
@@ -2310,6 +2318,9 @@ export interface AppsSelect<T extends boolean = true> {
         icon?: T;
         id?: T;
       };
+  publishedAt?: T;
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2365,7 +2376,7 @@ export interface AppIconsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
-  Category?: T;
+  category?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
