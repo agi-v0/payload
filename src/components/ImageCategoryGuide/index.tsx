@@ -11,6 +11,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import './index.scss'
+
 const categories = [
   {
     name: 'Hero Images',
@@ -49,34 +51,34 @@ const categories = [
 
 const ImageCategoryGuide: React.FC = (props) => {
   return (
-    <>
-      <div className="field-description field-description-Category">
+    <div className="image-category-guide">
+      <div className="field-description image-category-guide__description">
         Select the most appropriate category for the uploaded media. Refer to the guide below for
         default media categories and their typical usage.
       </div>
-      <div style={{ marginTop: 'calc(var(--base)/4)' }}>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[240px] text-[13px] font-medium">Category Name</TableHead>
-              <TableHead className="text-[13px] font-medium">Description</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
+      <div className="image-category-guide__table-container">
+        <table className="image-category-guide__table">
+          <thead className="image-category-guide__table-header">
+            <tr className="image-category-guide__table-row">
+              <th className="image-category-guide__table-head image-category-guide__table-head--category">
+                Category Name
+              </th>
+              <th className="image-category-guide__table-head">Description</th>
+            </tr>
+          </thead>
+          <tbody className="image-category-guide__table-body">
             {categories.map((category) => (
-              <TableRow key={category.name}>
-                <TableCell className="text-[13px] font-medium text-[var(--theme-elevation-400)]">
+              <tr key={category.name} className="image-category-guide__table-row">
+                <td className="image-category-guide__table-cell image-category-guide__table-cell--category">
                   {category.name}
-                </TableCell>
-                <TableCell className="text-[13px] text-[var(--theme-elevation-400)]">
-                  {category.description}
-                </TableCell>
-              </TableRow>
+                </td>
+                <td className="image-category-guide__table-cell">{category.description}</td>
+              </tr>
             ))}
-          </TableBody>
-        </Table>
+          </tbody>
+        </table>
       </div>
-    </>
+    </div>
   )
 }
 
