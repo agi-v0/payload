@@ -229,6 +229,7 @@ export interface Page {
     | FormBlock
     | StyledListBlock
     | TestimonialsBlock
+    | TestimonialsBlock
     | FeaturesBlock
   )[];
   meta?: {
@@ -2853,6 +2854,10 @@ export interface Header {
                       } | null);
                   url?: string | null;
                   label: string;
+                  /**
+                   * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+                   */
+                  icon?: string | null;
                 };
                 description?: string | null;
               };
@@ -2889,6 +2894,10 @@ export interface Header {
                             } | null);
                         url?: string | null;
                         label: string;
+                        /**
+                         * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+                         */
+                        icon?: string | null;
                       };
                       id?: string | null;
                     }[]
@@ -2912,6 +2921,11 @@ export interface Header {
                             } | null);
                         url?: string | null;
                         label: string;
+                        description?: string | null;
+                        /**
+                         * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+                         */
+                        icon?: string | null;
                       };
                       id?: string | null;
                     }[]
@@ -3038,6 +3052,7 @@ export interface HeaderSelect<T extends boolean = true> {
                           reference?: T;
                           url?: T;
                           label?: T;
+                          icon?: T;
                         };
                     description?: T;
                   };
@@ -3057,6 +3072,7 @@ export interface HeaderSelect<T extends boolean = true> {
                                 reference?: T;
                                 url?: T;
                                 label?: T;
+                                icon?: T;
                               };
                           id?: T;
                         };
@@ -3076,6 +3092,8 @@ export interface HeaderSelect<T extends boolean = true> {
                                 reference?: T;
                                 url?: T;
                                 label?: T;
+                                description?: T;
+                                icon?: T;
                               };
                           id?: T;
                         };

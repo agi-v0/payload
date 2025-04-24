@@ -16,8 +16,9 @@ import { CMSLink } from '@/components/Link'
 import type { Header as HeaderType } from '@/payload-types'
 import { Button } from '@/components/ui/button'
 import RichText from '@/components/RichText'
-import { ChevronDown } from 'lucide-react'
-
+import { ChevronDown, ChevronLeft } from 'lucide-react'
+import { DynamicIcon } from 'lucide-react/dynamic'
+import MarnIcon from '@/components/ui/marn-icon'
 interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
   className?: string
 }
@@ -48,16 +49,26 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
               return (
                 <NavigationMenuItem key={i + 'dropdown'}>
                   {tab.enableDirectLink && tab.link ? (
-                    <NavigationMenuTrigger>
+                    <NavigationMenuTrigger className="rounded-full">
                       <CMSLink {...tab.link} variant="inline" className={'group'}>
                         {tab.label}
                       </CMSLink>
                     </NavigationMenuTrigger>
                   ) : (
-                    <NavigationMenuTrigger>{tab.label}</NavigationMenuTrigger>
+                    <NavigationMenuTrigger className="rounded-full">
+                      {tab.label}
+                    </NavigationMenuTrigger>
                   )}
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[900px] lg:grid-cols-3">
+                    <ul
+                      className="grid w-[400px] gap-4 p-4 md:w-full md:grid-cols-2 lg:w-full lg:grid-cols-[repeat(var(--lgColumns),minmax(332px,1fr))]"
+                      style={
+                        {
+                          '--lgColumns': `${tab.navItems?.length || 1}`,
+                          '--radix-navigation-menu-viewport-width': `${(tab.navItems?.length || 1) * 332 + ((tab.navItems?.length || 1) - 1) * 16 + 32}px`,
+                        } as React.CSSProperties
+                      }
+                    >
                       {
                         (tab.description || tab.descriptionLinks) && null
                         // <li className="row-span-3 md:col-span-1">
@@ -69,7 +80,7 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
                         //       href={tab.descriptionLinks?.[0]?.link?.url || '#'}
                         //     >
                         //       <div className="mt-4 mb-2 text-lg font-medium">{tab.label}</div>
-                        //       <p className="text-muted-foreground text-sm leading-tight">
+                        //       <p className="text-base-tertiary text-sm leading-tight">
                         //         {tab.description}
                         //       </p>
                         //     </a>
@@ -92,7 +103,7 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
                 <NavigationMenuItem key={i + 'directLink'}>
                   <NavigationMenuLink asChild>
                     <CMSLink
-                      className={navigationMenuTriggerStyle()}
+                      className={cn(navigationMenuTriggerStyle(), 'rounded-full')}
                       label={tab.label}
                       {...tab.link}
                     />
@@ -123,7 +134,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
         itemContent = (
           <div ref={ref as React.Ref<HTMLDivElement>} className={cn('p-3', className)} {...props}>
             {featuredLink?.tag && (
-              <div className="text-muted-foreground mb-1 text-xs font-semibold">
+              <div className="text-base-tertiary mb-1 text-xs font-semibold">
                 {featuredLink.tag}
               </div>
             )}
@@ -134,7 +145,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                 <CMSLink
                   key={i}
                   {...subLink.link}
-                  className="text-muted-foreground hover:text-foreground text-sm"
+                  className="text-base-tertiary hover:text-base-secondary text-sm"
                 />
               ))}
             </div>
@@ -143,19 +154,46 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
         break
       case 'list':
         itemContent = (
-          <div ref={ref as React.Ref<HTMLDivElement>} className={cn('p-3', className)} {...props}>
+          <div ref={ref as React.Ref<HTMLDivElement>} className={cn('', className)} {...props}>
             {listLinks?.tag && (
-              <div className="text-muted-foreground mb-1 text-xs font-semibold">
+              <div className="text-base-tertiary mb-1 px-4 text-xs font-normal">
                 {listLinks.tag}
               </div>
             )}
-            <div className="mt-1 flex flex-col space-y-1">
+            <div className="mt-1 flex flex-col gap-0">
               {listLinks?.links?.map((subLink, i) => (
                 <CMSLink
                   key={i}
                   {...subLink.link}
-                  className="text-muted-foreground hover:text-foreground text-sm"
-                />
+                  icon={null}
+                  label={null}
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    'relative h-fit w-full rounded-xl px-3 text-base transition-all duration-300 hover:px-4 [&_svg]:size-5',
+                  )}
+                >
+                  {subLink.link.icon && (
+                    <div className="group-hover:bg-background-neutral bg-background flex size-10 flex-none items-center justify-center rounded-full">
+                      {subLink.link.icon === 'marn-icon' ? (
+                        <MarnIcon className="text-base-secondary" />
+                      ) : (
+                        <DynamicIcon
+                          name={subLink.link.icon as any}
+                          className="text-base-secondary"
+                        />
+                      )}
+                    </div>
+                  )}
+                  <div className="flex w-full flex-col justify-start gap-1">
+                    {subLink.link.label}
+                    {subLink.link.description && (
+                      <p className="text-base-tertiary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
+                        {subLink.link.description}
+                      </p>
+                    )}
+                  </div>
+                  <ChevronLeft className="text-base-tertiary group-hover:text-base-secondary absolute end-4 -translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                </CMSLink>
               ))}
             </div>
           </div>
@@ -177,7 +215,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
             >
               <div className="text-sm leading-none font-medium">{defaultLink.link.label}</div>
               {defaultLink.description && (
-                <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+                <p className="text-base-tertiary line-clamp-2 text-sm leading-snug">
                   {defaultLink.description}
                 </p>
               )}
