@@ -129,6 +129,7 @@ export const seed = async ({
         password: 'password',
       },
     }),
+
     payload.create({
       collection: 'media',
       data: image1,
@@ -173,11 +174,11 @@ export const seed = async ({
     payload.create({
       collection: 'categories',
       data: {
-        title: 'Technology',
+        title: 'إدارة المطاعم',
         breadcrumbs: [
           {
-            label: 'Technology',
-            url: '/technology',
+            label: 'إدارة المطاعم',
+            url: '/restaurant-management',
           },
         ],
       },
@@ -186,11 +187,11 @@ export const seed = async ({
     payload.create({
       collection: 'categories',
       data: {
-        title: 'News',
+        title: 'إدارة المخزون',
         breadcrumbs: [
           {
-            label: 'News',
-            url: '/news',
+            label: 'إدارة المخزون',
+            url: '/inventory-management',
           },
         ],
       },
@@ -199,11 +200,11 @@ export const seed = async ({
     payload.create({
       collection: 'categories',
       data: {
-        title: 'Finance',
+        title: 'تقارير المبيعات',
         breadcrumbs: [
           {
-            label: 'Finance',
-            url: '/finance',
+            label: 'تقارير المبيعات',
+            url: '/sales-reports',
           },
         ],
       },
@@ -211,24 +212,11 @@ export const seed = async ({
     payload.create({
       collection: 'categories',
       data: {
-        title: 'Design',
+        title: 'إدارة الموظفين',
         breadcrumbs: [
           {
-            label: 'Design',
-            url: '/design',
-          },
-        ],
-      },
-    }),
-
-    payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Software',
-        breadcrumbs: [
-          {
-            label: 'Software',
-            url: '/software',
+            label: 'إدارة الموظفين',
+            url: '/staff-management',
           },
         ],
       },
@@ -237,13 +225,87 @@ export const seed = async ({
     payload.create({
       collection: 'categories',
       data: {
-        title: 'Engineering',
+        title: 'برامج نقاط البيع',
         breadcrumbs: [
           {
-            label: 'Engineering',
-            url: '/engineering',
+            label: 'برامج نقاط البيع',
+            url: '/pos-software',
           },
         ],
+      },
+    }),
+
+    payload.create({
+      collection: 'categories',
+      data: {
+        title: 'خدمة العملاء',
+        breadcrumbs: [
+          {
+            label: 'خدمة العملاء',
+            url: '/customer-service',
+          },
+        ],
+      },
+    }),
+
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'App Icons',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'App Icons',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Hero Images',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Feature Images',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Blog Images',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'OG Images',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Customer Logos',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'App Icons',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Team Photos',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Background Textures',
       },
     }),
   ])
