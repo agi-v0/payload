@@ -50,7 +50,7 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
 
             // Theme V: Background, Radius (Padding removed)
             const baseClasses =
-              'bg-background-light flex flex-col justify-between overflow-hidden rounded-space-sm'
+              'bg-background-neutral flex flex-col justify-between overflow-hidden rounded-space-sm'
             // Apply size classes and conditionally add padding
             const itemClasses = cn(
               baseClasses,

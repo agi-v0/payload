@@ -42,22 +42,24 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
   const { authorInfo, quote, media, companyLogo, stats } = testimonial
 
   return (
-    <div className="bg-background-light rounded-space-sm grid w-full max-w-[90rem] grid-cols-1 md:grid-cols-2 lg:items-stretch">
+    <div className="bg-background-neutral rounded-space-sm grid w-full max-w-[90rem] grid-cols-1 md:auto-cols-fr lg:items-stretch">
       <div className="gap-space-md p-space-md pb-space-xs md:pb-space-md flex w-full flex-col justify-start md:justify-between">
-        {companyLogo && (
-          <Media resource={companyLogo} className="h-12 w-auto" imgClassName="object-contain" />
-        )}
-        {quote && (
-          <RichText
-            data={quote}
-            enableProse={false}
-            className="text-base-primary text-(length:--text-h3) font-medium"
-          />
-        )}
+        <div className="gap-space-sm flex flex-grow flex-col justify-start">
+          {companyLogo && (
+            <Media resource={companyLogo} imgClassName="h-8 w-auto opacity-50 dark:invert" />
+          )}
+          {quote && (
+            <RichText
+              data={quote}
+              enableProse={false}
+              className="text-base-primary text-(length:--text-h3) font-medium"
+            />
+          )}
+        </div>
 
         {stats && stats.length > 0 && (
           <div
-            className="mt-space-xs border-neutral/10 gap-space-xs pt-space-xs grid w-full grid-cols-2 border-t lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))]"
+            className="border-neutral/10 gap-space-xs pt-space-xs grid w-full grid-cols-2 border-t lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))]"
             style={
               {
                 '--cols': stats?.length || 0,
@@ -71,7 +73,12 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
           {authorInfo && (
             <div className="gap-space-xs flex flex-row items-center">
               {authorInfo.avatar && (
-                <Media resource={authorInfo.avatar} className="h-12 w-12 rounded-full" />
+                <Media
+                  resource={authorInfo.avatar}
+                  fill
+                  className="relative h-12 w-12 overflow-hidden rounded-full"
+                  imgClassName="object-cover"
+                />
               )}
               <div>
                 <p className="text-base-primary text-body-sm font-medium">{authorInfo.name}</p>
@@ -87,15 +94,16 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
           </Link>
         </div>
       </div>
-      {media && (
+      {/* {media && (
         <div className="p-space-xs flex items-center justify-center">
           <Media
             resource={media}
-            className="rounded-space-sm aspect-[4/3] h-auto w-full overflow-hidden"
-            imgClassName="rounded-space-sm"
+            fill
+            className="rounded-space-sm relative aspect-[4/3] h-auto w-full overflow-hidden"
+            imgClassName="object-cover"
           />
         </div>
-      )}
+      )} */}
     </div>
   )
 }
