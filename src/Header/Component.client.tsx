@@ -49,7 +49,7 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
       {/* Main container with flex layout */}
       <div className="container grid h-[var(--header-height)] grid-cols-4 items-center justify-between lg:grid-cols-10">
         <Link href="/" className="col-span-2 flex-shrink-0">
-          <Logo className="text-base-primary" />
+          <Logo className="text-base-primary h-5 w-auto" />
         </Link>
 
         <DesktopNav

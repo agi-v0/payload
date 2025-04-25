@@ -433,27 +433,57 @@ export const seed = async ({
           {
             enableDirectLink: false,
             enableDropdown: true,
+
             descriptionLinks: [],
+
             navItems: [
               {
                 style: 'list',
+
                 defaultLink: {
                   link: {
                     type: 'custom',
                     newTab: false,
-
                     url: '/solutions/cashier',
                     label: 'الكاشير',
+                    icon: null,
                   },
                   description: null,
                 },
+
                 featuredLink: {
                   tag: null,
-                  label: null,
+
+                  label: {
+                    root: {
+                      type: 'root',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+
+                      children: [
+                        {
+                          type: 'paragraph',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+
+                          children: [],
+                          direction: null,
+                          textStyle: '',
+                          textFormat: 0,
+                        },
+                      ],
+                      direction: null,
+                    },
+                  },
+
                   links: [],
                 },
+
                 listLinks: {
                   tag: 'بيع',
+
                   links: [
                     {
                       link: {
@@ -461,6 +491,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/solutions/cashier',
                         label: 'الكاشير',
+                        description: 'تسجيل المبيعات بمرونة وسرعة على أي جهاز',
+                        icon: null,
                       },
                     },
 
@@ -470,6 +502,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/solutions/paysync',
                         label: 'شاشة السداد',
+                        description: 'عرض الطلبات والدفع بشكل مباشر للعميل',
+                        icon: null,
                       },
                     },
 
@@ -479,20 +513,24 @@ export const seed = async ({
                         newTab: false,
                         url: '/solutions/kiosk',
                         label: 'الطلب الذاتي',
+                        description: 'خلي العملاء يطلبون بأنفسهم ويقل الضغط على الموظفين',
+                        icon: null,
                       },
                     },
                   ],
                 },
               },
+
               {
                 style: 'list',
+
                 defaultLink: {
                   link: {
                     type: 'custom',
                     newTab: false,
-
                     url: '/solutions/cashier',
                     label: 'الكاشير',
+                    icon: null,
                   },
                   description: null,
                 },
@@ -514,15 +552,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/solutions/orderstation',
                         label: 'محطة الطلبات',
-                      },
-                    },
-
-                    {
-                      link: {
-                        type: 'custom',
-                        newTab: false,
-                        url: '/solutions/inventory',
-                        label: 'المخزون',
+                        description: ' إدارة جميع الطلبات من مكان واحد – حضوري وتوصيل',
+                        icon: null,
                       },
                     },
 
@@ -532,11 +563,25 @@ export const seed = async ({
                         newTab: false,
                         url: '/solutions/products',
                         label: 'المنتجات',
+                        description: 'نظّم منتجاتك، الأسعار، والعروض بسهولة',
+                        icon: null,
+                      },
+                    },
+
+                    {
+                      link: {
+                        type: 'custom',
+                        newTab: false,
+                        url: '/solutions/inventory',
+                        label: 'المخزون',
+                        description: 'تابع الكميات وتفادى النقص أو الهدر تلقائيًا',
+                        icon: null,
                       },
                     },
                   ],
                 },
               },
+
               {
                 style: 'list',
 
@@ -544,11 +589,18 @@ export const seed = async ({
                   link: {
                     type: 'custom',
                     newTab: false,
-
                     url: '/solutions/cashier',
                     label: 'الكاشير',
+                    icon: null,
                   },
                   description: null,
+                },
+
+                featuredLink: {
+                  tag: null,
+                  label: null,
+
+                  links: [],
                 },
 
                 listLinks: {
@@ -561,6 +613,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/solutions/analytics',
                         label: 'التحليلات',
+                        description: 'تقارير فورية عن المبيعات والأرباح تساعدك تتخذ قرارات',
+                        icon: null,
                       },
                     },
 
@@ -570,6 +624,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/solutions/branches',
                         label: 'الفروع',
+                        description: 'راقب كل فروعك وتقاريرها من نفس اللوحة',
+                        icon: null,
                       },
                     },
 
@@ -579,6 +635,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/solutions/customers',
                         label: 'العملاء',
+                        description: 'احفظ بيانات عملاءك وفعّل برامج الولاء',
+                        icon: null,
                       },
                     },
 
@@ -587,7 +645,9 @@ export const seed = async ({
                         type: 'custom',
                         newTab: false,
                         url: '/solutions/accouting',
-                        label: 'المحاسبة',
+                        label: 'المالية',
+                        description: 'تتبّع المصاريف، الضرائب، والتدفق المالي بسهولة',
+                        icon: null,
                       },
                     },
                   ],
@@ -595,6 +655,12 @@ export const seed = async ({
               },
             ],
             label: 'الحلول',
+
+            link: {
+              type: 'reference',
+              newTab: null,
+              url: null,
+            },
             description:
               'كل أدواتك في منظومة مرنة. استكشف حلول البيع، التشغيل، والإدارة المصممة لتلبية احتياجاتك.',
           },
@@ -602,7 +668,9 @@ export const seed = async ({
           {
             enableDirectLink: false,
             enableDropdown: true,
+
             descriptionLinks: [],
+
             navItems: [
               {
                 style: 'list',
@@ -612,6 +680,7 @@ export const seed = async ({
                     type: 'reference',
                     newTab: false,
                     url: null,
+                    icon: null,
                   },
                   description: null,
                 },
@@ -633,6 +702,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/restaurants',
                         label: 'للمطاعم',
+                        description: null,
+                        icon: 'utensils',
                       },
                     },
 
@@ -642,6 +713,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/retail',
                         label: 'للبيع بالتجزئة',
+                        description: null,
+                        icon: 'scan-barcode',
                       },
                     },
 
@@ -651,6 +724,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/express-services',
                         label: 'للخدمات السريعة',
+                        description: null,
+                        icon: 'fuel',
                       },
                     },
                   ],
@@ -665,6 +740,7 @@ export const seed = async ({
                     type: 'reference',
                     newTab: false,
                     url: null,
+                    icon: null,
                   },
                   description: null,
                 },
@@ -686,6 +762,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/features/control',
                         label: 'للبساطة والتحكم',
+                        description: null,
+                        icon: 'package-open',
                       },
                     },
 
@@ -695,6 +773,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/solutions/branches',
                         label: 'لتعدد الفروع',
+                        description: null,
+                        icon: 'map-pin',
                       },
                     },
 
@@ -704,6 +784,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/integrations',
                         label: 'للربط مع أدواتك',
+                        description: null,
+                        icon: 'puzzle',
                       },
                     },
 
@@ -713,6 +795,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/blog/increasing-profits-with-marnpos',
                         label: 'للزيادة أرباحك',
+                        description: null,
+                        icon: 'bar-chart-big',
                       },
                     },
                   ],
@@ -720,16 +804,25 @@ export const seed = async ({
               },
             ],
             label: 'لماذا مرن',
+
+            link: {
+              type: 'reference',
+              newTab: null,
+              url: null,
+            },
             description:
               'ليش أصحاب المشاريع يختارون مرن؟ اكتشف قيمنا وكيف نسهّل عليك الشغل وتكبير مشروعك.',
           },
 
           {
             enableDirectLink: true,
-            enableDropdown: true,
+            enableDropdown: false,
+
             descriptionLinks: [],
+
             navItems: [],
             label: 'التطبيقات',
+
             link: {
               type: 'custom',
               newTab: false,
@@ -738,10 +831,13 @@ export const seed = async ({
             description:
               'اربط مرن مع تطبيقات الدفع، التوصيل، والمحاسبة. سهّل شغلك وربط كل شيء ببعضه.',
           },
+
           {
             enableDirectLink: true,
             enableDropdown: true,
+
             descriptionLinks: [],
+
             navItems: [
               {
                 style: 'list',
@@ -751,6 +847,7 @@ export const seed = async ({
                     type: 'reference',
                     newTab: false,
                     url: null,
+                    icon: null,
                   },
                   description: null,
                 },
@@ -772,6 +869,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/blog',
                         label: 'المدونة',
+                        description: null,
+                        icon: 'newspaper',
                       },
                     },
 
@@ -781,6 +880,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/customers',
                         label: 'قصص النجاح',
+                        description: null,
+                        icon: 'trophy',
                       },
                     },
                   ],
@@ -795,6 +896,7 @@ export const seed = async ({
                     type: 'reference',
                     newTab: false,
                     url: null,
+                    icon: null,
                   },
                   description: null,
                 },
@@ -807,7 +909,7 @@ export const seed = async ({
                 },
 
                 listLinks: {
-                  tag: 'منشوراتنا',
+                  tag: 'عن مرن',
 
                   links: [
                     {
@@ -816,6 +918,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/about',
                         label: 'عن مرن',
+                        description: null,
+                        icon: 'marn-icon',
                       },
                     },
 
@@ -825,6 +929,8 @@ export const seed = async ({
                         newTab: false,
                         url: '/contact-us',
                         label: 'تواصل معنا',
+                        description: null,
+                        icon: 'phone',
                       },
                     },
 
@@ -834,6 +940,8 @@ export const seed = async ({
                         newTab: false,
                         url: 'https://marn.gitbook.io/marn-developers/',
                         label: 'المطورين',
+                        description: null,
+                        icon: 'code',
                       },
                     },
                   ],
@@ -841,21 +949,37 @@ export const seed = async ({
               },
             ],
             label: 'الموارد',
+
             link: {
               type: 'custom',
+              newTab: null,
               url: '/contact',
             },
             description:
               'كل ما تحتاج تعرفه عن مرن وأصحاب المشاريع اللي يستخدمونه—من مقالات ونصائح، إلى قصص وتجارب حقيقية، وحتى التواصل معنا',
           },
         ],
+
         cta: [
+          {
+            link: {
+              type: 'custom',
+              newTab: null,
+              url: '/',
+              label: 'دخول التاجر',
+              color: 'neutral',
+              variant: 'secondary',
+            },
+          },
+
           {
             link: {
               type: 'custom',
               newTab: false,
               url: '/contact-us',
               label: 'تواصل معنا',
+              color: 'neutral',
+              variant: 'primary',
             },
           },
         ],
@@ -866,55 +990,91 @@ export const seed = async ({
       data: {
         columns: [
           {
-            label: 'Company',
+            label: 'الحلول',
             navItems: [
               {
                 link: {
                   type: 'custom',
-                  label: 'About Us',
-                  url: '/about',
+                  newTab: false,
+                  url: '/solutions/cashier',
+                  label: 'الكاشير',
                 },
               },
               {
                 link: {
                   type: 'custom',
-                  label: 'Blog',
-                  url: '/posts',
+                  newTab: false,
+                  url: '/solutions/paysync',
+                  label: 'شاشة السداد',
                 },
               },
               {
                 link: {
                   type: 'custom',
-                  label: 'Contact',
-                  url: '/contact',
-                },
-              },
-            ],
-          },
-          {
-            label: 'Resources',
-            navItems: [
-              {
-                link: {
-                  type: 'custom',
-                  label: 'Admin',
-                  url: '/admin',
+                  newTab: false,
+                  url: '/solutions/kiosk',
+                  label: 'الطلب الذاتي',
                 },
               },
               {
                 link: {
                   type: 'custom',
-                  label: 'Source Code',
-                  newTab: true,
-                  url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
+                  newTab: false,
+                  url: '/solutions/orderstation',
+                  label: 'محطة الطلبات',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom',
+                  newTab: false,
+                  url: '/solutions/products',
+                  label: 'المنتجات',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom',
+                  newTab: false,
+                  url: '/solutions/inventory',
+                  label: 'المخزون',
                 },
               },
               {
                 link: {
                   type: 'custom',
-                  label: 'Payload',
-                  newTab: true,
-                  url: 'https://payloadcms.com/',
+                  newTab: false,
+                  url: '/solutions/analytics',
+                  label: 'التحليلات',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom',
+                  newTab: false,
+                  url: '/solutions/branches',
+                  label: 'الفروع',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom',
+                  newTab: false,
+                  url: '/solutions/customers',
+                  label: 'العملاء',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom',
+                  newTab: false,
+                  url: '/solutions/accouting',
+                  label: 'المالية',
                 },
               },
             ],

@@ -34,7 +34,7 @@ export const Footer: GlobalConfig = {
           ],
         },
       ],
-      maxRows: 3,
+      maxRows: 4,
       minRows: 1,
     },
   ],

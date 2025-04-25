@@ -48,14 +48,8 @@ export const enum_pages_blocks_apps_block_header_type = pgEnum(
   'enum_pages_blocks_apps_block_header_type',
   ['center', 'split', 'start'],
 )
-export const enum_pages_blocks_apps_block_header_badge_color = pgEnum(
-  'enum_pages_blocks_apps_block_header_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum_pages_blocks_apps_block_header_badge_icon_dir = pgEnum(
-  'enum_pages_blocks_apps_block_header_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
-)
+export const badge_color = pgEnum('badge_color', ['blue', 'red', 'green', 'yellow'])
+export const badge_icon_position = pgEnum('badge_icon_position', ['flex-row', 'flex-row-reverse'])
 export const enum_pages_blocks_apps_type = pgEnum('enum_pages_blocks_apps_type', [
   'appsBlock01',
   'appsBlock02',
@@ -63,14 +57,6 @@ export const enum_pages_blocks_apps_type = pgEnum('enum_pages_blocks_apps_type',
   'appsBlock04',
   'appsBlockHero',
 ])
-export const enum_pages_blocks_apps_body_badge_color = pgEnum(
-  'enum_pages_blocks_apps_body_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum_pages_blocks_apps_body_badge_icon_dir = pgEnum(
-  'enum_pages_blocks_apps_body_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
-)
 export const enum_pages_blocks_cta_block_header_links_link_type = pgEnum(
   'enum_pages_blocks_cta_block_header_links_link_type',
   ['reference', 'custom'],
@@ -82,14 +68,6 @@ export const enum_pages_blocks_cta_links_link_type = pgEnum(
 export const enum_pages_blocks_cta_block_header_type = pgEnum(
   'enum_pages_blocks_cta_block_header_type',
   ['center', 'split', 'start'],
-)
-export const enum_pages_blocks_cta_block_header_badge_color = pgEnum(
-  'enum_pages_blocks_cta_block_header_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum_pages_blocks_cta_block_header_badge_icon_dir = pgEnum(
-  'enum_pages_blocks_cta_block_header_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
 )
 export const enum_pages_blocks_content_block_header_links_link_type = pgEnum(
   'enum_pages_blocks_content_block_header_links_link_type',
@@ -106,14 +84,6 @@ export const enum_pages_blocks_content_columns_link_type = pgEnum(
 export const enum_pages_blocks_content_block_header_type = pgEnum(
   'enum_pages_blocks_content_block_header_type',
   ['center', 'split', 'start'],
-)
-export const enum_pages_blocks_content_block_header_badge_color = pgEnum(
-  'enum_pages_blocks_content_block_header_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum_pages_blocks_content_block_header_badge_icon_dir = pgEnum(
-  'enum_pages_blocks_content_block_header_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
 )
 export const enum_pages_blocks_archive_populate_by = pgEnum(
   'enum_pages_blocks_archive_populate_by',
@@ -135,14 +105,6 @@ export const enum_pages_blocks_testimonials_block_header_type = pgEnum(
   'enum_pages_blocks_testimonials_block_header_type',
   ['center', 'split', 'start'],
 )
-export const enum_pages_blocks_testimonials_block_header_badge_color = pgEnum(
-  'enum_pages_blocks_testimonials_block_header_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum_pages_blocks_testimonials_block_header_badge_icon_dir = pgEnum(
-  'enum_pages_blocks_testimonials_block_header_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
-)
 export const enum_pages_blocks_testimonials_type = pgEnum('enum_pages_blocks_testimonials_type', [
   'TestimonialsBlock01',
   'TestimonialsBlock02',
@@ -154,31 +116,15 @@ export const enum_pages_blocks_features_block_header_links_link_type = pgEnum(
 )
 export const enum_pages_blocks_features_columns_size = pgEnum(
   'enum_pages_blocks_features_columns_size',
-  ['oneThird', 'half', 'twoThirds', 'full'],
+  ['half', 'full', 'oneThird', 'twoThirds'],
 )
 export const enum_pages_blocks_features_columns_link_type = pgEnum(
   'enum_pages_blocks_features_columns_link_type',
   ['reference', 'custom'],
 )
-export const enum_pages_blocks_features_columns_badge_color = pgEnum(
-  'enum_pages_blocks_features_columns_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum_pages_blocks_features_columns_badge_icon_dir = pgEnum(
-  'enum_pages_blocks_features_columns_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
-)
 export const enum_pages_blocks_features_block_header_type = pgEnum(
   'enum_pages_blocks_features_block_header_type',
   ['center', 'split', 'start'],
-)
-export const enum_pages_blocks_features_block_header_badge_color = pgEnum(
-  'enum_pages_blocks_features_block_header_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum_pages_blocks_features_block_header_badge_icon_dir = pgEnum(
-  'enum_pages_blocks_features_block_header_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
 )
 export const enum_pages_blocks_features_layout = pgEnum('enum_pages_blocks_features_layout', [
   '01',
@@ -209,16 +155,6 @@ export const enum_pages_hero_type = pgEnum('enum_pages_hero_type', [
   'hero07',
   'none',
 ])
-export const enum_pages_hero_badge_color = pgEnum('enum_pages_hero_badge_color', [
-  'blue',
-  'red',
-  'green',
-  'yellow',
-])
-export const enum_pages_hero_badge_icon_dir = pgEnum('enum_pages_hero_badge_icon_dir', [
-  'flex-row',
-  'flex-row-reverse',
-])
 export const enum_pages_status = pgEnum('enum_pages_status', ['draft', 'published'])
 export const enum__pages_v_version_hero_links_link_type = pgEnum(
   'enum__pages_v_version_hero_links_link_type',
@@ -236,14 +172,6 @@ export const enum__pages_v_blocks_apps_block_header_type = pgEnum(
   'enum__pages_v_blocks_apps_block_header_type',
   ['center', 'split', 'start'],
 )
-export const enum__pages_v_blocks_apps_block_header_badge_color = pgEnum(
-  'enum__pages_v_blocks_apps_block_header_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum__pages_v_blocks_apps_block_header_badge_icon_dir = pgEnum(
-  'enum__pages_v_blocks_apps_block_header_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
-)
 export const enum__pages_v_blocks_apps_type = pgEnum('enum__pages_v_blocks_apps_type', [
   'appsBlock01',
   'appsBlock02',
@@ -251,14 +179,6 @@ export const enum__pages_v_blocks_apps_type = pgEnum('enum__pages_v_blocks_apps_
   'appsBlock04',
   'appsBlockHero',
 ])
-export const enum__pages_v_blocks_apps_body_badge_color = pgEnum(
-  'enum__pages_v_blocks_apps_body_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum__pages_v_blocks_apps_body_badge_icon_dir = pgEnum(
-  'enum__pages_v_blocks_apps_body_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
-)
 export const enum__pages_v_blocks_cta_block_header_links_link_type = pgEnum(
   'enum__pages_v_blocks_cta_block_header_links_link_type',
   ['reference', 'custom'],
@@ -270,14 +190,6 @@ export const enum__pages_v_blocks_cta_links_link_type = pgEnum(
 export const enum__pages_v_blocks_cta_block_header_type = pgEnum(
   'enum__pages_v_blocks_cta_block_header_type',
   ['center', 'split', 'start'],
-)
-export const enum__pages_v_blocks_cta_block_header_badge_color = pgEnum(
-  'enum__pages_v_blocks_cta_block_header_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum__pages_v_blocks_cta_block_header_badge_icon_dir = pgEnum(
-  'enum__pages_v_blocks_cta_block_header_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
 )
 export const enum__pages_v_blocks_content_block_header_links_link_type = pgEnum(
   'enum__pages_v_blocks_content_block_header_links_link_type',
@@ -294,14 +206,6 @@ export const enum__pages_v_blocks_content_columns_link_type = pgEnum(
 export const enum__pages_v_blocks_content_block_header_type = pgEnum(
   'enum__pages_v_blocks_content_block_header_type',
   ['center', 'split', 'start'],
-)
-export const enum__pages_v_blocks_content_block_header_badge_color = pgEnum(
-  'enum__pages_v_blocks_content_block_header_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum__pages_v_blocks_content_block_header_badge_icon_dir = pgEnum(
-  'enum__pages_v_blocks_content_block_header_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
 )
 export const enum__pages_v_blocks_archive_populate_by = pgEnum(
   'enum__pages_v_blocks_archive_populate_by',
@@ -323,14 +227,6 @@ export const enum__pages_v_blocks_testimonials_block_header_type = pgEnum(
   'enum__pages_v_blocks_testimonials_block_header_type',
   ['center', 'split', 'start'],
 )
-export const enum__pages_v_blocks_testimonials_block_header_badge_color = pgEnum(
-  'enum__pages_v_blocks_testimonials_block_header_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum__pages_v_blocks_testimonials_block_header_badge_icon_dir = pgEnum(
-  'enum__pages_v_blocks_testimonials_block_header_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
-)
 export const enum__pages_v_blocks_testimonials_type = pgEnum(
   'enum__pages_v_blocks_testimonials_type',
   ['TestimonialsBlock01', 'TestimonialsBlock02', 'testimonialsModularGrid'],
@@ -341,31 +237,15 @@ export const enum__pages_v_blocks_features_block_header_links_link_type = pgEnum
 )
 export const enum__pages_v_blocks_features_columns_size = pgEnum(
   'enum__pages_v_blocks_features_columns_size',
-  ['oneThird', 'half', 'twoThirds', 'full'],
+  ['half', 'full', 'oneThird', 'twoThirds'],
 )
 export const enum__pages_v_blocks_features_columns_link_type = pgEnum(
   'enum__pages_v_blocks_features_columns_link_type',
   ['reference', 'custom'],
 )
-export const enum__pages_v_blocks_features_columns_badge_color = pgEnum(
-  'enum__pages_v_blocks_features_columns_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum__pages_v_blocks_features_columns_badge_icon_dir = pgEnum(
-  'enum__pages_v_blocks_features_columns_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
-)
 export const enum__pages_v_blocks_features_block_header_type = pgEnum(
   'enum__pages_v_blocks_features_block_header_type',
   ['center', 'split', 'start'],
-)
-export const enum__pages_v_blocks_features_block_header_badge_color = pgEnum(
-  'enum__pages_v_blocks_features_block_header_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum__pages_v_blocks_features_block_header_badge_icon_dir = pgEnum(
-  'enum__pages_v_blocks_features_block_header_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
 )
 export const enum__pages_v_blocks_features_layout = pgEnum('enum__pages_v_blocks_features_layout', [
   '01',
@@ -396,14 +276,6 @@ export const enum__pages_v_version_hero_type = pgEnum('enum__pages_v_version_her
   'hero07',
   'none',
 ])
-export const enum__pages_v_version_hero_badge_color = pgEnum(
-  'enum__pages_v_version_hero_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum__pages_v_version_hero_badge_icon_dir = pgEnum(
-  'enum__pages_v_version_hero_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
-)
 export const enum__pages_v_version_status = pgEnum('enum__pages_v_version_status', [
   'draft',
   'published',
@@ -430,16 +302,6 @@ export const enum_apps_hero_type = pgEnum('enum_apps_hero_type', [
   'hero07',
   'none',
 ])
-export const enum_apps_hero_badge_color = pgEnum('enum_apps_hero_badge_color', [
-  'blue',
-  'red',
-  'green',
-  'yellow',
-])
-export const enum_apps_hero_badge_icon_dir = pgEnum('enum_apps_hero_badge_icon_dir', [
-  'flex-row',
-  'flex-row-reverse',
-])
 export const enum_apps_status = pgEnum('enum_apps_status', ['draft', 'published'])
 export const enum__apps_v_version_hero_links_link_type = pgEnum(
   'enum__apps_v_version_hero_links_link_type',
@@ -459,14 +321,6 @@ export const enum__apps_v_version_hero_type = pgEnum('enum__apps_v_version_hero_
   'hero07',
   'none',
 ])
-export const enum__apps_v_version_hero_badge_color = pgEnum(
-  'enum__apps_v_version_hero_badge_color',
-  ['blue', 'red', 'green', 'yellow'],
-)
-export const enum__apps_v_version_hero_badge_icon_dir = pgEnum(
-  'enum__apps_v_version_hero_badge_icon_dir',
-  ['flex-row', 'flex-row-reverse'],
-)
 export const enum__apps_v_version_status = pgEnum('enum__apps_v_version_status', [
   'draft',
   'published',
@@ -645,19 +499,17 @@ export const pages_blocks_apps = pgTable(
     blockHeader_type:
       enum_pages_blocks_apps_block_header_type('block_header_type').default('center'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
-    blockHeader_badge_color: enum_pages_blocks_apps_block_header_badge_color(
-      'block_header_badge_color',
-    ).default('blue'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
-    blockHeader_badge_icon_dir: enum_pages_blocks_apps_block_header_badge_icon_dir(
-      'block_header_badge_icon_dir',
-    ),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
     type: enum_pages_blocks_apps_type('type').default('appsBlock01'),
     body_badge_label: varchar('body_badge_label'),
-    body_badge_color: enum_pages_blocks_apps_body_badge_color('body_badge_color').default('blue'),
+    body_badge_color: badge_color('body_badge_color').default('blue'),
     body_badge_icon: varchar('body_badge_icon'),
-    body_badge_icon_dir: enum_pages_blocks_apps_body_badge_icon_dir('body_badge_icon_dir'),
+    body_badge_icon_position: badge_icon_position('body_badge_icon_position').default('flex-row'),
     body_headerText: jsonb('body_header_text'),
     media: integer('media_id').references(() => media.id, {
       onDelete: 'set null',
@@ -741,13 +593,11 @@ export const pages_blocks_cta = pgTable(
     blockHeader_type:
       enum_pages_blocks_cta_block_header_type('block_header_type').default('center'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
-    blockHeader_badge_color: enum_pages_blocks_cta_block_header_badge_color(
-      'block_header_badge_color',
-    ).default('blue'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
-    blockHeader_badge_icon_dir: enum_pages_blocks_cta_block_header_badge_icon_dir(
-      'block_header_badge_icon_dir',
-    ),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
     richText: jsonb('rich_text'),
     blockName: varchar('block_name'),
@@ -834,13 +684,11 @@ export const pages_blocks_content = pgTable(
     blockHeader_type:
       enum_pages_blocks_content_block_header_type('block_header_type').default('center'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
-    blockHeader_badge_color: enum_pages_blocks_content_block_header_badge_color(
-      'block_header_badge_color',
-    ).default('blue'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
-    blockHeader_badge_icon_dir: enum_pages_blocks_content_block_header_badge_icon_dir(
-      'block_header_badge_icon_dir',
-    ),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
     blockName: varchar('block_name'),
   },
@@ -1029,13 +877,11 @@ export const pages_blocks_testimonials = pgTable(
     blockHeader_type:
       enum_pages_blocks_testimonials_block_header_type('block_header_type').default('center'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
-    blockHeader_badge_color: enum_pages_blocks_testimonials_block_header_badge_color(
-      'block_header_badge_color',
-    ).default('blue'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
-    blockHeader_badge_icon_dir: enum_pages_blocks_testimonials_block_header_badge_icon_dir(
-      'block_header_badge_icon_dir',
-    ),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
     type: enum_pages_blocks_testimonials_type('type').default('TestimonialsBlock01'),
     blockName: varchar('block_name'),
@@ -1082,30 +928,6 @@ export const pages_blocks_features_block_header_links = pgTable(
   }),
 )
 
-export const pages_blocks_features_columns_features = pgTable(
-  'pages_blocks_features_columns_features',
-  {
-    _order: integer('_order').notNull(),
-    _parentID: varchar('_parent_id').notNull(),
-    _locale: enum__locales('_locale').notNull(),
-    id: varchar('id').primaryKey(),
-    featureItem_icon: varchar('feature_item_icon'),
-    featureItem_content: jsonb('feature_item_content'),
-  },
-  (columns) => ({
-    _orderIdx: index('pages_blocks_features_columns_features_order_idx').on(columns._order),
-    _parentIDIdx: index('pages_blocks_features_columns_features_parent_id_idx').on(
-      columns._parentID,
-    ),
-    _localeIdx: index('pages_blocks_features_columns_features_locale_idx').on(columns._locale),
-    _parentIDFk: foreignKey({
-      columns: [columns['_parentID']],
-      foreignColumns: [pages_blocks_features_columns.id],
-      name: 'pages_blocks_features_columns_features_parent_id_fk',
-    }).onDelete('cascade'),
-  }),
-)
-
 export const pages_blocks_features_columns = pgTable(
   'pages_blocks_features_columns',
   {
@@ -1113,39 +935,38 @@ export const pages_blocks_features_columns = pgTable(
     _parentID: varchar('_parent_id').notNull(),
     _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
-    size: enum_pages_blocks_features_columns_size('size').default('oneThird'),
+    size: enum_pages_blocks_features_columns_size('size').default('half'),
+    appReference: integer('app_reference_id').references(() => apps.id, {
+      onDelete: 'set null',
+    }),
     image: integer('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    content: jsonb('content'),
+    tabLabel: varchar('tab_label'),
+    icon: varchar('icon'),
+    content_title: varchar('content_title'),
+    content_copy: varchar('content_copy'),
+    enableBadge: boolean('enable_badge'),
+    enableCta: boolean('enable_cta'),
+    badge_label: varchar('badge_label'),
+    badge_color: badge_color('badge_color').default('blue'),
+    badge_icon: varchar('badge_icon'),
+    badge_icon_position: badge_icon_position('badge_icon_position').default('flex-row'),
     link_type: enum_pages_blocks_features_columns_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
-    link_color: link_color('link_color').default('brand'),
-    link_variant: link_variant('link_variant').default('primary'),
-    icon: varchar('icon'),
-    appReference: integer('app_reference_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    tabLabel: varchar('tab_label'),
-    showBadge: boolean('show_badge'),
-    badge_label: varchar('badge_label'),
-    badge_color: enum_pages_blocks_features_columns_badge_color('badge_color').default('blue'),
-    badge_icon: varchar('badge_icon'),
-    badge_icon_dir: enum_pages_blocks_features_columns_badge_icon_dir('badge_icon_dir'),
-    showFeatureList: boolean('show_feature_list'),
   },
   (columns) => ({
     _orderIdx: index('pages_blocks_features_columns_order_idx').on(columns._order),
     _parentIDIdx: index('pages_blocks_features_columns_parent_id_idx').on(columns._parentID),
     _localeIdx: index('pages_blocks_features_columns_locale_idx').on(columns._locale),
-    pages_blocks_features_columns_image_idx: index('pages_blocks_features_columns_image_idx').on(
-      columns.image,
-    ),
     pages_blocks_features_columns_app_reference_idx: index(
       'pages_blocks_features_columns_app_reference_idx',
     ).on(columns.appReference),
+    pages_blocks_features_columns_image_idx: index('pages_blocks_features_columns_image_idx').on(
+      columns.image,
+    ),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [pages_blocks_features.id],
@@ -1165,15 +986,13 @@ export const pages_blocks_features = pgTable(
     blockHeader_type:
       enum_pages_blocks_features_block_header_type('block_header_type').default('center'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
-    blockHeader_badge_color: enum_pages_blocks_features_block_header_badge_color(
-      'block_header_badge_color',
-    ).default('blue'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
-    blockHeader_badge_icon_dir: enum_pages_blocks_features_block_header_badge_icon_dir(
-      'block_header_badge_icon_dir',
-    ),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
-    layout: enum_pages_blocks_features_layout('layout').default('grid'),
+    layout: enum_pages_blocks_features_layout('layout').default('01'),
     blockImage: integer('block_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
@@ -1227,9 +1046,9 @@ export const pages = pgTable(
     id: serial('id').primaryKey(),
     hero_type: enum_pages_hero_type('hero_type').default('hero01'),
     hero_supportingText: varchar('hero_supporting_text'),
-    hero_badge_color: enum_pages_hero_badge_color('hero_badge_color').default('blue'),
+    hero_badge_color: badge_color('hero_badge_color').default('blue'),
     hero_badge_icon: varchar('hero_badge_icon'),
-    hero_badge_icon_dir: enum_pages_hero_badge_icon_dir('hero_badge_icon_dir'),
+    hero_badge_icon_position: badge_icon_position('hero_badge_icon_position').default('flex-row'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
@@ -1473,20 +1292,17 @@ export const _pages_v_blocks_apps = pgTable(
     blockHeader_type:
       enum__pages_v_blocks_apps_block_header_type('block_header_type').default('center'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
-    blockHeader_badge_color: enum__pages_v_blocks_apps_block_header_badge_color(
-      'block_header_badge_color',
-    ).default('blue'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
-    blockHeader_badge_icon_dir: enum__pages_v_blocks_apps_block_header_badge_icon_dir(
-      'block_header_badge_icon_dir',
-    ),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
     type: enum__pages_v_blocks_apps_type('type').default('appsBlock01'),
     body_badge_label: varchar('body_badge_label'),
-    body_badge_color:
-      enum__pages_v_blocks_apps_body_badge_color('body_badge_color').default('blue'),
+    body_badge_color: badge_color('body_badge_color').default('blue'),
     body_badge_icon: varchar('body_badge_icon'),
-    body_badge_icon_dir: enum__pages_v_blocks_apps_body_badge_icon_dir('body_badge_icon_dir'),
+    body_badge_icon_position: badge_icon_position('body_badge_icon_position').default('flex-row'),
     body_headerText: jsonb('body_header_text'),
     media: integer('media_id').references(() => media.id, {
       onDelete: 'set null',
@@ -1576,13 +1392,11 @@ export const _pages_v_blocks_cta = pgTable(
     blockHeader_type:
       enum__pages_v_blocks_cta_block_header_type('block_header_type').default('center'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
-    blockHeader_badge_color: enum__pages_v_blocks_cta_block_header_badge_color(
-      'block_header_badge_color',
-    ).default('blue'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
-    blockHeader_badge_icon_dir: enum__pages_v_blocks_cta_block_header_badge_icon_dir(
-      'block_header_badge_icon_dir',
-    ),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
     richText: jsonb('rich_text'),
     _uuid: varchar('_uuid'),
@@ -1672,13 +1486,11 @@ export const _pages_v_blocks_content = pgTable(
     blockHeader_type:
       enum__pages_v_blocks_content_block_header_type('block_header_type').default('center'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
-    blockHeader_badge_color: enum__pages_v_blocks_content_block_header_badge_color(
-      'block_header_badge_color',
-    ).default('blue'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
-    blockHeader_badge_icon_dir: enum__pages_v_blocks_content_block_header_badge_icon_dir(
-      'block_header_badge_icon_dir',
-    ),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
@@ -1880,13 +1692,11 @@ export const _pages_v_blocks_testimonials = pgTable(
     blockHeader_type:
       enum__pages_v_blocks_testimonials_block_header_type('block_header_type').default('center'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
-    blockHeader_badge_color: enum__pages_v_blocks_testimonials_block_header_badge_color(
-      'block_header_badge_color',
-    ).default('blue'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
-    blockHeader_badge_icon_dir: enum__pages_v_blocks_testimonials_block_header_badge_icon_dir(
-      'block_header_badge_icon_dir',
-    ),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
     type: enum__pages_v_blocks_testimonials_type('type').default('TestimonialsBlock01'),
     _uuid: varchar('_uuid'),
@@ -1935,31 +1745,6 @@ export const _pages_v_blocks_features_block_header_links = pgTable(
   }),
 )
 
-export const _pages_v_blocks_features_columns_features = pgTable(
-  '_pages_v_blocks_features_columns_features',
-  {
-    _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    _locale: enum__locales('_locale').notNull(),
-    id: serial('id').primaryKey(),
-    featureItem_icon: varchar('feature_item_icon'),
-    featureItem_content: jsonb('feature_item_content'),
-    _uuid: varchar('_uuid'),
-  },
-  (columns) => ({
-    _orderIdx: index('_pages_v_blocks_features_columns_features_order_idx').on(columns._order),
-    _parentIDIdx: index('_pages_v_blocks_features_columns_features_parent_id_idx').on(
-      columns._parentID,
-    ),
-    _localeIdx: index('_pages_v_blocks_features_columns_features_locale_idx').on(columns._locale),
-    _parentIDFk: foreignKey({
-      columns: [columns['_parentID']],
-      foreignColumns: [_pages_v_blocks_features_columns.id],
-      name: '_pages_v_blocks_features_columns_features_parent_id_fk',
-    }).onDelete('cascade'),
-  }),
-)
-
 export const _pages_v_blocks_features_columns = pgTable(
   '_pages_v_blocks_features_columns',
   {
@@ -1967,40 +1752,39 @@ export const _pages_v_blocks_features_columns = pgTable(
     _parentID: integer('_parent_id').notNull(),
     _locale: enum__locales('_locale').notNull(),
     id: serial('id').primaryKey(),
-    size: enum__pages_v_blocks_features_columns_size('size').default('oneThird'),
+    size: enum__pages_v_blocks_features_columns_size('size').default('half'),
+    appReference: integer('app_reference_id').references(() => apps.id, {
+      onDelete: 'set null',
+    }),
     image: integer('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    content: jsonb('content'),
+    tabLabel: varchar('tab_label'),
+    icon: varchar('icon'),
+    content_title: varchar('content_title'),
+    content_copy: varchar('content_copy'),
+    enableBadge: boolean('enable_badge'),
+    enableCta: boolean('enable_cta'),
+    badge_label: varchar('badge_label'),
+    badge_color: badge_color('badge_color').default('blue'),
+    badge_icon: varchar('badge_icon'),
+    badge_icon_position: badge_icon_position('badge_icon_position').default('flex-row'),
     link_type: enum__pages_v_blocks_features_columns_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
-    link_color: link_color('link_color').default('brand'),
-    link_variant: link_variant('link_variant').default('primary'),
-    icon: varchar('icon'),
-    appReference: integer('app_reference_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    tabLabel: varchar('tab_label'),
-    showBadge: boolean('show_badge'),
-    badge_label: varchar('badge_label'),
-    badge_color: enum__pages_v_blocks_features_columns_badge_color('badge_color').default('blue'),
-    badge_icon: varchar('badge_icon'),
-    badge_icon_dir: enum__pages_v_blocks_features_columns_badge_icon_dir('badge_icon_dir'),
-    showFeatureList: boolean('show_feature_list'),
     _uuid: varchar('_uuid'),
   },
   (columns) => ({
     _orderIdx: index('_pages_v_blocks_features_columns_order_idx').on(columns._order),
     _parentIDIdx: index('_pages_v_blocks_features_columns_parent_id_idx').on(columns._parentID),
     _localeIdx: index('_pages_v_blocks_features_columns_locale_idx').on(columns._locale),
-    _pages_v_blocks_features_columns_image_idx: index(
-      '_pages_v_blocks_features_columns_image_idx',
-    ).on(columns.image),
     _pages_v_blocks_features_columns_app_reference_idx: index(
       '_pages_v_blocks_features_columns_app_reference_idx',
     ).on(columns.appReference),
+    _pages_v_blocks_features_columns_image_idx: index(
+      '_pages_v_blocks_features_columns_image_idx',
+    ).on(columns.image),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [_pages_v_blocks_features.id],
@@ -2020,15 +1804,13 @@ export const _pages_v_blocks_features = pgTable(
     blockHeader_type:
       enum__pages_v_blocks_features_block_header_type('block_header_type').default('center'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
-    blockHeader_badge_color: enum__pages_v_blocks_features_block_header_badge_color(
-      'block_header_badge_color',
-    ).default('blue'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
-    blockHeader_badge_icon_dir: enum__pages_v_blocks_features_block_header_badge_icon_dir(
-      'block_header_badge_icon_dir',
-    ),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
-    layout: enum__pages_v_blocks_features_layout('layout').default('grid'),
+    layout: enum__pages_v_blocks_features_layout('layout').default('01'),
     blockImage: integer('block_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
@@ -2089,13 +1871,11 @@ export const _pages_v = pgTable(
     }),
     version_hero_type: enum__pages_v_version_hero_type('version_hero_type').default('hero01'),
     version_hero_supportingText: varchar('version_hero_supporting_text'),
-    version_hero_badge_color: enum__pages_v_version_hero_badge_color(
-      'version_hero_badge_color',
-    ).default('blue'),
+    version_hero_badge_color: badge_color('version_hero_badge_color').default('blue'),
     version_hero_badge_icon: varchar('version_hero_badge_icon'),
-    version_hero_badge_icon_dir: enum__pages_v_version_hero_badge_icon_dir(
-      'version_hero_badge_icon_dir',
-    ),
+    version_hero_badge_icon_position: badge_icon_position(
+      'version_hero_badge_icon_position',
+    ).default('flex-row'),
     version_publishedAt: timestamp('version_published_at', {
       mode: 'string',
       withTimezone: true,
@@ -2657,9 +2437,9 @@ export const apps = pgTable(
     link_url: varchar('link_url'),
     hero_type: enum_apps_hero_type('hero_type').default('hero01'),
     hero_supportingText: varchar('hero_supporting_text'),
-    hero_badge_color: enum_apps_hero_badge_color('hero_badge_color').default('blue'),
+    hero_badge_color: badge_color('hero_badge_color').default('blue'),
     hero_badge_icon: varchar('hero_badge_icon'),
-    hero_badge_icon_dir: enum_apps_hero_badge_icon_dir('hero_badge_icon_dir'),
+    hero_badge_icon_position: badge_icon_position('hero_badge_icon_position').default('flex-row'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -2863,13 +2643,11 @@ export const _apps_v = pgTable(
     version_link_url: varchar('version_link_url'),
     version_hero_type: enum__apps_v_version_hero_type('version_hero_type').default('hero01'),
     version_hero_supportingText: varchar('version_hero_supporting_text'),
-    version_hero_badge_color: enum__apps_v_version_hero_badge_color(
-      'version_hero_badge_color',
-    ).default('blue'),
+    version_hero_badge_color: badge_color('version_hero_badge_color').default('blue'),
     version_hero_badge_icon: varchar('version_hero_badge_icon'),
-    version_hero_badge_icon_dir: enum__apps_v_version_hero_badge_icon_dir(
-      'version_hero_badge_icon_dir',
-    ),
+    version_hero_badge_icon_position: badge_icon_position(
+      'version_hero_badge_icon_position',
+    ).default('flex-row'),
     version_updatedAt: timestamp('version_updated_at', {
       mode: 'string',
       withTimezone: true,
@@ -5231,36 +5009,23 @@ export const relations_pages_blocks_features_block_header_links = relations(
     }),
   }),
 )
-export const relations_pages_blocks_features_columns_features = relations(
-  pages_blocks_features_columns_features,
-  ({ one }) => ({
-    _parentID: one(pages_blocks_features_columns, {
-      fields: [pages_blocks_features_columns_features._parentID],
-      references: [pages_blocks_features_columns.id],
-      relationName: 'features',
-    }),
-  }),
-)
 export const relations_pages_blocks_features_columns = relations(
   pages_blocks_features_columns,
-  ({ one, many }) => ({
+  ({ one }) => ({
     _parentID: one(pages_blocks_features, {
       fields: [pages_blocks_features_columns._parentID],
       references: [pages_blocks_features.id],
       relationName: 'columns',
     }),
+    appReference: one(apps, {
+      fields: [pages_blocks_features_columns.appReference],
+      references: [apps.id],
+      relationName: 'appReference',
+    }),
     image: one(media, {
       fields: [pages_blocks_features_columns.image],
       references: [media.id],
       relationName: 'image',
-    }),
-    appReference: one(media, {
-      fields: [pages_blocks_features_columns.appReference],
-      references: [media.id],
-      relationName: 'appReference',
-    }),
-    features: many(pages_blocks_features_columns_features, {
-      relationName: 'features',
     }),
   }),
 )
@@ -5620,36 +5385,23 @@ export const relations__pages_v_blocks_features_block_header_links = relations(
     }),
   }),
 )
-export const relations__pages_v_blocks_features_columns_features = relations(
-  _pages_v_blocks_features_columns_features,
-  ({ one }) => ({
-    _parentID: one(_pages_v_blocks_features_columns, {
-      fields: [_pages_v_blocks_features_columns_features._parentID],
-      references: [_pages_v_blocks_features_columns.id],
-      relationName: 'features',
-    }),
-  }),
-)
 export const relations__pages_v_blocks_features_columns = relations(
   _pages_v_blocks_features_columns,
-  ({ one, many }) => ({
+  ({ one }) => ({
     _parentID: one(_pages_v_blocks_features, {
       fields: [_pages_v_blocks_features_columns._parentID],
       references: [_pages_v_blocks_features.id],
       relationName: 'columns',
     }),
+    appReference: one(apps, {
+      fields: [_pages_v_blocks_features_columns.appReference],
+      references: [apps.id],
+      relationName: 'appReference',
+    }),
     image: one(media, {
       fields: [_pages_v_blocks_features_columns.image],
       references: [media.id],
       relationName: 'image',
-    }),
-    appReference: one(media, {
-      fields: [_pages_v_blocks_features_columns.appReference],
-      references: [media.id],
-      relationName: 'appReference',
-    }),
-    features: many(_pages_v_blocks_features_columns_features, {
-      relationName: 'features',
     }),
   }),
 )
@@ -7004,83 +6756,53 @@ type DatabaseSchema = {
   enum_pages_blocks_apps_block_header_links_link_type: typeof enum_pages_blocks_apps_block_header_links_link_type
   enum_pages_blocks_apps_body_links_link_type: typeof enum_pages_blocks_apps_body_links_link_type
   enum_pages_blocks_apps_block_header_type: typeof enum_pages_blocks_apps_block_header_type
-  enum_pages_blocks_apps_block_header_badge_color: typeof enum_pages_blocks_apps_block_header_badge_color
-  enum_pages_blocks_apps_block_header_badge_icon_dir: typeof enum_pages_blocks_apps_block_header_badge_icon_dir
+  badge_color: typeof badge_color
+  badge_icon_position: typeof badge_icon_position
   enum_pages_blocks_apps_type: typeof enum_pages_blocks_apps_type
-  enum_pages_blocks_apps_body_badge_color: typeof enum_pages_blocks_apps_body_badge_color
-  enum_pages_blocks_apps_body_badge_icon_dir: typeof enum_pages_blocks_apps_body_badge_icon_dir
   enum_pages_blocks_cta_block_header_links_link_type: typeof enum_pages_blocks_cta_block_header_links_link_type
   enum_pages_blocks_cta_links_link_type: typeof enum_pages_blocks_cta_links_link_type
   enum_pages_blocks_cta_block_header_type: typeof enum_pages_blocks_cta_block_header_type
-  enum_pages_blocks_cta_block_header_badge_color: typeof enum_pages_blocks_cta_block_header_badge_color
-  enum_pages_blocks_cta_block_header_badge_icon_dir: typeof enum_pages_blocks_cta_block_header_badge_icon_dir
   enum_pages_blocks_content_block_header_links_link_type: typeof enum_pages_blocks_content_block_header_links_link_type
   enum_pages_blocks_content_columns_size: typeof enum_pages_blocks_content_columns_size
   enum_pages_blocks_content_columns_link_type: typeof enum_pages_blocks_content_columns_link_type
   enum_pages_blocks_content_block_header_type: typeof enum_pages_blocks_content_block_header_type
-  enum_pages_blocks_content_block_header_badge_color: typeof enum_pages_blocks_content_block_header_badge_color
-  enum_pages_blocks_content_block_header_badge_icon_dir: typeof enum_pages_blocks_content_block_header_badge_icon_dir
   enum_pages_blocks_archive_populate_by: typeof enum_pages_blocks_archive_populate_by
   enum_pages_blocks_archive_relation_to: typeof enum_pages_blocks_archive_relation_to
   enum_pages_blocks_styled_list_list_style: typeof enum_pages_blocks_styled_list_list_style
   enum_pages_blocks_testimonials_block_header_links_link_type: typeof enum_pages_blocks_testimonials_block_header_links_link_type
   enum_pages_blocks_testimonials_block_header_type: typeof enum_pages_blocks_testimonials_block_header_type
-  enum_pages_blocks_testimonials_block_header_badge_color: typeof enum_pages_blocks_testimonials_block_header_badge_color
-  enum_pages_blocks_testimonials_block_header_badge_icon_dir: typeof enum_pages_blocks_testimonials_block_header_badge_icon_dir
   enum_pages_blocks_testimonials_type: typeof enum_pages_blocks_testimonials_type
   enum_pages_blocks_features_block_header_links_link_type: typeof enum_pages_blocks_features_block_header_links_link_type
   enum_pages_blocks_features_columns_size: typeof enum_pages_blocks_features_columns_size
   enum_pages_blocks_features_columns_link_type: typeof enum_pages_blocks_features_columns_link_type
-  enum_pages_blocks_features_columns_badge_color: typeof enum_pages_blocks_features_columns_badge_color
-  enum_pages_blocks_features_columns_badge_icon_dir: typeof enum_pages_blocks_features_columns_badge_icon_dir
   enum_pages_blocks_features_block_header_type: typeof enum_pages_blocks_features_block_header_type
-  enum_pages_blocks_features_block_header_badge_color: typeof enum_pages_blocks_features_block_header_badge_color
-  enum_pages_blocks_features_block_header_badge_icon_dir: typeof enum_pages_blocks_features_block_header_badge_icon_dir
   enum_pages_blocks_features_layout: typeof enum_pages_blocks_features_layout
   enum_pages_hero_type: typeof enum_pages_hero_type
-  enum_pages_hero_badge_color: typeof enum_pages_hero_badge_color
-  enum_pages_hero_badge_icon_dir: typeof enum_pages_hero_badge_icon_dir
   enum_pages_status: typeof enum_pages_status
   enum__pages_v_version_hero_links_link_type: typeof enum__pages_v_version_hero_links_link_type
   enum__pages_v_blocks_apps_block_header_links_link_type: typeof enum__pages_v_blocks_apps_block_header_links_link_type
   enum__pages_v_blocks_apps_body_links_link_type: typeof enum__pages_v_blocks_apps_body_links_link_type
   enum__pages_v_blocks_apps_block_header_type: typeof enum__pages_v_blocks_apps_block_header_type
-  enum__pages_v_blocks_apps_block_header_badge_color: typeof enum__pages_v_blocks_apps_block_header_badge_color
-  enum__pages_v_blocks_apps_block_header_badge_icon_dir: typeof enum__pages_v_blocks_apps_block_header_badge_icon_dir
   enum__pages_v_blocks_apps_type: typeof enum__pages_v_blocks_apps_type
-  enum__pages_v_blocks_apps_body_badge_color: typeof enum__pages_v_blocks_apps_body_badge_color
-  enum__pages_v_blocks_apps_body_badge_icon_dir: typeof enum__pages_v_blocks_apps_body_badge_icon_dir
   enum__pages_v_blocks_cta_block_header_links_link_type: typeof enum__pages_v_blocks_cta_block_header_links_link_type
   enum__pages_v_blocks_cta_links_link_type: typeof enum__pages_v_blocks_cta_links_link_type
   enum__pages_v_blocks_cta_block_header_type: typeof enum__pages_v_blocks_cta_block_header_type
-  enum__pages_v_blocks_cta_block_header_badge_color: typeof enum__pages_v_blocks_cta_block_header_badge_color
-  enum__pages_v_blocks_cta_block_header_badge_icon_dir: typeof enum__pages_v_blocks_cta_block_header_badge_icon_dir
   enum__pages_v_blocks_content_block_header_links_link_type: typeof enum__pages_v_blocks_content_block_header_links_link_type
   enum__pages_v_blocks_content_columns_size: typeof enum__pages_v_blocks_content_columns_size
   enum__pages_v_blocks_content_columns_link_type: typeof enum__pages_v_blocks_content_columns_link_type
   enum__pages_v_blocks_content_block_header_type: typeof enum__pages_v_blocks_content_block_header_type
-  enum__pages_v_blocks_content_block_header_badge_color: typeof enum__pages_v_blocks_content_block_header_badge_color
-  enum__pages_v_blocks_content_block_header_badge_icon_dir: typeof enum__pages_v_blocks_content_block_header_badge_icon_dir
   enum__pages_v_blocks_archive_populate_by: typeof enum__pages_v_blocks_archive_populate_by
   enum__pages_v_blocks_archive_relation_to: typeof enum__pages_v_blocks_archive_relation_to
   enum__pages_v_blocks_styled_list_list_style: typeof enum__pages_v_blocks_styled_list_list_style
   enum__pages_v_blocks_testimonials_block_header_links_link_type: typeof enum__pages_v_blocks_testimonials_block_header_links_link_type
   enum__pages_v_blocks_testimonials_block_header_type: typeof enum__pages_v_blocks_testimonials_block_header_type
-  enum__pages_v_blocks_testimonials_block_header_badge_color: typeof enum__pages_v_blocks_testimonials_block_header_badge_color
-  enum__pages_v_blocks_testimonials_block_header_badge_icon_dir: typeof enum__pages_v_blocks_testimonials_block_header_badge_icon_dir
   enum__pages_v_blocks_testimonials_type: typeof enum__pages_v_blocks_testimonials_type
   enum__pages_v_blocks_features_block_header_links_link_type: typeof enum__pages_v_blocks_features_block_header_links_link_type
   enum__pages_v_blocks_features_columns_size: typeof enum__pages_v_blocks_features_columns_size
   enum__pages_v_blocks_features_columns_link_type: typeof enum__pages_v_blocks_features_columns_link_type
-  enum__pages_v_blocks_features_columns_badge_color: typeof enum__pages_v_blocks_features_columns_badge_color
-  enum__pages_v_blocks_features_columns_badge_icon_dir: typeof enum__pages_v_blocks_features_columns_badge_icon_dir
   enum__pages_v_blocks_features_block_header_type: typeof enum__pages_v_blocks_features_block_header_type
-  enum__pages_v_blocks_features_block_header_badge_color: typeof enum__pages_v_blocks_features_block_header_badge_color
-  enum__pages_v_blocks_features_block_header_badge_icon_dir: typeof enum__pages_v_blocks_features_block_header_badge_icon_dir
   enum__pages_v_blocks_features_layout: typeof enum__pages_v_blocks_features_layout
   enum__pages_v_version_hero_type: typeof enum__pages_v_version_hero_type
-  enum__pages_v_version_hero_badge_color: typeof enum__pages_v_version_hero_badge_color
-  enum__pages_v_version_hero_badge_icon_dir: typeof enum__pages_v_version_hero_badge_icon_dir
   enum__pages_v_version_status: typeof enum__pages_v_version_status
   enum__pages_v_published_locale: typeof enum__pages_v_published_locale
   enum_posts_status: typeof enum_posts_status
@@ -7089,14 +6811,10 @@ type DatabaseSchema = {
   enum_apps_hero_links_link_type: typeof enum_apps_hero_links_link_type
   enum_apps_link_type: typeof enum_apps_link_type
   enum_apps_hero_type: typeof enum_apps_hero_type
-  enum_apps_hero_badge_color: typeof enum_apps_hero_badge_color
-  enum_apps_hero_badge_icon_dir: typeof enum_apps_hero_badge_icon_dir
   enum_apps_status: typeof enum_apps_status
   enum__apps_v_version_hero_links_link_type: typeof enum__apps_v_version_hero_links_link_type
   enum__apps_v_version_link_type: typeof enum__apps_v_version_link_type
   enum__apps_v_version_hero_type: typeof enum__apps_v_version_hero_type
-  enum__apps_v_version_hero_badge_color: typeof enum__apps_v_version_hero_badge_color
-  enum__apps_v_version_hero_badge_icon_dir: typeof enum__apps_v_version_hero_badge_icon_dir
   enum__apps_v_version_status: typeof enum__apps_v_version_status
   enum__apps_v_published_locale: typeof enum__apps_v_published_locale
   enum_app_icons_category: typeof enum_app_icons_category
@@ -7135,7 +6853,6 @@ type DatabaseSchema = {
   pages_blocks_testimonials_block_header_links: typeof pages_blocks_testimonials_block_header_links
   pages_blocks_testimonials: typeof pages_blocks_testimonials
   pages_blocks_features_block_header_links: typeof pages_blocks_features_block_header_links
-  pages_blocks_features_columns_features: typeof pages_blocks_features_columns_features
   pages_blocks_features_columns: typeof pages_blocks_features_columns
   pages_blocks_features: typeof pages_blocks_features
   pages_breadcrumbs: typeof pages_breadcrumbs
@@ -7161,7 +6878,6 @@ type DatabaseSchema = {
   _pages_v_blocks_testimonials_block_header_links: typeof _pages_v_blocks_testimonials_block_header_links
   _pages_v_blocks_testimonials: typeof _pages_v_blocks_testimonials
   _pages_v_blocks_features_block_header_links: typeof _pages_v_blocks_features_block_header_links
-  _pages_v_blocks_features_columns_features: typeof _pages_v_blocks_features_columns_features
   _pages_v_blocks_features_columns: typeof _pages_v_blocks_features_columns
   _pages_v_blocks_features: typeof _pages_v_blocks_features
   _pages_v_version_breadcrumbs: typeof _pages_v_version_breadcrumbs
@@ -7284,7 +7000,6 @@ type DatabaseSchema = {
   relations_pages_blocks_testimonials_block_header_links: typeof relations_pages_blocks_testimonials_block_header_links
   relations_pages_blocks_testimonials: typeof relations_pages_blocks_testimonials
   relations_pages_blocks_features_block_header_links: typeof relations_pages_blocks_features_block_header_links
-  relations_pages_blocks_features_columns_features: typeof relations_pages_blocks_features_columns_features
   relations_pages_blocks_features_columns: typeof relations_pages_blocks_features_columns
   relations_pages_blocks_features: typeof relations_pages_blocks_features
   relations_pages_breadcrumbs: typeof relations_pages_breadcrumbs
@@ -7310,7 +7025,6 @@ type DatabaseSchema = {
   relations__pages_v_blocks_testimonials_block_header_links: typeof relations__pages_v_blocks_testimonials_block_header_links
   relations__pages_v_blocks_testimonials: typeof relations__pages_v_blocks_testimonials
   relations__pages_v_blocks_features_block_header_links: typeof relations__pages_v_blocks_features_block_header_links
-  relations__pages_v_blocks_features_columns_features: typeof relations__pages_v_blocks_features_columns_features
   relations__pages_v_blocks_features_columns: typeof relations__pages_v_blocks_features_columns
   relations__pages_v_blocks_features: typeof relations__pages_v_blocks_features
   relations__pages_v_version_breadcrumbs: typeof relations__pages_v_version_breadcrumbs

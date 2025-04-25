@@ -5,5 +5,10 @@
   },
   "TestimonialsBlock": {
     "readMore": "إقرأ القصة"
+  },
+  "Footer": {
+    "allRightsReserved": "© {year} مرن. جميع الحقوق محفوظة.",
+    "termsAndConditions": "الشروط والأحكام",
+    "privacyPolicy": "سياسة الخصوصية"
   }
 }
