@@ -386,6 +386,10 @@ export const enum_footer_columns_nav_items_link_type = pgEnum(
   'enum_footer_columns_nav_items_link_type',
   ['reference', 'custom'],
 )
+export const enum_site_config_announcement_bar_link_type = pgEnum(
+  'enum_site_config_announcement_bar_link_type',
+  ['reference', 'custom'],
+)
 
 export const pages_hero_links = pgTable(
   'pages_hero_links',
@@ -2429,7 +2433,8 @@ export const apps = pgTable(
   'apps',
   {
     id: serial('id').primaryKey(),
-    icon: integer('icon_id').references(() => app_icons.id, {
+    title: varchar('title'),
+    icon: integer('icon_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     link_type: enum_apps_link_type('link_type').default('reference'),
@@ -2440,6 +2445,9 @@ export const apps = pgTable(
     hero_badge_color: badge_color('hero_badge_color').default('blue'),
     hero_badge_icon: varchar('hero_badge_icon'),
     hero_badge_icon_position: badge_icon_position('hero_badge_icon_position').default('flex-row'),
+    publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    slug: varchar('slug'),
+    slugLock: boolean('slug_lock').default(true),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -2450,6 +2458,7 @@ export const apps = pgTable(
   },
   (columns) => ({
     apps_icon_idx: index('apps_icon_idx').on(columns.icon),
+    apps_slug_idx: index('apps_slug_idx').on(columns.slug),
     apps_updated_at_idx: index('apps_updated_at_idx').on(columns.updatedAt),
     apps_created_at_idx: index('apps_created_at_idx').on(columns.createdAt),
     apps__status_idx: index('apps__status_idx').on(columns._status),
@@ -2635,7 +2644,8 @@ export const _apps_v = pgTable(
     parent: integer('parent_id').references(() => apps.id, {
       onDelete: 'set null',
     }),
-    version_icon: integer('version_icon_id').references(() => app_icons.id, {
+    version_title: varchar('version_title'),
+    version_icon: integer('version_icon_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     version_link_type: enum__apps_v_version_link_type('version_link_type').default('reference'),
@@ -2648,6 +2658,13 @@ export const _apps_v = pgTable(
     version_hero_badge_icon_position: badge_icon_position(
       'version_hero_badge_icon_position',
     ).default('flex-row'),
+    version_publishedAt: timestamp('version_published_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    version_slug: varchar('version_slug'),
+    version_slugLock: boolean('version_slug_lock').default(true),
     version_updatedAt: timestamp('version_updated_at', {
       mode: 'string',
       withTimezone: true,
@@ -2674,6 +2691,9 @@ export const _apps_v = pgTable(
     _apps_v_parent_idx: index('_apps_v_parent_idx').on(columns.parent),
     _apps_v_version_version_icon_idx: index('_apps_v_version_version_icon_idx').on(
       columns.version_icon,
+    ),
+    _apps_v_version_version_slug_idx: index('_apps_v_version_version_slug_idx').on(
+      columns.version_slug,
     ),
     _apps_v_version_version_updated_at_idx: index('_apps_v_version_version_updated_at_idx').on(
       columns.version_updatedAt,
@@ -2833,7 +2853,7 @@ export const media = pgTable(
     id: serial('id').primaryKey(),
     alt: varchar('alt').notNull(),
     caption: jsonb('caption'),
-    Category: integer('category_id').references(() => media_categories.id, {
+    category: integer('category_id').references(() => media_categories.id, {
       onDelete: 'set null',
     }),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -2895,7 +2915,7 @@ export const media = pgTable(
     sizes_og_filename: varchar('sizes_og_filename'),
   },
   (columns) => ({
-    media_category_idx: index('media_category_idx').on(columns.Category),
+    media_category_idx: index('media_category_idx').on(columns.category),
     media_updated_at_idx: index('media_updated_at_idx').on(columns.updatedAt),
     media_created_at_idx: index('media_created_at_idx').on(columns.createdAt),
     media_filename_idx: uniqueIndex('media_filename_idx').on(columns.filename),
@@ -4441,6 +4461,7 @@ export const header_tabs_nav_items_featured_link_links = pgTable(
       enum_header_tabs_nav_items_featured_link_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
+    link_icon: varchar('link_icon'),
   },
   (columns) => ({
     _orderIdx: index('header_tabs_nav_items_featured_link_links_order_idx').on(columns._order),
@@ -4485,6 +4506,8 @@ export const header_tabs_nav_items_list_links_links = pgTable(
       enum_header_tabs_nav_items_list_links_links_link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
+    link_description: varchar('link_description'),
+    link_icon: varchar('link_icon'),
   },
   (columns) => ({
     _orderIdx: index('header_tabs_nav_items_list_links_links_order_idx').on(columns._order),
@@ -4532,6 +4555,7 @@ export const header_tabs_nav_items = pgTable(
       ),
     defaultLink_link_newTab: boolean('default_link_link_new_tab'),
     defaultLink_link_url: varchar('default_link_link_url'),
+    defaultLink_link_icon: varchar('default_link_link_icon'),
     defaultLink_description: varchar('default_link_description'),
     featuredLink_tag: varchar('featured_link_tag'),
     featuredLink_label: jsonb('featured_link_label'),
@@ -4795,6 +4819,86 @@ export const footer_rels = pgTable(
       columns: [columns['postsID']],
       foreignColumns: [posts.id],
       name: 'footer_rels_posts_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const site_config = pgTable('site_config', {
+  id: serial('id').primaryKey(),
+  announcementBar_link_type: enum_site_config_announcement_bar_link_type(
+    'announcement_bar_link_type',
+  ).default('reference'),
+  announcementBar_link_newTab: boolean('announcement_bar_link_new_tab'),
+  announcementBar_link_url: varchar('announcement_bar_link_url'),
+  customHeadHtml: varchar('custom_head_html'),
+  customBodyHtml: varchar('custom_body_html'),
+  tagManagerId: varchar('tag_manager_id'),
+  analyticsScripts: varchar('analytics_scripts'),
+  updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }),
+  createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }),
+})
+
+export const site_config_locales = pgTable(
+  'site_config_locales',
+  {
+    meta_title: varchar('meta_title'),
+    meta_image: integer('meta_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    meta_description: varchar('meta_description'),
+    announcementBar_text: varchar('announcement_bar_text'),
+    announcementBar_link_label: varchar('announcement_bar_link_label').notNull(),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    site_config_meta_meta_image_idx: index('site_config_meta_meta_image_idx').on(
+      columns.meta_image,
+      columns._locale,
+    ),
+    _localeParent: uniqueIndex('site_config_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [site_config.id],
+      name: 'site_config_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const site_config_rels = pgTable(
+  'site_config_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: integer('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    pagesID: integer('pages_id'),
+    postsID: integer('posts_id'),
+  },
+  (columns) => ({
+    order: index('site_config_rels_order_idx').on(columns.order),
+    parentIdx: index('site_config_rels_parent_idx').on(columns.parent),
+    pathIdx: index('site_config_rels_path_idx').on(columns.path),
+    site_config_rels_pages_id_idx: index('site_config_rels_pages_id_idx').on(columns.pagesID),
+    site_config_rels_posts_id_idx: index('site_config_rels_posts_id_idx').on(columns.postsID),
+    parentFk: foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [site_config.id],
+      name: 'site_config_rels_parent_fk',
+    }).onDelete('cascade'),
+    pagesIdFk: foreignKey({
+      columns: [columns['pagesID']],
+      foreignColumns: [pages.id],
+      name: 'site_config_rels_pages_fk',
+    }).onDelete('cascade'),
+    postsIdFk: foreignKey({
+      columns: [columns['postsID']],
+      foreignColumns: [posts.id],
+      name: 'site_config_rels_posts_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -5737,9 +5841,9 @@ export const relations_apps_rels = relations(apps_rels, ({ one }) => ({
   }),
 }))
 export const relations_apps = relations(apps, ({ one, many }) => ({
-  icon: one(app_icons, {
+  icon: one(media, {
     fields: [apps.icon],
-    references: [app_icons.id],
+    references: [media.id],
     relationName: 'icon',
   }),
   hero_links: many(apps_hero_links, {
@@ -5846,9 +5950,9 @@ export const relations__apps_v = relations(_apps_v, ({ one, many }) => ({
     references: [apps.id],
     relationName: 'parent',
   }),
-  version_icon: one(app_icons, {
+  version_icon: one(media, {
     fields: [_apps_v.version_icon],
-    references: [app_icons.id],
+    references: [media.id],
     relationName: 'version_icon',
   }),
   version_hero_links: many(_apps_v_version_hero_links, {
@@ -5869,10 +5973,10 @@ export const relations__apps_v = relations(_apps_v, ({ one, many }) => ({
 }))
 export const relations_app_icons = relations(app_icons, () => ({}))
 export const relations_media = relations(media, ({ one }) => ({
-  Category: one(media_categories, {
-    fields: [media.Category],
+  category: one(media_categories, {
+    fields: [media.category],
     references: [media_categories.id],
-    relationName: 'Category',
+    relationName: 'category',
   }),
 }))
 export const relations_categories_breadcrumbs = relations(categories_breadcrumbs, ({ one }) => ({
@@ -6747,6 +6851,43 @@ export const relations_footer = relations(footer, ({ many }) => ({
     relationName: '_rels',
   }),
 }))
+export const relations_site_config_locales = relations(site_config_locales, ({ one }) => ({
+  _parentID: one(site_config, {
+    fields: [site_config_locales._parentID],
+    references: [site_config.id],
+    relationName: '_locales',
+  }),
+  meta_image: one(media, {
+    fields: [site_config_locales.meta_image],
+    references: [media.id],
+    relationName: 'meta_image',
+  }),
+}))
+export const relations_site_config_rels = relations(site_config_rels, ({ one }) => ({
+  parent: one(site_config, {
+    fields: [site_config_rels.parent],
+    references: [site_config.id],
+    relationName: '_rels',
+  }),
+  pagesID: one(pages, {
+    fields: [site_config_rels.pagesID],
+    references: [pages.id],
+    relationName: 'pages',
+  }),
+  postsID: one(posts, {
+    fields: [site_config_rels.postsID],
+    references: [posts.id],
+    relationName: 'posts',
+  }),
+}))
+export const relations_site_config = relations(site_config, ({ many }) => ({
+  _locales: many(site_config_locales, {
+    relationName: '_locales',
+  }),
+  _rels: many(site_config_rels, {
+    relationName: '_rels',
+  }),
+}))
 
 type DatabaseSchema = {
   enum__locales: typeof enum__locales
@@ -6834,6 +6975,7 @@ type DatabaseSchema = {
   enum_header_tabs_link_type: typeof enum_header_tabs_link_type
   enum_header_cta_link_type: typeof enum_header_cta_link_type
   enum_footer_columns_nav_items_link_type: typeof enum_footer_columns_nav_items_link_type
+  enum_site_config_announcement_bar_link_type: typeof enum_site_config_announcement_bar_link_type
   pages_hero_links: typeof pages_hero_links
   pages_hero_logos: typeof pages_hero_logos
   pages_blocks_apps_block_header_links: typeof pages_blocks_apps_block_header_links
@@ -6981,6 +7123,9 @@ type DatabaseSchema = {
   footer_columns: typeof footer_columns
   footer: typeof footer
   footer_rels: typeof footer_rels
+  site_config: typeof site_config
+  site_config_locales: typeof site_config_locales
+  site_config_rels: typeof site_config_rels
   relations_pages_hero_links: typeof relations_pages_hero_links
   relations_pages_hero_logos: typeof relations_pages_hero_logos
   relations_pages_blocks_apps_block_header_links: typeof relations_pages_blocks_apps_block_header_links
@@ -7128,6 +7273,9 @@ type DatabaseSchema = {
   relations_footer_columns: typeof relations_footer_columns
   relations_footer_rels: typeof relations_footer_rels
   relations_footer: typeof relations_footer
+  relations_site_config_locales: typeof relations_site_config_locales
+  relations_site_config_rels: typeof relations_site_config_rels
+  relations_site_config: typeof relations_site_config
 }
 
 declare module '@payloadcms/db-postgres/types' {

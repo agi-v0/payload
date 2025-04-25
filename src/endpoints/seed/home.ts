@@ -10,11 +10,11 @@ type HomeArgs = {
 }
 
 export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
-  _heroImage,
-  _metaImage,
+  heroImage,
+  metaImage,
   image169,
   image43,
-  _imageSquare,
+  imageSquare,
 }) => {
   return {
     title: 'Home',
