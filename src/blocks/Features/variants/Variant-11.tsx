@@ -1,40 +1,55 @@
+'use client'
+
 import React from 'react'
-import { VariantProps } from './VariantTypes'
-import { LucideIcon } from 'lucide-react'
-import * as LucideIcons from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { CMSLink } from '@/components/Link'
+import { Card, CardContent } from '@/components/ui/card'
+import { FeaturesBlock } from '@/payload-types'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNavigation,
+} from '@/components/ui/carousel'
+import { Media } from '@/components/Media'
 
-export const Variant11: React.FC<VariantProps> = ({ columns, showBadge, badgeConfig }) => {
-  // Placeholder for Cards with Modals variant
+export const Variant11: React.FC<FeaturesBlock> = ({ columns }) => {
+  if (!columns || columns.length === 0) return null
+
   return (
-    <div className="space-y-6">
-      <h2 className="text-center text-2xl font-semibold">Cards with Modals (Variant 11)</h2>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {columns.map((column, index) => {
-          const IconComponent = column.icon
-            ? (LucideIcons[column.icon as keyof typeof LucideIcons] as LucideIcon)
-            : null
-
-          return (
-            <div
-              key={`modal-card-${index}`}
-              className="border-border flex flex-col gap-4 rounded-lg border p-6 shadow-sm"
-            >
-              {IconComponent && <IconComponent className="text-primary h-8 w-8" />}
-              <h3 className="text-xl font-semibold">{column.title}</h3>
-              {column.content && (
-                <div className="text-muted-foreground text-sm">
-                  {/* Render rich text content */}
-                </div>
-              )}
-              <Button variant="outline" className="mt-auto">
-                Learn More
-                <LucideIcons.ExternalLink className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          )
-        })}
-      </div>
-    </div>
+    <Carousel className="w-full">
+      {/* <div className="relative hidden gap-2 md:mb-8 md:flex">
+        <CarouselPrevious className="static translate-0 border border-gray-400" />
+        <CarouselNext className="static translate-0 border border-gray-400" />
+      </div> */}
+      <CarouselNavigation alwaysShow />
+      <CarouselContent className="gap-space-xs">
+        {columns.map((column, index) => (
+          <CarouselItem key={index} className="h-[540px] md:basis-1/2 lg:basis-1/4">
+            <Card className="h-full border border-[#F9FAFB] shadow-none transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
+              <CardContent className="rounded-space-md flex h-full flex-col items-start gap-4 p-4">
+                {column.image && (
+                  <div className="rounded-space-xs overflow-hidden">
+                    <Media
+                      resource={column.image}
+                      className="h-auto w-full"
+                      imgClassName="w-full h-auto aspect-square object-cover"
+                    />
+                  </div>
+                )}
+                {column.content && (
+                  <div>
+                    <h3 className="text-body-lg text-base-primary font-medium">
+                      {column.content.title}
+                    </h3>
+                    <p className="text-body-md text-base-secondary">{column.content.title}</p>
+                  </div>
+                )}
+                {column.link && <CMSLink {...column.link} />}
+              </CardContent>
+            </Card>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+    </Carousel>
   )
 }

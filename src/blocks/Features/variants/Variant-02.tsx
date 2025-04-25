@@ -1,12 +1,12 @@
 import React from 'react'
-import { VariantProps } from './VariantTypes'
+import { FeaturesBlock } from '@/payload-types'
 import { Badge } from '@/components/ui/badge'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 
 import { CMSLink } from '@/components/Link'
 
-export const Variant02: React.FC<VariantProps> = ({ columns }) => {
+export const Variant02: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
 
   return (
@@ -35,11 +35,11 @@ export const Variant02: React.FC<VariantProps> = ({ columns }) => {
                   'pe-space-md w-full lg:basis-1/2': size === 'full',
                 })}
               >
-                {column.enableBadge && (
+                {column.enableBadge && column.badge && (
                   <Badge
                     variant={column.badge?.color}
                     icon={column.badge.icon}
-                    icon_dir={column.badge.icon_dir}
+                    icon_position={column.badge.icon_position}
                     label={column.badge?.label}
                   />
                 )}

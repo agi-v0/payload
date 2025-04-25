@@ -85,7 +85,7 @@ const ContentSection: React.FC<{ body: AppsBlockType['body'] }> = ({ body }) => 
           className="mb-4"
           label={badge?.label}
           icon={badge?.icon}
-          icon_dir={badge?.icon_dir}
+          icon_position={badge?.icon_position}
           variant={badge?.color}
         />
       )}

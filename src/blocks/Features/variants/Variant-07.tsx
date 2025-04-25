@@ -3,12 +3,12 @@
 import React from 'react'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
-import { VariantProps } from './VariantTypes'
+import { FeaturesBlock } from '@/payload-types'
 import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
 import { Card, CardContent } from '@/components/ui/card'
 import { BlockHeader } from '@/blocks/BlockHeader'
 
-export const Variant07: React.FC<VariantProps> = ({ columns, blockImage, blockHeader }) => {
+export const Variant07: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
   return (
     <div className={cn('gap-space-site rounded-space-md flex flex-col lg:p-8')}>
@@ -19,7 +19,7 @@ export const Variant07: React.FC<VariantProps> = ({ columns, blockImage, blockHe
             <Media
               resource={blockImage}
               className="h-auto w-full"
-              imgClassName="w-full h-auto aspect-[19/6] object-cover"
+              imgClassName="w-full h-auto aspect-[16/9] object-cover"
             />
           </div>
         )}

@@ -1,11 +1,10 @@
 import React from 'react'
-import { VariantProps } from './VariantTypes'
-import RichText from '@/components/RichText'
+import { FeaturesBlock } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 import { AppReference } from '@/components/AppReference'
 
-export const Variant01: React.FC<VariantProps> = ({ columns }) => {
+export const Variant01: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
 
   return (

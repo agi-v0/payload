@@ -1,5 +1,5 @@
 import React from 'react'
-import { VariantProps } from './VariantTypes'
+import { FeaturesBlock } from '@/payload-types'
 
 // Import all variants
 import { Variant01 } from './Variant-01'
@@ -20,8 +20,8 @@ import { Variant15 } from './Variant-15'
 import { Variant16 } from './Variant-16'
 import { Variant17 } from './Variant-17'
 
-export const getVariantComponent = (variant: string = '01'): React.FC<VariantProps> => {
-  const variantMap: Record<string, React.FC<VariantProps>> = {
+export const getVariantComponent = (variant: string = '01'): React.FC<FeaturesBlock> => {
+  const variantMap: Record<string, React.FC<FeaturesBlock>> = {
     '01': Variant01,
     '02': Variant02,
     '03': Variant03,

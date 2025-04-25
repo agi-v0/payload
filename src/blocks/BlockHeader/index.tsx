@@ -40,7 +40,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
           className={cn('col-span-2', badgeClassName)}
           label={badge?.label}
           icon={badge?.icon}
-          icon_dir={badge?.icon_dir}
+          icon_position={badge?.icon_position}
           variant={badge?.color}
         />
       )}

@@ -1,42 +1,42 @@
+'use client'
+
 import React from 'react'
-import { VariantProps } from './VariantTypes'
-import { LucideIcon } from 'lucide-react'
-import * as LucideIcons from 'lucide-react'
+import { FeaturesBlock } from '@/payload-types'
 
-export const Variant13: React.FC<VariantProps> = ({ columns, showBadge, badgeConfig }) => {
+import { cn } from '@/utilities/ui'
+
+import { Card, CardContent } from '@/components/ui/card'
+import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
+
+export const Variant13: React.FC<FeaturesBlock> = ({ columns }) => {
+  if (!columns || columns.length === 0) return null
+
   return (
-    <div className="space-y-8">
-      <h2 className="text-center text-2xl font-semibold">
-        Simple Text with Icon (Cards) - Variant 13
-      </h2>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {columns.map((column, index) => {
-          const IconComponent = column.icon
-            ? (LucideIcons[column.icon as keyof typeof LucideIcons] as LucideIcon)
-            : null
-
-          return (
-            <div
-              key={`icon-card-${index}`}
-              className="border-border flex items-start gap-4 rounded-lg border p-6"
-            >
-              {IconComponent && (
-                <div className="bg-primary/10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full">
-                  <IconComponent className="text-primary h-6 w-6" />
+    <div className="gap-space-md grid grid-cols-1 py-8 md:grid-cols-3 md:py-12">
+      {columns.map((column, index) => {
+        const iconName = column.icon as keyof typeof dynamicIconImports
+        return (
+          <Card key={index} className="rounded-none border-0 bg-transparent">
+            <CardContent key={index} className={cn('gap-space-md flex flex-col justify-start p-0')}>
+              {column.icon && (
+                <DynamicIcon
+                  className="text-base-secondary h-6 w-6 md:h-8 md:w-8"
+                  name={iconName}
+                  color="currentColor"
+                />
+              )}
+              {column.content && (
+                <div className="flex flex-col gap-2">
+                  <h3 className={`text-body-lg text-base-primary font-medium`}>
+                    {column.content?.title}
+                  </h3>
+                  <p className={`text-body-md text-base-secondary`}>{column.content?.title}</p>
                 </div>
               )}
-              <div>
-                <h3 className="text-lg font-medium">{column.title}</h3>
-                {column.content && (
-                  <div className="text-muted-foreground mt-2 text-sm">
-                    {/* Render rich text content */}
-                  </div>
-                )}
-              </div>
-            </div>
-          )
-        })}
-      </div>
+            </CardContent>
+          </Card>
+        )
+      })}
     </div>
   )
 }

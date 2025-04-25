@@ -1,61 +1,49 @@
 import React from 'react'
-import { VariantProps } from './VariantTypes'
-import { LucideIcon } from 'lucide-react'
-import * as LucideIcons from 'lucide-react'
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
+import { FeaturesBlock } from '@/payload-types'
+import { Media } from '@/components/Media'
+import { Card, CardContent } from '@/components/ui/card'
+import { CMSLink } from '@/components/Link'
 
-export const Variant16: React.FC<VariantProps> = ({ columns, showBadge, badgeConfig }) => {
+export const Variant16: React.FC<FeaturesBlock> = ({ columns, link, CTALabel }) => {
+  if (!columns?.length) return null
+  const limitedColumns = columns.slice(0, 4)
   return (
-    <div className="space-y-10">
-      <h2 className="text-center text-3xl font-bold">4 Image with Text, Big CTA - Variant 16</h2>
-
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {columns.slice(0, 4).map((column, index) => {
-          const IconComponent = column.icon
-            ? (LucideIcons[column.icon as keyof typeof LucideIcons] as LucideIcon)
-            : null
-
-          return (
-            <div key={`feature-image-${index}`} className="flex flex-col gap-4">
+    <div className="my-8 grid grid-cols-1 grid-rows-3 gap-6 md:my-12 md:grid-cols-2 md:gap-4">
+      {limitedColumns.map((column, index) => {
+        return (
+          <Card key={index} className="overflow-hidden rounded-none border-0 bg-transparent">
+            <CardContent className="grid grid-cols-2 items-start p-0 md:items-center">
               {column.image && (
-                <div className="aspect-square overflow-hidden rounded-lg">
-                  <Image
-                    src={
-                      typeof column.image === 'object' && column.image.url
-                        ? column.image.url
-                        : '/placeholder.jpg'
-                    }
-                    alt={column.title}
-                    width={300}
-                    height={300}
-                    className="h-full w-full object-cover"
+                <div className="h-auto w-full">
+                  <Media
+                    resource={column.image}
+                    className="h-auto w-full"
+                    imgClassName="w-full h-auto aspect-square object-cover rounded-space-sm "
                   />
                 </div>
               )}
-
-              <div className="flex flex-col gap-2">
-                {IconComponent && <IconComponent className="text-primary h-6 w-6" />}
-                <h3 className="text-lg font-semibold">{column.title}</h3>
-                {column.content && (
-                  <div className="text-muted-foreground text-sm">
-                    {/* Render rich text content */}
-                  </div>
-                )}
-              </div>
-            </div>
-          )
-        })}
-      </div>
-
-      <div className="mx-auto max-w-md text-center">
-        <Button size="lg" className="w-full">
-          Call to Action
-        </Button>
-        <p className="text-muted-foreground mt-2 text-sm">
-          No credit card required. Start your free trial today.
-        </p>
-      </div>
+              {column.content && (
+                <div className="p-space-sm">
+                  <h3 className="text-body-lg text-base-primary mb-2 font-medium">
+                    {column.content?.title}
+                  </h3>
+                  <p className="text-body-sm text-base-secondary">{column.content?.copy}</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )
+      })}
+      <CMSLink
+        variant={'primary'}
+        color={'brand'}
+        className="rounded-space-md col-span-2 flex h-full flex-col items-start justify-between px-0 py-4 whitespace-normal text-white md:p-8"
+        {...link}
+        label={null}
+      >
+        <h4 className="text-h4 mx-6 font-medium md:mx-0">{CTALabel}</h4>
+        <p className="text-body-lg hidden self-end md:block">{link.label}</p>
+      </CMSLink>
     </div>
   )
 }

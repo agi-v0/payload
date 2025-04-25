@@ -5,7 +5,7 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
-import { VariantProps } from './VariantTypes'
+import { FeaturesBlock } from '@/payload-types'
 import {
   Accordion,
   AccordionContent,
@@ -13,7 +13,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 
-export const Variant09: React.FC<VariantProps> = ({ columns }) => {
+export const Variant09: React.FC<FeaturesBlock> = ({ columns }) => {
   const [activeAccordionId, setActiveAccordionId] = useState<string | null>(
     columns && columns.length > 0 ? String(0) : null,
   )

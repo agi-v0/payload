@@ -71,6 +71,28 @@ export const Features: Block = {
       },
     },
     {
+      type: 'collapsible',
+      label: 'CTA Link',
+      fields: [
+        {
+          name: 'CTALabel',
+          type: 'text',
+          label: 'CTA Label Text',
+          admin: {
+            description: 'Extra text to display alongside the link',
+          },
+        },
+        link({
+          variants: false,
+          colors: false,
+        }),
+      ],
+      admin: {
+        condition: (_, siblingData, { blockData }) =>
+          ['14', '15', '16', '17'].includes(blockData?.layout),
+      },
+    },
+    {
       name: 'columns',
       type: 'array',
       label: 'Feature Columns',

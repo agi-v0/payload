@@ -1,59 +1,39 @@
 import React from 'react'
-import { VariantProps } from './VariantTypes'
-import { LucideIcon } from 'lucide-react'
-import * as LucideIcons from 'lucide-react'
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
+import { FeaturesBlock } from '@/payload-types'
+import { Media } from '@/components/Media'
+import { Card, CardContent } from '@/components/ui/card'
+import { BlockHeader } from '@/blocks/BlockHeader'
 
-export const Variant17: React.FC<VariantProps> = ({ columns, showBadge, badgeConfig }) => {
+export const Variant17: React.FC<FeaturesBlock> = ({ columns, blockHeader }) => {
+  if (!columns?.length) return null
+  const limitedColumns = columns.slice(0, 4)
   return (
-    <div className="space-y-10">
-      <h2 className="text-center text-3xl font-bold">4 Image with Text, Small CTA - Variant 17</h2>
-
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        {columns.slice(0, 4).map((column, index) => {
-          const IconComponent = column.icon
-            ? (LucideIcons[column.icon as keyof typeof LucideIcons] as LucideIcon)
-            : null
-
+    <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2 md:gap-12">
+      {blockHeader && <BlockHeader {...blockHeader} type="start" />}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:grid-rows-2 md:gap-4">
+        {limitedColumns.map((column, index) => {
           return (
-            <div
-              key={`feature-image-${index}`}
-              className="border-border flex flex-col gap-4 rounded-lg border p-6"
-            >
-              {column.image && (
-                <div className="overflow-hidden rounded-md">
-                  <Image
-                    src={
-                      typeof column.image === 'object' && column.image.url
-                        ? column.image.url
-                        : '/placeholder.jpg'
-                    }
-                    alt={column.title}
-                    width={300}
-                    height={200}
-                    className="h-auto w-full object-cover"
-                  />
-                </div>
-              )}
-
-              <div className="flex flex-col gap-2">
-                {IconComponent && <IconComponent className="text-primary h-6 w-6" />}
-                <h3 className="text-lg font-semibold">{column.title}</h3>
-                {column.content && (
-                  <div className="text-muted-foreground text-sm">
-                    {/* Render rich text content */}
+            <Card key={index} className="overflow-hidden rounded-none border-0 bg-transparent">
+              <CardContent className="gap-space-sm grid grid-cols-2 items-start bg-transparent p-0 md:grid-cols-1">
+                {column.image && (
+                  <div className="h-auto w-full">
+                    <Media
+                      resource={column.image}
+                      className="h-auto w-full"
+                      imgClassName="w-full h-auto aspect-square object-cover rounded-space-md"
+                    />
                   </div>
                 )}
-
-                {column.enableCta && column.link?.label && (
-                  <Button variant="link" className="mt-2 self-start p-0">
-                    {column.link.label}
-                    <LucideIcons.ChevronRight className="ml-1 h-4 w-4" />
-                  </Button>
+                {column.content && (
+                  <div>
+                    <h3 className="text-body-lg text-base-primary mb-2 font-medium">
+                      {column.content?.title}
+                    </h3>
+                    <p className="text-body-sm text-base-secondary">{column.content?.copy}</p>
+                  </div>
                 )}
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           )
         })}
       </div>

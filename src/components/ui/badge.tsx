@@ -30,18 +30,18 @@ function Badge({
   className,
   variant,
   icon,
-  icon_dir,
+  icon_position,
   label,
   ...props
 }: BadgeProps & {
   icon?: string | null
-  icon_dir?: string | null
+  icon_position?: string | null
   label?: string | null
 }) {
   const iconName = icon ? (icon as keyof typeof dynamicIconImports) : undefined
 
   return (
-    <div className={cn(badgeVariants({ variant }), icon_dir, className)} {...props}>
+    <div className={cn(badgeVariants({ variant }), icon_position, className)} {...props}>
       <p>{label}</p>
       {iconName && <DynamicIcon name={iconName} color="currentColor" size={16} />}
     </div>

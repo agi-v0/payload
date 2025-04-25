@@ -3,7 +3,7 @@
 import React from 'react'
 import { CMSLink } from '@/components/Link'
 import { Card, CardContent } from '@/components/ui/card'
-import { VariantProps } from './VariantTypes'
+import { FeaturesBlock } from '@/payload-types'
 import {
   Carousel,
   CarouselContent,
@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/carousel'
 import { Media } from '@/components/Media'
 
-export const Variant10: React.FC<VariantProps> = ({ columns }) => {
+export const Variant10: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (

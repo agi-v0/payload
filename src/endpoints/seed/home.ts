@@ -95,7 +95,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
         label: null,
         color: 'blue',
         icon: null,
-        icon_dir: null,
+        icon_position: null,
       },
     },
 

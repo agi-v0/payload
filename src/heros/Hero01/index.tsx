@@ -32,7 +32,7 @@ export const Hero01: React.FC<Page['hero']> = ({
           <Badge
             label={badge?.label}
             icon={badge?.icon}
-            icon_dir={badge?.icon_dir}
+            icon_position={badge?.icon_position}
             variant={badge?.color}
           />
 

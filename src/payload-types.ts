@@ -229,6 +229,7 @@ export interface Page {
     | FormBlock
     | StyledListBlock
     | TestimonialsBlock
+    | TestimonialsBlock
     | FeaturesBlock
   )[];
   meta?: {
@@ -1470,6 +1471,25 @@ export interface FeaturesBlock {
     | '16'
     | '17';
   blockImage?: (number | null) | Media;
+  /**
+   * Extra text to display alongside the link
+   */
+  CTALabel?: string | null;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
   columns?:
     | {
         size?: ('half' | 'full' | 'oneThird' | 'twoThirds') | null;
@@ -2173,6 +2193,16 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
       };
   layout?: T;
   blockImage?: T;
+  CTALabel?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
   columns?:
     | T
     | {

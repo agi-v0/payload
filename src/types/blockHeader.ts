@@ -2,12 +2,15 @@ import { Page, Post } from '@/payload-types'
 
 export interface BlockHeaderType {
   className?: string | null
+  badgeClassName?: string | null
+  richTextClassName?: string | null
+  linksClassName?: string | null
   type: 'center' | 'split' | 'start'
   badge?: {
     label?: string | null
     color?: ('blue' | 'red' | 'green' | 'yellow') | null
     icon?: string | null
-    icon_dir?: ('flex-row' | 'flex-row-reverse') | null
+    icon_position?: ('flex-row' | 'flex-row-reverse') | null
   }
   headerText?: {
     root: {
