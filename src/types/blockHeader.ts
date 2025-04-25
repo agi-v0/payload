@@ -48,4 +48,5 @@ export interface BlockHeaderType {
         id?: string | null
       }[]
     | null
+  blockName?: string | null
 }

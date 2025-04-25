@@ -8,7 +8,7 @@ import { cn } from '@/utilities/ui'
 import { BlockHeaderType } from '@/types/blockHeader'
 
 export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
-  const { headerText, links, badge, className, type } = props
+  const { headerText, links, badge, className, type, blockName } = props
 
   const { setHeaderTheme } = useHeaderTheme()
 
@@ -18,6 +18,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
 
   return (
     <div
+      id={blockName || undefined}
       className={cn(
         'gap-md container grid grid-cols-2',
         type === 'center' ? 'justify-items-center' : '',
