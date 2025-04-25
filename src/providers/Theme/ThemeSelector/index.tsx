@@ -1,13 +1,28 @@
 'use client'
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import React, { useState } from 'react'
+
+import { cn } from '@/utilities/ui'
+import { Monitor, Moon, Sun } from 'lucide-react'
+import { motion } from 'motion/react'
+
+const themes = [
+  {
+    key: 'auto',
+    icon: Monitor,
+    label: 'System theme',
+  },
+  {
+    key: 'light',
+    icon: Sun,
+    label: 'Light theme',
+  },
+  {
+    key: 'dark',
+    icon: Moon,
+    label: 'Dark theme',
+  },
+]
 
 import type { Theme } from './types'
 
@@ -34,18 +49,34 @@ export const ThemeSelector: React.FC = () => {
   }, [])
 
   return (
-    <Select onValueChange={onThemeChange} value={value}>
-      <SelectTrigger
-        aria-label="Select a theme"
-        className="w-auto gap-2 border-none bg-transparent pl-0 md:pl-3"
-      >
-        <SelectValue placeholder="Theme" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="auto">Auto</SelectItem>
-        <SelectItem value="light">Light</SelectItem>
-        <SelectItem value="dark">Dark</SelectItem>
-      </SelectContent>
-    </Select>
+    <div className={cn('bg-background-neutral-subtle relative flex h-auto rounded-full')}>
+      {themes.map(({ key, icon: Icon, label }) => {
+        const isActive = value === key
+
+        return (
+          <button
+            type="button"
+            key={key}
+            className="relative rounded-full p-2"
+            onClick={() => onThemeChange(key as Theme & 'auto')}
+            aria-label={label}
+          >
+            {isActive && (
+              <motion.div
+                layoutId="activeTheme"
+                className="bg-background absolute inset-0 rounded-full"
+                transition={{ type: 'spring', duration: 0.5 }}
+              />
+            )}
+            <Icon
+              className={cn(
+                'relative m-auto size-5',
+                isActive ? 'text-base-secondary' : 'text-base-tertiary',
+              )}
+            />
+          </button>
+        )
+      })}
+    </div>
   )
 }

@@ -905,55 +905,91 @@ export const seed = async ({
       data: {
         columns: [
           {
-            label: 'Company',
+            label: 'الحلول',
             navItems: [
               {
                 link: {
                   type: 'custom',
-                  label: 'About Us',
-                  url: '/about',
+                  newTab: false,
+                  url: '/solutions/cashier',
+                  label: 'الكاشير',
                 },
               },
               {
                 link: {
                   type: 'custom',
-                  label: 'Blog',
-                  url: '/posts',
+                  newTab: false,
+                  url: '/solutions/paysync',
+                  label: 'شاشة السداد',
                 },
               },
               {
                 link: {
                   type: 'custom',
-                  label: 'Contact',
-                  url: '/contact',
-                },
-              },
-            ],
-          },
-          {
-            label: 'Resources',
-            navItems: [
-              {
-                link: {
-                  type: 'custom',
-                  label: 'Admin',
-                  url: '/admin',
+                  newTab: false,
+                  url: '/solutions/kiosk',
+                  label: 'الطلب الذاتي',
                 },
               },
               {
                 link: {
                   type: 'custom',
-                  label: 'Source Code',
-                  newTab: true,
-                  url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
+                  newTab: false,
+                  url: '/solutions/orderstation',
+                  label: 'محطة الطلبات',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom',
+                  newTab: false,
+                  url: '/solutions/products',
+                  label: 'المنتجات',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom',
+                  newTab: false,
+                  url: '/solutions/inventory',
+                  label: 'المخزون',
                 },
               },
               {
                 link: {
                   type: 'custom',
-                  label: 'Payload',
-                  newTab: true,
-                  url: 'https://payloadcms.com/',
+                  newTab: false,
+                  url: '/solutions/analytics',
+                  label: 'التحليلات',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom',
+                  newTab: false,
+                  url: '/solutions/branches',
+                  label: 'الفروع',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom',
+                  newTab: false,
+                  url: '/solutions/customers',
+                  label: 'العملاء',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom',
+                  newTab: false,
+                  url: '/solutions/accouting',
+                  label: 'المالية',
                 },
               },
             ],
