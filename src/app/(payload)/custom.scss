@@ -5,6 +5,7 @@
   --style-radius-s: 8px;
   --style-radius-m: 12px;
   --style-radius-l: 16px;
+  --style-radius-full: 999px;
 }
 
 // .btn {
@@ -13,24 +14,20 @@
 
 .collapsible {
   border-radius: var(--style-radius-s);
-  // overflow: hidden;
 }
 
 .collapsible__content {
   border-bottom-left-radius: var(--style-radius-s);
   border-bottom-right-radius: var(--style-radius-s);
 }
-.collapsible__toggle {
-  border-top-left-radius: var(--style-radius-s);
-  border-top-right-radius: var(--style-radius-s);
-}
+
 .collapsible__toggle-wrap {
-  border-top-left-radius: var(--style-radius-s);
-  border-top-right-radius: var(--style-radius-s);
+  border-radius: var(--style-radius-s);
 }
-.collapsible__toggle--collapsed {
-  border-bottom-left-radius: var(--style-radius-s);
-  border-bottom-right-radius: var(--style-radius-s);
+
+.collapsible__toggle-wrap:has(.collapsible__toggle--open) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .fixed-toolbar {
@@ -47,16 +44,49 @@
   margin-block: 0.5rem 1.5rem;
 }
 
+.monaco-editor {
+  border-radius: var(--style-radius-s);
+  overflow: hidden;
+}
+.monaco-editor .overflow-guard {
+  border-radius: var(--style-radius-s);
+  overflow: hidden;
+}
+
 .nav__link {
   padding-block: 8px;
   padding-inline: 16px;
-  border-radius: 12px;
+  border-radius: 999px;
   &:hover {
-    background-color: var(--theme-elevation-100);
+    background-color: var(--theme-elevation-50);
     text-decoration: none;
     transition: background-color 0.2s ease-in-out;
   }
 }
 .nav__link:has(.nav__link-indicator) {
   background-color: var(--theme-elevation-100);
+}
+
+.nav-group__label {
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  // font-size: 0.75rem;
+  // color: var(--theme-elevation-700);
+}
+
+.hamburger {
+  border-radius: var(--style-radius-full);
+}
+
+[data-theme='light'] {
+  .login__brand {
+    filter: invert(1);
+    height: 32px;
+    width: auto;
+  }
+}
+.login__brand {
+  height: 32px;
+  width: auto;
 }
