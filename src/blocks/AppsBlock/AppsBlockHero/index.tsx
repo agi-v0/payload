@@ -5,8 +5,6 @@ import config from '@payload-config'
 import type { App, AppsBlock as AppsBlockProps } from '@/payload-types'
 import { AppsBlockGrid } from './AppsBlockGrid'
 
-import { ArrowLeftIcon } from 'lucide-react'
-
 export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
   const { reference, blockHeader, body } = props
 
@@ -15,14 +13,12 @@ export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
   let fetchedApps: App[] = []
   let fetchError: string | null = null
 
-  const appIds = (
-    Array.isArray(reference)
-      ? reference?.map((ref) => {
-          const id = typeof ref.value === 'object' ? ref.value?.id : ref.value
-          return id ? String(id) : null
-        })
-      : []
-  ).filter((id): id is string => id !== null)
+  const appIds = Array.isArray(reference)
+    ? reference?.map((ref) => {
+        const id = typeof ref.value === 'object' ? ref.value?.id : ref.value
+        return id
+      })
+    : []
 
   if (appIds.length > 0) {
     try {
@@ -30,7 +26,6 @@ export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
         collection: 'apps',
         locale: 'ar',
         draft: false,
-        overrideAccess: false,
         depth: 2,
         where: {
           id: {
@@ -40,7 +35,6 @@ export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
       })
 
       fetchedApps = result.docs || []
-
       // if (fetchedApps.length > 0) {
       //   fetchedApps.sort((a, b) => appIds.indexOf(String(a.id)) - appIds.indexOf(String(b.id)))
       // }
@@ -54,7 +48,6 @@ export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
       collection: 'apps',
       locale: 'ar',
       draft: false,
-      overrideAccess: false,
       depth: 2,
       limit: 10,
       sort: '-updatedAt',

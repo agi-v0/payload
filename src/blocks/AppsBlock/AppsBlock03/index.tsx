@@ -1,4 +1,3 @@
-import { cn } from '@/utilities/ui'
 import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
@@ -19,7 +18,6 @@ export const AppsBlock03: React.FC<Props> = async (props) => {
     draft: false,
     limit: 3,
     page: 1,
-    overrideAccess: false,
     depth: 10,
     sort: '-createdAt',
     select: {

@@ -5,12 +5,10 @@ import config from '@payload-config'
 import type { App, AppsBlock as AppsBlockProps } from '@/payload-types'
 import { AppsCarouselClient } from './AppsCarouselClient'
 
-import { ArrowLeftIcon } from 'lucide-react'
-
 interface Props extends AppsBlockProps {}
 
 export const AppsBlock04: React.FC<Props> = async (props) => {
-  const { reference, blockHeader } = props
+  const { reference } = props
 
   const payload = await getPayload({ config })
 
@@ -32,7 +30,6 @@ export const AppsBlock04: React.FC<Props> = async (props) => {
         collection: 'apps',
         locale: 'ar',
         draft: false,
-        overrideAccess: false,
         depth: 2,
         where: {
           id: {
@@ -43,9 +40,9 @@ export const AppsBlock04: React.FC<Props> = async (props) => {
 
       fetchedApps = result.docs || []
 
-      // if (fetchedApps.length > 0) {
-      //   fetchedApps.sort((a, b) => appIds.indexOf(String(a.id)) - appIds.indexOf(String(b.id)))
-      // }
+      if (fetchedApps.length > 0) {
+        fetchedApps.sort((a, b) => appIds.indexOf(String(a.id)) - appIds.indexOf(String(b.id)))
+      }
     } catch (error) {
       console.error('Error fetching referenced apps:', error)
       fetchError = 'Failed to load app data.'
@@ -56,9 +53,8 @@ export const AppsBlock04: React.FC<Props> = async (props) => {
       collection: 'apps',
       locale: 'ar',
       draft: false,
-      overrideAccess: false,
       depth: 2,
-      limit: 10,
+      limit: 8,
       sort: '-updatedAt',
     })
 

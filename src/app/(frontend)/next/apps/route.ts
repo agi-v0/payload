@@ -22,8 +22,8 @@ export async function GET(request: NextRequest) {
       locale: locale as 'ar' | 'en', // Cast to expected union type
       draft: false,
       limit: limit,
-      page: page,
-      overrideAccess: false, // Important: Enforce access control
+      page: page, // Add the page parameter
+
       depth: 10, // Ensure relationships are populated
       sort: '-createdAt',
       select: {
