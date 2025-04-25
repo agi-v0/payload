@@ -59,7 +59,7 @@ export const HorizontalVariant: React.FC<FeaturesBlock> = ({ columns }) => {
                   const featuresheadingText = extractHeading(feature?.content)
                   const featurescontentWithoutHeading = getContentWithoutHeading(feature?.content)
                   return (
-                    <Card className="border-0">
+                    <Card key={feature.id || `feature-${index}`} className="border-0">
                       <CardContent
                         className={cn(
                           'flex flex-col justify-start gap-6 bg-transparent p-0 md:gap-8',

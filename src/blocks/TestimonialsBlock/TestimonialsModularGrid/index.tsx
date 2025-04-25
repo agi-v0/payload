@@ -30,7 +30,7 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
   const gridItems = testimonials.map((testimonial, index) => {
     // Get the pattern for the current index
     const pattern = cellPatterns[index % cellPatterns.length]
-    let assignedType = pattern.type as 'quote' | 'image' | 'stat' | 'logo'
+    const assignedType = pattern.type as 'quote' | 'image' | 'stat' | 'logo'
     const sizeClasses = pattern.classes
 
     return {

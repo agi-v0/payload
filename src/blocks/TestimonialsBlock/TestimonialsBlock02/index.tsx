@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { Link } from '@/i18n/routing'
 import {
   Carousel,
@@ -8,16 +8,13 @@ import {
   CarouselItem,
   CarouselNavigation,
   CarouselIndicator,
-  useCarousel,
-} from '@/components/ui/carousel' // Assuming correct path
+} from '@/components/ui/carousel'
 
-import { ArrowDown, ArrowUp, ArrowRight, ArrowLeftIcon } from 'lucide-react'
+import { ArrowDown, ArrowUp } from 'lucide-react'
 
 import { Testimonial } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
-import { cn } from '@/utilities/ui'
-import { CMSLink } from '@/components/Link'
 
 interface Props {
   testimonials: Testimonial[]
@@ -42,7 +39,7 @@ const renderStat = (stat: NonNullable<Testimonial['stats']>[number], index: numb
 )
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }) => {
-  const { authorInfo, quote, media, companyLogo, stats, rating } = testimonial
+  const { authorInfo, quote, media, companyLogo, stats } = testimonial
 
   return (
     <div className="bg-background-light rounded-space-sm grid w-full max-w-[90rem] grid-cols-1 md:grid-cols-2 lg:items-stretch">
@@ -103,7 +100,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
   )
 }
 
-export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }) => {
+export const TestimonialsBlock02: React.FC<Props> = ({ testimonials }) => {
   return (
     <section className="bg-background py-space-xl relative container">
       <Carousel>
