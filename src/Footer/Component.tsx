@@ -89,7 +89,7 @@ export async function Footer() {
                           key={i}
                           variant="inline"
                           className="text-body-sm text-base-secondary h-auto justify-start rounded-none px-0 py-2 font-medium hover:bg-transparent"
-                          {...(link as any)}
+                          {...link}
                         />
                       )
                     })}

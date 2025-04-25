@@ -31,7 +31,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
           className="col-span-2"
           label={badge?.label}
           icon={badge?.icon}
-          icon_dir={badge?.icon_dir}
+          icon_position={badge?.icon_position}
           variant={badge?.color}
         />
       )}
@@ -60,7 +60,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
               {links.map(({ link }, i) => {
                 return (
                   <li key={i}>
-                    <CMSLink className="w-full" size={'lg'} {...(link as any)} />
+                    <CMSLink className="w-full" size={'lg'} {...link} />
                   </li>
                 )
               })}

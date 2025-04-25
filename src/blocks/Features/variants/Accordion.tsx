@@ -68,8 +68,6 @@ export const AccordionVariant: React.FC<FeaturesBlock> = ({ columns }) => {
                     reference={column.link.reference}
                     url={column.link.url || undefined}
                     label={column.link.label}
-                    color={column.link.color || 'brand'}
-                    variant={column.link.variant || 'tertiary'}
                   />
                 )}
               </AccordionContent>

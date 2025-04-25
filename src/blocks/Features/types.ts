@@ -75,7 +75,7 @@ export interface BadgeConfig {
     label?: string | null
     color?: ('blue' | 'red' | 'green' | 'yellow') | null
     icon?: string | null
-    icon_dir?: ('flex-row' | 'flex-row-reverse') | null
+    icon_position?: ('flex-row' | 'flex-row-reverse') | null
   }
 }
 

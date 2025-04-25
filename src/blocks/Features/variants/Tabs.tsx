@@ -56,9 +56,9 @@ export const TabsVariant: React.FC<FeaturesBlock> = ({ columns }) => {
             >
               <div className="lg:pe-space-md w-full">
                 {badge?.label && <Badge className="mb-4">{badge.label}</Badge>}
-                {content && (
+                {/* {content && (
                   <RichText data={content} enableGutter={false} className="mx-0 text-start" />
-                )}
+                )} */}
                 {link && <CMSLink {...link} className="mt-4" />}
               </div>
               {image && (

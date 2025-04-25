@@ -124,7 +124,7 @@ const ContentSection: React.FC<{ body: AppsBlockType['body'] }> = ({ body }) => 
       {links && links.length > 0 && (
         <div className="flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
           {links.map(({ link }, i) => (
-            <CMSLink key={i} className="w-full sm:w-auto" size={'lg'} {...(link as any)} />
+            <CMSLink key={i} className="w-full sm:w-auto" size={'lg'} {...link} />
           ))}
         </div>
       )}

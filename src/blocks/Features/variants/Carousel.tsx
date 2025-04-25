@@ -34,18 +34,12 @@ export const CarouselVariant: React.FC<FeaturesBlock> = ({ columns }) => {
                     <Media resource={column.image} className="object-cover" fill />
                   </div>
                 )}
-                {column.content && (
+                {/* {column.content && (
                   <div className="text-gray-600 dark:text-gray-400">
                     <RichText data={column.content} enableProse={false} enableGutter={false} />
                   </div>
-                )}
-                {column.link && (
-                  <CMSLink
-                    className="justify-start"
-                    {...column.link}
-                    color={column.link.color || 'brand'}
-                  />
-                )}
+                )} */}
+                {column.link && <CMSLink className="justify-start" {...column.link} />}
               </CardContent>
             </Card>
           </CarouselItem>

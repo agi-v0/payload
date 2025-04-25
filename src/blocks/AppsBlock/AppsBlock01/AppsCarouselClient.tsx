@@ -59,7 +59,7 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
         {/* Link Button */}
         {link && (
           <CMSLink
-            {...(link as any)}
+            {...link}
             // Use text size, color variables, and explicit gap
             className="text-body-lg text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
             label="المزيد"

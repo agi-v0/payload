@@ -16,7 +16,7 @@ export const HorizontalVariant: React.FC<FeaturesBlock> = ({ columns }) => {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-12">
       {columns.map((column, index) => {
-        const { content, image, appReference, link, showFeatureList, features } = column
+        const { content, image, appReference, link } = column
 
         const headingText = extractHeading(content)
 
@@ -50,7 +50,7 @@ export const HorizontalVariant: React.FC<FeaturesBlock> = ({ columns }) => {
                 </div>
               )}
             </div>
-            <div key={index} className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-4">
+            {/* <div key={index} className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-4">
               {showFeatureList &&
                 features &&
                 features.map((featureGroup, index) => {
@@ -88,7 +88,7 @@ export const HorizontalVariant: React.FC<FeaturesBlock> = ({ columns }) => {
                     </Card>
                   )
                 })}
-            </div>
+            </div> */}
           </div>
         )
       })}

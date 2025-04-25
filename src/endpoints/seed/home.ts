@@ -10,11 +10,11 @@ type HomeArgs = {
 }
 
 export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
-  heroImage,
-  metaImage,
+  _heroImage,
+  _metaImage,
   image169,
   image43,
-  imageSquare,
+  _imageSquare,
 }) => {
   return {
     title: 'Home',
@@ -101,15 +101,15 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
 
     layout: [
       {
+        blockType: 'features',
         layout: '02',
-        blockimage: image169.id,
+        blockImage: image169.id,
         blockName: null,
 
         columns: [
           {
             size: 'full',
             appReference: null,
-
             icon: null,
             tabLabel: null,
             enableBadge: false,
@@ -119,19 +119,17 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
               title: 'استخدمه عند الكاونتر، أو كمحطة متنقلة في المحل—الكاشير يتكيف مع مشروعك',
               copy: 'توافق الأجهزة المتعددة يتيح لك أخذ الطلبات سواء أثناء التنقل أو من على الطاولة.',
             },
-
             badge: {
               label: null,
               color: 'blue',
               icon: null,
               icon_position: 'flex-row',
             },
-
             link: {
-              type: 'reference',
+              type: 'custom',
               newTab: null,
-              url: null,
-              label: null,
+              url: '/',
+              label: 'معرفة المزيد',
             },
           },
 
@@ -143,24 +141,21 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
             tabLabel: null,
             enableBadge: false,
             enableCta: false,
-
             content: {
               title: 'الربط مع 20+ تطبيق يعزز عملياتك',
               copy: 'ادمج نظامنا مع تطبيقات التوصيل والأنظمة الأخرى لسهولة إدارة أعمالك وشحنها بإمكانيات إضافية.',
             },
-
             badge: {
               label: null,
               color: 'blue',
               icon: null,
               icon_position: 'flex-row',
             },
-
             link: {
-              type: 'reference',
+              type: 'custom',
               newTab: null,
-              url: null,
-              label: null,
+              url: '/',
+              label: 'معرفة المزيد',
             },
           },
 
@@ -172,24 +167,21 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
             tabLabel: null,
             enableBadge: null,
             enableCta: null,
-
             content: {
               title: 'استقبال المدفوعات بطرق متعددة بسلاسة',
               copy: 'يقبل النقد أو البطاقات، ويحافظ على سرعة المعاملات بدون توقف.',
             },
-
             badge: {
               label: null,
               color: 'blue',
               icon: null,
               icon_position: 'flex-row',
             },
-
             link: {
-              type: 'reference',
+              type: 'custom',
               newTab: null,
-              url: null,
-              label: null,
+              url: '/',
+              label: 'معرفة المزيد',
             },
           },
 
@@ -201,24 +193,21 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
             tabLabel: null,
             enableBadge: null,
             enableCta: null,
-
             content: {
               title: 'تابع مبيعاتك بدقة مع تقارير مفصلة وتحليلات',
               copy: 'كل بيعة أو استرداد أو خصم يُسجل لحظة حدوثه، لتعرف الحصيلة اليومية بدقة—لا تخمين، فقط أرقام واضحة.',
             },
-
             badge: {
               label: null,
               color: 'blue',
               icon: null,
               icon_position: 'flex-row',
             },
-
             link: {
-              type: 'reference',
+              type: 'custom',
               newTab: null,
-              url: null,
-              label: null,
+              url: '/',
+              label: 'معرفة المزيد',
             },
           },
 
@@ -230,28 +219,24 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
             tabLabel: null,
             enableBadge: null,
             enableCta: null,
-
             content: {
               title: 'تواصل ذكي مع العملاء',
               copy: 'اجمع معلومات قيمة عن عملائك لتعزيز استراتيجيات التسويق والعروض المخصصة.',
             },
-
             badge: {
               label: null,
               color: 'blue',
               icon: null,
               icon_position: 'flex-row',
             },
-
             link: {
-              type: 'reference',
+              type: 'custom',
               newTab: null,
-              url: null,
-              label: null,
+              url: '/',
+              label: 'معرفة المزيد',
             },
           },
         ],
-        blockType: 'features',
 
         blockHeader: {
           type: 'center',

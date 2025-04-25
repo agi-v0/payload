@@ -41,9 +41,9 @@ export const GridVariant: React.FC<FeaturesBlock> = ({ columns }) => {
                 })}
               >
                 {/* Render content if available */}
-                {content && (
+                {/* {content && (
                   <RichText enableGutter={false} data={content} className="prose-h3:text-h3" />
-                )}
+                )} */}
               </div>
               {/* Render image if available */}
               {image && (
