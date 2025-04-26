@@ -24,7 +24,7 @@ import { Testimonials } from './collections/Testimonials'
 
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
-import SiteConfig from './collections/Site'
+import { FAQ } from './collections/FAQ'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -38,10 +38,6 @@ export default buildConfig({
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
       beforeDashboard: ['@/components/BeforeDashboard'],
-      graphics: {
-        // Icon: '@/components/ui/marn-icon',
-        Logo: '@/components/Logo/Logo#Logo',
-      },
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -115,9 +111,10 @@ export default buildConfig({
     MediaCategories,
     Users,
     Testimonials,
+    FAQ,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, SiteConfig],
+  globals: [Header, Footer],
   plugins: [
     ...plugins,
     s3Storage({
@@ -164,7 +161,7 @@ export default buildConfig({
   },
   email: resendAdapter({
     defaultFromAddress: process.env.RESEND_EMAIL || '',
-    defaultFromName: 'Marn POS',
+    defaultFromName: 'Payload CMS',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
 })

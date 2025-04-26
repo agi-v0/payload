@@ -24,6 +24,7 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { FaqBlock } from '@/blocks/FaqBlock/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -91,8 +92,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 FormBlock,
                 StyledList,
                 TestimonialsBlock,
-                TestimonialsBlock,
                 Features,
+                FaqBlock,
               ],
               required: true,
               localized: true,
