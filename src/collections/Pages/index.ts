@@ -11,6 +11,7 @@ import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { StyledList } from '@/blocks/StyledList/config'
 import { TestimonialsBlock } from '@/blocks/TestimonialsBlock/config'
+import { GalleryBlock } from '@/blocks/Gallery/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
@@ -94,6 +95,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 TestimonialsBlock,
                 Features,
                 FaqBlock,
+                GalleryBlock,
               ],
               required: true,
               localized: true,
