@@ -231,7 +231,6 @@ export interface Page {
     | FormBlock
     | StyledListBlock
     | TestimonialsBlock
-    | TestimonialsBlock
     | FeaturesBlock
     | FaqBlock
     | GalleryBlock
