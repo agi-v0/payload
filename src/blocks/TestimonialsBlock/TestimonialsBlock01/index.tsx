@@ -69,7 +69,7 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
       whileInView="visible"
       viewport={{ once: false, margin: '50%' }}
       variants={containerVariants}
-      className="bg-background-medium py-space-lg"
+      className="bg-bcakground-neutral-subtle py-space-lg"
     >
       <div className="container">
         <motion.div

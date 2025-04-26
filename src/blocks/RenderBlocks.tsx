@@ -50,7 +50,7 @@ export const RenderBlocks: React.FC<{
         }
 
         return (
-          <div className="" key={index}>
+          <div id={block.blockName || undefined} className="" key={index}>
             {blockHeader && <BlockHeader {...blockHeader} className="container" />}
             <Block blockHeader={blockHeader} {...(block as any)} />
           </div>

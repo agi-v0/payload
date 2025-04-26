@@ -9,11 +9,11 @@ Working with the project's design system.
 **1. Prioritize Theme Variables (`globals.css` `@theme`):**
 
 *   **Golden Rule:** Always favor using Tailwind utility classes generated from the CSS variables defined within the `@theme { ... }` block in `src/app/(frontend)/[locale]/globals.css`.
-*   **Correct Usage:** Use classes like `text-base-primary`, `bg-background-light`, `p-space-md`, `gap-space-sm`, `text-h3`, `rounded-space-sm`, etc.
+*   **Correct Usage:** Use classes like `text-base-primary`, `bg-background-neutral`, `p-space-md`, `gap-space-sm`, `text-h3`, `rounded-space-sm`, etc.
 *   **Avoid:**
     *   Directly using variables defined only in `:root` or `[data-theme='dark']` (like `--neutral-primary`) in Tailwind classes, as these might not have corresponding utility classes.
     *   Hardcoding pixel/rem values (e.g., `p-8`, `text-[31px]`, `gap-4`) when a theme spacing or text size variable (`p-space-lg`, `text-h3`, `gap-space-sm`) provides a semantic equivalent.
-    *   Using arbitrary hex colors or Tailwind color palette classes (e.g., `bg-gray-50`, `text-gray-900`) if a theme color variable (`bg-background-light`, `text-base-primary`) fits the purpose.
+    *   Using arbitrary hex colors or Tailwind color palette classes (e.g., `bg-gray-50`, `text-gray-900`) if a theme color variable (`bg-background-neutral`, `text-base-primary`) fits the purpose.
 *   **Dark Mode:** Using the `base-*` theme variables correctly generally ensures dark mode compatibility (`dark:*` variants are often handled by the variable definitions themselves or should be applied minimally where needed, like specific borders).
 
 **2. Map Design Specs to Theme Variables:**

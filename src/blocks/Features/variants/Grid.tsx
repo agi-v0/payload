@@ -26,7 +26,7 @@ export const GridVariant: React.FC<FeaturesBlock> = ({ columns }) => {
           <div
             key={index}
             className={cn(
-              'bg-background-light rounded-space-md p-space-md col-span-4',
+              'bg-background-neutral rounded-space-md p-space-md col-span-4',
               lgColSpanClass,
             )}
           >

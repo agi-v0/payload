@@ -52,7 +52,7 @@ export const TabsVariant: React.FC<FeaturesBlock> = ({ columns }) => {
           {columns.map(({ image, content, badge, link }, index) => (
             <CarouselItem
               key={index}
-              className="bg-background-light p-space-md rounded-space-md flex w-full flex-col items-center justify-center gap-4 lg:flex-row"
+              className="bg-background-neutral p-space-md rounded-space-md flex w-full flex-col items-center justify-center gap-4 lg:flex-row"
             >
               <div className="lg:pe-space-md w-full">
                 {badge?.label && <Badge className="mb-4">{badge.label}</Badge>}

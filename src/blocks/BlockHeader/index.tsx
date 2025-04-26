@@ -17,7 +17,6 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
     richTextClassName,
     linksClassName,
     type,
-    blockName,
   } = props
 
   const { setHeaderTheme } = useHeaderTheme()
@@ -28,7 +27,6 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
 
   return (
     <div
-      id={blockName || undefined}
       className={cn(
         'gap-md grid grid-cols-2',
         type === 'center' ? 'justify-items-center' : '',

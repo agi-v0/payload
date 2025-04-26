@@ -67,7 +67,7 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
       {gallery && gallery.length > 0 && (
         <Media
           resource={gallery[0]}
-          className="bg-background-light p-space-xs aspect-[4/3] h-auto w-full flex-shrink-0 lg:w-1/2"
+          className="bg-background-neutral p-space-xs aspect-[4/3] h-auto w-full flex-shrink-0 lg:w-1/2"
           imgClassName="rounded-space-sm"
         />
       )}

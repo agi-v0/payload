@@ -19,7 +19,7 @@ export const Variant01: React.FC<FeaturesBlock> = ({ columns }) => {
           <div
             key={index}
             className={cn(
-              'rounded-space-md bg-background-light p-space-md col-span-4',
+              'rounded-space-md bg-background-neutral p-space-md col-span-4',
               lgColSpanClass,
             )}
           >
