@@ -38,9 +38,14 @@ export const Media: CollectionConfig = {
       }),
     },
     {
-      name: 'Category',
+      name: 'category',
       type: 'relationship',
       relationTo: 'media-categories',
+      admin: {
+        components: {
+          afterInput: ['@/components/ImageCategoryGuide'],
+        },
+      },
     },
   ],
   upload: {

@@ -1,20 +1,18 @@
 'use client'
 
 import React from 'react'
-import type { App, Media as MediaType } from '@/payload-types' // Import necessary types
+import type { App } from '@/payload-types'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNavigation,
   CarouselIndicator,
-  useCarousel,
-} from '@/components/ui/carousel' // Assuming correct path
+} from '@/components/ui/carousel'
 import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
-import RichText from '@/components/RichText' // Use default import for RichText
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
-import { cn } from '@/utilities/ui'
+import RichText from '@/components/RichText'
+import { ArrowLeftIcon } from 'lucide-react'
 
 // Props for the client component
 interface AppsCarouselClientProps {
@@ -28,17 +26,13 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
 
   return (
     // Use background variable and explicit rounding from Figma
-    <div className="bg-background-light flex flex-col overflow-hidden rounded-3xl lg:flex-row">
+    <div className="bg-background-neutral rounded-space-md flex flex-col overflow-hidden lg:flex-row">
       {/* Content Section */}
       <div className="p-space-md flex w-full flex-col justify-between text-start">
         <div className="gap-space-sm flex flex-col items-start justify-start">
           {/* App Badge (Icon + Name) */}
           <div className="gap-space-xs flex items-center justify-end">
-            {icon && (
-              <div className="rounded-xl">
-                <Media resource={icon as MediaType} className="size-16" />
-              </div>
-            )}
+            {icon && <Media resource={icon} className="size-16 overflow-hidden rounded-xl" />}
             {name && <span className="text-h3 text-base-secondary font-medium">{name}</span>}
           </div>
           {/* Title and Description */}
@@ -59,26 +53,24 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
         {/* Link Button */}
         {link && (
           <CMSLink
-            {...(link as any)}
-            // Use text size, color variables, and explicit gap
-            className="text-body-lg text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
+            {...link}
+            className="text-body-md text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
             label="المزيد"
           >
-            <ArrowLeftIcon className="size-5" />
+            <ArrowLeftIcon className="size-4" />
           </CMSLink>
         )}
       </div>
 
       {/* Image Section - Placeholder */}
-      <div className="bg-background-light p-space-xs w-full flex-shrink-0 lg:w-1/2">
-        {gallery && gallery.length > 0 && (
-          <Media
-            resource={gallery[0] as MediaType}
-            className="aspect-[4/3] h-auto w-full"
-            imgClassName="rounded-space-sm"
-          />
-        )}
-      </div>
+
+      {gallery && gallery.length > 0 && (
+        <Media
+          resource={gallery[0]}
+          className="bg-background-light p-space-xs aspect-[4/3] h-auto w-full flex-shrink-0 lg:w-1/2"
+          imgClassName="rounded-space-sm"
+        />
+      )}
     </div>
   )
 }

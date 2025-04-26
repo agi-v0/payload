@@ -124,7 +124,7 @@ export const Header: GlobalConfig = {
                     link({
                       variants: false,
                       colors: false,
-                      icon: false,
+                      icon: true,
                       description: false,
                       overrides: {
                         label: false,
@@ -158,7 +158,7 @@ export const Header: GlobalConfig = {
                         link({
                           variants: false,
                           colors: false,
-                          icon: false,
+                          icon: true,
                           description: false,
                           overrides: {
                             label: false,
@@ -186,8 +186,8 @@ export const Header: GlobalConfig = {
                         link({
                           variants: false,
                           colors: false,
-                          icon: false,
-                          description: false,
+                          icon: true,
+                          description: true,
                           overrides: {
                             label: false,
                           },

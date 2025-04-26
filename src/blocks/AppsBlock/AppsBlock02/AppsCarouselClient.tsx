@@ -1,22 +1,19 @@
 'use client'
 
 import React from 'react'
-import type { App, Media as MediaType } from '@/payload-types' // Import necessary types
+import type { App } from '@/payload-types'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNavigation,
   CarouselIndicator,
-  useCarousel,
-} from '@/components/ui/carousel' // Assuming correct path
+} from '@/components/ui/carousel'
 import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
-import RichText from '@/components/RichText' // Use default import for RichText
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
-import { cn } from '@/utilities/ui'
+import RichText from '@/components/RichText'
+import { ArrowLeftIcon } from 'lucide-react'
 
-// Props for the client component
 interface AppsCarouselClientProps {
   apps: App[]
 }
@@ -28,17 +25,13 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
 
   return (
     // Use background variable and explicit rounding from Figma
-    <div className="bg-background-light flex flex-col overflow-hidden rounded-3xl lg:flex-row">
+    <div className="bg-background-neutral flex flex-col overflow-hidden rounded-3xl lg:flex-row">
       {/* Content Section */}
       <div className="p-space-md flex w-full flex-col justify-between text-start">
         <div className="gap-space-sm flex flex-col items-start justify-start">
           {/* App Badge (Icon + Name) */}
           <div className="gap-space-xs flex items-center justify-end">
-            {icon && (
-              <div className="rounded-xl">
-                <Media resource={icon as MediaType} className="size-8" />
-              </div>
-            )}
+            {icon && <Media resource={icon} className="size-8 overflow-hidden rounded-md" />}
             {name && <span className="text-body-lg text-base-secondary font-medium">{name}</span>}
           </div>
           {/* Title and Description */}
@@ -57,9 +50,9 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
         {/* Link Button */}
         {link && (
           <CMSLink
-            {...(link as any)}
+            {...link}
             // Use text size, color variables, and explicit gap
-            className="text-body-lg text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
+            className="text-body-lg mt-space-xs text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
             label="المزيد"
           >
             <ArrowLeftIcon className="size-5" />
@@ -75,10 +68,9 @@ export const AppsCarouselClient: React.FC<AppsCarouselClientProps> = ({ apps }) 
   if (!apps || apps.length === 0) {
     return null // Or render an empty state
   }
-
   return (
     <div className="relative container w-full">
-      <Carousel>
+      <Carousel slidesPerView={3}>
         <CarouselContent className="-ml-4 items-stretch">
           {apps.map((app, index) => (
             <CarouselItem
@@ -89,7 +81,7 @@ export const AppsCarouselClient: React.FC<AppsCarouselClientProps> = ({ apps }) 
             </CarouselItem>
           ))}
         </CarouselContent>
-        {apps.length > 1 && (
+        {apps.length > 3 && (
           <>
             <CarouselNavigation
               className="absolute top-auto -bottom-20 left-auto w-full justify-between gap-2"

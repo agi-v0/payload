@@ -42,7 +42,7 @@ export const Hero04: React.FC<Page['hero']> = ({
                   {links.map(({ link }, i) => {
                     return (
                       <li key={i}>
-                        <CMSLink size={'lg'} {...(link as any)} />
+                        <CMSLink size={'lg'} {...link} />
                       </li>
                     )
                   })}

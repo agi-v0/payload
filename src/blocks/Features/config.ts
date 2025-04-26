@@ -24,7 +24,7 @@ const richTextEditor = lexicalEditor({
   },
 })
 
-let sizeOptions = [
+const sizeOptions = [
   { label: 'Half', value: 'half' },
   { label: 'Full', value: 'full' },
   { label: 'One Third', value: 'oneThird' },

@@ -46,19 +46,19 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
     <motion.div
       key={stat.id || index}
       variants={itemVariants} // Apply item animation
-      className="p-space-lg bg-background-light rounded-space-sm flex flex-col justify-center border border-neutral-200 dark:border-neutral-700"
+      className="p-space-lg bg-background-neutral rounded-space-sm flex flex-col justify-center"
     >
       <span className="text-h3 text-base-primary font-medium">
         {stat.value}
         {stat.isPercentage ? '%' : ''}
       </span>
-      <div className="mt-space-xs flex items-center gap-1">
+      <div className="flex items-center gap-1">
         {stat.isIncrease ? (
           <ArrowUp className="text-base-tertiary size-4" />
         ) : (
           <ArrowDown className="text-base-tertiary size-4" />
         )}
-        <span className="text-base-tertiary text-sm font-normal">{stat.label}</span>
+        <span className="text-base-tertiary text-base font-normal">{stat.label}</span>
       </div>
     </motion.div>
   )
@@ -74,23 +74,30 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
       <div className="container">
         <motion.div
           variants={itemVariants} // Animate the main card as one item
-          className="bg-background-light rounded-space-sm grid grid-cols-1 md:grid-cols-2 lg:items-stretch"
+          className="bg-background-neutral rounded-space-sm grid grid-cols-1 md:grid-cols-2 lg:items-stretch"
         >
-          <div className="gap-space-md p-space-md pb-space-xs md:pb-space-md flex flex-col justify-start md:justify-between">
-            {companyLogo && (
-              <Media resource={companyLogo} className="h-12 w-auto" imgClassName="object-contain" />
-            )}
-            {quote && (
-              <RichText
-                data={quote}
-                enableProse={false}
-                className="text-base-primary text-(length:--text-h3) font-medium"
-              />
-            )}
+          <div className="gap-space-md p-space-md pb-space-xs md:pb-space-md flex flex-col justify-start">
+            <div className="gap-space-md flex flex-grow flex-col justify-start">
+              {companyLogo && (
+                <Media resource={companyLogo} imgClassName="h-8 w-auto opacity-50 dark:invert" />
+              )}
+              {quote && (
+                <RichText
+                  data={quote}
+                  enableProse={false}
+                  className="text-base-primary text-(length:--text-h3) font-medium"
+                />
+              )}
+            </div>
             {authorInfo && (
-              <div className="mt-space-sm gap-space-xs flex flex-row items-center">
+              <div className="gap-space-xs flex flex-row items-center">
                 {authorInfo.avatar && (
-                  <Media resource={authorInfo.avatar} className="h-12 w-12 rounded-full" />
+                  <Media
+                    resource={authorInfo.avatar}
+                    fill
+                    className="relative h-12 w-12 overflow-hidden rounded-full"
+                    imgClassName="object-cover"
+                  />
                 )}
                 <div>
                   <p className="text-base-primary text-body-sm font-medium">{authorInfo.name}</p>
@@ -106,7 +113,9 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
             >
               <Media
                 resource={media}
-                className="rounded-space-sm aspect-[4/3] h-auto w-full overflow-hidden"
+                fill
+                className="rounded-space-sm relative aspect-[4/3] h-auto w-full overflow-hidden"
+                imgClassName="object-cover"
               />
             </motion.div>
           )}
@@ -121,18 +130,25 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
               variants={itemVariants}
               initial="initial"
               whileHover="hover"
-              className="overflow-hidden"
+              className={cn('overflow-hidden', {
+                'col-span-2': stats.length < 3,
+              })}
             >
               <Link
                 href="/testimonials"
-                className="text-h4 p-space-sm rounded-space-sm bg-neutral/90 hover:bg-neutral text-inverted-primary relative flex h-full items-center justify-center text-center font-medium transition-colors duration-300"
+                className={cn(
+                  'text-h4 p-space-sm rounded-space-sm bg-neutral/90 hover:bg-neutral text-inverted-primary relative flex h-full items-center justify-center text-center font-medium transition-colors duration-300',
+                )}
               >
                 <motion.span
                   variants={{
                     initial: { opacity: 1, x: 0 },
                     hover: { opacity: 0, x: '-50%' },
                   }}
-                  transition={{ duration: 0.5, type: 'spring' }}
+                  transition={{
+                    ease: [0.455, 0.03, 0.515, 0.955],
+                  }}
+                  className="text-h4"
                 >
                   {linkLabel}
                 </motion.span>
@@ -142,7 +158,9 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
                     initial: { opacity: 0, x: '50%' },
                     hover: { opacity: 1, x: 0 },
                   }}
-                  transition={{ duration: 0.5, type: 'spring' }}
+                  transition={{
+                    ease: [0.455, 0.03, 0.515, 0.955],
+                  }}
                 >
                   <ArrowRight className="size-8 rtl:rotate-180" />
                 </motion.span>

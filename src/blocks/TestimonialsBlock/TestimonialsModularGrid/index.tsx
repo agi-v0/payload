@@ -30,7 +30,7 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
   const gridItems = testimonials.map((testimonial, index) => {
     // Get the pattern for the current index
     const pattern = cellPatterns[index % cellPatterns.length]
-    let assignedType = pattern.type as 'quote' | 'image' | 'stat' | 'logo'
+    const assignedType = pattern.type as 'quote' | 'image' | 'stat' | 'logo'
     const sizeClasses = pattern.classes
 
     return {
@@ -50,7 +50,7 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
 
             // Theme V: Background, Radius (Padding removed)
             const baseClasses =
-              'bg-background-light flex flex-col justify-between overflow-hidden rounded-space-sm'
+              'bg-background-neutral flex flex-col justify-between overflow-hidden rounded-space-sm'
             // Apply size classes and conditionally add padding
             const itemClasses = cn(
               baseClasses,

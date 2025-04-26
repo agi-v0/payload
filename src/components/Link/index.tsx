@@ -5,7 +5,7 @@ import { Link } from '@/i18n/routing'
 import React from 'react'
 
 import type { Page, Post } from '@/payload-types'
-import { ArrowLeft } from 'lucide-react'
+import { DynamicIcon } from 'lucide-react/dynamic'
 
 export type CMSLinkType = {
   variant?: 'inline' | ButtonProps['variant'] | null
@@ -21,6 +21,7 @@ export type CMSLinkType = {
   size?: ButtonProps['size'] | null
   type?: 'custom' | 'reference' | null
   url?: string | null
+  icon?: string | null
 }
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
@@ -35,6 +36,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     reference,
     size: sizeFromProps,
     url,
+    icon,
   } = props
 
   // console.log('reference ', reference)
@@ -63,6 +65,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   return (
     <Button asChild className={className} size={size} variant={variant} color={color || 'neutral'}>
       <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+        {icon && <DynamicIcon name={icon as any} className="size-3" />}
         {label && label}
         {children && children}
       </Link>

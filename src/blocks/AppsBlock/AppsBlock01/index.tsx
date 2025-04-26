@@ -5,8 +5,6 @@ import config from '@payload-config'
 import type { App, AppsBlock as AppsBlockProps } from '@/payload-types'
 import { AppsCarouselClient } from './AppsCarouselClient'
 
-import { ArrowLeftIcon } from 'lucide-react'
-
 interface Props extends AppsBlockProps {}
 
 export const AppsBlock01: React.FC<Props> = async (props) => {
@@ -32,10 +30,12 @@ export const AppsBlock01: React.FC<Props> = async (props) => {
         collection: 'apps',
         locale: 'ar',
         draft: false,
-        limit: 10,
-        overrideAccess: false,
         depth: 2,
-        sort: '-createdAt',
+        where: {
+          id: {
+            in: appIds,
+          },
+        },
       })
 
       fetchedApps = result.docs || []
@@ -48,9 +48,16 @@ export const AppsBlock01: React.FC<Props> = async (props) => {
       fetchError = 'Failed to load app data.'
     }
   } else {
-    // If no apps are referenced, maybe fetch the latest ones as a fallback?
-    // For now, just show an error or empty state.
-    // fetchError = 'No apps selected for this block.'
+    const result = await payload.find({
+      collection: 'apps',
+      locale: 'ar',
+      draft: false,
+      limit: 6,
+      depth: 2,
+      sort: '-createdAt',
+    })
+
+    fetchedApps = result.docs || []
   }
 
   return (

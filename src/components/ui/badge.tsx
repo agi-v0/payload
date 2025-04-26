@@ -3,7 +3,6 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utilities/ui'
 import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
-import type { LucideIcon } from 'lucide-react'
 
 const badgeVariants = cva(
   'focus:ring-ring inline-flex max-w-max items-center gap-1 rounded-md px-1.5 py-1 text-sm font-medium transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none',

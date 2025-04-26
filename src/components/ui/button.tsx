@@ -9,8 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
-        primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        default: 'bg-brand text-base-primary hover:bg-brand/90',
+        primary: 'bg-brand text-base-primary hover:bg-brand/90',
         secondary: 'border-input bg-background hover:bg-accent hover:text-accent-foreground border',
         tertiary: '',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
@@ -24,7 +24,7 @@ const buttonVariants = cva(
       size: {
         clear: '',
         default: 'h-10 px-4 py-2',
-        sm: 'h-9 px-3',
+        sm: 'h-9 px-4 text-sm',
         md: 'h-10 px-4 py-2',
         lg: 'h-12 px-5 [&_svg]:size-6',
         icon: 'h-10 w-10',
@@ -34,7 +34,7 @@ const buttonVariants = cva(
       {
         color: 'brand',
         variant: 'primary',
-        className: 'bg-brand hover:bg-brand/90 text-white',
+        className: 'bg-brand hover:bg-brand/90 text-inverted-primary',
       },
       {
         color: 'brand',
@@ -59,7 +59,7 @@ const buttonVariants = cva(
       {
         color: 'neutral',
         variant: 'primary',
-        className: 'bg-neutral hover:bg-neutral/90 text-white',
+        className: 'bg-neutral hover:bg-neutral/90 text-inverted-primary',
       },
       {
         color: 'neutral',

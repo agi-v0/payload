@@ -11,12 +11,14 @@ import { BlockHeader } from '@/blocks/BlockHeader'
 import { BlockHeaderType } from '@/types/blockHeader'
 import { RenderAppsBlock } from './AppsBlock/RenderAppsBlock'
 import { RenderTestimonialsBlock } from './TestimonialsBlock/RenderTestimonialsBlock'
+import { FaqBlock } from './FaqBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
   apps: RenderAppsBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
+  faqBlock: FaqBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   testimonials: RenderTestimonialsBlock,

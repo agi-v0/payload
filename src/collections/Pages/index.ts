@@ -11,6 +11,7 @@ import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { StyledList } from '@/blocks/StyledList/config'
 import { TestimonialsBlock } from '@/blocks/TestimonialsBlock/config'
+import { GalleryBlock } from '@/blocks/Gallery/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
@@ -24,6 +25,7 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { FaqBlock } from '@/blocks/FaqBlock/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -91,8 +93,9 @@ export const Pages: CollectionConfig<'pages'> = {
                 FormBlock,
                 StyledList,
                 TestimonialsBlock,
-                TestimonialsBlock,
                 Features,
+                FaqBlock,
+                GalleryBlock,
               ],
               required: true,
               localized: true,

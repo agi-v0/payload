@@ -5,5 +5,10 @@
   },
   "TestimonialsBlock": {
     "readMore": "Read story"
+  },
+  "Footer": {
+    "allRightsReserved": "© {year} Marn. All rights reserved.",
+    "termsAndConditions": "Terms & Conditions",
+    "privacyPolicy": "Privacy Policy"
   }
 }

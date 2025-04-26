@@ -24,6 +24,7 @@ import { Testimonials } from './collections/Testimonials'
 
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
+import { FAQ } from './collections/FAQ'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -110,6 +111,7 @@ export default buildConfig({
     MediaCategories,
     Users,
     Testimonials,
+    FAQ,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],

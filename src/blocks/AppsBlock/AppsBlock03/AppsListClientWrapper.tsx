@@ -1,17 +1,15 @@
 'use client'
 
-import React, { useState, useEffect, useCallback, cache } from 'react'
+import React, { useState, useCallback } from 'react'
 import type { App, Media as MediaType } from '@/payload-types'
 import { CMSLink } from '../../../components/Link'
 import { Media } from '@/components/Media'
 import { PaginationControls } from './PaginationControls'
 
-// More simplified PopulatedApp type
-type PopulatedApp = Partial<App> // Start with partial App
+type PopulatedApp = Partial<App>
 
-// Define a simplified PaginatedDocs type for the expected API response shape
 interface AppListData {
-  docs: PopulatedApp[] // Use the simplified app type
+  docs: PopulatedApp[]
   totalDocs: number
   limit: number
   totalPages: number
@@ -65,7 +63,7 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
       {appsData.docs.map(({ name, tagline, icon, link }, index) => (
         <CMSLink
           {...link}
-          key={index}
+          key={name}
           label={null}
           className="px-space-xs hover:bg-background-light flex h-fit w-full flex-row items-center justify-start gap-4 rounded-3xl whitespace-normal transition-colors"
         >
@@ -74,7 +72,7 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
             <Media
               priority
               resource={icon as MediaType}
-              className="size-12 flex-none rounded-lg object-cover"
+              className="size-12 flex-none overflow-hidden rounded-lg"
             /> // Cast icon
           )}
           <div className="flex w-full flex-col py-4">

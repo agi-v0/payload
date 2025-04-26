@@ -1,0 +1,50 @@
+@import '@payloadcms/ui/scss';
+
+.app-preview-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: var(--base);
+  padding-bottom: var(--base);
+  margin-bottom: var(--base); // Add margin below the component
+  border-bottom: 1px solid var(--theme-elevation-100); // Add a subtle bottom border as divider
+
+  &[data-rtl='true'] {
+    justify-content: end;
+    text-align: right;
+    flex-direction: row-reverse;
+  }
+  &__icon {
+    width: 96px;
+    height: 96px;
+    aspect-ratio: 1/1;
+    border-radius: var(--style-radius-m);
+    object-fit: cover;
+
+    &--placeholder {
+      width: 96px;
+      height: 96px;
+      aspect-ratio: 1/1;
+      background-color: var(--theme-elevation-100);
+      color: var(--theme-text-secondary);
+      border-radius: var(--style-radius-m);
+    }
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &__name {
+    font-size: var(--step-2);
+    font-weight: 600;
+    margin-bottom: calc(var(--base) / 4);
+    color: var(--theme-text);
+  }
+  &__tagline {
+    font-size: var(--step--1);
+    color: var(--theme-text-secondary);
+    line-height: 1.4;
+  }
+}
