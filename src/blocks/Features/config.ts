@@ -5,6 +5,7 @@ import {
   HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
+  BlocksFeature,
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'
@@ -12,14 +13,15 @@ import { blockHeader } from '@/blocks/BlockHeader/config'
 import { badge } from '@/fields/badge'
 import { iconPickerField } from '@/fields/iconPickerField'
 import lucideIcons from '@/fields/iconPickerField/lucide-icons.json'
+import { StyledList } from '@/blocks/StyledList/config'
 
 const richTextEditor = lexicalEditor({
   features: ({ rootFeatures }) => {
     return [
       ...rootFeatures,
-      HeadingFeature({ enabledHeadingSizes: ['h3', 'h4'] }),
       FixedToolbarFeature(),
       InlineToolbarFeature(),
+      BlocksFeature({ blocks: [StyledList] }),
     ]
   },
 })
@@ -67,7 +69,8 @@ export const Features: Block = {
       relationTo: 'media',
       label: 'Image',
       admin: {
-        condition: (_, siblingData, { blockData }) => ['06', '07'].includes(blockData?.layout),
+        condition: (_, siblingData, { blockData }) =>
+          ['04', '06', '07'].includes(blockData?.layout),
       },
     },
     {
@@ -191,6 +194,7 @@ export const Features: Block = {
               ].includes(blockData?.layout),
           },
         },
+
         {
           name: 'tabLabel',
           type: 'text',
@@ -220,6 +224,19 @@ export const Features: Block = {
               name: 'copy',
               type: 'textarea',
               label: 'Copy',
+              admin: {
+                condition: (_, siblingData, { blockData }) => blockData?.layout !== '05',
+              },
+            },
+            {
+              name: 'featuresRichText',
+              label: false,
+              type: 'richText',
+              editor: richTextEditor,
+              localized: true,
+              admin: {
+                condition: (_, siblingData, { blockData }) => ['05'].includes(blockData?.layout),
+              },
             },
           ],
         },
@@ -270,6 +287,9 @@ export const Features: Block = {
           },
         },
       ],
+      admin: {
+        condition: (_, siblingData, { blockData }) => blockData?.layout !== '04',
+      },
     },
   ],
 }

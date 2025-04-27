@@ -1457,6 +1457,21 @@ export interface FeaturesBlock {
         content: {
           title: string;
           copy?: string | null;
+          featuresRichText?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
         };
         enableBadge?: boolean | null;
         enableCta?: boolean | null;
@@ -2409,6 +2424,7 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
           | {
               title?: T;
               copy?: T;
+              featuresRichText?: T;
             };
         enableBadge?: T;
         enableCta?: T;
