@@ -4,7 +4,7 @@ import { cn } from '@/utilities/ui'
 import { Link } from '@/i18n/routing'
 import React from 'react'
 
-import type { Page, Post } from '@/payload-types'
+import type { Page, Post, Solution } from '@/payload-types'
 import { DynamicIcon } from 'lucide-react/dynamic'
 
 export type CMSLinkType = {
@@ -15,8 +15,8 @@ export type CMSLinkType = {
   label?: string | null
   newTab?: boolean | null
   reference?: {
-    relationTo: 'pages' | 'posts'
-    value: Page | Post | string | number
+    relationTo: 'pages' | 'posts' | 'solutions'
+    value: Page | Post | Solution | string | number
   } | null
   size?: ButtonProps['size'] | null
   type?: 'custom' | 'reference' | null
