@@ -14,6 +14,8 @@ import Logo from '@/components/ui/logo'
 // Assuming DesktopNav and MobileNav will be refactored similarly
 import { DesktopNav } from './DesktopNav'
 import { MobileNav } from './MobileNav'
+import { motion } from 'motion/react'
+import { AnimatePresence } from 'motion/react'
 
 export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
@@ -74,15 +76,24 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
       {/* Conditionally rendered Mobile Nav Dropdown */}
       {/* Animate presence will be added later with framer-motion */}
       {isMobileNavOpen && (
-        <div
-          id="mobile-nav-content" // For aria-controls
-          className={cn(
-            'bg-background absolute inset-x-4 top-full z-40 my-4 rounded-2xl border md:hidden',
-            'animate-in slide-in-from-top-4 duration-300 ease-out',
-          )}
-        >
-          <MobileNav cta={cta} tabs={tabs} onLinkClick={() => setIsMobileNavOpen(false)} />
-        </div>
+        <AnimatePresence>
+          <motion.div
+            key="mobile-nav-content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className={cn(
+              // Remove island styles: absolute inset-x-4 top-full my-4 rounded-2xl border
+              // Add full-screen styles: fixed top-[var(--header-height)] inset-x-0 bottom-0
+              'bg-background-neutral fixed inset-x-0 top-[var(--header-height)] bottom-0 z-40 overflow-y-auto md:hidden',
+              // Remove animation for now, can be added back later
+              // 'animate-in slide-in-from-top-4 duration-300 ease-out',
+            )}
+          >
+            <MobileNav cta={cta} tabs={tabs} onLinkClick={() => setIsMobileNavOpen(false)} />
+          </motion.div>
+        </AnimatePresence>
       )}
     </header>
   )
