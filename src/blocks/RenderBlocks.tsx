@@ -50,7 +50,7 @@ export const RenderBlocks: React.FC<{
         }
 
         return (
-          <div className="" key={index}>
+          <div className="bg-background" key={index}>
             {blockHeader && (
               <BlockHeader {...blockHeader} blockName={block.blockName} className="" />
             )}

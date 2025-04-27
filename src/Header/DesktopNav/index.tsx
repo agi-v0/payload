@@ -12,13 +12,14 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
+import Image from 'next/image'
 import { CMSLink } from '@/components/Link'
 import type { Header as HeaderType } from '@/payload-types'
-import { Button } from '@/components/ui/button'
 import RichText from '@/components/RichText'
-import { ChevronDown, ChevronLeft } from 'lucide-react'
 import { DynamicIcon } from 'lucide-react/dynamic'
 import MarnIcon from '@/components/ui/marn-icon'
+import { CaretLeft } from '@/icons/caret-left-filled'
+
 interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
   className?: string
 }
@@ -34,88 +35,89 @@ interface ListItemProps {
   featuredLink?: NavItem['featuredLink']
   listLinks?: NavItem['listLinks']
   id?: string | null
-  // Add other props passed down if necessary, e.g., from spread
   [key: string]: any // Allow other props temporarily
 }
 
 export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
   const validTabs = tabs || []
   return (
-    <div id="parent" className={cn('grid w-full', className)}>
-      <NavigationMenu className="col-span-6" dir="rtl">
-        <NavigationMenuList>
-          {validTabs.map((tab, i) => {
-            if (tab.enableDropdown) {
-              return (
-                <NavigationMenuItem key={i + 'dropdown'}>
-                  {tab.enableDirectLink && tab.link ? (
-                    <NavigationMenuTrigger className="rounded-full">
-                      <CMSLink {...tab.link} variant="inline" className={'group'}>
+    <div id="parent" className={cn('', className)}>
+      <div className="px-space-site absolute start-0 end-0 w-full">
+        <NavigationMenu className="" dir="rtl">
+          <NavigationMenuList className="space-x-0">
+            {validTabs.map((tab, i) => {
+              if (tab.enableDropdown) {
+                return (
+                  <NavigationMenuItem key={i + 'dropdown'}>
+                    {tab.enableDirectLink && tab.link ? (
+                      <NavigationMenuTrigger className="rounded-full">
+                        <CMSLink {...tab.link} variant="inline" className={'group'}>
+                          {tab.label}
+                        </CMSLink>
+                      </NavigationMenuTrigger>
+                    ) : (
+                      <NavigationMenuTrigger className="rounded-full">
                         {tab.label}
-                      </CMSLink>
-                    </NavigationMenuTrigger>
-                  ) : (
-                    <NavigationMenuTrigger className="rounded-full">
-                      {tab.label}
-                    </NavigationMenuTrigger>
-                  )}
-                  <NavigationMenuContent>
-                    <ul
-                      className="grid w-[400px] gap-4 p-4 md:w-full md:grid-cols-2 lg:w-full lg:grid-cols-[repeat(var(--lgColumns),minmax(332px,1fr))]"
-                      style={
+                      </NavigationMenuTrigger>
+                    )}
+                    <NavigationMenuContent>
+                      <ul
+                        className="olg:grid-cols-[repeat(var(--lgColumns),minmax(332px,1fr))] grid w-[400px] gap-4 p-4 md:w-full md:grid-cols-2 lg:w-(--content-width) lg:grid-cols-[var(--lgColumns)]"
+                        style={
+                          {
+                            '--lgColumns': `repeat(${tab.navItems?.length || 1}, minmax(0, 1fr))`,
+                            '--content-width': `${(tab.navItems?.length || 1) * 332 + ((tab.navItems?.length || 1) - 1) * 16 + 32}px`,
+                          } as React.CSSProperties
+                        }
+                      >
                         {
-                          '--lgColumns': `${tab.navItems?.length || 1}`,
-                          '--radix-navigation-menu-viewport-width': `${(tab.navItems?.length || 1) * 332 + ((tab.navItems?.length || 1) - 1) * 16 + 32}px`,
-                        } as React.CSSProperties
-                      }
-                    >
-                      {
-                        (tab.description || tab.descriptionLinks) && null
-                        // <li className="row-span-3 md:col-span-1">
-                        //   {' '}
-                        //   {/* Adjust span based on grid */}
-                        //   <NavigationMenuLink asChild>
-                        //     <a
-                        //       className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline outline-none select-none focus:shadow-md"
-                        //       href={tab.descriptionLinks?.[0]?.link?.url || '#'}
-                        //     >
-                        //       <div className="mt-4 mb-2 text-lg font-medium">{tab.label}</div>
-                        //       <p className="text-base-tertiary text-sm leading-tight">
-                        //         {tab.description}
-                        //       </p>
-                        //     </a>
-                        //   </NavigationMenuLink>
-                        // </li>
-                      }
-                      {tab.navItems?.map((navItem) => (
-                        <li key={navItem.id}>
-                          {/* Use navItem.id as key */}
-                          <ListItem {...navItem} />
-                        </li>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              )
-            }
-            if (tab.enableDirectLink && tab.link) {
-              return (
-                <NavigationMenuItem key={i + 'directLink'}>
-                  <NavigationMenuLink asChild>
-                    <CMSLink
-                      className={cn(navigationMenuTriggerStyle(), 'rounded-full')}
-                      label={tab.label}
-                      {...tab.link}
-                    />
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              )
-            }
-            return null
-          })}
-        </NavigationMenuList>
-      </NavigationMenu>
-      <div className="col-span-2 flex flex-row items-center justify-end gap-2">
+                          (tab.description || tab.descriptionLinks) && null
+                          // <li className="row-span-3 md:col-span-1">
+                          //   {' '}
+                          //   {/* Adjust span based on grid */}
+                          //   <NavigationMenuLink asChild>
+                          //     <a
+                          //       className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline outline-none select-none focus:shadow-md"
+                          //       href={tab.descriptionLinks?.[0]?.link?.url || '#'}
+                          //     >
+                          //       <div className="mt-4 mb-2 text-lg font-medium">{tab.label}</div>
+                          //       <p className="text-base-tertiary text-sm leading-tight">
+                          //         {tab.description}
+                          //       </p>
+                          //     </a>
+                          //   </NavigationMenuLink>
+                          // </li>
+                        }
+                        {tab.navItems?.map((navItem) => (
+                          <li key={navItem.id}>
+                            {/* Use navItem.id as key */}
+                            <ListItem {...navItem} />
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                )
+              }
+              if (tab.enableDirectLink && tab.link) {
+                return (
+                  <NavigationMenuItem key={i + 'directLink'}>
+                    <NavigationMenuLink asChild>
+                      <CMSLink
+                        className={cn(navigationMenuTriggerStyle(), 'rounded-full')}
+                        label={tab.label}
+                        {...tab.link}
+                      />
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                )
+              }
+              return null
+            })}
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+      <div className="flex w-full max-w-54 flex-row items-center justify-end gap-2">
         {cta &&
           cta.map((ctaItem, id) => (
             <CMSLink key={id} {...ctaItem.link} size="sm" color={ctaItem.link.color ?? undefined} />
@@ -161,40 +163,52 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
               </div>
             )}
             <div className="mt-1 flex flex-col gap-0">
-              {listLinks?.links?.map((subLink, i) => (
-                <CMSLink
-                  key={i}
-                  {...subLink.link}
-                  icon={null}
-                  label={null}
-                  className={cn(
-                    navigationMenuTriggerStyle(),
-                    'relative h-fit w-full rounded-xl px-3 text-base transition-all duration-300 hover:px-4 [&_svg]:size-5',
-                  )}
-                >
-                  {subLink.link.icon && (
-                    <div className="group-hover:bg-background-neutral bg-background flex size-10 flex-none items-center justify-center rounded-full">
-                      {subLink.link.icon === 'marn-icon' ? (
-                        <MarnIcon className="text-base-secondary" />
-                      ) : (
-                        <DynamicIcon
-                          name={subLink.link.icon as any}
-                          className="text-base-secondary"
+              {listLinks?.links?.map((subLink, i) => {
+                return (
+                  <CMSLink
+                    key={i}
+                    {...subLink.link}
+                    icon={null}
+                    label={null}
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      'ease-in-out-quad relative h-fit w-full rounded-2xl px-3 text-base transition-all duration-300 hover:px-4 [&_svg]:size-5',
+                    )}
+                  >
+                    {subLink.link.icon && (
+                      <div className="group-hover:bg-background-neutral bg-background flex size-10 flex-none items-center justify-center rounded-full">
+                        {subLink.link.icon === 'marn-icon' ? (
+                          <MarnIcon className="text-base-secondary" />
+                        ) : (
+                          <DynamicIcon
+                            name={subLink.link.icon as any}
+                            className="text-base-secondary"
+                          />
+                        )}
+                      </div>
+                    )}
+                    {subLink.link.type === 'reference' &&
+                      subLink.link.reference?.value?.icon.url && (
+                        <Image
+                          src={subLink.link.reference.value.icon.url}
+                          alt={subLink.link.reference.value.icon.alt}
+                          width={300}
+                          height={300}
+                          className="aspect-square size-10 flex-none rounded-md"
                         />
                       )}
+                    <div className="me-10 flex w-full flex-col justify-start gap-1">
+                      {subLink.link.label}
+                      {(subLink.link.description || subLink.link.reference?.value?.tagline) && (
+                        <p className="text-base-tertiary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
+                          {subLink.link.description || subLink.link.reference?.value?.tagline}
+                        </p>
+                      )}
                     </div>
-                  )}
-                  <div className="flex w-full flex-col justify-start gap-1">
-                    {subLink.link.label}
-                    {subLink.link.description && (
-                      <p className="text-base-tertiary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
-                        {subLink.link.description}
-                      </p>
-                    )}
-                  </div>
-                  <ChevronLeft className="text-base-tertiary group-hover:text-base-secondary absolute end-4 -translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
-                </CMSLink>
-              ))}
+                    <CaretLeft className="text-base-tertiary group-hover:text-base-tertiary absolute end-4 -translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                  </CMSLink>
+                )
+              })}
             </div>
           </div>
         )

@@ -35,10 +35,10 @@ export const Solutions: CollectionConfig<'solutions'> = {
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
   // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'pages'>
   defaultPopulate: {
-    icon: true,
     tagline: true,
     link: true,
     slug: true,
+    icon: true,
   },
   admin: {
     defaultColumns: ['icon', 'name', 'tagline', 'ecosystem', 'updatedAt'],

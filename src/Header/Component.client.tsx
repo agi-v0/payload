@@ -47,18 +47,16 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
       )}
     >
       {/* Main container with flex layout */}
-      <div className="container grid h-[var(--header-height)] grid-cols-4 items-center justify-between lg:grid-cols-10">
-        <Link href="/" className="col-span-2 flex-shrink-0">
-          <Logo className="text-base-primary h-5 w-auto" />
-        </Link>
+      <div className="relative container flex h-[var(--header-height)] flex-row items-center justify-between">
+        <div className="w-full max-w-54">
+          <Link href="/" className="flex-shrink-0">
+            <Logo className="text-base-secondary h-5 w-auto" />
+          </Link>
+        </div>
 
-        <DesktopNav
-          cta={cta}
-          tabs={tabs}
-          className="col-span-8 hidden lg:grid lg:w-full lg:grid-cols-subgrid"
-        />
+        <DesktopNav cta={cta} tabs={tabs} className="hidden lg:flex lg:w-full lg:justify-end" />
 
-        <div className="col-span-2 flex flex-shrink-0 justify-end lg:hidden">
+        <div className="flex flex-shrink-0 justify-end lg:hidden">
           <Button
             variant="secondary"
             size="icon"

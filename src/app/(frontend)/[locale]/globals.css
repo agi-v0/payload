@@ -72,7 +72,7 @@
   --chart-5: hsl(27 87% 67%);
   --radius: 0.6rem;
 
-  --brand: oklch(54.38% 0.191 267.01);
+  --brand: var(--color-marn-500);
   --neutral: var(--color-neutral-950);
   /* use for background */
   --background: var(--color-neutral-50);
@@ -214,6 +214,18 @@
   --spacing-md: clamp(1rem, 0.858rem + 0.71vw, 1.5rem);
   --spacing-sm: clamp(0.5rem, 0.358rem + 0.71vw, 1rem);
 
+  --color-marn-50: #eef1fc;
+  --color-marn-100: #d8dff8;
+  --color-marn-200: #b1c0f1;
+  --color-marn-300: #8aa0ea;
+  --color-marn-400: #6381e3;
+  --color-marn-500: #3e63dd;
+  --color-marn-600: #254dd0;
+  --color-marn-700: #1f42b2;
+  --color-marn-800: #1a3693;
+  --color-marn-900: #152b75;
+  --color-marn-950: #122668;
+
   --color-tomato-50: #fdf0ed;
   --color-tomato-100: #fae0db;
   --color-tomato-200: #f7c5bb;
@@ -258,6 +270,8 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar-background);
+
+  --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
