@@ -39,7 +39,7 @@ const buttonVariants = cva(
       {
         color: 'brand',
         variant: 'secondary',
-        className: 'hover:bg-background-light bg-background text-base-primary border-input',
+        className: 'hover:bg-background-neutral text-base-secondary border-input bg-transparent',
       },
       {
         color: 'brand',
@@ -64,7 +64,7 @@ const buttonVariants = cva(
       {
         color: 'neutral',
         variant: 'secondary',
-        className: 'hover:bg-background-light bg-background text-base-primary border-input',
+        className: 'hover:bg-background-neutral text-base-secondary border-input bg-transparent',
       },
       {
         color: 'neutral',

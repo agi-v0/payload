@@ -22,6 +22,7 @@ export type CMSLinkType = {
   type?: 'custom' | 'reference' | null
   url?: string | null
   icon?: string | null
+  onClick?: () => void
 }
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {

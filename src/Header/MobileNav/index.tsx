@@ -11,6 +11,14 @@ import type { Header as HeaderType } from '@/payload-types'
 import { Button } from '@/components/ui/button' // Import Button for Back button
 import { DynamicIcon } from 'lucide-react/dynamic'
 import MarnIcon from '@/components/ui/marn-icon'
+import { cva } from 'class-variance-authority'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/motion-ui/accordion'
+import { CaretLeft } from '@/icons/caret-left-filled'
 
 // Define the type for a single nav item from HeaderType
 type NavItem = NonNullable<NonNullable<HeaderType['tabs']>[number]['navItems']>[number]
@@ -31,10 +39,13 @@ interface MobileNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdA
   onLinkClick?: () => void // Callback to close sheet on link click
 }
 
+const navigationMenuTriggerStyle = cva(
+  'focus:text-base-primary data-[closed]:text-base-secondary inline-flex w-full items-center justify-start gap-2 bg-transparent py-4 text-(length:--text-h3) font-medium text-(color:--color-base-secondary) transition-colors group-data-[expanded]:text-(color:--color-base-primary) hover:text-(color:--color-base-primary) focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-transparent data-[state=open]:focus:bg-transparent',
+)
+
 export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
   const validTabs = tabs || []
   const pathname = usePathname()
-  const [activeSubmenuIndex, setActiveSubmenuIndex] = React.useState<number | null>(null)
 
   const handleLinkClick = () => {
     if (onLinkClick) {
@@ -42,114 +53,64 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
     }
   }
 
-  const handleBackClick = () => {
-    setActiveSubmenuIndex(null)
+  const handleDirectLinkClick = () => {
+    handleLinkClick() // Close sheet for direct links
+    // Navigation is handled by CMSLink
   }
-
-  const handleTabClick = (index: number, tab: Tab) => {
-    if (tab.enableDropdown) {
-      setActiveSubmenuIndex(index)
-    } else if (tab.enableDirectLink && tab.link) {
-      handleLinkClick() // Close sheet for direct links
-      // Navigation is handled by CMSLink
-    }
-  }
-
-  const activeTab = activeSubmenuIndex !== null ? validTabs[activeSubmenuIndex] : null
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full w-full flex-col">
       {/* NEW: Scrollable wrapper for menu content */}
-      <div className="flex-grow overflow-y-auto pb-20">
-        {' '}
+      <div className="p-space-site flex-grow overflow-y-auto pb-20">
         {/* Added pb-20 for CTA spacing */}
-        {/* Conditional Rendering for Main Menu or Submenu */}
-        {activeTab && activeTab.enableDropdown ? (
-          /* Submenu View */
-          <div className="flex flex-col">
-            <div className="flex items-center border-b px-4 py-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                color="neutral"
-                className="-ms-2 px-2"
-                onClick={handleBackClick}
-                aria-label="Go back to main menu"
-              >
-                <ChevronLeft className="h-5 w-5 rtl:rotate-180" />
-              </Button>
-              <h3 className="ml-4 text-base font-semibold">{activeTab.label}</h3>
-            </div>
-            <nav className="space-y-1 px-4 py-4">
-              {/* Render Description Links First */}
-              {activeTab.descriptionLinks?.map((descLink, descIdx) => (
-                <div
-                  key={`desc-${descIdx}`}
-                  onClick={handleLinkClick}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => e.key === 'Enter' && handleLinkClick()}
-                >
-                  <CMSLink
-                    {...descLink.link}
-                    className="text-foreground hover:bg-accent hover:text-accent-foreground -mx-2 block rounded-md px-2 py-1.5 text-sm font-medium"
-                  />
-                </div>
-              ))}
-              {/* Render Nav Items */}
-              {activeTab.navItems?.map((navItem) => (
-                <MobileNavItem key={navItem.id} item={navItem} onClick={handleLinkClick} />
-              ))}
-            </nav>
-          </div>
-        ) : (
-          /* Main Menu View */
-          <nav className="space-y-1 px-2 py-4">
-            {validTabs.map((tab, i) => {
-              // --- Dropdown Tab (renders as a clickable item) ---
-              if (tab.enableDropdown) {
-                return (
-                  <button
-                    key={i}
-                    onClick={() => handleTabClick(i, tab)}
-                    className={cn(
-                      'text-foreground hover:bg-accent hover:text-accent-foreground flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium',
-                    )}
-                  >
+        {/* Main Menu View using Accordion */}
+        <Accordion
+          className="flex w-full flex-col divide-y divide-neutral-200"
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
+        >
+          {validTabs.map((tab, i) => {
+            // --- Dropdown Tab (renders as AccordionItem) ---
+            if (tab.enableDropdown) {
+              return (
+                <AccordionItem value={`item-${i}`} key={i}>
+                  <AccordionTrigger className={cn(navigationMenuTriggerStyle(), '')}>
                     <span>{tab.label}</span>
-                  </button>
-                )
-              }
-              // --- Direct Link Tab ---
-              if (tab.enableDirectLink && tab.link) {
-                return (
-                  <div
-                    key={i}
-                    onClick={handleLinkClick}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => e.key === 'Enter' && handleLinkClick()}
-                  >
-                    <CMSLink
-                      {...tab.link}
-                      label={tab.label}
-                      className={cn(
-                        'text-foreground hover:bg-accent hover:text-accent-foreground block rounded-md px-3 py-2 text-base font-medium',
-                        pathname === tab.link.url && 'bg-accent',
-                      )}
-                    />
-                  </div>
-                )
-              }
-              return null
-            })}
-          </nav>
-        )}
-      </div>{' '}
+                    <CaretLeft className="size-4 -rotate-90 transition-transform duration-200 group-data-[expanded]:rotate-90" />
+                  </AccordionTrigger>
+                  <AccordionContent className="">
+                    <nav className="space-y-4 pb-4">
+                      {tab.navItems?.map((navItem) => (
+                        <MobileNavItem key={navItem.id} item={navItem} onClick={handleLinkClick} />
+                      ))}
+                    </nav>
+                  </AccordionContent>
+                </AccordionItem>
+              )
+            }
+            // --- Direct Link Tab ---
+            if (tab.enableDirectLink && tab.link) {
+              return (
+                <CMSLink
+                  key={i}
+                  onClick={handleDirectLinkClick}
+                  {...tab.link}
+                  label={tab.label}
+                  variant="inline"
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    'text-base-secondary text-(length:--text-h3)',
+                  )}
+                />
+              )
+            }
+            return null
+          })}
+        </Accordion>
+      </div>
       {/* End Scrollable wrapper */}
       {/* Always render CTA Button at the bottom, pushed by mt-auto */}
       {cta && (
-        <div className="mt-auto space-y-2 border-t p-4">
+        <div className="p-space-site mt-auto space-y-2">
           {cta.map((ctaItem, i) => (
             <div
               onClick={handleLinkClick}
@@ -181,14 +142,14 @@ interface MobileNavItemProps {
 function MobileNavItem({ item, onClick }: MobileNavItemProps) {
   // Base class for all nav items in the submenu for consistent padding/hover
   const baseItemClasses =
-    'text-muted-foreground hover:bg-accent hover:text-accent-foreground block rounded-md py-1 text-sm -mx-2 px-2' // Added negative margin and padding
+    'text-base-secondary h-fit hover:bg-background-neutral-subtle hover:text-base-primary block rounded-space-sm py-2 text-(length:--text-body-md) px-3'
 
   switch (item.style) {
     case 'featured':
       return (
-        <div className="py-1">
+        <div className="">
           {item.featuredLink?.tag && (
-            <div className="text-muted-foreground mb-1 px-2 text-xs font-semibold">
+            <div className="text-base-tertiary mx-3 mb-2 text-sm font-normal">
               {item.featuredLink.tag}
             </div>
           )}
@@ -209,18 +170,16 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
       )
     case 'list':
       return (
-        <div className="py-1">
+        <div className="space-y-2">
           {item.listLinks?.tag && (
-            <div className="text-muted-foreground mb-1 px-3 text-xs font-semibold">
+            <div className="text-base-tertiary mx-3 mb-2 text-sm font-normal">
               {item.listLinks.tag}
             </div>
           )}
           {item.listLinks?.links?.map((subLink, i) => {
-            // --- Type Guard Setup --- START
             const referenceValue = subLink.link.reference?.value
             const isReferenceObject =
               referenceValue && typeof referenceValue === 'object' && !Array.isArray(referenceValue)
-            // --- Type Guard Setup --- END
 
             return (
               <div
@@ -236,13 +195,13 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                   icon={undefined}
                   className={cn(
                     baseItemClasses,
-                    'group flex items-center justify-start gap-3', // Use flex, add gap
+                    'group flex items-center justify-start gap-2', // Use flex, add gap
                   )}
                 >
                   {/* Icon/Image Rendering */}
                   {(subLink.link.icon ||
                     (isReferenceObject && 'icon' in referenceValue && referenceValue.icon)) && (
-                    <div className="group-hover:bg-background-neutral bg-background flex size-10 flex-none items-center justify-center rounded-full">
+                    <div className="group-hover:bg-background-neutral bg-background flex size-10 flex-none items-center justify-center rounded-full [&_svg]:size-4">
                       {subLink.link.icon ? (
                         subLink.link.icon === 'marn-icon' ? (
                           <MarnIcon className="text-base-secondary" />
@@ -269,14 +228,12 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                   )}
                   {/* Text Content (with type safety for tagline) */}
                   <div className="flex-grow space-y-1">
-                    <div className="text-foreground text-sm leading-none font-medium">
-                      {subLink.link.label}
-                    </div>
+                    {subLink.link.label}
                     {(subLink.link.description ||
                       (isReferenceObject &&
                         'tagline' in referenceValue &&
                         referenceValue.tagline)) && (
-                      <p className="text-muted-foreground line-clamp-2 text-sm leading-snug font-normal">
+                      <p className="text-base-secondary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
                         {subLink.link.description ||
                           (isReferenceObject && 'tagline' in referenceValue
                             ? referenceValue.tagline
