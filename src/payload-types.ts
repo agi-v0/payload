@@ -1623,29 +1623,40 @@ export interface FeaturesBlock {
   columns?:
     | {
         size?: ('half' | 'full' | 'oneThird' | 'twoThirds') | null;
-        appReference?: (number | null) | App;
+        appReference?:
+          | ({
+              relationTo: 'solutions';
+              value: number | Solution;
+            } | null)
+          | ({
+              relationTo: 'apps';
+              value: number | App;
+            } | null);
         image?: (number | null) | Media;
-        tabLabel?: string | null;
-        icon?: string | null;
-        content: {
-          title: string;
-          copy?: string | null;
-          featuresRichText?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
+        tab?: {
+          tabLabel?: string | null;
+          tabIcon?: string | null;
         };
+        icon?: string | null;
+        content?: {
+          title: string;
+          subtitle?: string | null;
+        };
+        richTextContent?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
         enableBadge?: boolean | null;
         enableCta?: boolean | null;
         badge?: {
@@ -1689,6 +1700,7 @@ export interface FeaturesBlock {
         id?: string | null;
       }[]
     | null;
+  locale?: ('en' | 'ar') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'features';
@@ -2650,15 +2662,20 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
         size?: T;
         appReference?: T;
         image?: T;
-        tabLabel?: T;
+        tab?:
+          | T
+          | {
+              tabLabel?: T;
+              tabIcon?: T;
+            };
         icon?: T;
         content?:
           | T
           | {
               title?: T;
-              copy?: T;
-              featuresRichText?: T;
+              subtitle?: T;
             };
+        richTextContent?: T;
         enableBadge?: T;
         enableCta?: T;
         badge?:
@@ -2682,6 +2699,7 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  locale?: T;
   id?: T;
   blockName?: T;
 }

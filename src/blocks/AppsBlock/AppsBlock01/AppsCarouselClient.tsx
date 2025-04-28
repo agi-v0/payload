@@ -26,17 +26,17 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
 
   return (
     // Use background variable and explicit rounding from Figma
-    <div className="bg-background-neutral rounded-space-md flex flex-col overflow-hidden lg:flex-row">
+    <div className="bg-background-neutral rounded-space-sm flex flex-col overflow-hidden lg:flex-row">
       {/* Content Section */}
-      <div className="p-space-md flex w-full flex-col justify-between text-start">
-        <div className="gap-space-sm flex flex-col items-start justify-start">
+      <div className="p-md flex w-full flex-col justify-between text-start">
+        <div className="gap-sm flex flex-col items-start justify-start">
           {/* App Badge (Icon + Name) */}
-          <div className="gap-space-xs flex items-center justify-end">
+          <div className="gap-xs flex items-center justify-end">
             {icon && <Media resource={icon} className="size-16 overflow-hidden rounded-xl" />}
             {name && <span className="text-h3 text-base-secondary font-medium">{name}</span>}
           </div>
           {/* Title and Description */}
-          <div className="gap-space-xs flex flex-col">
+          <div className="gap-xs flex flex-col">
             {tagline && <h3 className="text-h3 text-base-primary font-medium">{tagline}</h3>}
             {/* Render overview using RichText component with `data` prop */}
             {overview && (
@@ -67,7 +67,7 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
       {gallery && gallery.length > 0 && (
         <Media
           resource={gallery[0]}
-          className="bg-background-neutral p-space-xs aspect-[4/3] h-auto w-full flex-shrink-0 lg:w-1/2"
+          className="bg-background-neutral p-xs aspect-[4/3] h-auto w-full flex-shrink-0 lg:w-1/2"
           imgClassName="rounded-space-sm"
         />
       )}

@@ -9,7 +9,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'
-import { blockHeader } from '@/blocks/BlockHeader/config'
+import { blockHeader } from '@/components/BlockHeader/config'
 import { badge } from '@/fields/badge'
 import { iconPickerField } from '@/fields/iconPickerField'
 import lucideIcons from '@/fields/iconPickerField/lucide-icons.json'
@@ -21,6 +21,7 @@ const richTextEditor = lexicalEditor({
       ...rootFeatures,
       FixedToolbarFeature(),
       InlineToolbarFeature(),
+      HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
       BlocksFeature({ blocks: [StyledList] }),
     ]
   },
@@ -107,62 +108,14 @@ export const Features: Block = {
           options: sizeOptions,
           admin: {
             condition: (_, siblingData, { blockData }) => {
-              return ['01', '02', '03', '04', '05'].includes(blockData?.layout)
+              return ['01', '02', '03', '05'].includes(blockData?.layout)
             },
-          },
-          validate: (
-            value: any,
-            { data, path }: { data?: Record<string, any>; path?: (string | number)[] },
-          ) => {
-            // --- Debugging ---
-            console.log('--- Features Block: size field validation ---')
-            console.log('Path:', path)
-            console.log('Value:', value)
-            console.log('Layout:', data?.layout)
-            console.log('Columns Data:', JSON.stringify(data?.columns, null, 2))
-            // --- End Debugging ---
-
-            // Only apply this validation for specific layouts where 'size' is relevant
-            if (!['01', '02', '03', '04', '05'].includes(data?.layout)) {
-              console.log('Skipping validation: Layout not relevant')
-              return true // Skip validation for other layouts
-            }
-
-            // Extract index from path array (e.g., ['columns', 0, 'size'] -> index is path[1])
-            const currentIndex =
-              Array.isArray(path) && path.length > 1 && typeof path[1] === 'number' ? path[1] : -1
-            console.log('Extracted Index:', currentIndex)
-
-            // Ensure we have valid data and index
-            const columns = data?.columns
-            if (
-              !Array.isArray(columns) ||
-              currentIndex === -1 ||
-              currentIndex >= columns.length - 1
-            ) {
-              // Not enough data, couldn't find index, or it's the last item (no next item to check)
-              console.log('Skipping validation: Invalid data, index, or last item')
-              return true
-            }
-
-            // Check the condition: current item is 'half' but the next one is not 'half'
-            const nextItem = columns[currentIndex + 1]
-            console.log('Current Item Size:', value)
-            console.log('Next Item Size:', nextItem?.size)
-
-            if (value === 'half' && nextItem?.size !== 'half') {
-              console.log('Validation FAILED: Half size mismatch')
-              return 'A column with size "Half" must be followed by another column with size "Half".'
-            }
-
-            console.log('Validation PASSED')
-            return true // Validation passes
           },
         },
         {
           name: 'appReference',
           type: 'relationship',
-          relationTo: 'apps',
+          relationTo: ['solutions', 'apps'],
           label: 'App Reference',
           admin: {
             condition: (_, siblingData, { blockData }) => {
@@ -194,11 +147,28 @@ export const Features: Block = {
               ].includes(blockData?.layout),
           },
         },
-
         {
-          name: 'tabLabel',
-          type: 'text',
-          label: 'Tab Label',
+          type: 'group',
+          label: false,
+          name: 'tab',
+          fields: [
+            {
+              name: 'tabLabel',
+              type: 'text',
+              label: 'Tab Label',
+              admin: {
+                width: '50%',
+              },
+            },
+            iconPickerField({
+              name: 'tabIcon',
+              label: 'Icon',
+              icons: lucideIcons,
+              admin: {
+                width: '50%',
+              },
+            }),
+          ],
           admin: {
             condition: (_, siblingData, { blockData }) => ['08'].includes(blockData?.layout),
           },
@@ -216,31 +186,31 @@ export const Features: Block = {
 
         {
           type: 'group',
-          label: 'Content',
+          label: false,
           name: 'content',
           fields: [
             { name: 'title', type: 'text', label: 'Title', required: true },
             {
-              name: 'copy',
+              name: 'subtitle',
               type: 'textarea',
-              label: 'Copy',
-              admin: {
-                condition: (_, siblingData, { blockData }) => blockData?.layout !== '05',
-              },
-            },
-            {
-              name: 'featuresRichText',
-              label: false,
-              type: 'richText',
-              editor: richTextEditor,
-              localized: true,
-              admin: {
-                condition: (_, siblingData, { blockData }) => ['05'].includes(blockData?.layout),
-              },
+              label: 'Subtitle',
             },
           ],
+          admin: {
+            condition: (_, siblingData, { blockData }) =>
+              !['01', '03', '04', '05'].includes(blockData?.layout),
+          },
         },
-
+        {
+          name: 'richTextContent',
+          label: 'Content',
+          type: 'richText',
+          editor: richTextEditor,
+          admin: {
+            condition: (_, siblingData, { blockData }) =>
+              ['01', '03', '04', '05'].includes(blockData?.layout),
+          },
+        },
         {
           type: 'row',
           fields: [
@@ -287,8 +257,27 @@ export const Features: Block = {
           },
         },
       ],
+    },
+    {
+      name: 'locale',
+      type: 'select',
       admin: {
-        condition: (_, siblingData, { blockData }) => blockData?.layout !== '04',
+        hidden: true,
+      },
+      options: [
+        { label: 'English', value: 'en' },
+        { label: 'Arabic', value: 'ar' },
+      ],
+      hooks: {
+        beforeValidate: [
+          ({ req, value, data }) => {
+            if (req?.locale) {
+              return req.locale
+            }
+
+            return value || 'en' // Default to English if no locale is found
+          },
+        ],
       },
     },
   ],

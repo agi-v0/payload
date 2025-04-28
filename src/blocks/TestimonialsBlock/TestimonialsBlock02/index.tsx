@@ -43,8 +43,8 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
 
   return (
     <div className="bg-background-neutral rounded-space-sm grid w-full max-w-[90rem] grid-cols-1 md:auto-cols-fr lg:items-stretch">
-      <div className="gap-space-md p-space-md pb-space-xs md:pb-space-md flex w-full flex-col justify-start md:justify-between">
-        <div className="gap-space-sm flex flex-grow flex-col justify-start">
+      <div className="gap-md p-md pb-xs md:pb-md flex w-full flex-col justify-start md:justify-between">
+        <div className="gap-sm flex flex-grow flex-col justify-start">
           {companyLogo && (
             <Media resource={companyLogo} imgClassName="h-8 w-auto opacity-50 dark:invert" />
           )}
@@ -59,7 +59,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
 
         {stats && stats.length > 0 && (
           <div
-            className="border-neutral/10 gap-space-xs pt-space-xs grid w-full grid-cols-2 border-t lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))]"
+            className="border-neutral/10 gap-xs pt-xs grid w-full grid-cols-2 border-t lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))]"
             style={
               {
                 '--cols': stats?.length || 0,
@@ -71,7 +71,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
         )}
         <div className="flex flex-row items-center justify-between">
           {authorInfo && (
-            <div className="gap-space-xs flex flex-row items-center">
+            <div className="gap-xs flex flex-row items-center">
               {authorInfo.avatar && (
                 <Media
                   resource={authorInfo.avatar}
@@ -95,7 +95,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
         </div>
       </div>
       {/* {media && (
-        <div className="p-space-xs flex items-center justify-center">
+        <div className="p-xs flex items-center justify-center">
           <Media
             resource={media}
             fill
@@ -110,7 +110,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
 
 export const TestimonialsBlock02: React.FC<Props> = ({ testimonials }) => {
   return (
-    <section className="bg-background py-space-xl relative container">
+    <section className="bg-background py-xl relative container">
       <Carousel>
         <CarouselContent className="items-stretch">
           {testimonials.map((testimonial, index) => (

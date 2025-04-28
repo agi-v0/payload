@@ -28,7 +28,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
   return (
     <div
       className={cn(
-        'gap-md grid grid-cols-2',
+        'gap-md container grid grid-cols-2',
         type === 'center' ? 'justify-items-center' : '',
         className,
       )}

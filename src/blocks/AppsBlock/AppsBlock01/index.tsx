@@ -61,7 +61,7 @@ export const AppsBlock01: React.FC<Props> = async (props) => {
   }
 
   return (
-    <div className="py-space-lg">
+    <div className="py-lg">
       {fetchError && <p className="container text-center">{fetchError}</p>}
 
       {!fetchError && fetchedApps.length > 0 && <AppsCarouselClient apps={fetchedApps} />}

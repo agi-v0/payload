@@ -40,7 +40,7 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
     }
   })
   return (
-    <section className="py-space-xl md:py-space-2xl lg:py-space-3xl container">
+    <section className="py-xl md:py-2xl lg:py-3xl container">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {gridItems.map(
           ({ id, authorInfo, companyLogo, company, stats, quote, cellType, sizeClasses }) => {
@@ -55,8 +55,8 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
             const itemClasses = cn(
               baseClasses,
               sizeClasses,
-              // Add p-space-md unless it's an image or logo cell
-              cellType !== 'image' ? 'p-space-md' : 'p-0',
+              // Add p-md unless it's an image or logo cell
+              cellType !== 'image' ? 'p-md' : 'p-0',
               cellType === 'quote' ? '' : 'aspect-square h-auto w-full',
             )
 
@@ -71,7 +71,7 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
                         className="text-base-primary text-h4 font-medium"
                       />
                     </div>
-                    <div className="border-base pt-space-sm text-body-sm mt-auto border-t font-medium">
+                    <div className="border-base pt-sm text-body-sm mt-auto border-t font-medium">
                       {authorInfo?.name}
                       {authorInfo?.title && (
                         <span className="text-muted-foreground text-caption block">
@@ -104,7 +104,7 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
                 )}
 
                 {cellType === 'logo' && logo && (
-                  <div className="p-space-md flex h-full w-full flex-col items-center justify-center">
+                  <div className="p-md flex h-full w-full flex-col items-center justify-center">
                     <Media
                       resource={logo}
                       className="w-full"

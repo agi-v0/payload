@@ -3,6 +3,7 @@ import { FeaturesBlock } from '@/payload-types'
 import { Badge } from '@/components/ui/badge'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
+import RichText from '@/components/RichText'
 
 import { CMSLink } from '@/components/Link'
 
@@ -10,29 +11,22 @@ export const Variant03: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
 
   return (
-    <div className="bg-background gap-sm grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
+    <div className="bg-background py-xl gap-md container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
       {columns.map((column, index) => {
-        const { content, image, appReference, size = 'oneThird' } = column
-
-        const lgColSpanClass =
-          size === 'full' ? 'lg:col-span-12' : size === 'half' ? 'lg:col-span-6' : ''
+        const { image, appReference, size = 'oneThird', richTextContent } = column
+        //assign lg:col-span-12 to full width size, and lg:col-span-6 to all other sizes
+        const lgColSpanClass = size === 'full' ? 'lg:col-span-12' : 'lg:col-span-6'
 
         return (
-          <div
-            key={index}
-            className={cn(
-              'rounded-space-md bg-background-neutral p-space-md col-span-4',
-              lgColSpanClass,
-            )}
-          >
+          <div key={index} className={cn('col-span-full', lgColSpanClass)}>
             <div
-              className={cn('gap-md flex flex-col lg:items-center lg:gap-0', {
-                'lg:flex-row': size === 'full', // Adjust layout for full-size columns
+              className={cn('gap-md flex flex-col', {
+                'lg:flex-row lg:items-center lg:justify-start': size === 'full',
               })}
             >
               {image && (
                 <div
-                  className={cn('rounded-space-md overflow-hidden', {
+                  className={cn('rounded-space-sm overflow-hidden', {
                     'lg:basis-1/2': size === 'full', // Adjust width for full-size columns
                     'w-full': size !== 'full', // Full width for non-full-size columns
                   })}
@@ -45,8 +39,8 @@ export const Variant03: React.FC<FeaturesBlock> = ({ columns }) => {
                 </div>
               )}
               <div
-                className={cn('gap-md flex flex-col', {
-                  'lg:ps-space-xl w-full lg:basis-1/2': size === 'full',
+                className={cn('gap-md flex flex-col items-start', {
+                  'lg:ps-xl w-full lg:basis-1/2': size === 'full',
                 })}
               >
                 {column.enableBadge && column.badge && (
@@ -57,16 +51,7 @@ export const Variant03: React.FC<FeaturesBlock> = ({ columns }) => {
                     label={column.badge?.label}
                   />
                 )}
-                {content && (
-                  <div
-                    className={cn('gap-sm flex flex-col', {
-                      'lg:py-space-site': size === 'half',
-                    })}
-                  >
-                    {content.title && <h3 className="text-h3 font-medium">{content.title}</h3>}
-                    {content.copy && <p className="text-body-md">{content.copy}</p>}
-                  </div>
-                )}
+                {richTextContent && <RichText data={richTextContent} />}
                 {column.enableCta && column.link?.label && (
                   <div>
                     <CMSLink {...column.link} />

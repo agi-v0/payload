@@ -8,7 +8,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'
-import { blockHeader } from '@/blocks/BlockHeader/config'
+import { blockHeader } from '@/components/BlockHeader/config'
 import { linkGroup } from '@/fields/linkGroup'
 import { badge } from '@/fields/badge'
 

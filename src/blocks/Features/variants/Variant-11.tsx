@@ -22,11 +22,11 @@ export const Variant11: React.FC<FeaturesBlock> = ({ columns }) => {
         <CarouselNext className="static translate-0 border border-gray-400" />
       </div> */}
       <CarouselNavigation alwaysShow />
-      <CarouselContent className="gap-space-xs">
+      <CarouselContent className="gap-xs">
         {columns.map((column, index) => (
           <CarouselItem key={index} className="h-[540px] md:basis-1/2 lg:basis-1/4">
             <Card className="h-full border border-[#F9FAFB] shadow-none transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
-              <CardContent className="rounded-space-md flex h-full flex-col items-start gap-4 p-4">
+              <CardContent className="rounded-space-sm flex h-full flex-col items-start gap-4 p-4">
                 {column.image && (
                   <div className="rounded-space-xs overflow-hidden">
                     <Media

@@ -61,7 +61,7 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
   return (
     <div className="flex h-full w-full flex-col">
       {/* NEW: Scrollable wrapper for menu content */}
-      <div className="p-space-site flex-grow overflow-y-auto pb-20">
+      <div className="p-site flex-grow overflow-y-auto pb-20">
         {/* Added pb-20 for CTA spacing */}
         {/* Main Menu View using Accordion */}
         <Accordion
@@ -110,7 +110,7 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
       {/* End Scrollable wrapper */}
       {/* Always render CTA Button at the bottom, pushed by mt-auto */}
       {cta && (
-        <div className="p-space-site mt-auto space-y-2">
+        <div className="p-site mt-auto space-y-2">
           {cta.map((ctaItem, i) => (
             <div
               onClick={handleLinkClick}

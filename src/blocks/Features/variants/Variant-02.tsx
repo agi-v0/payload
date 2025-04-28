@@ -20,19 +20,16 @@ export const Variant02: React.FC<FeaturesBlock> = ({ columns }) => {
         return (
           <div
             key={index}
-            className={cn(
-              'rounded-space-md bg-background-neutral p-space-md col-span-4',
-              lgColSpanClass,
-            )}
+            className={cn('rounded-space-sm bg-background-neutral p-md col-span-4', lgColSpanClass)}
           >
             <div
-              className={cn('gap-space-site flex flex-col', {
+              className={cn('gap-site flex flex-col', {
                 'lg:flex-row': size === 'full', // Adjust layout for full-size columns
               })}
             >
               <div
-                className={cn('gap-md flex flex-col', {
-                  'pe-space-md w-full lg:basis-1/2': size === 'full',
+                className={cn('gap- flex flex-col', {
+                  'pe-md w-full lg:basis-1/2': size === 'full',
                 })}
               >
                 {column.enableBadge && column.badge && (
@@ -46,7 +43,7 @@ export const Variant02: React.FC<FeaturesBlock> = ({ columns }) => {
                 {content && (
                   <div className="gap-sm flex grow flex-col">
                     {content.title && <h3 className="text-h3 font-medium">{content.title}</h3>}
-                    {content.copy && <p className="text-body-md">{content.copy}</p>}
+                    {content.subtitle && <p className="text-body-md">{content.subtitle}</p>}
                   </div>
                 )}
                 {column.enableCta && column.link?.label && (
@@ -57,7 +54,7 @@ export const Variant02: React.FC<FeaturesBlock> = ({ columns }) => {
               </div>
               {image && (
                 <div
-                  className={cn('rounded-space-md overflow-hidden', {
+                  className={cn('rounded-space-sm overflow-hidden', {
                     'lg:basis-1/2': size === 'full', // Adjust width for full-size columns
                     'w-full': size !== 'full', // Full width for non-full-size columns
                   })}

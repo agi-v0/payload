@@ -52,9 +52,9 @@ export const TabsVariant: React.FC<FeaturesBlock> = ({ columns }) => {
           {columns.map(({ image, content, badge, link }, index) => (
             <CarouselItem
               key={index}
-              className="bg-background-neutral p-space-md rounded-space-md flex w-full flex-col items-center justify-center gap-4 lg:flex-row"
+              className="bg-background-neutral p-md rounded-space-sm flex w-full flex-col items-center justify-center gap-4 lg:flex-row"
             >
-              <div className="lg:pe-space-md w-full">
+              <div className="lg:pe-md w-full">
                 {badge?.label && <Badge className="mb-4">{badge.label}</Badge>}
                 {/* {content && (
                   <RichText data={content} enableGutter={false} className="mx-0 text-start" />
@@ -62,7 +62,7 @@ export const TabsVariant: React.FC<FeaturesBlock> = ({ columns }) => {
                 {link && <CMSLink {...link} className="mt-4" />}
               </div>
               {image && (
-                <div className={cn('rounded-space-md overflow-hidden', {})}>
+                <div className={cn('rounded-space-sm overflow-hidden', {})}>
                   <Media resource={image} className="aspect-[4/3] h-auto w-full" />
                 </div>
               )}

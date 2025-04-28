@@ -1,4 +1,4 @@
-import { Page, Post } from '@/payload-types'
+import { Page, Post, Solution } from '@/payload-types'
 
 export interface BlockHeaderType {
   className?: string | null
@@ -40,6 +40,10 @@ export interface BlockHeaderType {
             | ({
                 relationTo: 'posts'
                 value: number | Post
+              } | null)
+            | ({
+                relationTo: 'solutions'
+                value: number | Solution
               } | null)
           url?: string | null
           label: string

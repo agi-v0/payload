@@ -65,7 +65,7 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
           {...link}
           key={name}
           label={null}
-          className="px-space-xs hover:bg-background-neutral flex h-fit w-full flex-row items-center justify-start gap-4 rounded-3xl whitespace-normal transition-colors"
+          className="px-xs hover:bg-background-neutral flex h-fit w-full flex-row items-center justify-start gap-4 rounded-3xl whitespace-normal transition-colors"
         >
           {/* Pass resource directly if it matches MediaProps resource type */}
           {icon && typeof icon === 'object' && (
@@ -85,9 +85,9 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
   )
 
   return (
-    <div className="py-space-xl container">
+    <div className="py-xl container">
       <div className="grid grid-cols-2">
-        <div className="md:pe-space-xl flex flex-col">
+        <div className="md:pe-xl flex flex-col">
           <PaginationControls
             totalPages={appsData.totalPages ?? 1}
             currentPage={currentPage}

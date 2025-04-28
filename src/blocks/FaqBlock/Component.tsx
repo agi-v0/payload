@@ -37,7 +37,7 @@ export const FaqBlock: React.FC<FaqBlockProps> = async (props) => {
             <Accordion type="single" collapsible>
               {faqDocs.map((faq, idx) => (
                 <AccordionItem value={'item-' + idx} key={idx}>
-                  <AccordionTrigger className="bg-background-neutral rounded-space-md text-start">
+                  <AccordionTrigger className="bg-background-neutral rounded-space-sm text-start">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent>

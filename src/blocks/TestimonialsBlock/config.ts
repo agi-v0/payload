@@ -1,6 +1,6 @@
 import type { Block, Field } from 'payload'
 
-import { blockHeader } from '@/blocks/BlockHeader/config'
+import { blockHeader } from '@/components/BlockHeader/config'
 
 const fields: Field[] = [
   {

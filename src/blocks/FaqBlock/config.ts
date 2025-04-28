@@ -1,6 +1,6 @@
 import type { Block } from 'payload'
 
-import { blockHeader } from '../BlockHeader/config'
+import { blockHeader } from '../../components/BlockHeader/config'
 
 export const FaqBlock: Block = {
   slug: 'faqBlock',

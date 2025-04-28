@@ -170,6 +170,13 @@
     3rem
   ); /* 40px - 48px extra large element spacing*/
 
+  --spacing-site: clamp(1rem, 0.2rem + 2vw, 2rem); /* 16px - 32px site margin */
+  --spacing-xs: clamp(0.5rem, 0.1rem + 1vw, 1rem); /* 8px - 16px smaller element spacing */
+  --spacing-sm: clamp(1rem, 0.6rem + 1vw, 1.5rem); /* 16px - 24px main element spacing */
+  --spacing-md: clamp(1.5rem, 1.1rem + 1vw, 2rem); /* 24px - 32px main card padding */
+  --spacing-lg: clamp(2rem, 1.6rem + 1vw, 2.5rem); /* 32px - 40px larger element spacing */
+  --spacing-xl: clamp(2.5rem, 2.1rem + 1vw, 3rem); /* 40px - 48px extra large element spacing*/
+
   --radius-space-md: clamp(1rem, 0.6rem + 1vw, 1.5rem);
 
   --text-display: clamp(2.4rem, 1.32rem + 2.7vw, 3.75rem); /* 32px - 56px display text */
@@ -208,11 +215,6 @@
   --color-brand-quaternary: var(--brand-quaternary);
 
   --color-inverted-primary: var(--inverted-primary);
-
-  --spacing-site: clamp(1rem, 0.714rem + 1.43vw, 2rem);
-  --spacing-lg: clamp(1.5rem, 1.358rem + 0.71vw, 2rem);
-  --spacing-md: clamp(1rem, 0.858rem + 0.71vw, 1.5rem);
-  --spacing-sm: clamp(0.5rem, 0.358rem + 0.71vw, 1rem);
 
   --color-marn-50: #eef1fc;
   --color-marn-100: #d8dff8;

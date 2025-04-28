@@ -25,10 +25,7 @@ export const GridVariant: React.FC<FeaturesBlock> = ({ columns }) => {
           // Individual column container with styling and dynamic column span
           <div
             key={index}
-            className={cn(
-              'bg-background-neutral rounded-space-md p-space-md col-span-4',
-              lgColSpanClass,
-            )}
+            className={cn('bg-background-neutral rounded-space-sm p-md col-span-4', lgColSpanClass)}
           >
             <div
               className={cn('flex flex-col gap-4', {
@@ -37,7 +34,7 @@ export const GridVariant: React.FC<FeaturesBlock> = ({ columns }) => {
             >
               <div
                 className={cn('flex flex-col gap-6', {
-                  'pe-space-md w-full lg:basis-1/2': size === 'full', // Adjust width for full-size columns
+                  'pe-md w-full lg:basis-1/2': size === 'full', // Adjust width for full-size columns
                 })}
               >
                 {/* Render content if available */}
@@ -48,7 +45,7 @@ export const GridVariant: React.FC<FeaturesBlock> = ({ columns }) => {
               {/* Render image if available */}
               {image && (
                 <div
-                  className={cn('rounded-space-md overflow-hidden', {
+                  className={cn('rounded-space-sm overflow-hidden', {
                     'lg:basis-1/2': size === 'full', // Adjust width for full-size columns
                     'w-full': size !== 'full', // Full width for non-full-size columns
                   })}

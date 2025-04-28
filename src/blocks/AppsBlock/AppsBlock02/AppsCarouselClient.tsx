@@ -27,15 +27,15 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
     // Use background variable and explicit rounding from Figma
     <div className="bg-background-neutral flex flex-col overflow-hidden rounded-3xl lg:flex-row">
       {/* Content Section */}
-      <div className="p-space-md flex w-full flex-col justify-between text-start">
-        <div className="gap-space-sm flex flex-col items-start justify-start">
+      <div className="p-md flex w-full flex-col justify-between text-start">
+        <div className="gap-sm flex flex-col items-start justify-start">
           {/* App Badge (Icon + Name) */}
-          <div className="gap-space-xs flex items-center justify-end">
+          <div className="gap-xs flex items-center justify-end">
             {icon && <Media resource={icon} className="size-8 overflow-hidden rounded-md" />}
             {name && <span className="text-body-lg text-base-secondary font-medium">{name}</span>}
           </div>
           {/* Title and Description */}
-          <div className="gap-space-xs flex flex-col">
+          <div className="gap-xs flex flex-col">
             {tagline && <h3 className="text-h4 text-base-primary font-medium">{tagline}</h3>}
             {/* Render overview using RichText component with `data` prop */}
             {overview && (

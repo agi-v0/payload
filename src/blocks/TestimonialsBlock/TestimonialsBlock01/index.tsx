@@ -46,7 +46,7 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
     <motion.div
       key={stat.id || index}
       variants={itemVariants} // Apply item animation
-      className="p-space-lg bg-background-neutral rounded-space-sm flex flex-col justify-center"
+      className="p-lg bg-background-neutral rounded-space-sm flex flex-col justify-center"
     >
       <span className="text-h3 text-base-primary font-medium">
         {stat.value}
@@ -69,15 +69,15 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
       whileInView="visible"
       viewport={{ once: false, margin: '50%' }}
       variants={containerVariants}
-      className="bg-bcakground-neutral-subtle py-space-lg"
+      className="bg-bcakground-neutral-subtle py-lg"
     >
       <div className="container">
         <motion.div
           variants={itemVariants} // Animate the main card as one item
           className="bg-background-neutral rounded-space-sm grid grid-cols-1 md:grid-cols-2 lg:items-stretch"
         >
-          <div className="gap-space-md p-space-md pb-space-xs md:pb-space-md flex flex-col justify-start">
-            <div className="gap-space-md flex flex-grow flex-col justify-start">
+          <div className="gap-md p-md pb-xs md:pb-md flex flex-col justify-start">
+            <div className="gap-md flex flex-grow flex-col justify-start">
               {companyLogo && (
                 <Media resource={companyLogo} imgClassName="h-8 w-auto opacity-50 dark:invert" />
               )}
@@ -90,7 +90,7 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
               )}
             </div>
             {authorInfo && (
-              <div className="gap-space-xs flex flex-row items-center">
+              <div className="gap-xs flex flex-row items-center">
                 {authorInfo.avatar && (
                   <Media
                     resource={authorInfo.avatar}
@@ -107,10 +107,7 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
             )}
           </div>
           {media && (
-            <motion.div
-              variants={itemVariants}
-              className="p-space-xs flex items-center justify-center"
-            >
+            <motion.div variants={itemVariants} className="p-xs flex items-center justify-center">
               <Media
                 resource={media}
                 fill
@@ -123,7 +120,7 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
         {stats && stats.length > 0 && (
           <motion.div
             variants={containerVariants} // Use container variants to stagger stats + link
-            className="mt-space-xs gap-space-xs grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+            className="mt-space-xs gap-xs grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
           >
             {stats.map(renderStat)}
             <motion.div
@@ -137,7 +134,7 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
               <Link
                 href="/testimonials"
                 className={cn(
-                  'text-h4 p-space-sm rounded-space-sm bg-neutral/90 hover:bg-neutral text-inverted-primary relative flex h-full items-center justify-center text-center font-medium transition-colors duration-300',
+                  'text-h4 p-sm rounded-space-sm bg-neutral/90 hover:bg-neutral text-inverted-primary relative flex h-full items-center justify-center text-center font-medium transition-colors duration-300',
                 )}
               >
                 <motion.span

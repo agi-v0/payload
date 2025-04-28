@@ -21,7 +21,7 @@ export const Variant09: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="flex flex-col gap-12 md:p-8 lg:grid lg:grid-cols-2">
+    <div className="py-xl gap-md container flex flex-col lg:grid lg:grid-cols-2 lg:items-center">
       <Accordion
         type="single"
         collapsible={false}
@@ -38,21 +38,21 @@ export const Variant09: React.FC<FeaturesBlock> = ({ columns }) => {
               key={index}
               value={String(index)}
               className={cn(
-                'rounded-space-md border-0 p-4 transition-colors duration-200 md:p-6',
-                isActive && 'bg-white dark:bg-gray-900',
+                'rounded-space-sm md:p-sm border-0 transition-colors duration-200',
+                isActive && 'bg-background-neutral',
               )}
             >
               <AccordionTrigger
                 className={cn(
                   'text-base-tertiary flex items-center justify-start gap-2 bg-transparent p-0 hover:no-underline md:gap-4',
-                  isActive && 'text-base-primary pb-0.5 md:pb-2 dark:bg-gray-900',
+                  isActive && 'pb-0.5 text-(color:--color-base-primary) md:pb-2',
                 )}
               >
                 {column.icon && (
                   <div className={`flex-shrink-0`}>
                     <DynamicIcon
                       className={cn(
-                        'h-6.5 w-6.5 md:h-8 md:w-8',
+                        'size-sm',
                         isActive ? 'text-base-primary' : 'text-base-tertiary',
                       )}
                       name={iconName}
@@ -60,29 +60,30 @@ export const Variant09: React.FC<FeaturesBlock> = ({ columns }) => {
                     />
                   </div>
                 )}
-                <h3 className="text-body-lg font-medium ltr:text-left rtl:text-right">
-                  {column.content.title}
-                </h3>
+                {column.content?.title && (
+                  <h3 className="text-body-lg text-start font-medium">{column.content.title}</h3>
+                )}
               </AccordionTrigger>
-              <AccordionContent className="flex flex-col items-start gap-4 p-0 ltr:pl-12 rtl:pr-12">
-                {column.content && <p className="text-body-md">{column.content.copy}</p>}
-                {column.link && <CMSLink {...column.link} />}
+              <AccordionContent className="ps-lg flex flex-col items-start gap-4 p-0">
+                {column.content && (
+                  <p className="text-base-secondary text-(length:--text-body-md)">
+                    {column.content.subtitle}
+                  </p>
+                )}
+                {column.link && <CMSLink variant="inline" {...column.link} />}
               </AccordionContent>
             </AccordionItem>
           )
         })}
       </Accordion>
-
       {activeAccordionId !== null && columns[parseInt(activeAccordionId)] && (
         <>
           {columns[parseInt(activeAccordionId)].image && (
-            <div className="rounded-space-md overflow-hidden">
-              <Media
-                resource={columns[parseInt(activeAccordionId)].image || undefined}
-                className="h-auto w-full"
-                imgClassName="w-full h-auto aspect-square object-cover"
-              />
-            </div>
+            <Media
+              resource={columns[parseInt(activeAccordionId)].image || undefined}
+              className="rounded-space-sm h-auto w-full overflow-hidden"
+              imgClassName="w-full h-auto object-cover"
+            />
           )}
         </>
       )}

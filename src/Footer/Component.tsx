@@ -60,7 +60,7 @@ export async function Footer() {
     <>
       <div className="relative overflow-hidden">
         {/* Footer content */}
-        <footer className="border-border rounded-b-space-sm pt-space-xl bg-background-neutral-subtle text-base-primary z-10 mt-auto mb-[16vw] border-t shadow-2xl transition-transform duration-300">
+        <footer className="border-border rounded-b-space-sm pt-xl bg-background-neutral-subtle text-base-primary z-10 mt-auto mb-[16vw] border-t shadow-2xl transition-transform duration-300">
           <div className="container grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-12">
             <div className="flex w-full flex-col items-start justify-start gap-6 lg:col-span-5">
               <div className="flex flex-col items-start justify-between gap-1">
@@ -78,7 +78,7 @@ export async function Footer() {
               <ThemeSelector />
               <LanguageSwitcher />
             </div>
-            <nav className="pb-space-site grid grid-cols-2 md:col-span-2 lg:col-span-7 lg:grid-cols-4">
+            <nav className="pb-site grid grid-cols-2 md:col-span-2 lg:col-span-7 lg:grid-cols-4">
               {columns?.map(({ label, navItems }, i) => {
                 return (
                   <nav key={i} className="grid grid-cols-1">
@@ -120,7 +120,7 @@ export async function Footer() {
         </footer>
 
         {/* Fixed full width logo underneath the footer */}
-        <div className="bg-brand/10 p-space-site fixed bottom-0 -z-10 flex w-full items-center justify-center">
+        <div className="bg-brand/10 p-site fixed bottom-0 -z-10 flex w-full items-center justify-center">
           <Link href="/" className="flex h-auto w-full justify-center">
             <Logo className="text-brand h-auto w-full" />
           </Link>

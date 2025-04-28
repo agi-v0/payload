@@ -2,7 +2,7 @@ import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { Card, CardContent } from '@/components/ui/card'
-import { BlockHeader } from '@/blocks/BlockHeader'
+import { BlockHeader } from '@/components/BlockHeader'
 
 export const Variant17: React.FC<FeaturesBlock> = ({ columns, blockHeader }) => {
   if (!columns?.length) return null
@@ -14,13 +14,13 @@ export const Variant17: React.FC<FeaturesBlock> = ({ columns, blockHeader }) => 
         {limitedColumns.map((column, index) => {
           return (
             <Card key={index} className="overflow-hidden rounded-none border-0 bg-transparent">
-              <CardContent className="gap-space-sm grid grid-cols-2 items-start bg-transparent p-0 md:grid-cols-1">
+              <CardContent className="gap-sm grid grid-cols-2 items-start bg-transparent p-0 md:grid-cols-1">
                 {column.image && (
                   <div className="h-auto w-full">
                     <Media
                       resource={column.image}
                       className="h-auto w-full"
-                      imgClassName="w-full h-auto aspect-square object-cover rounded-space-md"
+                      imgClassName="w-full h-auto aspect-square object-cover rounded-space-sm"
                     />
                   </div>
                 )}
@@ -29,7 +29,7 @@ export const Variant17: React.FC<FeaturesBlock> = ({ columns, blockHeader }) => 
                     <h3 className="text-body-lg text-base-primary mb-2 font-medium">
                       {column.content?.title}
                     </h3>
-                    <p className="text-body-sm text-base-secondary">{column.content?.copy}</p>
+                    <p className="text-body-sm text-base-secondary">{column.content?.subtitle}</p>
                   </div>
                 )}
               </CardContent>

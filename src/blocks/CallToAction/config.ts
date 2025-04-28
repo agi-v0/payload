@@ -8,7 +8,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '../../fields/linkGroup'
-import { blockHeader } from '../BlockHeader/config'
+import { blockHeader } from '../../components/BlockHeader/config'
 
 export const CallToAction: Block = {
   slug: 'cta',

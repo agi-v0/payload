@@ -57,7 +57,7 @@ export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
   }
 
   return (
-    <div className="py-space-lg w-full">
+    <div className="py-lg w-full">
       {fetchError && <p className="container text-center">{fetchError}</p>}
       {!fetchError && fetchedApps.length > 0 && <AppsBlockGrid apps={fetchedApps} body={body} />}
     </div>

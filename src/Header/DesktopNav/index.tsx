@@ -42,7 +42,7 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
   const validTabs = tabs || []
   return (
     <div id="parent" className={cn('', className)}>
-      <div className="px-space-site absolute start-0 end-0 w-full">
+      <div className="px-site absolute start-0 end-0 w-full">
         <NavigationMenu className="" dir="rtl">
           <NavigationMenuList className="space-x-0">
             {validTabs.map((tab, i) => {
