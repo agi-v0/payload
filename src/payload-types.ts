@@ -1612,6 +1612,10 @@ export interface FeaturesBlock {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'solutions';
+          value: number | Solution;
         } | null);
     url?: string | null;
     label: string;

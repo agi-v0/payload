@@ -44,7 +44,6 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
           variant={badge?.color}
         />
       )}
-
       {headerText && (
         <RichText
           className={cn(

@@ -124,6 +124,7 @@ export default buildConfig({
         media: {
           prefix: 'media',
         },
+        // media: true,
         'app-icons': {
           prefix: 'app-icons',
         },
