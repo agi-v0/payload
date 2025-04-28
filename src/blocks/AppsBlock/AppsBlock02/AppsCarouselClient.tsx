@@ -70,7 +70,7 @@ export const AppsCarouselClient: React.FC<AppsCarouselClientProps> = ({ apps }) 
   }
   return (
     <div className="relative container w-full">
-      <Carousel slidesPerView={3}>
+      <Carousel>
         <CarouselContent className="-ml-4 items-stretch">
           {apps.map((app, index) => (
             <CarouselItem
