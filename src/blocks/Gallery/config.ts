@@ -55,6 +55,7 @@ const fields: Field[] = [
     type: 'array',
     minRows: 1,
     fields: imageEntry,
+    localized: true,
   },
 ]
 
