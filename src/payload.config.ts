@@ -11,6 +11,7 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { AppIcons } from './collections/AppIcons'
 import { Pages } from './collections/Pages'
+import { Solutions } from './collections/Solutions'
 import { Apps } from './collections/Apps'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
@@ -105,6 +106,7 @@ export default buildConfig({
     Pages,
     Posts,
     Apps,
+    Solutions,
     AppIcons,
     Media,
     Categories,

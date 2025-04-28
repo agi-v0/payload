@@ -52,6 +52,14 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
     },
     fields: [
       {
+        name: 'type',
+        type: 'select',
+        options: [
+          { value: 'label', label: 'Label' },
+          { value: 'reference', label: 'Reference' },
+        ],
+      },
+      {
         type: 'row',
         fields: [
           {
@@ -74,6 +82,16 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
             dbName: 'badge_color',
           },
         ],
+      },
+      {
+        name: 'reference',
+        type: 'relationship',
+        admin: {
+          condition: (_, siblingData) => siblingData?.type === 'reference',
+        },
+        label: 'Document to link to',
+        relationTo: ['solutions', 'apps'],
+        required: true,
       },
     ],
   }

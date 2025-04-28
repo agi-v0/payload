@@ -70,6 +70,7 @@ export interface Config {
     pages: Page;
     posts: Post;
     apps: App;
+    solutions: Solution;
     'app-icons': AppIcon;
     media: Media;
     categories: Category;
@@ -91,6 +92,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     apps: AppsSelect<false> | AppsSelect<true>;
+    solutions: SolutionsSelect<false> | SolutionsSelect<true>;
     'app-icons': AppIconsSelect<false> | AppIconsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
@@ -188,6 +190,10 @@ export interface Page {
               | ({
                   relationTo: 'posts';
                   value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
                 } | null);
             url?: string | null;
             label: string;
@@ -213,8 +219,18 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
     badge?: {
+      type?: ('label' | 'reference') | null;
       label?: string | null;
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'apps';
+            value: number | App;
+          } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
@@ -452,132 +468,46 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "AppsBlock".
+ * via the `definition` "solutions".
  */
-export interface AppsBlock {
-  blockHeader: {
-    type: 'center' | 'split' | 'start';
-    badge?: {
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-    headerText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  type: 'appsBlock01' | 'appsBlock02' | 'appsBlock03' | 'appsBlock04' | 'appsBlockHero';
-  body?: {
-    badge?: {
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-    headerText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  media?: (number | null) | Media;
+export interface Solution {
+  id: number;
   /**
-   * Select the apps to link to. Leave blank to show 10 last updated apps.
+   * Title of the app in English for display purposes.
    */
-  reference?:
-    | {
-        relationTo: 'apps';
-        value: number | App;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'apps';
+  title: string;
+  /**
+   * Upload an icon for the solution. 500x500px recommended.
+   */
+  icon?: (number | null) | Media;
+  name?: string | null;
+  tagline?: string | null;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'solutions';
+          value: number | Solution;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
+  publishedAt?: string | null;
+  ecosystem?: ('sell' | 'operate' | 'manage') | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -621,6 +551,10 @@ export interface App {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'solutions';
+          value: number | Solution;
         } | null);
     url?: string | null;
     label: string;
@@ -655,6 +589,10 @@ export interface App {
               | ({
                   relationTo: 'posts';
                   value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
                 } | null);
             url?: string | null;
             label: string;
@@ -680,8 +618,18 @@ export interface App {
       | null;
     media?: (number | null) | Media;
     badge?: {
+      type?: ('label' | 'reference') | null;
       label?: string | null;
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'apps';
+            value: number | App;
+          } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
@@ -725,14 +673,24 @@ export interface App {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock".
+ * via the `definition` "AppsBlock".
  */
-export interface CallToActionBlock {
+export interface AppsBlock {
   blockHeader: {
     type: 'center' | 'split' | 'start';
     badge?: {
+      type?: ('label' | 'reference') | null;
       label?: string | null;
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'apps';
+            value: number | App;
+          } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
@@ -767,6 +725,167 @@ export interface CallToActionBlock {
               | ({
                   relationTo: 'posts';
                   value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  type: 'appsBlock01' | 'appsBlock02' | 'appsBlock03' | 'appsBlock04' | 'appsBlockHero';
+  body?: {
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'apps';
+            value: number | App;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  media?: (number | null) | Media;
+  /**
+   * Select the apps to link to. Leave blank to show 10 last updated apps.
+   */
+  reference?:
+    | {
+        relationTo: 'apps';
+        value: number | App;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'apps';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlock".
+ */
+export interface CallToActionBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'apps';
+            value: number | App;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
                 } | null);
             url?: string | null;
             label: string;
@@ -811,6 +930,10 @@ export interface CallToActionBlock {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
               } | null);
           url?: string | null;
           label: string;
@@ -838,8 +961,18 @@ export interface ContentBlock {
   blockHeader: {
     type: 'center' | 'split' | 'start';
     badge?: {
+      type?: ('label' | 'reference') | null;
       label?: string | null;
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'apps';
+            value: number | App;
+          } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
@@ -874,6 +1007,10 @@ export interface ContentBlock {
               | ({
                   relationTo: 'posts';
                   value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
                 } | null);
             url?: string | null;
             label: string;
@@ -920,6 +1057,10 @@ export interface ContentBlock {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
               } | null);
           url?: string | null;
           label: string;
@@ -1205,8 +1346,18 @@ export interface TestimonialsBlock {
   blockHeader: {
     type: 'center' | 'split' | 'start';
     badge?: {
+      type?: ('label' | 'reference') | null;
       label?: string | null;
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'apps';
+            value: number | App;
+          } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
@@ -1241,6 +1392,10 @@ export interface TestimonialsBlock {
               | ({
                   relationTo: 'posts';
                   value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
                 } | null);
             url?: string | null;
             label: string;
@@ -1357,8 +1512,18 @@ export interface FeaturesBlock {
   blockHeader: {
     type: 'center' | 'split' | 'start';
     badge?: {
+      type?: ('label' | 'reference') | null;
       label?: string | null;
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'apps';
+            value: number | App;
+          } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
@@ -1393,6 +1558,10 @@ export interface FeaturesBlock {
               | ({
                   relationTo: 'posts';
                   value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
                 } | null);
             url?: string | null;
             label: string;
@@ -1476,8 +1645,18 @@ export interface FeaturesBlock {
         enableBadge?: boolean | null;
         enableCta?: boolean | null;
         badge?: {
+          type?: ('label' | 'reference') | null;
           label?: string | null;
           color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+          reference?:
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
+              } | null)
+            | ({
+                relationTo: 'apps';
+                value: number | App;
+              } | null);
           /**
            * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
            */
@@ -1495,6 +1674,10 @@ export interface FeaturesBlock {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
               } | null);
           url?: string | null;
           label: string;
@@ -1514,8 +1697,18 @@ export interface FaqBlock {
   blockHeader: {
     type: 'center' | 'split' | 'start';
     badge?: {
+      type?: ('label' | 'reference') | null;
       label?: string | null;
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'apps';
+            value: number | App;
+          } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
@@ -1550,6 +1743,10 @@ export interface FaqBlock {
               | ({
                   relationTo: 'posts';
                   value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
                 } | null);
             url?: string | null;
             label: string;
@@ -1607,8 +1804,18 @@ export interface GalleryBlock {
   blockHeader: {
     type: 'center' | 'split' | 'start';
     badge?: {
+      type?: ('label' | 'reference') | null;
       label?: string | null;
       color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'apps';
+            value: number | App;
+          } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
        */
@@ -1643,6 +1850,10 @@ export interface GalleryBlock {
               | ({
                   relationTo: 'posts';
                   value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
                 } | null);
             url?: string | null;
             label: string;
@@ -1921,6 +2132,10 @@ export interface PayloadLockedDocument {
         value: number | App;
       } | null)
     | ({
+        relationTo: 'solutions';
+        value: number | Solution;
+      } | null)
+    | ({
         relationTo: 'app-icons';
         value: number | AppIcon;
       } | null)
@@ -2049,8 +2264,10 @@ export interface PagesSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2105,8 +2322,10 @@ export interface AppsBlockSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2135,8 +2354,10 @@ export interface AppsBlockSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2175,8 +2396,10 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2230,8 +2453,10 @@ export interface ContentBlockSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2336,8 +2561,10 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2376,8 +2603,10 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2431,8 +2660,10 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2462,8 +2693,10 @@ export interface FaqBlockSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2501,8 +2734,10 @@ export interface GalleryBlockSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2623,8 +2858,10 @@ export interface AppsSelect<T extends boolean = true> {
         badge?:
           | T
           | {
+              type?: T;
               label?: T;
               color?: T;
+              reference?: T;
               icon?: T;
               icon_position?: T;
             };
@@ -2640,6 +2877,32 @@ export interface AppsSelect<T extends boolean = true> {
         id?: T;
       };
   publishedAt?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "solutions_select".
+ */
+export interface SolutionsSelect<T extends boolean = true> {
+  title?: T;
+  icon?: T;
+  name?: T;
+  tagline?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
+  publishedAt?: T;
+  ecosystem?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -3154,6 +3417,10 @@ export interface Header {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
               } | null);
           url?: string | null;
         };
@@ -3171,6 +3438,10 @@ export interface Header {
                   | ({
                       relationTo: 'posts';
                       value: number | Post;
+                    } | null)
+                  | ({
+                      relationTo: 'solutions';
+                      value: number | Solution;
                     } | null);
                 url?: string | null;
                 label: string;
@@ -3193,6 +3464,10 @@ export interface Header {
                     | ({
                         relationTo: 'posts';
                         value: number | Post;
+                      } | null)
+                    | ({
+                        relationTo: 'solutions';
+                        value: number | Solution;
                       } | null);
                   url?: string | null;
                   label: string;
@@ -3233,6 +3508,10 @@ export interface Header {
                           | ({
                               relationTo: 'posts';
                               value: number | Post;
+                            } | null)
+                          | ({
+                              relationTo: 'solutions';
+                              value: number | Solution;
                             } | null);
                         url?: string | null;
                         label: string;
@@ -3260,6 +3539,10 @@ export interface Header {
                           | ({
                               relationTo: 'posts';
                               value: number | Post;
+                            } | null)
+                          | ({
+                              relationTo: 'solutions';
+                              value: number | Solution;
                             } | null);
                         url?: string | null;
                         label: string;
@@ -3292,6 +3575,10 @@ export interface Header {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
               } | null);
           url?: string | null;
           label: string;
@@ -3332,6 +3619,10 @@ export interface Footer {
                   | ({
                       relationTo: 'posts';
                       value: number | Post;
+                    } | null)
+                  | ({
+                      relationTo: 'solutions';
+                      value: number | Solution;
                     } | null);
                 url?: string | null;
                 label: string;
@@ -3513,6 +3804,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'apps';
           value: number | App;
+        } | null)
+      | ({
+          relationTo: 'solutions';
+          value: number | Solution;
         } | null);
     global?: string | null;
     user?: (number | null) | User;
