@@ -30,7 +30,10 @@ export const Variant07: React.FC<FeaturesBlock> = ({ columns, blockImage, blockH
         {columns.map((column, index) => {
           const { content, icon } = column
           return (
-            <div className="gap-sm bg-background-neutral rounded-space-sm p-sm flex flex-col items-start">
+            <div
+              key={index}
+              className="gap-sm bg-background-neutral rounded-space-sm p-sm flex flex-col items-start"
+            >
               {icon && (
                 <div className="bg-background-neutral-subtle p-xs inline rounded-full">
                   <DynamicIcon
