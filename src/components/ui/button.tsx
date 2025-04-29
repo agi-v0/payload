@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/utilities/ui'
 
 const buttonVariants = cva(
-  'ring-offset-background focus-visible:ring-ring focus-visible:secondary-none -[&_svg]:size-4 inline-flex items-center justify-center gap-2 rounded-full text-(length:--text-body-l) font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rtl:tracking-normal [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  'ring-offset-background focus-visible:ring-ring focus-visible:secondary-none inline-flex items-center justify-center gap-2 rounded-full text-(length:--text-body-l) font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rtl:tracking-normal [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -26,7 +26,7 @@ const buttonVariants = cva(
         default: 'h-10 px-4 py-2',
         sm: 'h-9 px-3 py-2 text-sm',
         md: 'h-10 px-4 py-2',
-        lg: 'h-13 px-5 py-3 [&_svg]:size-6',
+        lg: 'h-13 px-5 py-3',
         icon: 'h-10 w-10',
       },
     },
@@ -34,7 +34,7 @@ const buttonVariants = cva(
       {
         color: 'brand',
         variant: 'primary',
-        className: 'bg-brand hover:bg-brand/90 text-inverted-primary',
+        className: 'bg-brand hover:bg-brand/90 text-white',
       },
       {
         color: 'brand',
@@ -59,7 +59,7 @@ const buttonVariants = cva(
       {
         color: 'neutral',
         variant: 'primary',
-        className: 'bg-neutral hover:bg-neutral/90 text-inverted-primary',
+        className: 'bg-neutral hover:bg-neutral/90 text-white',
       },
       {
         color: 'neutral',

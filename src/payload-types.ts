@@ -1633,10 +1633,7 @@ export interface FeaturesBlock {
               value: number | App;
             } | null);
         image?: (number | null) | Media;
-        tab?: {
-          tabLabel?: string | null;
-          tabIcon?: string | null;
-        };
+        tabLabel?: string | null;
         icon?: string | null;
         content?: {
           title: string;
@@ -2662,12 +2659,7 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
         size?: T;
         appReference?: T;
         image?: T;
-        tab?:
-          | T
-          | {
-              tabLabel?: T;
-              tabIcon?: T;
-            };
+        tabLabel?: T;
         icon?: T;
         content?:
           | T

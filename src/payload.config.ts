@@ -66,6 +66,38 @@ export default buildConfig({
         },
       ],
     },
+    meta: {
+      titleSuffix: 'Marn POS',
+      title: 'Marn Website Admin Panel',
+      description: 'This is the admin panel for the Marn Website',
+      openGraph: {
+        title: 'Marn Website Admin Panel',
+        description: 'This is the admin panel for the Marn Website',
+        siteName: 'Marn Website Admin Panel',
+        images: [
+          {
+            url: '',
+          },
+        ],
+      },
+      icons: [
+        {
+          url: `${process.env.S3}/Square-1 2.png`,
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16 32x32 64x64',
+          fetchPriority: 'high',
+        },
+        {
+          url: `${process.env.S3}/Square-1.png`,
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16 32x32 64x64',
+          fetchPriority: 'high',
+          media: '(prefers-color-scheme: dark)',
+        },
+      ],
+    },
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,

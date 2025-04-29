@@ -1,18 +1,21 @@
+'use client'
 import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { Card, CardContent } from '@/components/ui/card'
 import { CMSLink } from '@/components/Link'
+import { LinkBlock } from '@/components/LinkBlock'
+import { cn } from '@/utilities/ui'
 
 export const Variant14: React.FC<FeaturesBlock> = ({ columns, link, CTALabel }) => {
   if (!columns?.length) return null
   const limitedColumns = columns.slice(0, 3)
   return (
-    <div className="py-xl container grid grid-cols-1 gap-6 md:my-12 md:grid-cols-2 md:gap-4 lg:grid-cols-4">
+    <div className="py-xl container grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
       {limitedColumns.map((column, index) => {
         return (
-          <Card key={index} className="overflow-hidden rounded-none border-0 bg-transparent">
-            <CardContent className="gap-sm grid grid-cols-2 items-start bg-transparent p-0 md:grid-cols-1 md:flex-col">
+          <Card key={index} className="overflow-hidden rounded-none bg-transparent !p-0">
+            <CardContent className="gap-sm grid grid-cols-2 items-start rounded-none bg-transparent p-0 md:grid-cols-1 md:flex-col">
               {column.image && (
                 <div className="h-auto w-full">
                   <Media
@@ -22,29 +25,25 @@ export const Variant14: React.FC<FeaturesBlock> = ({ columns, link, CTALabel }) 
                   />
                 </div>
               )}
-              {column.content && (
-                <div>
-                  <h3 className="text-body-lg text-base-primary mb-2 font-medium">
+              {column.content?.title && (
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-body-lg text-base-primary font-medium">
                     {column.content?.title}
                   </h3>
-                  <p className="text-body-sm text-base-secondary">{column.content?.subtitle}</p>
+                  <p className="text-body-md text-base-tertiary">{column.content?.title}</p>
                 </div>
               )}
             </CardContent>
           </Card>
         )
       })}
-      {/* TODO: MAKE IT THE SAME HEIGHT AS THE IMAGES */}
-      <CMSLink
-        variant={'primary'}
-        color={'brand'}
-        className="rounded-space-sm flex h-full flex-col items-start justify-between px-0 py-4 whitespace-normal text-white md:items-end md:p-8"
-        {...link}
-        label={null}
+      <div
+        className={cn({
+          'col-span-2': columns.length < 3,
+        })}
       >
-        <h4 className="text-h4 mx-6 font-medium md:mx-0">{CTALabel}</h4>
-        <p className="text-body-lg hidden md:block">{link.label}</p>
-      </CMSLink>
+        <LinkBlock className="md:aspect-square" link={link} label={link?.label} />
+      </div>
     </div>
   )
 }

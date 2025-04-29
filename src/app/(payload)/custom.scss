@@ -53,6 +53,31 @@
   overflow: hidden;
 }
 
+.btn {
+  border-radius: var(--style-radius-full);
+}
+
+html:not([dir='RTL']) .btn--withPopup .btn {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+html:not([dir='RTL']) .btn--withPopup .popup-button {
+  border-top-right-radius: var(--style-radius-full);
+  border-bottom-right-radius: var(--style-radius-full);
+}
+
+.relationship-add-new__add-button {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: var(--style-radius-s);
+  border-bottom-right-radius: var(--style-radius-s);
+}
+
+.doc-controls__dots {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
 .nav__link {
   padding-block: 8px;
   padding-inline: 16px;

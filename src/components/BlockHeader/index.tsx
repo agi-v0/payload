@@ -34,7 +34,6 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
       )}
       data-theme="light"
     >
-      {/* TODO: Hide all elements when their value is null */}
       {badge?.label && (
         <Badge
           className={cn('col-span-2', badgeClassName)}
@@ -48,8 +47,11 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
         <RichText
           className={cn(
             'col-span-2 mx-0 md:row-start-2',
-            type === 'split' ? 'md:grid md:grid-cols-subgrid' : '',
+            type === 'split'
+              ? 'md:grid md:grid-cols-subgrid [&>*:is(h1,h2,h3,h4,h5,h6)]:pe-(length:--spacing-xl)'
+              : '',
             type === 'center' ? 'mx-auto text-center' : '',
+            '[&_p]:text-body-lg',
             richTextClassName,
           )}
           data={headerText}

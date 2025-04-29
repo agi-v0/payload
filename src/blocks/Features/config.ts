@@ -147,28 +147,11 @@ export const Features: Block = {
               ].includes(blockData?.layout),
           },
         },
+
         {
-          type: 'group',
-          label: false,
-          name: 'tab',
-          fields: [
-            {
-              name: 'tabLabel',
-              type: 'text',
-              label: 'Tab Label',
-              admin: {
-                width: '50%',
-              },
-            },
-            iconPickerField({
-              name: 'tabIcon',
-              label: 'Icon',
-              icons: lucideIcons,
-              admin: {
-                width: '50%',
-              },
-            }),
-          ],
+          name: 'tabLabel',
+          type: 'text',
+          label: 'Tab Label',
           admin: {
             condition: (_, siblingData, { blockData }) => ['08'].includes(blockData?.layout),
           },
