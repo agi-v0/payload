@@ -327,6 +327,12 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
             },
           ],
         },
+        link: {
+          type: 'custom',
+          newTab: null,
+          url: '/',
+          label: '',
+        },
       },
     ],
 

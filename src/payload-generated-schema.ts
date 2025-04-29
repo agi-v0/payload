@@ -48,6 +48,10 @@ export const enum_pages_blocks_apps_block_header_type = pgEnum(
   'enum_pages_blocks_apps_block_header_type',
   ['center', 'split', 'start'],
 )
+export const enum_pages_blocks_apps_block_header_badge_type = pgEnum(
+  'enum_pages_blocks_apps_block_header_badge_type',
+  ['label', 'reference'],
+)
 export const badge_color = pgEnum('badge_color', ['blue', 'red', 'green', 'yellow'])
 export const badge_icon_position = pgEnum('badge_icon_position', ['flex-row', 'flex-row-reverse'])
 export const enum_pages_blocks_apps_type = pgEnum('enum_pages_blocks_apps_type', [
@@ -57,6 +61,10 @@ export const enum_pages_blocks_apps_type = pgEnum('enum_pages_blocks_apps_type',
   'appsBlock04',
   'appsBlockHero',
 ])
+export const enum_pages_blocks_apps_body_badge_type = pgEnum(
+  'enum_pages_blocks_apps_body_badge_type',
+  ['label', 'reference'],
+)
 export const enum_pages_blocks_cta_block_header_links_link_type = pgEnum(
   'enum_pages_blocks_cta_block_header_links_link_type',
   ['reference', 'custom'],
@@ -68,6 +76,10 @@ export const enum_pages_blocks_cta_links_link_type = pgEnum(
 export const enum_pages_blocks_cta_block_header_type = pgEnum(
   'enum_pages_blocks_cta_block_header_type',
   ['center', 'split', 'start'],
+)
+export const enum_pages_blocks_cta_block_header_badge_type = pgEnum(
+  'enum_pages_blocks_cta_block_header_badge_type',
+  ['label', 'reference'],
 )
 export const enum_pages_blocks_content_block_header_links_link_type = pgEnum(
   'enum_pages_blocks_content_block_header_links_link_type',
@@ -84,6 +96,10 @@ export const enum_pages_blocks_content_columns_link_type = pgEnum(
 export const enum_pages_blocks_content_block_header_type = pgEnum(
   'enum_pages_blocks_content_block_header_type',
   ['center', 'split', 'start'],
+)
+export const enum_pages_blocks_content_block_header_badge_type = pgEnum(
+  'enum_pages_blocks_content_block_header_badge_type',
+  ['label', 'reference'],
 )
 export const enum_pages_blocks_archive_populate_by = pgEnum(
   'enum_pages_blocks_archive_populate_by',
@@ -105,6 +121,10 @@ export const enum_pages_blocks_testimonials_block_header_type = pgEnum(
   'enum_pages_blocks_testimonials_block_header_type',
   ['center', 'split', 'start'],
 )
+export const enum_pages_blocks_testimonials_block_header_badge_type = pgEnum(
+  'enum_pages_blocks_testimonials_block_header_badge_type',
+  ['label', 'reference'],
+)
 export const enum_pages_blocks_testimonials_type = pgEnum('enum_pages_blocks_testimonials_type', [
   'TestimonialsBlock01',
   'TestimonialsBlock02',
@@ -118,6 +138,10 @@ export const enum_pages_blocks_features_columns_size = pgEnum(
   'enum_pages_blocks_features_columns_size',
   ['half', 'full', 'oneThird', 'twoThirds'],
 )
+export const enum_pages_blocks_features_columns_badge_type = pgEnum(
+  'enum_pages_blocks_features_columns_badge_type',
+  ['label', 'reference'],
+)
 export const enum_pages_blocks_features_columns_link_type = pgEnum(
   'enum_pages_blocks_features_columns_link_type',
   ['reference', 'custom'],
@@ -125,6 +149,10 @@ export const enum_pages_blocks_features_columns_link_type = pgEnum(
 export const enum_pages_blocks_features_block_header_type = pgEnum(
   'enum_pages_blocks_features_block_header_type',
   ['center', 'split', 'start'],
+)
+export const enum_pages_blocks_features_block_header_badge_type = pgEnum(
+  'enum_pages_blocks_features_block_header_badge_type',
+  ['label', 'reference'],
 )
 export const enum_pages_blocks_features_layout = pgEnum('enum_pages_blocks_features_layout', [
   '01',
@@ -149,6 +177,10 @@ export const enum_pages_blocks_features_link_type = pgEnum('enum_pages_blocks_fe
   'reference',
   'custom',
 ])
+export const enum_pages_blocks_features_locale = pgEnum('enum_pages_blocks_features_locale', [
+  'en',
+  'ar',
+])
 export const enum_pages_blocks_faq_block_block_header_links_link_type = pgEnum(
   'enum_pages_blocks_faq_block_block_header_links_link_type',
   ['reference', 'custom'],
@@ -157,6 +189,10 @@ export const enum_pages_blocks_faq_block_block_header_type = pgEnum(
   'enum_pages_blocks_faq_block_block_header_type',
   ['center', 'split', 'start'],
 )
+export const enum_pages_blocks_faq_block_block_header_badge_type = pgEnum(
+  'enum_pages_blocks_faq_block_block_header_badge_type',
+  ['label', 'reference'],
+)
 export const enum_pages_blocks_gallery_block_header_links_link_type = pgEnum(
   'enum_pages_blocks_gallery_block_header_links_link_type',
   ['reference', 'custom'],
@@ -164,6 +200,10 @@ export const enum_pages_blocks_gallery_block_header_links_link_type = pgEnum(
 export const enum_pages_blocks_gallery_block_header_type = pgEnum(
   'enum_pages_blocks_gallery_block_header_type',
   ['center', 'split', 'start'],
+)
+export const enum_pages_blocks_gallery_block_header_badge_type = pgEnum(
+  'enum_pages_blocks_gallery_block_header_badge_type',
+  ['label', 'reference'],
 )
 export const enum_pages_blocks_gallery_type = pgEnum('enum_pages_blocks_gallery_type', [
   'gallery01',
@@ -179,6 +219,10 @@ export const enum_pages_hero_type = pgEnum('enum_pages_hero_type', [
   'hero06',
   'hero07',
   'none',
+])
+export const enum_pages_hero_badge_type = pgEnum('enum_pages_hero_badge_type', [
+  'label',
+  'reference',
 ])
 export const enum_pages_status = pgEnum('enum_pages_status', ['draft', 'published'])
 export const enum__pages_v_version_hero_links_link_type = pgEnum(
@@ -197,6 +241,10 @@ export const enum__pages_v_blocks_apps_block_header_type = pgEnum(
   'enum__pages_v_blocks_apps_block_header_type',
   ['center', 'split', 'start'],
 )
+export const enum__pages_v_blocks_apps_block_header_badge_type = pgEnum(
+  'enum__pages_v_blocks_apps_block_header_badge_type',
+  ['label', 'reference'],
+)
 export const enum__pages_v_blocks_apps_type = pgEnum('enum__pages_v_blocks_apps_type', [
   'appsBlock01',
   'appsBlock02',
@@ -204,6 +252,10 @@ export const enum__pages_v_blocks_apps_type = pgEnum('enum__pages_v_blocks_apps_
   'appsBlock04',
   'appsBlockHero',
 ])
+export const enum__pages_v_blocks_apps_body_badge_type = pgEnum(
+  'enum__pages_v_blocks_apps_body_badge_type',
+  ['label', 'reference'],
+)
 export const enum__pages_v_blocks_cta_block_header_links_link_type = pgEnum(
   'enum__pages_v_blocks_cta_block_header_links_link_type',
   ['reference', 'custom'],
@@ -215,6 +267,10 @@ export const enum__pages_v_blocks_cta_links_link_type = pgEnum(
 export const enum__pages_v_blocks_cta_block_header_type = pgEnum(
   'enum__pages_v_blocks_cta_block_header_type',
   ['center', 'split', 'start'],
+)
+export const enum__pages_v_blocks_cta_block_header_badge_type = pgEnum(
+  'enum__pages_v_blocks_cta_block_header_badge_type',
+  ['label', 'reference'],
 )
 export const enum__pages_v_blocks_content_block_header_links_link_type = pgEnum(
   'enum__pages_v_blocks_content_block_header_links_link_type',
@@ -231,6 +287,10 @@ export const enum__pages_v_blocks_content_columns_link_type = pgEnum(
 export const enum__pages_v_blocks_content_block_header_type = pgEnum(
   'enum__pages_v_blocks_content_block_header_type',
   ['center', 'split', 'start'],
+)
+export const enum__pages_v_blocks_content_block_header_badge_type = pgEnum(
+  'enum__pages_v_blocks_content_block_header_badge_type',
+  ['label', 'reference'],
 )
 export const enum__pages_v_blocks_archive_populate_by = pgEnum(
   'enum__pages_v_blocks_archive_populate_by',
@@ -252,6 +312,10 @@ export const enum__pages_v_blocks_testimonials_block_header_type = pgEnum(
   'enum__pages_v_blocks_testimonials_block_header_type',
   ['center', 'split', 'start'],
 )
+export const enum__pages_v_blocks_testimonials_block_header_badge_type = pgEnum(
+  'enum__pages_v_blocks_testimonials_block_header_badge_type',
+  ['label', 'reference'],
+)
 export const enum__pages_v_blocks_testimonials_type = pgEnum(
   'enum__pages_v_blocks_testimonials_type',
   ['TestimonialsBlock01', 'TestimonialsBlock02', 'testimonialsModularGrid'],
@@ -264,6 +328,10 @@ export const enum__pages_v_blocks_features_columns_size = pgEnum(
   'enum__pages_v_blocks_features_columns_size',
   ['half', 'full', 'oneThird', 'twoThirds'],
 )
+export const enum__pages_v_blocks_features_columns_badge_type = pgEnum(
+  'enum__pages_v_blocks_features_columns_badge_type',
+  ['label', 'reference'],
+)
 export const enum__pages_v_blocks_features_columns_link_type = pgEnum(
   'enum__pages_v_blocks_features_columns_link_type',
   ['reference', 'custom'],
@@ -271,6 +339,10 @@ export const enum__pages_v_blocks_features_columns_link_type = pgEnum(
 export const enum__pages_v_blocks_features_block_header_type = pgEnum(
   'enum__pages_v_blocks_features_block_header_type',
   ['center', 'split', 'start'],
+)
+export const enum__pages_v_blocks_features_block_header_badge_type = pgEnum(
+  'enum__pages_v_blocks_features_block_header_badge_type',
+  ['label', 'reference'],
 )
 export const enum__pages_v_blocks_features_layout = pgEnum('enum__pages_v_blocks_features_layout', [
   '01',
@@ -295,6 +367,10 @@ export const enum__pages_v_blocks_features_link_type = pgEnum(
   'enum__pages_v_blocks_features_link_type',
   ['reference', 'custom'],
 )
+export const enum__pages_v_blocks_features_locale = pgEnum('enum__pages_v_blocks_features_locale', [
+  'en',
+  'ar',
+])
 export const enum__pages_v_blocks_faq_block_block_header_links_link_type = pgEnum(
   'enum__pages_v_blocks_faq_block_block_header_links_link_type',
   ['reference', 'custom'],
@@ -303,6 +379,10 @@ export const enum__pages_v_blocks_faq_block_block_header_type = pgEnum(
   'enum__pages_v_blocks_faq_block_block_header_type',
   ['center', 'split', 'start'],
 )
+export const enum__pages_v_blocks_faq_block_block_header_badge_type = pgEnum(
+  'enum__pages_v_blocks_faq_block_block_header_badge_type',
+  ['label', 'reference'],
+)
 export const enum__pages_v_blocks_gallery_block_header_links_link_type = pgEnum(
   'enum__pages_v_blocks_gallery_block_header_links_link_type',
   ['reference', 'custom'],
@@ -310,6 +390,10 @@ export const enum__pages_v_blocks_gallery_block_header_links_link_type = pgEnum(
 export const enum__pages_v_blocks_gallery_block_header_type = pgEnum(
   'enum__pages_v_blocks_gallery_block_header_type',
   ['center', 'split', 'start'],
+)
+export const enum__pages_v_blocks_gallery_block_header_badge_type = pgEnum(
+  'enum__pages_v_blocks_gallery_block_header_badge_type',
+  ['label', 'reference'],
 )
 export const enum__pages_v_blocks_gallery_type = pgEnum('enum__pages_v_blocks_gallery_type', [
   'gallery01',
@@ -326,6 +410,10 @@ export const enum__pages_v_version_hero_type = pgEnum('enum__pages_v_version_her
   'hero07',
   'none',
 ])
+export const enum__pages_v_version_hero_badge_type = pgEnum(
+  'enum__pages_v_version_hero_badge_type',
+  ['label', 'reference'],
+)
 export const enum__pages_v_version_status = pgEnum('enum__pages_v_version_status', [
   'draft',
   'published',
@@ -352,6 +440,7 @@ export const enum_apps_hero_type = pgEnum('enum_apps_hero_type', [
   'hero07',
   'none',
 ])
+export const enum_apps_hero_badge_type = pgEnum('enum_apps_hero_badge_type', ['label', 'reference'])
 export const enum_apps_status = pgEnum('enum_apps_status', ['draft', 'published'])
 export const enum__apps_v_version_hero_links_link_type = pgEnum(
   'enum__apps_v_version_hero_links_link_type',
@@ -371,11 +460,39 @@ export const enum__apps_v_version_hero_type = pgEnum('enum__apps_v_version_hero_
   'hero07',
   'none',
 ])
+export const enum__apps_v_version_hero_badge_type = pgEnum('enum__apps_v_version_hero_badge_type', [
+  'label',
+  'reference',
+])
 export const enum__apps_v_version_status = pgEnum('enum__apps_v_version_status', [
   'draft',
   'published',
 ])
 export const enum__apps_v_published_locale = pgEnum('enum__apps_v_published_locale', ['en', 'ar'])
+export const enum_solutions_link_type = pgEnum('enum_solutions_link_type', ['reference', 'custom'])
+export const enum_solutions_ecosystem = pgEnum('enum_solutions_ecosystem', [
+  'sell',
+  'operate',
+  'manage',
+])
+export const enum_solutions_status = pgEnum('enum_solutions_status', ['draft', 'published'])
+export const enum__solutions_v_version_link_type = pgEnum('enum__solutions_v_version_link_type', [
+  'reference',
+  'custom',
+])
+export const enum__solutions_v_version_ecosystem = pgEnum('enum__solutions_v_version_ecosystem', [
+  'sell',
+  'operate',
+  'manage',
+])
+export const enum__solutions_v_version_status = pgEnum('enum__solutions_v_version_status', [
+  'draft',
+  'published',
+])
+export const enum__solutions_v_published_locale = pgEnum('enum__solutions_v_published_locale', [
+  'en',
+  'ar',
+])
 export const enum_app_icons_category = pgEnum('enum_app_icons_category', ['App', 'Website'])
 export const enum_testimonials_status = pgEnum('enum_testimonials_status', ['draft', 'published'])
 export const enum__testimonials_v_version_status = pgEnum('enum__testimonials_v_version_status', [
@@ -548,6 +665,8 @@ export const pages_blocks_apps = pgTable(
     id: varchar('id').primaryKey(),
     blockHeader_type:
       enum_pages_blocks_apps_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum_pages_blocks_apps_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -556,6 +675,7 @@ export const pages_blocks_apps = pgTable(
     ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
     type: enum_pages_blocks_apps_type('type').default('appsBlock01'),
+    body_badge_type: enum_pages_blocks_apps_body_badge_type('body_badge_type'),
     body_badge_label: varchar('body_badge_label'),
     body_badge_color: badge_color('body_badge_color').default('blue'),
     body_badge_icon: varchar('body_badge_icon'),
@@ -642,6 +762,8 @@ export const pages_blocks_cta = pgTable(
     id: varchar('id').primaryKey(),
     blockHeader_type:
       enum_pages_blocks_cta_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum_pages_blocks_cta_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -733,6 +855,8 @@ export const pages_blocks_content = pgTable(
     id: varchar('id').primaryKey(),
     blockHeader_type:
       enum_pages_blocks_content_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum_pages_blocks_content_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -926,6 +1050,8 @@ export const pages_blocks_testimonials = pgTable(
     id: varchar('id').primaryKey(),
     blockHeader_type:
       enum_pages_blocks_testimonials_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum_pages_blocks_testimonials_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -986,18 +1112,18 @@ export const pages_blocks_features_columns = pgTable(
     _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
     size: enum_pages_blocks_features_columns_size('size').default('half'),
-    appReference: integer('app_reference_id').references(() => apps.id, {
-      onDelete: 'set null',
-    }),
     image: integer('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    tabLabel: varchar('tab_label'),
+    tab_tabLabel: varchar('tab_tab_label'),
+    tab_tabIcon: varchar('tab_tab_icon'),
     icon: varchar('icon'),
     content_title: varchar('content_title'),
-    content_copy: varchar('content_copy'),
+    content_subtitle: varchar('content_subtitle'),
+    richTextContent: jsonb('rich_text_content'),
     enableBadge: boolean('enable_badge'),
     enableCta: boolean('enable_cta'),
+    badge_type: enum_pages_blocks_features_columns_badge_type('badge_type'),
     badge_label: varchar('badge_label'),
     badge_color: badge_color('badge_color').default('blue'),
     badge_icon: varchar('badge_icon'),
@@ -1011,9 +1137,6 @@ export const pages_blocks_features_columns = pgTable(
     _orderIdx: index('pages_blocks_features_columns_order_idx').on(columns._order),
     _parentIDIdx: index('pages_blocks_features_columns_parent_id_idx').on(columns._parentID),
     _localeIdx: index('pages_blocks_features_columns_locale_idx').on(columns._locale),
-    pages_blocks_features_columns_app_reference_idx: index(
-      'pages_blocks_features_columns_app_reference_idx',
-    ).on(columns.appReference),
     pages_blocks_features_columns_image_idx: index('pages_blocks_features_columns_image_idx').on(
       columns.image,
     ),
@@ -1035,6 +1158,8 @@ export const pages_blocks_features = pgTable(
     id: varchar('id').primaryKey(),
     blockHeader_type:
       enum_pages_blocks_features_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum_pages_blocks_features_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -1051,6 +1176,7 @@ export const pages_blocks_features = pgTable(
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
+    locale: enum_pages_blocks_features_locale('locale'),
     blockName: varchar('block_name'),
   },
   (columns) => ({
@@ -1108,6 +1234,8 @@ export const pages_blocks_faq_block = pgTable(
     id: varchar('id').primaryKey(),
     blockHeader_type:
       enum_pages_blocks_faq_block_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum_pages_blocks_faq_block_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -1197,6 +1325,8 @@ export const pages_blocks_gallery = pgTable(
     id: varchar('id').primaryKey(),
     blockHeader_type:
       enum_pages_blocks_gallery_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum_pages_blocks_gallery_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -1252,6 +1382,7 @@ export const pages = pgTable(
     id: serial('id').primaryKey(),
     hero_type: enum_pages_hero_type('hero_type').default('hero01'),
     hero_supportingText: varchar('hero_supporting_text'),
+    hero_badge_type: enum_pages_hero_badge_type('hero_badge_type'),
     hero_badge_color: badge_color('hero_badge_color').default('blue'),
     hero_badge_icon: varchar('hero_badge_icon'),
     hero_badge_icon_position: badge_icon_position('hero_badge_icon_position').default('flex-row'),
@@ -1325,6 +1456,7 @@ export const pages_rels = pgTable(
     locale: enum__locales('locale'),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
+    solutionsID: integer('solutions_id'),
     appsID: integer('apps_id'),
     categoriesID: integer('categories_id'),
     testimonialsID: integer('testimonials_id'),
@@ -1337,6 +1469,10 @@ export const pages_rels = pgTable(
     localeIdx: index('pages_rels_locale_idx').on(columns.locale),
     pages_rels_pages_id_idx: index('pages_rels_pages_id_idx').on(columns.pagesID, columns.locale),
     pages_rels_posts_id_idx: index('pages_rels_posts_id_idx').on(columns.postsID, columns.locale),
+    pages_rels_solutions_id_idx: index('pages_rels_solutions_id_idx').on(
+      columns.solutionsID,
+      columns.locale,
+    ),
     pages_rels_apps_id_idx: index('pages_rels_apps_id_idx').on(columns.appsID, columns.locale),
     pages_rels_categories_id_idx: index('pages_rels_categories_id_idx').on(
       columns.categoriesID,
@@ -1361,6 +1497,11 @@ export const pages_rels = pgTable(
       columns: [columns['postsID']],
       foreignColumns: [posts.id],
       name: 'pages_rels_posts_fk',
+    }).onDelete('cascade'),
+    solutionsIdFk: foreignKey({
+      columns: [columns['solutionsID']],
+      foreignColumns: [solutions.id],
+      name: 'pages_rels_solutions_fk',
     }).onDelete('cascade'),
     appsIdFk: foreignKey({
       columns: [columns['appsID']],
@@ -1504,6 +1645,8 @@ export const _pages_v_blocks_apps = pgTable(
     id: serial('id').primaryKey(),
     blockHeader_type:
       enum__pages_v_blocks_apps_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum__pages_v_blocks_apps_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -1512,6 +1655,7 @@ export const _pages_v_blocks_apps = pgTable(
     ).default('flex-row'),
     blockHeader_headerText: jsonb('block_header_header_text'),
     type: enum__pages_v_blocks_apps_type('type').default('appsBlock01'),
+    body_badge_type: enum__pages_v_blocks_apps_body_badge_type('body_badge_type'),
     body_badge_label: varchar('body_badge_label'),
     body_badge_color: badge_color('body_badge_color').default('blue'),
     body_badge_icon: varchar('body_badge_icon'),
@@ -1604,6 +1748,8 @@ export const _pages_v_blocks_cta = pgTable(
     id: serial('id').primaryKey(),
     blockHeader_type:
       enum__pages_v_blocks_cta_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum__pages_v_blocks_cta_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -1698,6 +1844,8 @@ export const _pages_v_blocks_content = pgTable(
     id: serial('id').primaryKey(),
     blockHeader_type:
       enum__pages_v_blocks_content_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum__pages_v_blocks_content_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -1904,6 +2052,8 @@ export const _pages_v_blocks_testimonials = pgTable(
     id: serial('id').primaryKey(),
     blockHeader_type:
       enum__pages_v_blocks_testimonials_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum__pages_v_blocks_testimonials_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -1966,18 +2116,18 @@ export const _pages_v_blocks_features_columns = pgTable(
     _locale: enum__locales('_locale').notNull(),
     id: serial('id').primaryKey(),
     size: enum__pages_v_blocks_features_columns_size('size').default('half'),
-    appReference: integer('app_reference_id').references(() => apps.id, {
-      onDelete: 'set null',
-    }),
     image: integer('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    tabLabel: varchar('tab_label'),
+    tab_tabLabel: varchar('tab_tab_label'),
+    tab_tabIcon: varchar('tab_tab_icon'),
     icon: varchar('icon'),
     content_title: varchar('content_title'),
-    content_copy: varchar('content_copy'),
+    content_subtitle: varchar('content_subtitle'),
+    richTextContent: jsonb('rich_text_content'),
     enableBadge: boolean('enable_badge'),
     enableCta: boolean('enable_cta'),
+    badge_type: enum__pages_v_blocks_features_columns_badge_type('badge_type'),
     badge_label: varchar('badge_label'),
     badge_color: badge_color('badge_color').default('blue'),
     badge_icon: varchar('badge_icon'),
@@ -1992,9 +2142,6 @@ export const _pages_v_blocks_features_columns = pgTable(
     _orderIdx: index('_pages_v_blocks_features_columns_order_idx').on(columns._order),
     _parentIDIdx: index('_pages_v_blocks_features_columns_parent_id_idx').on(columns._parentID),
     _localeIdx: index('_pages_v_blocks_features_columns_locale_idx').on(columns._locale),
-    _pages_v_blocks_features_columns_app_reference_idx: index(
-      '_pages_v_blocks_features_columns_app_reference_idx',
-    ).on(columns.appReference),
     _pages_v_blocks_features_columns_image_idx: index(
       '_pages_v_blocks_features_columns_image_idx',
     ).on(columns.image),
@@ -2016,6 +2163,8 @@ export const _pages_v_blocks_features = pgTable(
     id: serial('id').primaryKey(),
     blockHeader_type:
       enum__pages_v_blocks_features_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum__pages_v_blocks_features_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -2032,6 +2181,7 @@ export const _pages_v_blocks_features = pgTable(
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
+    locale: enum__pages_v_blocks_features_locale('locale'),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
   },
@@ -2093,6 +2243,8 @@ export const _pages_v_blocks_faq_block = pgTable(
     id: serial('id').primaryKey(),
     blockHeader_type:
       enum__pages_v_blocks_faq_block_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum__pages_v_blocks_faq_block_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -2185,6 +2337,8 @@ export const _pages_v_blocks_gallery = pgTable(
     id: serial('id').primaryKey(),
     blockHeader_type:
       enum__pages_v_blocks_gallery_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type:
+      enum__pages_v_blocks_gallery_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
     blockHeader_badge_icon: varchar('block_header_badge_icon'),
@@ -2247,6 +2401,7 @@ export const _pages_v = pgTable(
     }),
     version_hero_type: enum__pages_v_version_hero_type('version_hero_type').default('hero01'),
     version_hero_supportingText: varchar('version_hero_supporting_text'),
+    version_hero_badge_type: enum__pages_v_version_hero_badge_type('version_hero_badge_type'),
     version_hero_badge_color: badge_color('version_hero_badge_color').default('blue'),
     version_hero_badge_icon: varchar('version_hero_badge_icon'),
     version_hero_badge_icon_position: badge_icon_position(
@@ -2360,6 +2515,7 @@ export const _pages_v_rels = pgTable(
     locale: enum__locales('locale'),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
+    solutionsID: integer('solutions_id'),
     appsID: integer('apps_id'),
     categoriesID: integer('categories_id'),
     testimonialsID: integer('testimonials_id'),
@@ -2376,6 +2532,10 @@ export const _pages_v_rels = pgTable(
     ),
     _pages_v_rels_posts_id_idx: index('_pages_v_rels_posts_id_idx').on(
       columns.postsID,
+      columns.locale,
+    ),
+    _pages_v_rels_solutions_id_idx: index('_pages_v_rels_solutions_id_idx').on(
+      columns.solutionsID,
       columns.locale,
     ),
     _pages_v_rels_apps_id_idx: index('_pages_v_rels_apps_id_idx').on(
@@ -2405,6 +2565,11 @@ export const _pages_v_rels = pgTable(
       columns: [columns['postsID']],
       foreignColumns: [posts.id],
       name: '_pages_v_rels_posts_fk',
+    }).onDelete('cascade'),
+    solutionsIdFk: foreignKey({
+      columns: [columns['solutionsID']],
+      foreignColumns: [solutions.id],
+      name: '_pages_v_rels_solutions_fk',
     }).onDelete('cascade'),
     appsIdFk: foreignKey({
       columns: [columns['appsID']],
@@ -2821,6 +2986,7 @@ export const apps = pgTable(
     link_url: varchar('link_url'),
     hero_type: enum_apps_hero_type('hero_type').default('hero01'),
     hero_supportingText: varchar('hero_supporting_text'),
+    hero_badge_type: enum_apps_hero_badge_type('hero_badge_type'),
     hero_badge_color: badge_color('hero_badge_color').default('blue'),
     hero_badge_icon: varchar('hero_badge_icon'),
     hero_badge_icon_position: badge_icon_position('hero_badge_icon_position').default('flex-row'),
@@ -2889,6 +3055,8 @@ export const apps_rels = pgTable(
     locale: enum__locales('locale'),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
+    solutionsID: integer('solutions_id'),
+    appsID: integer('apps_id'),
     mediaID: integer('media_id'),
   },
   (columns) => ({
@@ -2898,6 +3066,11 @@ export const apps_rels = pgTable(
     localeIdx: index('apps_rels_locale_idx').on(columns.locale),
     apps_rels_pages_id_idx: index('apps_rels_pages_id_idx').on(columns.pagesID, columns.locale),
     apps_rels_posts_id_idx: index('apps_rels_posts_id_idx').on(columns.postsID, columns.locale),
+    apps_rels_solutions_id_idx: index('apps_rels_solutions_id_idx').on(
+      columns.solutionsID,
+      columns.locale,
+    ),
+    apps_rels_apps_id_idx: index('apps_rels_apps_id_idx').on(columns.appsID, columns.locale),
     apps_rels_media_id_idx: index('apps_rels_media_id_idx').on(columns.mediaID, columns.locale),
     parentFk: foreignKey({
       columns: [columns['parent']],
@@ -2913,6 +3086,16 @@ export const apps_rels = pgTable(
       columns: [columns['postsID']],
       foreignColumns: [posts.id],
       name: 'apps_rels_posts_fk',
+    }).onDelete('cascade'),
+    solutionsIdFk: foreignKey({
+      columns: [columns['solutionsID']],
+      foreignColumns: [solutions.id],
+      name: 'apps_rels_solutions_fk',
+    }).onDelete('cascade'),
+    appsIdFk: foreignKey({
+      columns: [columns['appsID']],
+      foreignColumns: [apps.id],
+      name: 'apps_rels_apps_fk',
     }).onDelete('cascade'),
     mediaIdFk: foreignKey({
       columns: [columns['mediaID']],
@@ -3032,6 +3215,7 @@ export const _apps_v = pgTable(
     version_link_url: varchar('version_link_url'),
     version_hero_type: enum__apps_v_version_hero_type('version_hero_type').default('hero01'),
     version_hero_supportingText: varchar('version_hero_supporting_text'),
+    version_hero_badge_type: enum__apps_v_version_hero_badge_type('version_hero_badge_type'),
     version_hero_badge_color: badge_color('version_hero_badge_color').default('blue'),
     version_hero_badge_icon: varchar('version_hero_badge_icon'),
     version_hero_badge_icon_position: badge_icon_position(
@@ -3136,6 +3320,8 @@ export const _apps_v_rels = pgTable(
     locale: enum__locales('locale'),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
+    solutionsID: integer('solutions_id'),
+    appsID: integer('apps_id'),
     mediaID: integer('media_id'),
   },
   (columns) => ({
@@ -3151,6 +3337,11 @@ export const _apps_v_rels = pgTable(
       columns.postsID,
       columns.locale,
     ),
+    _apps_v_rels_solutions_id_idx: index('_apps_v_rels_solutions_id_idx').on(
+      columns.solutionsID,
+      columns.locale,
+    ),
+    _apps_v_rels_apps_id_idx: index('_apps_v_rels_apps_id_idx').on(columns.appsID, columns.locale),
     _apps_v_rels_media_id_idx: index('_apps_v_rels_media_id_idx').on(
       columns.mediaID,
       columns.locale,
@@ -3170,10 +3361,257 @@ export const _apps_v_rels = pgTable(
       foreignColumns: [posts.id],
       name: '_apps_v_rels_posts_fk',
     }).onDelete('cascade'),
+    solutionsIdFk: foreignKey({
+      columns: [columns['solutionsID']],
+      foreignColumns: [solutions.id],
+      name: '_apps_v_rels_solutions_fk',
+    }).onDelete('cascade'),
+    appsIdFk: foreignKey({
+      columns: [columns['appsID']],
+      foreignColumns: [apps.id],
+      name: '_apps_v_rels_apps_fk',
+    }).onDelete('cascade'),
     mediaIdFk: foreignKey({
       columns: [columns['mediaID']],
       foreignColumns: [media.id],
       name: '_apps_v_rels_media_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const solutions = pgTable(
+  'solutions',
+  {
+    id: serial('id').primaryKey(),
+    title: varchar('title'),
+    icon: integer('icon_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    link_type: enum_solutions_link_type('link_type').default('reference'),
+    link_newTab: boolean('link_new_tab'),
+    link_url: varchar('link_url'),
+    publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    ecosystem: enum_solutions_ecosystem('ecosystem'),
+    slug: varchar('slug'),
+    slugLock: boolean('slug_lock').default(true),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    _status: enum_solutions_status('_status').default('draft'),
+  },
+  (columns) => ({
+    solutions_icon_idx: index('solutions_icon_idx').on(columns.icon),
+    solutions_slug_idx: index('solutions_slug_idx').on(columns.slug),
+    solutions_updated_at_idx: index('solutions_updated_at_idx').on(columns.updatedAt),
+    solutions_created_at_idx: index('solutions_created_at_idx').on(columns.createdAt),
+    solutions__status_idx: index('solutions__status_idx').on(columns._status),
+  }),
+)
+
+export const solutions_locales = pgTable(
+  'solutions_locales',
+  {
+    name: varchar('name'),
+    tagline: varchar('tagline'),
+    link_label: varchar('link_label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('solutions_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [solutions.id],
+      name: 'solutions_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const solutions_rels = pgTable(
+  'solutions_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: integer('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    pagesID: integer('pages_id'),
+    postsID: integer('posts_id'),
+    solutionsID: integer('solutions_id'),
+  },
+  (columns) => ({
+    order: index('solutions_rels_order_idx').on(columns.order),
+    parentIdx: index('solutions_rels_parent_idx').on(columns.parent),
+    pathIdx: index('solutions_rels_path_idx').on(columns.path),
+    solutions_rels_pages_id_idx: index('solutions_rels_pages_id_idx').on(columns.pagesID),
+    solutions_rels_posts_id_idx: index('solutions_rels_posts_id_idx').on(columns.postsID),
+    solutions_rels_solutions_id_idx: index('solutions_rels_solutions_id_idx').on(
+      columns.solutionsID,
+    ),
+    parentFk: foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [solutions.id],
+      name: 'solutions_rels_parent_fk',
+    }).onDelete('cascade'),
+    pagesIdFk: foreignKey({
+      columns: [columns['pagesID']],
+      foreignColumns: [pages.id],
+      name: 'solutions_rels_pages_fk',
+    }).onDelete('cascade'),
+    postsIdFk: foreignKey({
+      columns: [columns['postsID']],
+      foreignColumns: [posts.id],
+      name: 'solutions_rels_posts_fk',
+    }).onDelete('cascade'),
+    solutionsIdFk: foreignKey({
+      columns: [columns['solutionsID']],
+      foreignColumns: [solutions.id],
+      name: 'solutions_rels_solutions_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _solutions_v = pgTable(
+  '_solutions_v',
+  {
+    id: serial('id').primaryKey(),
+    parent: integer('parent_id').references(() => solutions.id, {
+      onDelete: 'set null',
+    }),
+    version_title: varchar('version_title'),
+    version_icon: integer('version_icon_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    version_link_type:
+      enum__solutions_v_version_link_type('version_link_type').default('reference'),
+    version_link_newTab: boolean('version_link_new_tab'),
+    version_link_url: varchar('version_link_url'),
+    version_publishedAt: timestamp('version_published_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    version_ecosystem: enum__solutions_v_version_ecosystem('version_ecosystem'),
+    version_slug: varchar('version_slug'),
+    version_slugLock: boolean('version_slug_lock').default(true),
+    version_updatedAt: timestamp('version_updated_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    version_createdAt: timestamp('version_created_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    version__status: enum__solutions_v_version_status('version__status').default('draft'),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    snapshot: boolean('snapshot'),
+    publishedLocale: enum__solutions_v_published_locale('published_locale'),
+    latest: boolean('latest'),
+    autosave: boolean('autosave'),
+  },
+  (columns) => ({
+    _solutions_v_parent_idx: index('_solutions_v_parent_idx').on(columns.parent),
+    _solutions_v_version_version_icon_idx: index('_solutions_v_version_version_icon_idx').on(
+      columns.version_icon,
+    ),
+    _solutions_v_version_version_slug_idx: index('_solutions_v_version_version_slug_idx').on(
+      columns.version_slug,
+    ),
+    _solutions_v_version_version_updated_at_idx: index(
+      '_solutions_v_version_version_updated_at_idx',
+    ).on(columns.version_updatedAt),
+    _solutions_v_version_version_created_at_idx: index(
+      '_solutions_v_version_version_created_at_idx',
+    ).on(columns.version_createdAt),
+    _solutions_v_version_version__status_idx: index('_solutions_v_version_version__status_idx').on(
+      columns.version__status,
+    ),
+    _solutions_v_created_at_idx: index('_solutions_v_created_at_idx').on(columns.createdAt),
+    _solutions_v_updated_at_idx: index('_solutions_v_updated_at_idx').on(columns.updatedAt),
+    _solutions_v_snapshot_idx: index('_solutions_v_snapshot_idx').on(columns.snapshot),
+    _solutions_v_published_locale_idx: index('_solutions_v_published_locale_idx').on(
+      columns.publishedLocale,
+    ),
+    _solutions_v_latest_idx: index('_solutions_v_latest_idx').on(columns.latest),
+    _solutions_v_autosave_idx: index('_solutions_v_autosave_idx').on(columns.autosave),
+  }),
+)
+
+export const _solutions_v_locales = pgTable(
+  '_solutions_v_locales',
+  {
+    version_name: varchar('version_name'),
+    version_tagline: varchar('version_tagline'),
+    version_link_label: varchar('version_link_label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('_solutions_v_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_solutions_v.id],
+      name: '_solutions_v_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _solutions_v_rels = pgTable(
+  '_solutions_v_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: integer('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    pagesID: integer('pages_id'),
+    postsID: integer('posts_id'),
+    solutionsID: integer('solutions_id'),
+  },
+  (columns) => ({
+    order: index('_solutions_v_rels_order_idx').on(columns.order),
+    parentIdx: index('_solutions_v_rels_parent_idx').on(columns.parent),
+    pathIdx: index('_solutions_v_rels_path_idx').on(columns.path),
+    _solutions_v_rels_pages_id_idx: index('_solutions_v_rels_pages_id_idx').on(columns.pagesID),
+    _solutions_v_rels_posts_id_idx: index('_solutions_v_rels_posts_id_idx').on(columns.postsID),
+    _solutions_v_rels_solutions_id_idx: index('_solutions_v_rels_solutions_id_idx').on(
+      columns.solutionsID,
+    ),
+    parentFk: foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [_solutions_v.id],
+      name: '_solutions_v_rels_parent_fk',
+    }).onDelete('cascade'),
+    pagesIdFk: foreignKey({
+      columns: [columns['pagesID']],
+      foreignColumns: [pages.id],
+      name: '_solutions_v_rels_pages_fk',
+    }).onDelete('cascade'),
+    postsIdFk: foreignKey({
+      columns: [columns['postsID']],
+      foreignColumns: [posts.id],
+      name: '_solutions_v_rels_posts_fk',
+    }).onDelete('cascade'),
+    solutionsIdFk: foreignKey({
+      columns: [columns['solutionsID']],
+      foreignColumns: [solutions.id],
+      name: '_solutions_v_rels_solutions_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -4615,6 +5053,7 @@ export const payload_locked_documents_rels = pgTable(
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
     appsID: integer('apps_id'),
+    solutionsID: integer('solutions_id'),
     'app-iconsID': integer('app_icons_id'),
     mediaID: integer('media_id'),
     categoriesID: integer('categories_id'),
@@ -4641,6 +5080,9 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_apps_id_idx: index(
       'payload_locked_documents_rels_apps_id_idx',
     ).on(columns.appsID),
+    payload_locked_documents_rels_solutions_id_idx: index(
+      'payload_locked_documents_rels_solutions_id_idx',
+    ).on(columns.solutionsID),
     payload_locked_documents_rels_app_icons_id_idx: index(
       'payload_locked_documents_rels_app_icons_id_idx',
     ).on(columns['app-iconsID']),
@@ -4696,6 +5138,11 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns['appsID']],
       foreignColumns: [apps.id],
       name: 'payload_locked_documents_rels_apps_fk',
+    }).onDelete('cascade'),
+    solutionsIdFk: foreignKey({
+      columns: [columns['solutionsID']],
+      foreignColumns: [solutions.id],
+      name: 'payload_locked_documents_rels_solutions_fk',
     }).onDelete('cascade'),
     'app-iconsIdFk': foreignKey({
       columns: [columns['app-iconsID']],
@@ -5124,6 +5571,7 @@ export const header_rels = pgTable(
     path: varchar('path').notNull(),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
+    solutionsID: integer('solutions_id'),
   },
   (columns) => ({
     order: index('header_rels_order_idx').on(columns.order),
@@ -5131,6 +5579,7 @@ export const header_rels = pgTable(
     pathIdx: index('header_rels_path_idx').on(columns.path),
     header_rels_pages_id_idx: index('header_rels_pages_id_idx').on(columns.pagesID),
     header_rels_posts_id_idx: index('header_rels_posts_id_idx').on(columns.postsID),
+    header_rels_solutions_id_idx: index('header_rels_solutions_id_idx').on(columns.solutionsID),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [header.id],
@@ -5145,6 +5594,11 @@ export const header_rels = pgTable(
       columns: [columns['postsID']],
       foreignColumns: [posts.id],
       name: 'header_rels_posts_fk',
+    }).onDelete('cascade'),
+    solutionsIdFk: foreignKey({
+      columns: [columns['solutionsID']],
+      foreignColumns: [solutions.id],
+      name: 'header_rels_solutions_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -5225,6 +5679,7 @@ export const footer_rels = pgTable(
     path: varchar('path').notNull(),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
+    solutionsID: integer('solutions_id'),
   },
   (columns) => ({
     order: index('footer_rels_order_idx').on(columns.order),
@@ -5232,6 +5687,7 @@ export const footer_rels = pgTable(
     pathIdx: index('footer_rels_path_idx').on(columns.path),
     footer_rels_pages_id_idx: index('footer_rels_pages_id_idx').on(columns.pagesID),
     footer_rels_posts_id_idx: index('footer_rels_posts_id_idx').on(columns.postsID),
+    footer_rels_solutions_id_idx: index('footer_rels_solutions_id_idx').on(columns.solutionsID),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [footer.id],
@@ -5246,6 +5702,11 @@ export const footer_rels = pgTable(
       columns: [columns['postsID']],
       foreignColumns: [posts.id],
       name: 'footer_rels_posts_fk',
+    }).onDelete('cascade'),
+    solutionsIdFk: foreignKey({
+      columns: [columns['solutionsID']],
+      foreignColumns: [solutions.id],
+      name: 'footer_rels_solutions_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -5468,11 +5929,6 @@ export const relations_pages_blocks_features_columns = relations(
       references: [pages_blocks_features.id],
       relationName: 'columns',
     }),
-    appReference: one(apps, {
-      fields: [pages_blocks_features_columns.appReference],
-      references: [apps.id],
-      relationName: 'appReference',
-    }),
     image: one(media, {
       fields: [pages_blocks_features_columns.image],
       references: [media.id],
@@ -5606,6 +6062,11 @@ export const relations_pages_rels = relations(pages_rels, ({ one }) => ({
     fields: [pages_rels.postsID],
     references: [posts.id],
     relationName: 'posts',
+  }),
+  solutionsID: one(solutions, {
+    fields: [pages_rels.solutionsID],
+    references: [solutions.id],
+    relationName: 'solutions',
   }),
   appsID: one(apps, {
     fields: [pages_rels.appsID],
@@ -5916,11 +6377,6 @@ export const relations__pages_v_blocks_features_columns = relations(
       references: [_pages_v_blocks_features.id],
       relationName: 'columns',
     }),
-    appReference: one(apps, {
-      fields: [_pages_v_blocks_features_columns.appReference],
-      references: [apps.id],
-      relationName: 'appReference',
-    }),
     image: one(media, {
       fields: [_pages_v_blocks_features_columns.image],
       references: [media.id],
@@ -6060,6 +6516,11 @@ export const relations__pages_v_rels = relations(_pages_v_rels, ({ one }) => ({
     fields: [_pages_v_rels.postsID],
     references: [posts.id],
     relationName: 'posts',
+  }),
+  solutionsID: one(solutions, {
+    fields: [_pages_v_rels.solutionsID],
+    references: [solutions.id],
+    relationName: 'solutions',
   }),
   appsID: one(apps, {
     fields: [_pages_v_rels.appsID],
@@ -6328,6 +6789,16 @@ export const relations_apps_rels = relations(apps_rels, ({ one }) => ({
     references: [posts.id],
     relationName: 'posts',
   }),
+  solutionsID: one(solutions, {
+    fields: [apps_rels.solutionsID],
+    references: [solutions.id],
+    relationName: 'solutions',
+  }),
+  appsID: one(apps, {
+    fields: [apps_rels.appsID],
+    references: [apps.id],
+    relationName: 'apps',
+  }),
   mediaID: one(media, {
     fields: [apps_rels.mediaID],
     references: [media.id],
@@ -6432,6 +6903,16 @@ export const relations__apps_v_rels = relations(_apps_v_rels, ({ one }) => ({
     references: [posts.id],
     relationName: 'posts',
   }),
+  solutionsID: one(solutions, {
+    fields: [_apps_v_rels.solutionsID],
+    references: [solutions.id],
+    relationName: 'solutions',
+  }),
+  appsID: one(apps, {
+    fields: [_apps_v_rels.appsID],
+    references: [apps.id],
+    relationName: 'apps',
+  }),
   mediaID: one(media, {
     fields: [_apps_v_rels.mediaID],
     references: [media.id],
@@ -6462,6 +6943,95 @@ export const relations__apps_v = relations(_apps_v, ({ one, many }) => ({
     relationName: '_locales',
   }),
   _rels: many(_apps_v_rels, {
+    relationName: '_rels',
+  }),
+}))
+export const relations_solutions_locales = relations(solutions_locales, ({ one }) => ({
+  _parentID: one(solutions, {
+    fields: [solutions_locales._parentID],
+    references: [solutions.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations_solutions_rels = relations(solutions_rels, ({ one }) => ({
+  parent: one(solutions, {
+    fields: [solutions_rels.parent],
+    references: [solutions.id],
+    relationName: '_rels',
+  }),
+  pagesID: one(pages, {
+    fields: [solutions_rels.pagesID],
+    references: [pages.id],
+    relationName: 'pages',
+  }),
+  postsID: one(posts, {
+    fields: [solutions_rels.postsID],
+    references: [posts.id],
+    relationName: 'posts',
+  }),
+  solutionsID: one(solutions, {
+    fields: [solutions_rels.solutionsID],
+    references: [solutions.id],
+    relationName: 'solutions',
+  }),
+}))
+export const relations_solutions = relations(solutions, ({ one, many }) => ({
+  icon: one(media, {
+    fields: [solutions.icon],
+    references: [media.id],
+    relationName: 'icon',
+  }),
+  _locales: many(solutions_locales, {
+    relationName: '_locales',
+  }),
+  _rels: many(solutions_rels, {
+    relationName: '_rels',
+  }),
+}))
+export const relations__solutions_v_locales = relations(_solutions_v_locales, ({ one }) => ({
+  _parentID: one(_solutions_v, {
+    fields: [_solutions_v_locales._parentID],
+    references: [_solutions_v.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations__solutions_v_rels = relations(_solutions_v_rels, ({ one }) => ({
+  parent: one(_solutions_v, {
+    fields: [_solutions_v_rels.parent],
+    references: [_solutions_v.id],
+    relationName: '_rels',
+  }),
+  pagesID: one(pages, {
+    fields: [_solutions_v_rels.pagesID],
+    references: [pages.id],
+    relationName: 'pages',
+  }),
+  postsID: one(posts, {
+    fields: [_solutions_v_rels.postsID],
+    references: [posts.id],
+    relationName: 'posts',
+  }),
+  solutionsID: one(solutions, {
+    fields: [_solutions_v_rels.solutionsID],
+    references: [solutions.id],
+    relationName: 'solutions',
+  }),
+}))
+export const relations__solutions_v = relations(_solutions_v, ({ one, many }) => ({
+  parent: one(solutions, {
+    fields: [_solutions_v.parent],
+    references: [solutions.id],
+    relationName: 'parent',
+  }),
+  version_icon: one(media, {
+    fields: [_solutions_v.version_icon],
+    references: [media.id],
+    relationName: 'version_icon',
+  }),
+  _locales: many(_solutions_v_locales, {
+    relationName: '_locales',
+  }),
+  _rels: many(_solutions_v_rels, {
     relationName: '_rels',
   }),
 }))
@@ -7047,6 +7617,11 @@ export const relations_payload_locked_documents_rels = relations(
       references: [apps.id],
       relationName: 'apps',
     }),
+    solutionsID: one(solutions, {
+      fields: [payload_locked_documents_rels.solutionsID],
+      references: [solutions.id],
+      relationName: 'solutions',
+    }),
     'app-iconsID': one(app_icons, {
       fields: [payload_locked_documents_rels['app-iconsID']],
       references: [app_icons.id],
@@ -7292,6 +7867,11 @@ export const relations_header_rels = relations(header_rels, ({ one }) => ({
     references: [posts.id],
     relationName: 'posts',
   }),
+  solutionsID: one(solutions, {
+    fields: [header_rels.solutionsID],
+    references: [solutions.id],
+    relationName: 'solutions',
+  }),
 }))
 export const relations_header = relations(header, ({ many }) => ({
   tabs: many(header_tabs, {
@@ -7353,6 +7933,11 @@ export const relations_footer_rels = relations(footer_rels, ({ one }) => ({
     references: [posts.id],
     relationName: 'posts',
   }),
+  solutionsID: one(solutions, {
+    fields: [footer_rels.solutionsID],
+    references: [solutions.id],
+    relationName: 'solutions',
+  }),
 }))
 export const relations_footer = relations(footer, ({ many }) => ({
   columns: many(footer_columns, {
@@ -7371,65 +7956,87 @@ type DatabaseSchema = {
   enum_pages_blocks_apps_block_header_links_link_type: typeof enum_pages_blocks_apps_block_header_links_link_type
   enum_pages_blocks_apps_body_links_link_type: typeof enum_pages_blocks_apps_body_links_link_type
   enum_pages_blocks_apps_block_header_type: typeof enum_pages_blocks_apps_block_header_type
+  enum_pages_blocks_apps_block_header_badge_type: typeof enum_pages_blocks_apps_block_header_badge_type
   badge_color: typeof badge_color
   badge_icon_position: typeof badge_icon_position
   enum_pages_blocks_apps_type: typeof enum_pages_blocks_apps_type
+  enum_pages_blocks_apps_body_badge_type: typeof enum_pages_blocks_apps_body_badge_type
   enum_pages_blocks_cta_block_header_links_link_type: typeof enum_pages_blocks_cta_block_header_links_link_type
   enum_pages_blocks_cta_links_link_type: typeof enum_pages_blocks_cta_links_link_type
   enum_pages_blocks_cta_block_header_type: typeof enum_pages_blocks_cta_block_header_type
+  enum_pages_blocks_cta_block_header_badge_type: typeof enum_pages_blocks_cta_block_header_badge_type
   enum_pages_blocks_content_block_header_links_link_type: typeof enum_pages_blocks_content_block_header_links_link_type
   enum_pages_blocks_content_columns_size: typeof enum_pages_blocks_content_columns_size
   enum_pages_blocks_content_columns_link_type: typeof enum_pages_blocks_content_columns_link_type
   enum_pages_blocks_content_block_header_type: typeof enum_pages_blocks_content_block_header_type
+  enum_pages_blocks_content_block_header_badge_type: typeof enum_pages_blocks_content_block_header_badge_type
   enum_pages_blocks_archive_populate_by: typeof enum_pages_blocks_archive_populate_by
   enum_pages_blocks_archive_relation_to: typeof enum_pages_blocks_archive_relation_to
   enum_pages_blocks_styled_list_list_style: typeof enum_pages_blocks_styled_list_list_style
   enum_pages_blocks_testimonials_block_header_links_link_type: typeof enum_pages_blocks_testimonials_block_header_links_link_type
   enum_pages_blocks_testimonials_block_header_type: typeof enum_pages_blocks_testimonials_block_header_type
+  enum_pages_blocks_testimonials_block_header_badge_type: typeof enum_pages_blocks_testimonials_block_header_badge_type
   enum_pages_blocks_testimonials_type: typeof enum_pages_blocks_testimonials_type
   enum_pages_blocks_features_block_header_links_link_type: typeof enum_pages_blocks_features_block_header_links_link_type
   enum_pages_blocks_features_columns_size: typeof enum_pages_blocks_features_columns_size
+  enum_pages_blocks_features_columns_badge_type: typeof enum_pages_blocks_features_columns_badge_type
   enum_pages_blocks_features_columns_link_type: typeof enum_pages_blocks_features_columns_link_type
   enum_pages_blocks_features_block_header_type: typeof enum_pages_blocks_features_block_header_type
+  enum_pages_blocks_features_block_header_badge_type: typeof enum_pages_blocks_features_block_header_badge_type
   enum_pages_blocks_features_layout: typeof enum_pages_blocks_features_layout
   enum_pages_blocks_features_link_type: typeof enum_pages_blocks_features_link_type
+  enum_pages_blocks_features_locale: typeof enum_pages_blocks_features_locale
   enum_pages_blocks_faq_block_block_header_links_link_type: typeof enum_pages_blocks_faq_block_block_header_links_link_type
   enum_pages_blocks_faq_block_block_header_type: typeof enum_pages_blocks_faq_block_block_header_type
+  enum_pages_blocks_faq_block_block_header_badge_type: typeof enum_pages_blocks_faq_block_block_header_badge_type
   enum_pages_blocks_gallery_block_header_links_link_type: typeof enum_pages_blocks_gallery_block_header_links_link_type
   enum_pages_blocks_gallery_block_header_type: typeof enum_pages_blocks_gallery_block_header_type
+  enum_pages_blocks_gallery_block_header_badge_type: typeof enum_pages_blocks_gallery_block_header_badge_type
   enum_pages_blocks_gallery_type: typeof enum_pages_blocks_gallery_type
   enum_pages_hero_type: typeof enum_pages_hero_type
+  enum_pages_hero_badge_type: typeof enum_pages_hero_badge_type
   enum_pages_status: typeof enum_pages_status
   enum__pages_v_version_hero_links_link_type: typeof enum__pages_v_version_hero_links_link_type
   enum__pages_v_blocks_apps_block_header_links_link_type: typeof enum__pages_v_blocks_apps_block_header_links_link_type
   enum__pages_v_blocks_apps_body_links_link_type: typeof enum__pages_v_blocks_apps_body_links_link_type
   enum__pages_v_blocks_apps_block_header_type: typeof enum__pages_v_blocks_apps_block_header_type
+  enum__pages_v_blocks_apps_block_header_badge_type: typeof enum__pages_v_blocks_apps_block_header_badge_type
   enum__pages_v_blocks_apps_type: typeof enum__pages_v_blocks_apps_type
+  enum__pages_v_blocks_apps_body_badge_type: typeof enum__pages_v_blocks_apps_body_badge_type
   enum__pages_v_blocks_cta_block_header_links_link_type: typeof enum__pages_v_blocks_cta_block_header_links_link_type
   enum__pages_v_blocks_cta_links_link_type: typeof enum__pages_v_blocks_cta_links_link_type
   enum__pages_v_blocks_cta_block_header_type: typeof enum__pages_v_blocks_cta_block_header_type
+  enum__pages_v_blocks_cta_block_header_badge_type: typeof enum__pages_v_blocks_cta_block_header_badge_type
   enum__pages_v_blocks_content_block_header_links_link_type: typeof enum__pages_v_blocks_content_block_header_links_link_type
   enum__pages_v_blocks_content_columns_size: typeof enum__pages_v_blocks_content_columns_size
   enum__pages_v_blocks_content_columns_link_type: typeof enum__pages_v_blocks_content_columns_link_type
   enum__pages_v_blocks_content_block_header_type: typeof enum__pages_v_blocks_content_block_header_type
+  enum__pages_v_blocks_content_block_header_badge_type: typeof enum__pages_v_blocks_content_block_header_badge_type
   enum__pages_v_blocks_archive_populate_by: typeof enum__pages_v_blocks_archive_populate_by
   enum__pages_v_blocks_archive_relation_to: typeof enum__pages_v_blocks_archive_relation_to
   enum__pages_v_blocks_styled_list_list_style: typeof enum__pages_v_blocks_styled_list_list_style
   enum__pages_v_blocks_testimonials_block_header_links_link_type: typeof enum__pages_v_blocks_testimonials_block_header_links_link_type
   enum__pages_v_blocks_testimonials_block_header_type: typeof enum__pages_v_blocks_testimonials_block_header_type
+  enum__pages_v_blocks_testimonials_block_header_badge_type: typeof enum__pages_v_blocks_testimonials_block_header_badge_type
   enum__pages_v_blocks_testimonials_type: typeof enum__pages_v_blocks_testimonials_type
   enum__pages_v_blocks_features_block_header_links_link_type: typeof enum__pages_v_blocks_features_block_header_links_link_type
   enum__pages_v_blocks_features_columns_size: typeof enum__pages_v_blocks_features_columns_size
+  enum__pages_v_blocks_features_columns_badge_type: typeof enum__pages_v_blocks_features_columns_badge_type
   enum__pages_v_blocks_features_columns_link_type: typeof enum__pages_v_blocks_features_columns_link_type
   enum__pages_v_blocks_features_block_header_type: typeof enum__pages_v_blocks_features_block_header_type
+  enum__pages_v_blocks_features_block_header_badge_type: typeof enum__pages_v_blocks_features_block_header_badge_type
   enum__pages_v_blocks_features_layout: typeof enum__pages_v_blocks_features_layout
   enum__pages_v_blocks_features_link_type: typeof enum__pages_v_blocks_features_link_type
+  enum__pages_v_blocks_features_locale: typeof enum__pages_v_blocks_features_locale
   enum__pages_v_blocks_faq_block_block_header_links_link_type: typeof enum__pages_v_blocks_faq_block_block_header_links_link_type
   enum__pages_v_blocks_faq_block_block_header_type: typeof enum__pages_v_blocks_faq_block_block_header_type
+  enum__pages_v_blocks_faq_block_block_header_badge_type: typeof enum__pages_v_blocks_faq_block_block_header_badge_type
   enum__pages_v_blocks_gallery_block_header_links_link_type: typeof enum__pages_v_blocks_gallery_block_header_links_link_type
   enum__pages_v_blocks_gallery_block_header_type: typeof enum__pages_v_blocks_gallery_block_header_type
+  enum__pages_v_blocks_gallery_block_header_badge_type: typeof enum__pages_v_blocks_gallery_block_header_badge_type
   enum__pages_v_blocks_gallery_type: typeof enum__pages_v_blocks_gallery_type
   enum__pages_v_version_hero_type: typeof enum__pages_v_version_hero_type
+  enum__pages_v_version_hero_badge_type: typeof enum__pages_v_version_hero_badge_type
   enum__pages_v_version_status: typeof enum__pages_v_version_status
   enum__pages_v_published_locale: typeof enum__pages_v_published_locale
   enum_posts_status: typeof enum_posts_status
@@ -7438,12 +8045,21 @@ type DatabaseSchema = {
   enum_apps_hero_links_link_type: typeof enum_apps_hero_links_link_type
   enum_apps_link_type: typeof enum_apps_link_type
   enum_apps_hero_type: typeof enum_apps_hero_type
+  enum_apps_hero_badge_type: typeof enum_apps_hero_badge_type
   enum_apps_status: typeof enum_apps_status
   enum__apps_v_version_hero_links_link_type: typeof enum__apps_v_version_hero_links_link_type
   enum__apps_v_version_link_type: typeof enum__apps_v_version_link_type
   enum__apps_v_version_hero_type: typeof enum__apps_v_version_hero_type
+  enum__apps_v_version_hero_badge_type: typeof enum__apps_v_version_hero_badge_type
   enum__apps_v_version_status: typeof enum__apps_v_version_status
   enum__apps_v_published_locale: typeof enum__apps_v_published_locale
+  enum_solutions_link_type: typeof enum_solutions_link_type
+  enum_solutions_ecosystem: typeof enum_solutions_ecosystem
+  enum_solutions_status: typeof enum_solutions_status
+  enum__solutions_v_version_link_type: typeof enum__solutions_v_version_link_type
+  enum__solutions_v_version_ecosystem: typeof enum__solutions_v_version_ecosystem
+  enum__solutions_v_version_status: typeof enum__solutions_v_version_status
+  enum__solutions_v_published_locale: typeof enum__solutions_v_published_locale
   enum_app_icons_category: typeof enum_app_icons_category
   enum_testimonials_status: typeof enum_testimonials_status
   enum__testimonials_v_version_status: typeof enum__testimonials_v_version_status
@@ -7543,6 +8159,12 @@ type DatabaseSchema = {
   _apps_v: typeof _apps_v
   _apps_v_locales: typeof _apps_v_locales
   _apps_v_rels: typeof _apps_v_rels
+  solutions: typeof solutions
+  solutions_locales: typeof solutions_locales
+  solutions_rels: typeof solutions_rels
+  _solutions_v: typeof _solutions_v
+  _solutions_v_locales: typeof _solutions_v_locales
+  _solutions_v_rels: typeof _solutions_v_rels
   app_icons: typeof app_icons
   media: typeof media
   categories_breadcrumbs: typeof categories_breadcrumbs
@@ -7702,6 +8324,12 @@ type DatabaseSchema = {
   relations__apps_v_locales: typeof relations__apps_v_locales
   relations__apps_v_rels: typeof relations__apps_v_rels
   relations__apps_v: typeof relations__apps_v
+  relations_solutions_locales: typeof relations_solutions_locales
+  relations_solutions_rels: typeof relations_solutions_rels
+  relations_solutions: typeof relations_solutions
+  relations__solutions_v_locales: typeof relations__solutions_v_locales
+  relations__solutions_v_rels: typeof relations__solutions_v_rels
+  relations__solutions_v: typeof relations__solutions_v
   relations_app_icons: typeof relations_app_icons
   relations_media: typeof relations_media
   relations_categories_breadcrumbs: typeof relations_categories_breadcrumbs
@@ -7781,7 +8409,7 @@ type DatabaseSchema = {
   relations_footer: typeof relations_footer
 }
 
-declare module '@payloadcms/db-postgres/types' {
+declare module '@payloadcms/db-postgres' {
   export interface GeneratedDatabaseSchema {
     schema: DatabaseSchema
   }
