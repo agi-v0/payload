@@ -21,7 +21,7 @@ export const TabsVariant: React.FC<FeaturesBlock> = ({ columns }) => {
     <div className="py-12">
       <div className="mb-8 overflow-x-auto [scrollbar-width:none]">
         <div className="flex min-w-max items-center justify-center space-x-4">
-          {columns.map(({ tabLabel }, index) => {
+          {columns.map(({ tab }, index) => {
             return (
               <Button
                 key={index}
@@ -34,7 +34,7 @@ export const TabsVariant: React.FC<FeaturesBlock> = ({ columns }) => {
                     : '',
                 )}
               >
-                {tabLabel}
+                {tab?.tabLabel}
               </Button>
             )
           })}
