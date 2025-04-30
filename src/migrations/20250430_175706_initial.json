@@ -1,5 +1,5 @@
 {
-  "id": "31cbd61c-a3b8-4f77-8950-adbb97fa5cd0",
+  "id": "c2c4966c-442f-4d73-bec8-5a180bab9cfb",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -2945,12 +2945,6 @@
           "notNull": false,
           "default": "'half'"
         },
-        "app_reference_id": {
-          "name": "app_reference_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
         "image_id": {
           "name": "image_id",
           "type": "integer",
@@ -2975,14 +2969,14 @@
           "primaryKey": false,
           "notNull": false
         },
-        "content_copy": {
-          "name": "content_copy",
+        "content_subtitle": {
+          "name": "content_subtitle",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
-        "content_features_rich_text": {
-          "name": "content_features_rich_text",
+        "rich_text_content": {
+          "name": "rich_text_content",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false
@@ -3107,21 +3101,6 @@
           "method": "btree",
           "with": {}
         },
-        "pages_blocks_features_columns_app_reference_idx": {
-          "name": "pages_blocks_features_columns_app_reference_idx",
-          "columns": [
-            {
-              "expression": "app_reference_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
         "pages_blocks_features_columns_image_idx": {
           "name": "pages_blocks_features_columns_image_idx",
           "columns": [
@@ -3139,19 +3118,6 @@
         }
       },
       "foreignKeys": {
-        "pages_blocks_features_columns_app_reference_id_apps_id_fk": {
-          "name": "pages_blocks_features_columns_app_reference_id_apps_id_fk",
-          "tableFrom": "pages_blocks_features_columns",
-          "tableTo": "apps",
-          "columnsFrom": [
-            "app_reference_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
         "pages_blocks_features_columns_image_id_media_id_fk": {
           "name": "pages_blocks_features_columns_image_id_media_id_fk",
           "tableFrom": "pages_blocks_features_columns",
@@ -8188,12 +8154,6 @@
           "notNull": false,
           "default": "'half'"
         },
-        "app_reference_id": {
-          "name": "app_reference_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
         "image_id": {
           "name": "image_id",
           "type": "integer",
@@ -8218,14 +8178,14 @@
           "primaryKey": false,
           "notNull": false
         },
-        "content_copy": {
-          "name": "content_copy",
+        "content_subtitle": {
+          "name": "content_subtitle",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
-        "content_features_rich_text": {
-          "name": "content_features_rich_text",
+        "rich_text_content": {
+          "name": "rich_text_content",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false
@@ -8356,21 +8316,6 @@
           "method": "btree",
           "with": {}
         },
-        "_pages_v_blocks_features_columns_app_reference_idx": {
-          "name": "_pages_v_blocks_features_columns_app_reference_idx",
-          "columns": [
-            {
-              "expression": "app_reference_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
         "_pages_v_blocks_features_columns_image_idx": {
           "name": "_pages_v_blocks_features_columns_image_idx",
           "columns": [
@@ -8388,19 +8333,6 @@
         }
       },
       "foreignKeys": {
-        "_pages_v_blocks_features_columns_app_reference_id_apps_id_fk": {
-          "name": "_pages_v_blocks_features_columns_app_reference_id_apps_id_fk",
-          "tableFrom": "_pages_v_blocks_features_columns",
-          "tableTo": "apps",
-          "columnsFrom": [
-            "app_reference_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
         "_pages_v_blocks_features_columns_image_id_media_id_fk": {
           "name": "_pages_v_blocks_features_columns_image_id_media_id_fk",
           "tableFrom": "_pages_v_blocks_features_columns",
