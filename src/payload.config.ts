@@ -1,5 +1,5 @@
 import { s3Storage } from '@payloadcms/storage-s3'
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { resendAdapter } from '@payloadcms/email-resend'
 
 import sharp from 'sharp' // sharp-import
@@ -127,7 +127,7 @@ export default buildConfig({
     defaultLocale: 'ar', // required
     fallback: true, // defaults to true
   },
-  db: postgresAdapter({
+  db: vercelPostgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
