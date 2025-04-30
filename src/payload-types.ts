@@ -1697,7 +1697,6 @@ export interface FeaturesBlock {
         id?: string | null;
       }[]
     | null;
-  locale?: ('en' | 'ar') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'features';
@@ -2691,7 +2690,6 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  locale?: T;
   id?: T;
   blockName?: T;
 }

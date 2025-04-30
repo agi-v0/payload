@@ -1,4 +1,5 @@
 'use client'
+
 import { Children, ReactNode, createContext, useContext, useEffect, useRef, useState } from 'react'
 import { motion, Transition, useMotionValue } from 'motion/react'
 import { cn } from '@/utilities/ui'
@@ -6,22 +7,89 @@ import { ArrowLeftIcon, ArrowRightIcon, ChevronLeft, ChevronRight } from 'lucide
 import { useDirection } from '@/hooks/useDirection'
 import { Button } from './button'
 
+/** Tailwind breakpoint → min-width mapping */
+const BREAKPOINTS: [string, number][] = [
+  ['sm', 640],
+  ['md', 768],
+  ['lg', 1024],
+  ['xl', 1280],
+  ['2xl', 1536],
+]
+
+/** Hook: resolve slidesPerView (number or map) against current viewport */
+function useSlidesPerView(slidesPerView: number | Record<string, number>): number {
+  const [current, setCurrent] = useState<number>(
+    typeof slidesPerView === 'number' ? slidesPerView : (Object.values(slidesPerView)[0] ?? 1),
+  )
+
+  useEffect(() => {
+    function update() {
+      let value: number
+
+      if (typeof slidesPerView === 'number') {
+        value = slidesPerView
+      } else if (typeof window === 'undefined') {
+        // SSR: fallback to smallest‐breakpoint value
+        const entries = Object.entries(slidesPerView)
+          .map(([key, val]) => {
+            const bp = BREAKPOINTS.find(([b]) => b === key)
+            return bp ? [bp[1], val] : null
+          })
+          .filter(Boolean) as [number, number][]
+        entries.sort((a, b) => a[0] - b[0])
+        value = entries[0]?.[1] ?? 1
+      } else {
+        const width = window.innerWidth
+        const valid = Object.entries(slidesPerView)
+          .map(([key, val]) => {
+            const bp = BREAKPOINTS.find(([b]) => b === key)
+            return bp ? [bp[0], bp[1], val] : null
+          })
+          .filter(Boolean) as [string, number, number][]
+        valid.sort((a, b) => a[1] - b[1])
+
+        if (valid.length === 0) {
+          value = Object.values(slidesPerView)[0]
+        } else {
+          const matches = valid.filter(([, min]) => width >= min)
+          if (matches.length > 0) {
+            // pick the largest matching breakpoint
+            value = matches[matches.length - 1][2]
+          } else {
+            // below smallest: fallback to smallest’s value
+            value = valid[0][2]
+          }
+        }
+      }
+
+      setCurrent(value)
+    }
+
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [slidesPerView])
+
+  return current
+}
+
 export type CarouselContextType = {
   index: number
   setIndex: (newIndex: number) => void
   itemsCount: number
-  setItemsCount: (newItemsCount: number) => void
+  setItemsCount: (count: number) => void
   disableDrag: boolean
+  slidesPerView: number
 }
 
 const CarouselContext = createContext<CarouselContextType | undefined>(undefined)
 
 function useCarousel() {
-  const context = useContext(CarouselContext)
-  if (!context) {
-    throw new Error('useCarousel must be used within an CarouselProvider')
+  const ctx = useContext(CarouselContext)
+  if (!ctx) {
+    throw new Error('useCarousel must be used within a CarouselProvider')
   }
-  return context
+  return ctx
 }
 
 export type CarouselProviderProps = {
@@ -29,6 +97,7 @@ export type CarouselProviderProps = {
   initialIndex?: number
   onIndexChange?: (newIndex: number) => void
   disableDrag?: boolean
+  slidesPerView?: number | Record<string, number>
 }
 
 function CarouselProvider({
@@ -36,13 +105,15 @@ function CarouselProvider({
   initialIndex = 0,
   onIndexChange,
   disableDrag = false,
+  slidesPerView = 1,
 }: CarouselProviderProps) {
-  const [index, setIndex] = useState<number>(initialIndex)
-  const [itemsCount, setItemsCount] = useState<number>(0)
+  const [index, setIndex] = useState(initialIndex)
+  const [itemsCount, setItemsCount] = useState(0)
+  const resolved = useSlidesPerView(slidesPerView)
 
-  const handleSetIndex = (newIndex: number) => {
-    setIndex(newIndex)
-    onIndexChange?.(newIndex)
+  const handleSetIndex = (newIdx: number) => {
+    setIndex(newIdx)
+    onIndexChange?.(newIdx)
   }
 
   useEffect(() => {
@@ -57,6 +128,7 @@ function CarouselProvider({
         itemsCount,
         setItemsCount,
         disableDrag,
+        slidesPerView: resolved,
       }}
     >
       {children}
@@ -71,6 +143,8 @@ export type CarouselProps = {
   index?: number
   onIndexChange?: (newIndex: number) => void
   disableDrag?: boolean
+  /** Number or map of Tailwind breakpoints → slides per view */
+  slidesPerView?: number | Record<string, number>
 }
 
 function Carousel({
@@ -80,16 +154,15 @@ function Carousel({
   index: externalIndex,
   onIndexChange,
   disableDrag = false,
+  slidesPerView = 1,
 }: CarouselProps) {
   const [internalIndex, setInternalIndex] = useState<number>(initialIndex)
   const isControlled = externalIndex !== undefined
   const currentIndex = isControlled ? externalIndex : internalIndex
 
-  const handleIndexChange = (newIndex: number) => {
-    if (!isControlled) {
-      setInternalIndex(newIndex)
-    }
-    onIndexChange?.(newIndex)
+  const handleIndexChange = (newIdx: number) => {
+    if (!isControlled) setInternalIndex(newIdx)
+    onIndexChange?.(newIdx)
   }
 
   return (
@@ -97,12 +170,9 @@ function Carousel({
       initialIndex={currentIndex}
       onIndexChange={handleIndexChange}
       disableDrag={disableDrag}
+      slidesPerView={slidesPerView}
     >
-      <div className={cn('group/hover relative', className)}>
-        {children}
-        {/* <div className="">
-          </div> */}
-      </div>
+      <div className={cn('group/hover relative', className)}>{children}</div>
     </CarouselProvider>
   )
 }
@@ -114,19 +184,19 @@ export type CarouselNavigationProps = {
 }
 
 function CarouselNavigation({ className, classNameButton, alwaysShow }: CarouselNavigationProps) {
-  const { index, setIndex, itemsCount } = useCarousel()
+  const { index, setIndex, itemsCount, slidesPerView } = useCarousel()
   const direction = useDirection()
+
+  const pagesCount = Math.max(itemsCount - slidesPerView + 1, 1)
+  const prevDisabled = index === 0
+  const nextDisabled = index + 1 === pagesCount
 
   const PreviousIcon = direction === 'rtl' ? ChevronRight : ChevronLeft
   const NextIcon = direction === 'rtl' ? ChevronLeft : ChevronRight
 
   return (
     <div
-      className={cn(
-        'pointer-events-none absolute flex w-full justify-between gap-2',
-        direction === 'rtl' ? '' : '',
-        className,
-      )}
+      className={cn('pointer-events-none absolute flex w-full justify-between gap-2', className)}
     >
       <Button
         type="button"
@@ -135,27 +205,24 @@ function CarouselNavigation({ className, classNameButton, alwaysShow }: Carousel
         color="neutral"
         size="icon"
         className={cn('pointer-events-auto rounded-full', classNameButton)}
-        disabled={index === 0}
+        disabled={prevDisabled}
         onClick={() => {
-          if (index > 0) {
-            setIndex(index - 1)
-          }
+          if (!prevDisabled) setIndex(index - 1)
         }}
       >
         <ArrowRightIcon className="size-4" />
       </Button>
+
       <Button
         type="button"
+        aria-label="Next slide"
         variant="secondary"
         color="neutral"
         size="icon"
         className={cn('pointer-events-auto rounded-full', classNameButton)}
-        aria-label="Next slide"
-        disabled={index + 1 === itemsCount}
+        disabled={nextDisabled}
         onClick={() => {
-          if (index < itemsCount - 1) {
-            setIndex(index + 1)
-          }
+          if (!nextDisabled) setIndex(index + 1)
         }}
       >
         <ArrowLeftIcon className="size-4" />
@@ -170,7 +237,8 @@ export type CarouselIndicatorProps = {
 }
 
 function CarouselIndicator({ className, classNameButton }: CarouselIndicatorProps) {
-  const { index, itemsCount, setIndex } = useCarousel()
+  const { index, itemsCount, setIndex, slidesPerView } = useCarousel()
+  const pagesCount = Math.max(itemsCount - slidesPerView + 1, 1)
 
   return (
     <div
@@ -180,7 +248,7 @@ function CarouselIndicator({ className, classNameButton }: CarouselIndicatorProp
       )}
     >
       <div className="flex space-x-2">
-        {Array.from({ length: itemsCount }, (_, i) => (
+        {Array.from({ length: pagesCount }, (_, i) => (
           <button
             key={i}
             type="button"
@@ -205,73 +273,36 @@ export type CarouselContentProps = {
 }
 
 function CarouselContent({ children, className, transition }: CarouselContentProps) {
-  const { index, setIndex, setItemsCount, disableDrag } = useCarousel()
-  const [visibleItemsCount, setVisibleItemsCount] = useState(1)
+  const { index, setIndex, setItemsCount, disableDrag, slidesPerView } = useCarousel()
   const dragX = useMotionValue(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const itemsLength = Children.count(children)
   const direction = useDirection()
 
+  // keep track of total slides
   useEffect(() => {
-    if (!containerRef.current) {
-      return
-    }
-
-    const options = {
-      root: containerRef.current,
-      threshold: 0.5,
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      const visibleCount = entries.filter((entry) => entry.isIntersecting).length
-      setVisibleItemsCount(visibleCount)
-    }, options)
-
-    const childNodes = containerRef.current.children
-    Array.from(childNodes).forEach((child) => observer.observe(child))
-
-    return () => observer.disconnect()
-  }, [children, setItemsCount])
-
-  useEffect(() => {
-    if (!itemsLength) {
-      return
-    }
-
-    setItemsCount(itemsLength)
+    if (itemsLength) setItemsCount(itemsLength)
   }, [itemsLength, setItemsCount])
 
   const onDragEnd = () => {
     const x = dragX.get()
-    const dragThreshold = 10
+    const threshold = 10
+    const isNext = direction === 'rtl' ? x >= threshold : x <= -threshold
+    const isPrev = direction === 'rtl' ? x <= -threshold : x >= threshold
 
-    const isNextDrag = direction === 'rtl' ? x >= dragThreshold : x <= -dragThreshold
-    const isPrevDrag = direction === 'rtl' ? x <= -dragThreshold : x >= dragThreshold
-
-    if (isNextDrag && index < itemsLength - 1) {
-      setIndex(index + 1)
-    } else if (isPrevDrag && index > 0) {
-      setIndex(index - 1)
-    }
+    const maxIndex = Math.max(itemsLength - slidesPerView, 0)
+    if (isNext && index < maxIndex) setIndex(index + 1)
+    else if (isPrev && index > 0) setIndex(index - 1)
   }
 
   return (
     <motion.div
       drag={disableDrag ? false : 'x'}
-      dragConstraints={
-        disableDrag
-          ? undefined
-          : {
-              left: 0,
-              right: 0,
-            }
-      }
+      dragConstraints={disableDrag ? undefined : { left: 0, right: 0 }}
       dragMomentum={disableDrag ? undefined : false}
-      style={{
-        x: disableDrag ? undefined : dragX,
-      }}
+      style={{ x: dragX }}
       animate={{
-        translateX: `${direction === 'rtl' ? '' : '-'}${index * (100 / visibleItemsCount)}%`,
+        translateX: `${direction === 'rtl' ? '' : '-'}${index * (100 / slidesPerView)}%`,
       }}
       onDragEnd={disableDrag ? undefined : onDragEnd}
       transition={
@@ -300,8 +331,20 @@ export type CarouselItemProps = {
 }
 
 function CarouselItem({ children, className }: CarouselItemProps) {
+  const { slidesPerView } = useCarousel()
+  const basis = 100 / slidesPerView
+
   return (
-    <motion.div className={cn('w-full min-w-0 shrink-0 grow-0 overflow-hidden', className)}>
+    <motion.div
+      className={cn('overflow-hidden', className)}
+      style={{
+        flexBasis: `${basis}%`,
+        flexGrow: 0,
+        flexShrink: 0,
+        maxWidth: `${basis}%`,
+        minWidth: 0,
+      }}
+    >
       {children}
     </motion.div>
   )

@@ -31,9 +31,10 @@ type BlockWithHeader = {
 } & Page['layout'][0]
 
 export const RenderBlocks: React.FC<{
+  locale: string
   blocks: BlockWithHeader[]
 }> = (props) => {
-  const { blocks } = props
+  const { blocks, locale } = props
 
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) {
     return null
@@ -52,7 +53,7 @@ export const RenderBlocks: React.FC<{
         return (
           <div id={block.blockName || undefined} className="" key={index}>
             {blockHeader && <BlockHeader {...blockHeader} className="" />}
-            <Block {...(block as any)} />
+            <Block {...(block as any)} locale={locale} />
           </div>
         )
       })}

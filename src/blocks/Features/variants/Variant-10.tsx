@@ -7,6 +7,7 @@ import { FeaturesBlock } from '@/payload-types'
 import {
   Carousel,
   CarouselContent,
+  CarouselIndicator,
   CarouselItem,
   CarouselNavigation,
 } from '@/components/ui/carousel'
@@ -16,14 +17,20 @@ export const Variant10: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="py-xl container">
-      <Carousel className="w-full">
-        <CarouselNavigation alwaysShow />
-        <CarouselContent className="gap-xs">
+    <div className="py-md container pt-0">
+      <Carousel
+        slidesPerView={{
+          sm: 1, //   ≥640px: 1 slide
+          md: 2, //   ≥768px: 2 slides
+          lg: 4, //  ≥1024px: 4 slides
+        }}
+      >
+        {columns.length > 1 && <CarouselNavigation className="mb-xs relative justify-start" />}
+        <CarouselContent className="">
           {columns.map((column, index) => (
-            <CarouselItem key={index} className="h-[540px] md:basis-1/2 lg:basis-1/4">
-              <Card className="h-full border border-[#F9FAFB] shadow-none transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
-                <CardContent className="rounded-space-sm flex h-full flex-col items-start gap-4 p-4">
+            <CarouselItem key={index} className="px-2xs">
+              <Card className="p-sm h-full transition-colors">
+                <CardContent className="rounded-space-sm gap-xs flex h-full flex-col items-start">
                   {column.image && (
                     <div className="rounded-space-xs overflow-hidden">
                       <Media
@@ -47,6 +54,7 @@ export const Variant10: React.FC<FeaturesBlock> = ({ columns }) => {
             </CarouselItem>
           ))}
         </CarouselContent>
+        <CarouselIndicator className="mt-xs relative bottom-0 h-10" />
       </Carousel>
     </div>
   )

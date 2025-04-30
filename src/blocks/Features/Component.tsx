@@ -11,7 +11,7 @@ export const FeaturesBlockComponent: React.FC<FeaturesBlock> = (props) => {
     link,
     CTALabel,
     blockType,
-    locale,
+    locale = 'ar',
   } = props
 
   const VariantComponent = getVariantComponent(layout)

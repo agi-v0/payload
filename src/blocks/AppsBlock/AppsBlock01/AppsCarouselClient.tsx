@@ -26,7 +26,7 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
 
   return (
     // Use background variable and explicit rounding from Figma
-    <div className="bg-background-neutral rounded-space-sm flex flex-col overflow-hidden lg:flex-row">
+    <div className="bg-background-neutral rounded-space-sm flex w-full flex-col overflow-hidden lg:flex-row">
       {/* Content Section */}
       <div className="p-md flex w-full flex-col justify-between text-start">
         <div className="gap-sm flex flex-col items-start justify-start">
@@ -83,21 +83,24 @@ export const AppsCarouselClient: React.FC<AppsCarouselClientProps> = ({ apps }) 
 
   return (
     <div className="relative container w-full">
-      <Carousel>
-        <CarouselContent className="-ml-4 items-stretch">
+      <Carousel
+        slidesPerView={{
+          sm: 1, //   ≥640px: 1 slide
+          md: 2, //   ≥768px: 2 slides
+          lg: 1, //  ≥1024px: 4 slides
+        }}
+      >
+        <CarouselContent className="">
           {apps.map((app, index) => (
-            <CarouselItem key={app.id || index} className="basis-full px-2 pl-4">
+            <CarouselItem key={app.id || index} className="px-2xs">
               <AppCard app={app} />
             </CarouselItem>
           ))}
         </CarouselContent>
         {apps.length > 1 && (
           <>
-            <CarouselNavigation
-              className="absolute top-auto -bottom-20 left-auto w-full justify-between gap-2"
-              alwaysShow
-            />
-            <CarouselIndicator className="-bottom-20 h-12" />
+            <CarouselNavigation className="mt-xs relative justify-between" />
+            <CarouselIndicator className="absolute bottom-0 h-10" />
           </>
         )}
       </Carousel>

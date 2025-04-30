@@ -241,27 +241,5 @@ export const Features: Block = {
         },
       ],
     },
-    {
-      name: 'locale',
-      type: 'select',
-      admin: {
-        hidden: true,
-      },
-      options: [
-        { label: 'English', value: 'en' },
-        { label: 'Arabic', value: 'ar' },
-      ],
-      hooks: {
-        beforeValidate: [
-          ({ req, value, data }) => {
-            if (req?.locale) {
-              return req.locale
-            }
-
-            return value || 'en' // Default to English if no locale is found
-          },
-        ],
-      },
-    },
   ],
 }

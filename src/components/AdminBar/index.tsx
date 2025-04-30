@@ -24,10 +24,6 @@ const collectionLabels = {
     plural: 'Posts',
     singular: 'Post',
   },
-  projects: {
-    plural: 'Projects',
-    singular: 'Project',
-  },
 }
 
 const Title: React.FC = () => <span>Dashboard</span>
@@ -69,9 +65,9 @@ export const AdminBar: React.FC<{
           {...adminBarProps}
           className="h-full py-0 text-white"
           classNames={{
-            controls: 'font-medium text-white',
-            logo: 'text-white',
-            user: 'text-white',
+            controls: 'font-medium text-white me-2.5 mr-0',
+            logo: 'text-white me-2.5 mr-0',
+            user: 'text-white me-2.5 mr-0',
           }}
           cmsURL={getClientSideURL()}
           collection={collection}
