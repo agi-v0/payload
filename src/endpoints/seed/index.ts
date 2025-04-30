@@ -44,6 +44,12 @@ const collections: CollectionSlug[] = [
 ]
 const globals: GlobalSlug[] = ['header', 'footer']
 
+const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+
+console.log('NEXT_PUBLIC_SERVER_URL', NEXT_PUBLIC_SERVER_URL)
+
 // Next.js revalidation errors are normal when seeding the database without a server running
 // i.e. running `yarn seed` locally instead of using the admin UI within an active app
 // The app is not running to revalidate the pages and so the API routes are not available
@@ -201,20 +207,20 @@ export const seed = async ({
       data: image2, // Using image2 data for post 3 as in original code
       key: 'image3',
     },
-    { url: '/marn-logo.png', data: imageLogo, key: 'logo' },
-    { url: '/marn-placeholder.png', data: imageHero1, key: 'hero1' },
+    { url: `${NEXT_PUBLIC_SERVER_URL}/marn-logo.png`, data: imageLogo, key: 'logo' },
+    { url: `${NEXT_PUBLIC_SERVER_URL}/marn-placeholder.png`, data: imageHero1, key: 'hero1' },
     {
-      url: '/marn-placeholder-16x9.png',
+      url: `${NEXT_PUBLIC_SERVER_URL}/marn-placeholder-16x9.png`,
       data: image169,
       key: 'image169',
     },
     {
-      url: '/marn-placeholder-4x3.png',
+      url: `${NEXT_PUBLIC_SERVER_URL}/marn-placeholder-4x3.png`,
       data: image43,
       key: 'image43',
     },
     {
-      url: '/marn-placeholder-1x1.png',
+      url: `${NEXT_PUBLIC_SERVER_URL}/marn-placeholder-1x1.png`,
       data: imageSquare,
       key: 'imageSquare',
     },
