@@ -1,0 +1,78 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Payload CMS Seeding Guidelines
+
+This document outlines best practices for creating and maintaining seed functions for Payload CMS, particularly within this project.
+
+Refer to the main seed implementation: [src/endpoints/seed/index.ts](mdc:src/endpoints/seed/index.ts)
+
+## Key Principles
+
+1.  **Sequential Creation for Dependencies:** When creating documents that depend on each other (e.g., posts depending on media and authors, pages depending on forms), create them sequentially using `for...of` loops or individual `await` calls rather than `Promise.all`. This ensures dependencies exist before they are referenced.
+2.  **Parallelization for Independent Operations:** Operations that are independent can be parallelized using `Promise.all` for efficiency. This is suitable for:
+    *   Initial clearing of collections and globals.
+    *   Fetching external resources (like images) if they don't depend on each other.
+3.  **Clear Logging:** Add informative logs (`payload.logger.info`, `payload.logger.error`) before and after major steps (clearing, seeding specific collections, fetching data) and within loops to track progress and diagnose issues.
+4.  **Data Structuring:**
+    *   Define seed data structures or functions in separate files (e.g., `./home.ts`, `./post-1.ts`) and import them into the main seed file.
+    *   For sequential creation within loops, structure the data needed for each creation into an array of objects.
+5.  **Dependency Management:**
+    *   When creating items sequentially, store the results (e.g., created document IDs or the full documents) in variables or maps.
+    *   Use these stored results to link related documents (e.g., assigning an author to a post, linking related posts, assigning categories to media).
+6.  **Error Handling:** While the example focuses on logging, consider adding `try...catch` blocks for critical operations, especially external fetches (`fetchFileByURL`).
+7.  **Type Safety:**
+    *   Use Payload's generated types (from `src/payload-types.ts`) for data structures and function arguments.
+    *   Use type casting (`as Type`) for the results of `payload.create`, `payload.update`, etc., where TypeScript might not automatically infer the correct specific type (e.g., `await payload.create(...) as Post`).
+    *   For complex data structures like Globals (Header, Footer), defining the data object directly might lead to type errors. Consider using `data: yourData as any` during the `payload.updateGlobal` call as a pragmatic workaround if precisely matching the complex generated type proves difficult, but ensure the structure is fundamentally correct.
+8.  **Revalidation:** Be mindful of Next.js revalidation (`context: { disableRevalidate: true }`) when seeding, especially if running the seed script outside a running Next.js application context.
+
+## Example Pattern (Simplified)
+
+```typescript
+export const seed = async ({ payload, req }: { payload: Payload; req: PayloadRequest }) => {
+  payload.logger.info('Seeding database...')
+
+  // 1. Clear data (can be parallel)
+  payload.logger.info('— Clearing collections and globals...')
+  // ... clear operations using Promise.all
+
+  // 2. Seed independent data or prerequisites (can be parallel or sequential)
+  payload.logger.info('— Seeding users...')
+  const user = await payload.create({ /* ... */ }) as User
+  payload.logger.info('— Seeding media categories...')
+  const category = await payload.create({ /* ... */ }) as MediaCategory
+
+  // 3. Fetch external resources (can be parallel)
+  payload.logger.info('— Fetching media files...')
+  const files = await Promise.all([fetchFileByURL(payload, url1), /* ... */])
+
+  // 4. Seed media sequentially (depends on fetched files)
+  payload.logger.info('— Seeding media...')
+  const mediaDocs = {}
+  for (const file of files) {
+    const doc = await payload.create({ collection: 'media', /* ... */ file }) as Media
+    // Store doc if needed
+  }
+
+  // 5. Seed dependent data sequentially
+  payload.logger.info('— Seeding posts...')
+  const postsData = [{ /* ... */ }, { /* ... */ }]
+  for (const postData of postsData) {
+     // Use previously created user, media etc.
+    const post = await payload.create({ collection: 'posts', data: { ...postData, author: user.id } }) as Post
+    // Store post if needed for relations
+  }
+
+  // ... Seed other collections sequentially ...
+
+  // 6. Seed Globals
+  payload.logger.info('— Seeding globals...')
+  const headerData = { /* ... */ }
+  await payload.updateGlobal({ slug: 'header', data: headerData /* consider `as any` */ })
+
+  payload.logger.info('Seeded database successfully!')
+}
+```
