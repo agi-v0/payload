@@ -1,16 +1,5 @@
 import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
-import type {
-  Header,
-  MediaCategory,
-  Category,
-  User,
-  Media,
-  Post,
-  Form,
-  Page,
-  App,
-  Solution,
-} from '@/payload-types'
+import type { Header } from '@/payload-types'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
@@ -57,16 +46,30 @@ export const seed = async ({
 }): Promise<void> => {
   payload.logger.info('Seeding database...')
 
-  // 1. Clear globals & collections (can stay parallel)
+  // we need to clear the media directory before seeding
+  // as well as the collections and globals
+  // this is because while `yarn seed` drops the database
+  // the custom `/api/seed` endpoint does not
   payload.logger.info(`— Clearing collections and globals...`)
+
+  // clear the database
   await Promise.all(
-    globals.map((slug) =>
-      payload.updateGlobal({ slug, data: {}, depth: 0, context: { disableRevalidate: true } }),
+    globals.map((global) =>
+      payload.updateGlobal({
+        slug: global,
+        data: {},
+        depth: 0,
+        context: {
+          disableRevalidate: true,
+        },
+      }),
     ),
   )
+
   await Promise.all(
     collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
   )
+
   await Promise.all(
     collections
       .filter((collection) => Boolean(payload.collections[collection].config.versions))
@@ -74,7 +77,7 @@ export const seed = async ({
   )
 
   payload.logger.info(`— Seeding demo author and user...`)
-  // Clear existing demo user first
+
   await payload.delete({
     collection: 'users',
     depth: 0,
@@ -84,517 +87,1039 @@ export const seed = async ({
       },
     },
   })
-  const demoAuthor = (await payload.create({
-    collection: 'users',
-    data: {
-      name: 'Demo Author',
-      email: 'demo-author@example.com',
-      password: 'password',
-    },
-    req,
-    depth: 0,
-  })) as User
 
-  payload.logger.info('— Seeding categories sequentially...')
+  payload.logger.info(`— Seeding categories...`)
 
-  // 2. Build an array of category create operations
-  const categoryCreates = [
-    // Media Categories
-    { collection: 'media-categories', data: { title: 'App Icons', slug: 'app-icon' } },
-    { collection: 'media-categories', data: { title: 'Hero Images' } },
-    { collection: 'media-categories', data: { title: 'Feature Images' } },
-    { collection: 'media-categories', data: { title: 'Blog Images' } },
-    { collection: 'media-categories', data: { title: 'OG Images' } },
-    { collection: 'media-categories', data: { title: 'Customer Logos' } },
-    { collection: 'media-categories', data: { title: 'Team Photos' } },
-    { collection: 'media-categories', data: { title: 'Background Textures' } },
-    // Categories
-    {
+  const categories = await Promise.all([
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'App Icons',
+        slug: 'app-icon',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Hero Images',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Feature Images',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Blog Images',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'OG Images',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Customer Logos',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Team Photos',
+      },
+    }),
+    payload.create({
+      collection: 'media-categories',
+      data: {
+        title: 'Background Textures',
+      },
+    }),
+    payload.create({
       collection: 'categories',
       data: {
         title: 'إدارة المطاعم',
-        breadcrumbs: [{ label: 'إدارة المطاعم', url: '/restaurant-management' }],
+        breadcrumbs: [
+          {
+            label: 'إدارة المطاعم',
+            url: '/restaurant-management',
+          },
+        ],
       },
-    },
-    {
+    }),
+
+    payload.create({
       collection: 'categories',
       data: {
         title: 'إدارة المخزون',
-        breadcrumbs: [{ label: 'إدارة المخزون', url: '/inventory-management' }],
+        breadcrumbs: [
+          {
+            label: 'إدارة المخزون',
+            url: '/inventory-management',
+          },
+        ],
       },
-    },
-    {
+    }),
+
+    payload.create({
       collection: 'categories',
       data: {
         title: 'تقارير المبيعات',
-        breadcrumbs: [{ label: 'تقارير المبيعات', url: '/sales-reports' }],
+        breadcrumbs: [
+          {
+            label: 'تقارير المبيعات',
+            url: '/sales-reports',
+          },
+        ],
       },
-    },
-    {
+    }),
+    payload.create({
       collection: 'categories',
       data: {
         title: 'إدارة الموظفين',
-        breadcrumbs: [{ label: 'إدارة الموظفين', url: '/staff-management' }],
+        breadcrumbs: [
+          {
+            label: 'إدارة الموظفين',
+            url: '/staff-management',
+          },
+        ],
       },
-    },
-    {
+    }),
+
+    payload.create({
       collection: 'categories',
       data: {
         title: 'برامج نقاط البيع',
-        breadcrumbs: [{ label: 'برامج نقاط البيع', url: '/pos-software' }],
+        breadcrumbs: [
+          {
+            label: 'برامج نقاط البيع',
+            url: '/pos-software',
+          },
+        ],
       },
-    },
-    {
+    }),
+
+    payload.create({
       collection: 'categories',
       data: {
         title: 'خدمة العملاء',
-        breadcrumbs: [{ label: 'خدمة العملاء', url: '/customer-service' }],
+        breadcrumbs: [
+          {
+            label: 'خدمة العملاء',
+            url: '/customer-service',
+          },
+        ],
       },
-    },
-  ]
+    }),
+  ])
 
-  // 3. Run category creations one at a time and store results
-  const createdCategories: (MediaCategory | Category)[] = []
-  for (const op of categoryCreates) {
-    payload.logger.info(
-      `Creating ${op.collection} – ${op.data.title || op.data.slug || 'Untitled'}`,
-    )
-    if (op.collection === 'media-categories') {
-      const createdDoc = await payload.create({
-        collection: op.collection,
-        data: op.data,
-        req,
-        depth: 0,
-      })
-      createdCategories.push(createdDoc)
-    } else if (op.collection === 'categories') {
-      const createdDoc = await payload.create({
-        collection: op.collection,
-        data: op.data,
-        req,
-        depth: 0,
-      })
-      createdCategories.push(createdDoc)
-    }
-  }
-  // Find the 'App Icons' media category ID for later use
-  const appIconsCategoryId = createdCategories.find(
-    (cat) => 'slug' in cat && cat.slug === 'app-icon', // Use type guard
-  )?.id
+  payload.logger.info(`— Seeding media...`)
 
-  payload.logger.info('— Seeding media sequentially...')
+  const [
+    image1Buffer,
+    image2Buffer,
+    image3Buffer,
+    logoBuffer,
+    hero1Buffer,
+    image169Buffer,
+    image43Buffer,
+    imageSquareBuffer,
+  ] = await Promise.all([
+    fetchFileByURL(
+      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
+    ),
+    fetchFileByURL(
+      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
+    ),
+    fetchFileByURL(
+      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
+    ),
+    fetchFileByURL('http://localhost:3000/marn-logo.png'),
+    fetchFileByURL('http://localhost:3000/marn-placeholder.png'),
+    fetchFileByURL('http://localhost:3000/marn-placeholder-16x9.png'),
+    fetchFileByURL('http://localhost:3000/marn-placeholder-4x3.png'),
+    fetchFileByURL('http://localhost:3000/marn-placeholder-1x1.png'),
+  ])
 
-  // 4. Fetch files first (can be parallel)
-  const mediaFileSources = [
-    {
-      url: 'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
-      data: image1,
-      key: 'image1',
-    },
-    {
-      url: 'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
-      data: image2,
-      key: 'image2',
-    },
-    {
-      url: 'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
-      data: image2, // Using image2 data for post 3 as in original code
-      key: 'image3',
-    },
-    { url: 'http://localhost:3000/media/marn-logo.png', data: imageLogo, key: 'logo' },
-    { url: 'http://localhost:3000/media/marn-placeholder.png', data: imageHero1, key: 'hero1' },
-    {
-      url: 'http://localhost:3000/media/marn-placeholder-16x9.png',
-      data: image169,
-      key: 'image169',
-    },
-    {
-      url: 'http://localhost:3000/media/marn-placeholder-4x3.png',
-      data: image43,
-      key: 'image43',
-    },
-    {
-      url: 'http://localhost:3000/media/marn-placeholder-1x1.png',
-      data: imageSquare,
-      key: 'imageSquare',
-    },
-  ]
-
-  const fetchedFiles = await Promise.all(
-    mediaFileSources.map((src) => fetchFileByURL(payload, src.url)), // Pass payload
-  )
-
-  // 5. Create media documents sequentially, storing results in a map
-  const mediaDocs: { [key: string]: Media } = {}
-  for (let i = 0; i < mediaFileSources.length; i++) {
-    const source = mediaFileSources[i]
-    const file = fetchedFiles[i]
-    payload.logger.info(`Creating media – ${file.name}`)
-    const createdMedia = await payload.create({
-      collection: 'media',
-      data: source.data,
-      file: file,
-      req,
-      depth: 0,
-    })
-    mediaDocs[source.key] = createdMedia
-  }
-
-  // Update imageSquareDoc with its category
-  if (mediaDocs.imageSquare && appIconsCategoryId) {
-    await payload.update({
-      id: mediaDocs.imageSquare.id,
-      collection: 'media',
+  const [
+    demoAuthor,
+    image1Doc,
+    image2Doc,
+    image3Doc,
+    imageLogoDoc,
+    imageHomeDoc,
+    image169Doc,
+    image43Doc,
+    imageSquareDoc,
+  ] = await Promise.all([
+    payload.create({
+      collection: 'users',
       data: {
-        category: appIconsCategoryId,
+        name: 'Demo Author',
+        email: 'demo-author@example.com',
+        password: 'password',
       },
-      req,
-    })
-    // Refresh the doc in our map if needed, though likely not necessary for seed script
-    // mediaDocs.imageSquare = await payload.findByID({ collection: 'media', id: mediaDocs.imageSquare.id, req })
-  }
+    }),
+    payload.create({
+      collection: 'media',
+      data: image1,
+      file: image1Buffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: image2,
+      file: image2Buffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: image2,
+      file: image3Buffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: imageLogo,
+      file: logoBuffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: imageHero1,
+      file: hero1Buffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: image169,
+      file: image169Buffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: image43,
+      file: image43Buffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: imageSquare,
+      file: imageSquareBuffer,
+    }),
+  ])
 
-  payload.logger.info('— Seeding posts sequentially…')
-
-  // 6. Define posts data and dependencies
-  const postsData = [
-    {
-      fn: post1,
-      heroKey: 'image1',
-      blockKey: 'image2',
-      key: 'post1',
-    },
-    {
-      fn: post2,
-      heroKey: 'image2',
-      blockKey: 'image3',
-      key: 'post2',
-    },
-    {
-      fn: post3,
-      heroKey: 'image3',
-      blockKey: 'image1',
-      key: 'post3',
-    },
-  ]
-
-  // 7. Create posts sequentially and store results
-  const createdPosts: { [key: string]: Post } = {}
-  for (const postInfo of postsData) {
-    payload.logger.info(`Creating post – ${postInfo.key}`)
-    const heroImage = mediaDocs[postInfo.heroKey]
-    const blockImage = mediaDocs[postInfo.blockKey]
-    const post = await payload.create({
-      collection: 'posts',
-      data: postInfo.fn({ heroImage, blockImage, author: demoAuthor }),
-      req,
-      depth: 0,
-      context: { disableRevalidate: true },
-    })
-    createdPosts[postInfo.key] = post
-  }
-
-  // 8. Update posts with related posts
-  payload.logger.info('— Updating related posts...')
+  // Update imageSquareDoc with its category after creation
   await payload.update({
-    id: createdPosts.post1.id,
+    id: imageSquareDoc.id,
+    collection: 'media',
+    data: {
+      category: categories[0].id,
+    },
+  })
+
+  payload.logger.info(`— Seeding posts...`)
+
+  // Do not create posts with `Promise.all` because we want the posts to be created in order
+  // This way we can sort them by `createdAt` or `publishedAt` and they will be in the expected order
+  const post1Doc = await payload.create({
+    collection: 'posts',
+    depth: 0,
+    context: {
+      disableRevalidate: true,
+    },
+    data: post1({ heroImage: image1Doc, blockImage: image2Doc, author: demoAuthor }),
+  })
+
+  const post2Doc = await payload.create({
+    collection: 'posts',
+    depth: 0,
+    context: {
+      disableRevalidate: true,
+    },
+    data: post2({ heroImage: image2Doc, blockImage: image3Doc, author: demoAuthor }),
+  })
+
+  const post3Doc = await payload.create({
+    collection: 'posts',
+    depth: 0,
+    context: {
+      disableRevalidate: true,
+    },
+    data: post3({ heroImage: image3Doc, blockImage: image1Doc, author: demoAuthor }),
+  })
+
+  // update each post with related posts
+  await payload.update({
+    id: post1Doc.id,
     collection: 'posts',
     data: {
-      relatedPosts: [createdPosts.post2.id, createdPosts.post3.id],
+      relatedPosts: [post2Doc.id, post3Doc.id],
     },
-    req,
   })
   await payload.update({
-    id: createdPosts.post2.id,
+    id: post2Doc.id,
     collection: 'posts',
     data: {
-      relatedPosts: [createdPosts.post1.id, createdPosts.post3.id],
+      relatedPosts: [post1Doc.id, post3Doc.id],
     },
-    req,
   })
   await payload.update({
-    id: createdPosts.post3.id,
+    id: post3Doc.id,
     collection: 'posts',
     data: {
-      relatedPosts: [createdPosts.post1.id, createdPosts.post2.id],
+      relatedPosts: [post1Doc.id, post2Doc.id],
     },
-    req,
   })
 
   payload.logger.info(`— Seeding contact form...`)
+
   const contactForm = await payload.create({
     collection: 'forms',
     depth: 0,
     data: contactFormData,
-    req,
   })
 
-  payload.logger.info(`— Seeding apps sequentially...`)
-  const appDataArray = Array.from({ length: 10 }).map((_, i) => {
-    const appData = app({ imageSquare: mediaDocs.imageSquare })
+  payload.logger.info(`— Seeding apps...`)
+
+  const appPromises = Array.from({ length: 10 }).map((_, i) => {
+    const appData = app({ imageSquare: imageSquareDoc })
     // Make each app unique
     appData.title = `App ${i + 1}`
     appData.name = `تطبيق ${i + 1}`
     appData.slug = `app-${i + 1}`
+    // Optionally, slightly vary other fields like tagline or overview if needed
     appData.tagline = `${appData.tagline} - ${i + 1}`
-    return appData
-  })
 
-  for (const appData of appDataArray) {
-    payload.logger.info(`Creating app – ${appData.title}`)
-    await payload.create({
+    return payload.create({
       collection: 'apps',
       depth: 0,
       data: appData,
-      req,
     })
-  }
+  })
 
-  payload.logger.info(`— Seeding solutions...`) // Assuming seedSolutions handles its own logging/sequence if needed
-  const solutionsSlugToIdMap = await seedSolutions(payload, { imageSquare: mediaDocs.imageSquare })
+  await Promise.all(appPromises)
 
-  payload.logger.info(`— Seeding pages sequentially...`)
-  const pagesData = [
-    {
-      locale: 'ar',
-      data: home({
-        heroImage: mediaDocs.hero1,
-        metaImage: mediaDocs.image2,
-        image169: mediaDocs.image169,
-        image43: mediaDocs.image43,
-        imageSquare: mediaDocs.imageSquare,
-      }),
-      key: 'home',
-    },
-    {
-      locale: 'ar',
-      data: contactPageData({ contactForm: contactForm }),
-      key: 'contact',
-    },
-  ]
+  payload.logger.info(`— Seeding solutions...`)
+  const solutionsSlugToIdMap = await seedSolutions(payload, { imageSquare: imageSquareDoc })
 
-  const createdPages: { [key: string]: Page } = {}
-  for (const pageInfo of pagesData) {
-    payload.logger.info(`Creating page – ${pageInfo.key} (${pageInfo.locale})`)
-    const page = await payload.create({
+  payload.logger.info(`— Seeding pages...`)
+
+  const [_, contactPage] = await Promise.all([
+    payload.create({
       collection: 'pages',
       depth: 0,
-      locale: pageInfo.locale as 'ar' | 'en',
-      data: pageInfo.data,
-      req,
-    })
-    createdPages[pageInfo.key] = page
-  }
+      data: home({
+        heroImage: imageHomeDoc,
+        metaImage: image2Doc,
+        image169: image169Doc,
+        image43: image43Doc,
+        imageSquare: imageSquareDoc,
+      }),
+      locale: 'ar',
+    }),
+    payload.create({
+      collection: 'pages',
+      depth: 0,
+      data: contactPageData({ contactForm: contactForm }),
+      locale: 'ar',
+    }),
+  ])
 
-  payload.logger.info(`— Seeding testimonials...`) // Assuming seedTestimonials handles its own logging/sequence
-  await seedTestimonials(payload, { placeholder: mediaDocs.hero1, logo: mediaDocs.logo })
+  payload.logger.info(`— Seeding testimonials...`)
 
-  payload.logger.info(`— Seeding globals sequentially...`)
+  await seedTestimonials(payload, { placeholder: imageHomeDoc, logo: imageLogoDoc })
 
-  // Header Data (using solution IDs)
+  payload.logger.info(`— Seeding globals...`)
+
   const headerData: Partial<Header> = {
     tabs: [
       {
         enableDirectLink: false,
         enableDropdown: true,
+
         descriptionLinks: [],
+
         navItems: [
           {
             style: 'list' as const,
-            defaultLink: { link: { type: 'reference', newTab: false, url: null, icon: null, label: '' }, description: null }, // prettier-ignore
-            featuredLink: { tag: null, label: null, links: [] },
+
+            defaultLink: {
+              link: {
+                type: 'reference' as const,
+                newTab: false,
+                url: null,
+                icon: null,
+                label: '',
+              },
+              description: null,
+            },
+
+            featuredLink: {
+              tag: null,
+              label: null,
+
+              links: [],
+            },
+
             listLinks: {
               tag: 'بيع',
+
               links: [
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['cashier'] as any }, label: 'الكاشير', description: 'تسجيل المبيعات بمرونة وسرعة على أي جهاز', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['paysync'] as any }, label: 'شاشة السداد', description: 'عرض الطلبات والدفع بشكل مباشر للعميل', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['kiosk'] as any }, label: 'الطلب الذاتي', description: 'خلي العملاء يطلبون بأنفسهم ويقل الضغط على الموظفين', icon: null } }, // prettier-ignore
+                {
+                  link: {
+                    type: 'reference' as const,
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions' as const,
+                      value: solutionsSlugToIdMap['cashier'] as any,
+                    },
+                    label: 'الكاشير',
+                    description: 'تسجيل المبيعات بمرونة وسرعة على أي جهاز',
+                    icon: null,
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'reference' as const,
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions' as const,
+                      value: solutionsSlugToIdMap['paysync'] as any,
+                    },
+                    label: 'شاشة السداد',
+                    description: 'عرض الطلبات والدفع بشكل مباشر للعميل',
+                    icon: null,
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'reference' as const,
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions' as const,
+                      value: solutionsSlugToIdMap['kiosk'] as any,
+                    },
+                    label: 'الطلب الذاتي',
+                    description: 'خلي العملاء يطلبون بأنفسهم ويقل الضغط على الموظفين',
+                    icon: null,
+                  },
+                },
               ],
             },
           },
+
           {
             style: 'list' as const,
-            defaultLink: { link: { type: 'reference', newTab: false, url: null, icon: null, label: '' }, description: null }, // prettier-ignore
-            featuredLink: { tag: null, label: null, links: [] },
+
+            defaultLink: {
+              link: {
+                type: 'reference' as const,
+                newTab: false,
+                url: null,
+                icon: null,
+                label: '',
+              },
+              description: null,
+            },
+
+            featuredLink: {
+              tag: null,
+              label: null,
+
+              links: [],
+            },
+
             listLinks: {
               tag: 'تشغيل',
+
               links: [
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['orderstation'] as any }, label: 'محطة الطلبات', description: ' إدارة جميع الطلبات من مكان واحد – حضوري وتوصيل', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['products'] as any }, label: 'المنتجات', description: 'نظّم منتجاتك، الأسعار، والعروض بسهولة', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['inventory'] as any }, label: 'المخزون', description: 'تابع الكميات وتفادى النقص أو الهدر تلقائيًا', icon: null } }, // prettier-ignore
+                {
+                  link: {
+                    type: 'reference' as const,
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions' as const,
+                      value: solutionsSlugToIdMap['orderstation'] as any,
+                    },
+                    label: 'محطة الطلبات',
+                    description: ' إدارة جميع الطلبات من مكان واحد – حضوري وتوصيل',
+                    icon: null,
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'reference' as const,
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions' as const,
+                      value: solutionsSlugToIdMap['products'] as any,
+                    },
+                    label: 'المنتجات',
+                    description: 'نظّم منتجاتك، الأسعار، والعروض بسهولة',
+                    icon: null,
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'reference' as const,
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions' as const,
+                      value: solutionsSlugToIdMap['inventory'] as any,
+                    },
+                    label: 'المخزون',
+                    description: 'تابع الكميات وتفادى النقص أو الهدر تلقائيًا',
+                    icon: null,
+                  },
+                },
               ],
             },
           },
+
           {
             style: 'list' as const,
-            defaultLink: { link: { type: 'reference', newTab: false, url: null, icon: null, label: '' }, description: null }, // prettier-ignore
-            featuredLink: { tag: null, label: null, links: [] },
+
+            defaultLink: {
+              link: {
+                type: 'reference' as const,
+                newTab: false,
+                url: null,
+                icon: null,
+                label: '',
+              },
+              description: null,
+            },
+
+            featuredLink: {
+              tag: null,
+              label: null,
+
+              links: [],
+            },
+
             listLinks: {
               tag: 'إدارة',
+
               links: [
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['analytics'] as any }, label: 'التحليلات', description: 'تقارير فورية عن المبيعات والأرباح تساعدك تتخذ قرارات', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['branches'] as any }, label: 'الفروع', description: 'راقب كل فروعك وتقاريرها من نفس اللوحة', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['customers'] as any }, label: 'العملاء', description: 'احفظ بيانات عملاءك وفعّل برامج الولاء', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['accouting'] as any }, label: 'المالية', description: 'تتبّع المصاريف، الضرائب، والتدفق المالي بسهولة', icon: null } }, // prettier-ignore
+                {
+                  link: {
+                    type: 'reference' as const,
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions' as const,
+                      value: solutionsSlugToIdMap['analytics'] as any,
+                    },
+                    label: 'التحليلات',
+                    description: 'تقارير فورية عن المبيعات والأرباح تساعدك تتخذ قرارات',
+                    icon: null,
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'reference' as const,
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions' as const,
+                      value: solutionsSlugToIdMap['branches'] as any,
+                    },
+                    label: 'الفروع',
+                    description: 'راقب كل فروعك وتقاريرها من نفس اللوحة',
+                    icon: null,
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'reference' as const,
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions' as const,
+                      value: solutionsSlugToIdMap['customers'] as any,
+                    },
+                    label: 'العملاء',
+                    description: 'احفظ بيانات عملاءك وفعّل برامج الولاء',
+                    icon: null,
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'reference' as const,
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions' as const,
+                      value: solutionsSlugToIdMap['accouting'] as any,
+                    },
+                    label: 'المالية',
+                    description: 'تتبّع المصاريف، الضرائب، والتدفق المالي بسهولة',
+                    icon: null,
+                  },
+                },
               ],
             },
           },
         ],
         label: 'الحلول',
-        link: { type: 'reference', newTab: null, url: null },
+
+        link: {
+          type: 'reference' as const,
+          newTab: null,
+          url: null,
+        },
         description:
           'كل أدواتك في منظومة مرنة. استكشف حلول البيع، التشغيل، والإدارة المصممة لتلبية احتياجاتك.',
       },
+
       {
         enableDirectLink: false,
         enableDropdown: true,
+
         descriptionLinks: [],
+
         navItems: [
           {
             style: 'list' as const,
-            defaultLink: { link: { type: 'reference', newTab: false, url: null, icon: null, label: '' }, description: null }, // prettier-ignore
-            featuredLink: { tag: null, label: null, links: [] },
+
+            defaultLink: {
+              link: {
+                type: 'reference' as const,
+                newTab: false,
+                url: null,
+                icon: null,
+                label: '',
+              },
+              description: null,
+            },
+
+            featuredLink: {
+              tag: null,
+              label: null,
+
+              links: [],
+            },
+
             listLinks: {
               tag: 'الأنشطة',
+
               links: [
-                { link: { type: 'custom', newTab: false, url: '/restaurants', label: 'للمطاعم', description: null, icon: 'utensils' } }, // prettier-ignore
-                { link: { type: 'custom', newTab: false, url: '/retail', label: 'للبيع بالتجزئة', description: null, icon: 'scan-barcode' } }, // prettier-ignore
-                { link: { type: 'custom', newTab: false, url: '/express-services', label: 'للخدمات السريعة', description: null, icon: 'fuel' } }, // prettier-ignore
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/restaurants',
+                    label: 'للمطاعم',
+                    description: null,
+                    icon: 'utensils',
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/retail',
+                    label: 'للبيع بالتجزئة',
+                    description: null,
+                    icon: 'scan-barcode',
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/express-services',
+                    label: 'للخدمات السريعة',
+                    description: null,
+                    icon: 'fuel',
+                  },
+                },
               ],
             },
           },
+
           {
             style: 'list' as const,
-            defaultLink: { link: { type: 'reference', newTab: false, url: null, icon: null, label: '' }, description: null }, // prettier-ignore
-            featuredLink: { tag: null, label: null, links: [] },
+
+            defaultLink: {
+              link: {
+                type: 'reference' as const,
+                newTab: false,
+                url: null,
+                icon: null,
+                label: '',
+              },
+              description: null,
+            },
+
+            featuredLink: {
+              tag: null,
+              label: null,
+
+              links: [],
+            },
+
             listLinks: {
               tag: 'الميزات',
+
               links: [
-                { link: { type: 'custom', newTab: false, url: '/features/control', label: 'للبساطة والتحكم', description: null, icon: 'package-open' } }, // prettier-ignore
-                { link: { type: 'custom', newTab: false, url: '/solutions/branches', label: 'لتعدد الفروع', description: null, icon: 'map-pin' } }, // prettier-ignore
-                { link: { type: 'custom', newTab: false, url: '/integrations', label: 'للربط مع أدواتك', description: null, icon: 'puzzle' } }, // prettier-ignore
-                { link: { type: 'custom', newTab: false, url: '/blog/increasing-profits-with-marnpos', label: 'للزيادة أرباحك', description: null, icon: 'bar-chart-big' } }, // prettier-ignore
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/features/control',
+                    label: 'للبساطة والتحكم',
+                    description: null,
+                    icon: 'package-open',
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/solutions/branches',
+                    label: 'لتعدد الفروع',
+                    description: null,
+                    icon: 'map-pin',
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/integrations',
+                    label: 'للربط مع أدواتك',
+                    description: null,
+                    icon: 'puzzle',
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/blog/increasing-profits-with-marnpos',
+                    label: 'للزيادة أرباحك',
+                    description: null,
+                    icon: 'bar-chart-big',
+                  },
+                },
               ],
             },
           },
         ],
         label: 'لماذا مرن',
-        link: { type: 'reference', newTab: null, url: null },
+
+        link: {
+          type: 'reference' as const,
+          newTab: null,
+          url: null,
+        },
         description:
           'ليش أصحاب المشاريع يختارون مرن؟ اكتشف قيمنا وكيف نسهّل عليك الشغل وتكبير مشروعك.',
       },
+
       {
         enableDirectLink: true,
         enableDropdown: false,
+
         descriptionLinks: [],
+
         navItems: [],
         label: 'التطبيقات',
-        link: { type: 'custom', newTab: false, url: '/integrations' },
+
+        link: {
+          type: 'custom' as const,
+          newTab: false,
+          url: '/integrations',
+        },
         description: 'اربط مرن مع تطبيقات الدفع، التوصيل، والمحاسبة. سهّل شغلك وربط كل شيء ببعضه.',
       },
+
       {
-        enableDirectLink: true, // Changed from false in original to true based on structure
+        enableDirectLink: true,
         enableDropdown: true,
+
         descriptionLinks: [],
+
         navItems: [
           {
             style: 'list' as const,
-            defaultLink: { link: { type: 'reference', newTab: false, url: null, icon: null, label: '' }, description: null }, // prettier-ignore
-            featuredLink: { tag: null, label: null, links: [] },
+
+            defaultLink: {
+              link: {
+                type: 'reference' as const,
+                newTab: false,
+                url: null,
+                icon: null,
+                label: '',
+              },
+              description: null,
+            },
+
+            featuredLink: {
+              tag: null,
+              label: null,
+
+              links: [],
+            },
+
             listLinks: {
               tag: 'منشوراتنا',
+
               links: [
-                { link: { type: 'custom', newTab: false, url: '/blog', label: 'المدونة', description: null, icon: 'newspaper' } }, // prettier-ignore
-                { link: { type: 'custom', newTab: false, url: '/customers', label: 'قصص النجاح', description: null, icon: 'trophy' } }, // prettier-ignore
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/blog',
+                    label: 'المدونة',
+                    description: null,
+                    icon: 'newspaper',
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/customers',
+                    label: 'قصص النجاح',
+                    description: null,
+                    icon: 'trophy',
+                  },
+                },
               ],
             },
           },
+
           {
             style: 'list' as const,
-            defaultLink: { link: { type: 'reference', newTab: false, url: null, icon: null, label: '' }, description: null }, // prettier-ignore
-            featuredLink: { tag: null, label: null, links: [] },
+
+            defaultLink: {
+              link: {
+                type: 'reference' as const,
+                newTab: false,
+                url: null,
+                icon: null,
+                label: '',
+              },
+              description: null,
+            },
+
+            featuredLink: {
+              tag: null,
+              label: null,
+
+              links: [],
+            },
+
             listLinks: {
               tag: 'عن مرن',
+
               links: [
-                { link: { type: 'custom', newTab: false, url: '/about', label: 'عن مرن', description: null, icon: 'marn-icon' } }, // prettier-ignore
-                { link: { type: 'custom', newTab: false, url: '/contact-us', label: 'تواصل معنا', description: null, icon: 'phone' } }, // prettier-ignore
-                { link: { type: 'custom', newTab: false, url: 'https://marn.gitbook.io/marn-developers/', label: 'المطورين', description: null, icon: 'code' } }, // prettier-ignore
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/about',
+                    label: 'عن مرن',
+                    description: null,
+                    icon: 'marn-icon',
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: '/contact-us',
+                    label: 'تواصل معنا',
+                    description: null,
+                    icon: 'phone',
+                  },
+                },
+
+                {
+                  link: {
+                    type: 'custom' as const,
+                    newTab: false,
+                    url: 'https://marn.gitbook.io/marn-developers/',
+                    label: 'المطورين',
+                    description: null,
+                    icon: 'code',
+                  },
+                },
               ],
             },
           },
         ],
         label: 'الموارد',
-        link: { type: 'custom', newTab: false, url: '/resources' }, // Changed from /contact based on label
+
+        link: {
+          type: 'custom' as const,
+          newTab: null,
+          url: '/contact',
+        },
         description:
           'كل ما تحتاج تعرفه عن مرن وأصحاب المشاريع اللي يستخدمونه—من مقالات ونصائح، إلى قصص وتجارب حقيقية، وحتى التواصل معنا',
       },
     ],
+
     cta: [
-      { link: { type: 'custom', newTab: null, url: '/', label: 'دخول التاجر', color: 'neutral', variant: 'secondary' } }, // prettier-ignore
-      { link: { type: 'custom', newTab: false, url: '/contact-us', label: 'تواصل معنا', color: 'neutral', variant: 'primary' } }, // prettier-ignore
+      {
+        link: {
+          type: 'custom' as const,
+          newTab: null,
+          url: '/',
+          label: 'دخول التاجر',
+          color: 'neutral',
+          variant: 'secondary',
+        },
+      },
+
+      {
+        link: {
+          type: 'custom' as const,
+          newTab: false,
+          url: '/contact-us',
+          label: 'تواصل معنا',
+          color: 'neutral',
+          variant: 'primary',
+        },
+      },
     ],
   }
 
-  // Footer Data
-  const footerData = {
-    columns: [
-      {
-        label: 'الحلول',
-        navItems: [
-          { link: { type: 'custom', newTab: false, url: '/solutions/cashier', label: 'الكاشير' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/paysync', label: 'شاشة السداد' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/kiosk', label: 'الطلب الذاتي' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/orderstation', label: 'محطة الطلبات' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/products', label: 'المنتجات' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/inventory', label: 'المخزون' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/analytics', label: 'التحليلات' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/branches', label: 'الفروع' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/customers', label: 'العملاء' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/accouting', label: 'المالية' } }, // prettier-ignore
+  await Promise.all([
+    payload.updateGlobal({
+      slug: 'header',
+      locale: 'ar',
+      data: headerData,
+    }),
+    payload.updateGlobal({
+      slug: 'footer',
+      data: {
+        columns: [
+          {
+            label: 'الحلول',
+            navItems: [
+              {
+                link: {
+                  type: 'custom' as const,
+                  newTab: false,
+                  url: '/solutions/cashier',
+                  label: 'الكاشير',
+                },
+              },
+              {
+                link: {
+                  type: 'custom' as const,
+                  newTab: false,
+                  url: '/solutions/paysync',
+                  label: 'شاشة السداد',
+                },
+              },
+              {
+                link: {
+                  type: 'custom' as const,
+                  newTab: false,
+                  url: '/solutions/kiosk',
+                  label: 'الطلب الذاتي',
+                },
+              },
+              {
+                link: {
+                  type: 'custom' as const,
+                  newTab: false,
+                  url: '/solutions/orderstation',
+                  label: 'محطة الطلبات',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom' as const,
+                  newTab: false,
+                  url: '/solutions/products',
+                  label: 'المنتجات',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom' as const,
+                  newTab: false,
+                  url: '/solutions/inventory',
+                  label: 'المخزون',
+                },
+              },
+              {
+                link: {
+                  type: 'custom' as const,
+                  newTab: false,
+                  url: '/solutions/analytics',
+                  label: 'التحليلات',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom' as const,
+                  newTab: false,
+                  url: '/solutions/branches',
+                  label: 'الفروع',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom' as const,
+                  newTab: false,
+                  url: '/solutions/customers',
+                  label: 'العملاء',
+                },
+              },
+
+              {
+                link: {
+                  type: 'custom' as const,
+                  newTab: false,
+                  url: '/solutions/accouting',
+                  label: 'المالية',
+                },
+              },
+            ],
+          },
         ],
       },
-      // ... Add other footer columns if needed, based on original Footer global structure
-    ],
-  }
-
-  payload.logger.info('Updating global – header (ar)')
-  await payload.updateGlobal({
-    slug: 'header',
-    locale: 'ar',
-    data: headerData,
-  })
-
-  payload.logger.info('Updating global – footer')
-  await payload.updateGlobal({
-    slug: 'footer',
-    data: footerData as any,
-  })
-
+    }),
+  ])
   payload.logger.info('Seeded database successfully!')
 }
 
-async function fetchFileByURL(payload: Payload, url: string): Promise<File> {
-  payload.logger.info(`Fetching file from URL: ${url}`)
+async function fetchFileByURL(url: string): Promise<File> {
   const res = await fetch(url, {
     credentials: 'include',
     method: 'GET',
   })
 
   if (!res.ok) {
-    payload.logger.error(`Failed to fetch file from ${url}, status: ${res.status}`)
     throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`)
   }
 
   const data = await res.arrayBuffer()
-  const filename = url.split('/').pop() || `file-${Date.now()}`
-  const mimetype = `image/${url.split('.').pop()}`
-
-  payload.logger.info(`Fetched file: ${filename} (${(data.byteLength / 1024).toFixed(2)} KB)`)
 
   return {
-    name: filename,
+    name: url.split('/').pop() || `file-${Date.now()}`,
     data: Buffer.from(data),
-    mimetype: mimetype,
+    mimetype: `image/${url.split('.').pop()}`,
     size: data.byteLength,
   }
 }

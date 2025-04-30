@@ -21,8 +21,8 @@ import {
   timestamp,
   type AnyPgColumn,
   pgEnum,
-} from '@payloadcms/db-postgres/drizzle/pg-core'
-import { sql, relations } from '@payloadcms/db-postgres/drizzle'
+} from '@payloadcms/db-vercel-postgres/drizzle/pg-core'
+import { sql, relations } from '@payloadcms/db-vercel-postgres/drizzle'
 export const enum__locales = pgEnum('enum__locales', ['en', 'ar'])
 export const enum_pages_hero_links_link_type = pgEnum('enum_pages_hero_links_link_type', [
   'reference',
@@ -176,10 +176,6 @@ export const enum_pages_blocks_features_layout = pgEnum('enum_pages_blocks_featu
 export const enum_pages_blocks_features_link_type = pgEnum('enum_pages_blocks_features_link_type', [
   'reference',
   'custom',
-])
-export const enum_pages_blocks_features_locale = pgEnum('enum_pages_blocks_features_locale', [
-  'en',
-  'ar',
 ])
 export const enum_pages_blocks_faq_block_block_header_links_link_type = pgEnum(
   'enum_pages_blocks_faq_block_block_header_links_link_type',
@@ -367,10 +363,6 @@ export const enum__pages_v_blocks_features_link_type = pgEnum(
   'enum__pages_v_blocks_features_link_type',
   ['reference', 'custom'],
 )
-export const enum__pages_v_blocks_features_locale = pgEnum('enum__pages_v_blocks_features_locale', [
-  'en',
-  'ar',
-])
 export const enum__pages_v_blocks_faq_block_block_header_links_link_type = pgEnum(
   'enum__pages_v_blocks_faq_block_block_header_links_link_type',
   ['reference', 'custom'],
@@ -1115,8 +1107,7 @@ export const pages_blocks_features_columns = pgTable(
     image: integer('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    tab_tabLabel: varchar('tab_tab_label'),
-    tab_tabIcon: varchar('tab_tab_icon'),
+    tabLabel: varchar('tab_label'),
     icon: varchar('icon'),
     content_title: varchar('content_title'),
     content_subtitle: varchar('content_subtitle'),
@@ -1176,7 +1167,6 @@ export const pages_blocks_features = pgTable(
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
-    locale: enum_pages_blocks_features_locale('locale'),
     blockName: varchar('block_name'),
   },
   (columns) => ({
@@ -2119,8 +2109,7 @@ export const _pages_v_blocks_features_columns = pgTable(
     image: integer('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    tab_tabLabel: varchar('tab_tab_label'),
-    tab_tabIcon: varchar('tab_tab_icon'),
+    tabLabel: varchar('tab_label'),
     icon: varchar('icon'),
     content_title: varchar('content_title'),
     content_subtitle: varchar('content_subtitle'),
@@ -2181,7 +2170,6 @@ export const _pages_v_blocks_features = pgTable(
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     link_label: varchar('link_label'),
-    locale: enum__pages_v_blocks_features_locale('locale'),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
   },
@@ -7985,7 +7973,6 @@ type DatabaseSchema = {
   enum_pages_blocks_features_block_header_badge_type: typeof enum_pages_blocks_features_block_header_badge_type
   enum_pages_blocks_features_layout: typeof enum_pages_blocks_features_layout
   enum_pages_blocks_features_link_type: typeof enum_pages_blocks_features_link_type
-  enum_pages_blocks_features_locale: typeof enum_pages_blocks_features_locale
   enum_pages_blocks_faq_block_block_header_links_link_type: typeof enum_pages_blocks_faq_block_block_header_links_link_type
   enum_pages_blocks_faq_block_block_header_type: typeof enum_pages_blocks_faq_block_block_header_type
   enum_pages_blocks_faq_block_block_header_badge_type: typeof enum_pages_blocks_faq_block_block_header_badge_type
@@ -8027,7 +8014,6 @@ type DatabaseSchema = {
   enum__pages_v_blocks_features_block_header_badge_type: typeof enum__pages_v_blocks_features_block_header_badge_type
   enum__pages_v_blocks_features_layout: typeof enum__pages_v_blocks_features_layout
   enum__pages_v_blocks_features_link_type: typeof enum__pages_v_blocks_features_link_type
-  enum__pages_v_blocks_features_locale: typeof enum__pages_v_blocks_features_locale
   enum__pages_v_blocks_faq_block_block_header_links_link_type: typeof enum__pages_v_blocks_faq_block_block_header_links_link_type
   enum__pages_v_blocks_faq_block_block_header_type: typeof enum__pages_v_blocks_faq_block_block_header_type
   enum__pages_v_blocks_faq_block_block_header_badge_type: typeof enum__pages_v_blocks_faq_block_block_header_badge_type
@@ -8409,7 +8395,7 @@ type DatabaseSchema = {
   relations_footer: typeof relations_footer
 }
 
-declare module '@payloadcms/db-postgres' {
+declare module '@payloadcms/db-vercel-postgres' {
   export interface GeneratedDatabaseSchema {
     schema: DatabaseSchema
   }
