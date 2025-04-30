@@ -99,7 +99,9 @@ function Carousel({
       disableDrag={disableDrag}
     >
       <div className={cn('group/hover relative', className)}>
-        <div className="overflow-hidden">{children}</div>
+        {children}
+        {/* <div className="">
+          </div> */}
       </div>
     </CarouselProvider>
   )
@@ -121,7 +123,7 @@ function CarouselNavigation({ className, classNameButton, alwaysShow }: Carousel
   return (
     <div
       className={cn(
-        'pointer-events-none absolute top-1/2 flex w-[125%] -translate-y-1/2 justify-between',
+        'pointer-events-none absolute flex w-full justify-between gap-2',
         direction === 'rtl' ? '' : '',
         className,
       )}
@@ -131,8 +133,8 @@ function CarouselNavigation({ className, classNameButton, alwaysShow }: Carousel
         aria-label="Previous slide"
         variant="secondary"
         color="neutral"
-        size="lg"
-        className={cn('pointer-events-auto w-12 rounded-full', classNameButton)}
+        size="icon"
+        className={cn('pointer-events-auto rounded-full', classNameButton)}
         disabled={index === 0}
         onClick={() => {
           if (index > 0) {
@@ -146,8 +148,8 @@ function CarouselNavigation({ className, classNameButton, alwaysShow }: Carousel
         type="button"
         variant="secondary"
         color="neutral"
-        size="lg"
-        className={cn('pointer-events-auto w-12 rounded-full', classNameButton)}
+        size="icon"
+        className={cn('pointer-events-auto rounded-full', classNameButton)}
         aria-label="Next slide"
         disabled={index + 1 === itemsCount}
         onClick={() => {
@@ -173,7 +175,7 @@ function CarouselIndicator({ className, classNameButton }: CarouselIndicatorProp
   return (
     <div
       className={cn(
-        'pointer-events-none absolute bottom-0 z-10 flex w-full -translate-y-1/2 items-center justify-center',
+        'pointer-events-none absolute z-10 flex w-full items-center justify-center',
         className,
       )}
     >
