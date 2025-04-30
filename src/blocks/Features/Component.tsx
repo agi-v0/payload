@@ -2,7 +2,11 @@ import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
 import { getVariantComponent } from './variants/VariantSelector'
 
-export const FeaturesBlockComponent: React.FC<FeaturesBlock> = (props) => {
+type FeaturesBlockProps = FeaturesBlock & {
+  locale?: string
+}
+
+export const FeaturesBlockComponent: React.FC<FeaturesBlockProps> = (props) => {
   const {
     layout = '01',
     columns,

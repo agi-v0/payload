@@ -20,26 +20,30 @@ import { Variant15 } from './Variant-15'
 import { Variant16 } from './Variant-16'
 import { Variant17 } from './Variant-17'
 
-export const getVariantComponent = (variant: string = '01'): React.FC<FeaturesBlock> => {
-  const variantMap: Record<string, React.FC<FeaturesBlock>> = {
-    '01': Variant01,
-    '02': Variant02,
-    '03': Variant03,
-    '04': Variant04,
-    '05': Variant05,
-    '06': Variant06,
-    '07': Variant07,
-    '08': Variant08,
-    '09': Variant09,
-    '10': Variant10,
-    '11': Variant11,
-    '12': Variant12,
-    '13': Variant13,
-    '14': Variant14,
-    '15': Variant15,
-    '16': Variant16,
-    '17': Variant17,
+type FeaturesBlockWithLocale = FeaturesBlock & {
+  locale?: string
+}
+
+export const getVariantComponent = (variant: string = '01'): React.FC<FeaturesBlockWithLocale> => {
+  const variantMap: Record<string, React.FC<FeaturesBlockWithLocale>> = {
+    '01': Variant01 as React.FC<FeaturesBlockWithLocale>,
+    '02': Variant02 as React.FC<FeaturesBlockWithLocale>,
+    '03': Variant03 as React.FC<FeaturesBlockWithLocale>,
+    '04': Variant04 as React.FC<FeaturesBlockWithLocale>,
+    '05': Variant05 as React.FC<FeaturesBlockWithLocale>,
+    '06': Variant06 as React.FC<FeaturesBlockWithLocale>,
+    '07': Variant07 as React.FC<FeaturesBlockWithLocale>,
+    '08': Variant08 as React.FC<FeaturesBlockWithLocale>,
+    '09': Variant09 as React.FC<FeaturesBlockWithLocale>,
+    '10': Variant10 as React.FC<FeaturesBlockWithLocale>,
+    '11': Variant11 as React.FC<FeaturesBlockWithLocale>,
+    '12': Variant12 as React.FC<FeaturesBlockWithLocale>,
+    '13': Variant13 as React.FC<FeaturesBlockWithLocale>,
+    '14': Variant14 as React.FC<FeaturesBlockWithLocale>,
+    '15': Variant15 as React.FC<FeaturesBlockWithLocale>,
+    '16': Variant16 as React.FC<FeaturesBlockWithLocale>,
+    '17': Variant17 as React.FC<FeaturesBlockWithLocale>,
   }
 
-  return variantMap[variant] || Variant01
+  return variantMap[variant] || (Variant01 as React.FC<FeaturesBlockWithLocale>)
 }
