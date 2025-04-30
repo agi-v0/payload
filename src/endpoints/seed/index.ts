@@ -201,20 +201,20 @@ export const seed = async ({
       data: image2, // Using image2 data for post 3 as in original code
       key: 'image3',
     },
-    { url: 'http://localhost:3000/marn-logo.png', data: imageLogo, key: 'logo' },
-    { url: 'http://localhost:3000/marn-placeholder.png', data: imageHero1, key: 'hero1' },
+    { url: '/marn-logo.png', data: imageLogo, key: 'logo' },
+    { url: '/marn-placeholder.png', data: imageHero1, key: 'hero1' },
     {
-      url: 'http://localhost:3000/marn-placeholder-16x9.png',
+      url: '/marn-placeholder-16x9.png',
       data: image169,
       key: 'image169',
     },
     {
-      url: 'http://localhost:3000/marn-placeholder-4x3.png',
+      url: '/marn-placeholder-4x3.png',
       data: image43,
       key: 'image43',
     },
     {
-      url: 'http://localhost:3000/marn-placeholder-1x1.png',
+      url: '/marn-placeholder-1x1.png',
       data: imageSquare,
       key: 'imageSquare',
     },
