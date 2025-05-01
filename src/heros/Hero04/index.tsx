@@ -26,7 +26,7 @@ export const Hero04: React.FC<Page['hero']> = ({
   }, [setHeaderTheme])
 
   return (
-    <section className="pb-xl gap-xs container flex min-h-[calc(100vh-var(--header-height))] flex-col md:flex-row md:items-center">
+    <section className="py-xl gap-xs container flex h-fit min-h-screen flex-col md:flex-row md:items-center">
       <div className="gap-md md:pe-lg flex basis-1/2 flex-col items-start justify-start text-start">
         <div className="gap-sm flex max-w-3xl flex-col items-start">
           {badge?.label && (

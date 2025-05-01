@@ -65,7 +65,7 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
           'relative container flex h-[var(--header-height)] flex-row items-center justify-between transition-colors',
         )}
       >
-        <div className="w-full max-w-54">
+        <div className="z-50 w-full max-w-54">
           <Link href="/" className="flex-shrink-0">
             <Logo className="text-base-primary h-5 w-auto" />
           </Link>
