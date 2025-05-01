@@ -10,7 +10,7 @@ export const Variant02: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
 
   return (
-    <div className="bg-background gap-sm grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
+    <div className="gap-sm container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
       {columns.map((column, index) => {
         const { content, image, appReference, size = 'oneThird' } = column
 

@@ -10,6 +10,7 @@ import { Testimonial } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
+import { LinkBlock } from '@/components/LinkBlock'
 
 interface Props {
   testimonials: Testimonial[]
@@ -18,7 +19,7 @@ interface Props {
 
 // Animation Variants
 const containerVariants: Variants = {
-  hidden: { opacity: 1 }, // Start with container visible
+  hidden: { opacity: 0 }, // Start with container visible
   visible: {
     opacity: 1,
     transition: {
@@ -37,7 +38,7 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
   const testimonial = testimonials?.[0]
 
   const { authorInfo, quote, media, companyLogo, stats, rating } = testimonial
-
+  console.log('linkLabel', linkLabel)
   if (!testimonial) {
     return null
   }
@@ -64,14 +65,14 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
   )
 
   return (
-    <motion.section
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false, margin: '50%' }}
-      variants={containerVariants}
-      className="bg-bcakground-neutral-subtle py-lg"
-    >
-      <div className="container">
+    <section className="bg-bcakground-neutral-subtle py-lg">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={containerVariants}
+        className="container"
+      >
         <motion.div
           variants={itemVariants} // Animate the main card as one item
           className="bg-background-neutral rounded-space-sm grid grid-cols-1 md:grid-cols-2 lg:items-stretch"
@@ -118,54 +119,32 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
           )}
         </motion.div>
         {stats && stats.length > 0 && (
-          <motion.div
-            variants={containerVariants} // Use container variants to stagger stats + link
-            className="mt-space-xs gap-xs grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-          >
+          <div className="mt-space-xs gap-xs grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map(renderStat)}
-            <motion.div
-              variants={itemVariants}
-              initial="initial"
-              whileHover="hover"
-              className={cn('overflow-hidden', {
-                'col-span-2': stats.length < 3,
-              })}
-            >
-              <Link
-                href="/testimonials"
-                className={cn(
-                  'text-h4 p-sm rounded-space-sm bg-neutral/90 hover:bg-neutral text-inverted-primary relative flex h-full items-center justify-center text-center font-medium transition-colors duration-300',
-                )}
+            {linkLabel && (
+              <motion.div
+                variants={itemVariants}
+                className={cn('h-full w-full overflow-hidden', {
+                  'col-span-2': stats.length < 3,
+                })}
               >
-                <motion.span
-                  variants={{
-                    initial: { opacity: 1, x: 0 },
-                    hover: { opacity: 0, x: '-50%' },
+                <LinkBlock
+                  link={{
+                    type: 'custom',
+                    newTab: null,
+                    url: 'google.com',
+                    label: linkLabel,
+                    color: 'neutral',
+                    variant: 'primary',
                   }}
-                  transition={{
-                    ease: [0.455, 0.03, 0.515, 0.955],
-                  }}
-                  className="text-h4"
-                >
-                  {linkLabel}
-                </motion.span>
-                <motion.span
-                  className="absolute inset-0 flex items-center justify-center"
-                  variants={{
-                    initial: { opacity: 0, x: '50%' },
-                    hover: { opacity: 1, x: 0 },
-                  }}
-                  transition={{
-                    ease: [0.455, 0.03, 0.515, 0.955],
-                  }}
-                >
-                  <ArrowRight className="size-8 rtl:rotate-180" />
-                </motion.span>
-              </Link>
-            </motion.div>
-          </motion.div>
+                  label={linkLabel}
+                  className="h-full w-full"
+                />
+              </motion.div>
+            )}
+          </div>
         )}
-      </div>
-    </motion.section>
+      </motion.div>
+    </section>
   )
 }

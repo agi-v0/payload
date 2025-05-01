@@ -55,7 +55,7 @@ const GRID_CONFIG = {
       START_ROW: 1,
       END_ROW: 4,
     },
-    POSITIONS: [4, 18, 21, 39, 40, 53, 54, 55],
+    POSITIONS: [4, 10, 18, 21, 39, 40, 53, 55],
   },
 }
 
@@ -99,7 +99,7 @@ const AnimatedAppIcon: React.FC<{
       <Media
         resource={app.icon as MediaType}
         imgClassName="rounded-2xl sm:rounded-3xl object-cover w-full h-auto"
-        className="h-auto w-full"
+        className="h-auto w-full drop-shadow-md/50"
       />
     </motion.div>
   )
