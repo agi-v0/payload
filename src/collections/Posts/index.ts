@@ -236,9 +236,9 @@ export const Posts: CollectionConfig<'posts'> = {
   },
   versions: {
     drafts: {
-      autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
+      // autosave: {
+      //   interval: 100, // We set this interval for optimal live preview
+      // },
       schedulePublish: true,
     },
     maxPerDoc: 50,
