@@ -217,6 +217,14 @@ export const Features: Block = {
                 width: '50%',
               },
             },
+            {
+              name: 'reverseOrder',
+              label: 'Reverse Order',
+              type: 'checkbox',
+              admin: {
+                condition: (_, siblingData, { blockData }) => ['04'].includes(blockData?.layout),
+              },
+            },
           ],
         },
         badge({

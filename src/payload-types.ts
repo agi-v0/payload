@@ -1657,6 +1657,7 @@ export interface FeaturesBlock {
         } | null;
         enableBadge?: boolean | null;
         enableCta?: boolean | null;
+        reverseOrder?: boolean | null;
         badge?: {
           type?: ('label' | 'reference') | null;
           label?: string | null;
@@ -2670,6 +2671,7 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
         richTextContent?: T;
         enableBadge?: T;
         enableCta?: T;
+        reverseOrder?: T;
         badge?:
           | T
           | {

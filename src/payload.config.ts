@@ -156,10 +156,6 @@ export default buildConfig({
         media: {
           prefix: 'media',
         },
-        // media: true,
-        'app-icons': {
-          prefix: 'app-icons',
-        },
       },
       bucket: process.env.S3_BUCKET || '',
       config: {
@@ -171,6 +167,7 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
       },
+      // enabled: true,
       enabled: process.env.NODE_ENV === 'production', // Use in production only
     }),
   ],
