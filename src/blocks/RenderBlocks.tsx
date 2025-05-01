@@ -12,6 +12,7 @@ import { BlockHeaderType } from '@/types/blockHeader'
 import { RenderAppsBlock } from './AppsBlock/RenderAppsBlock'
 import { RenderTestimonialsBlock } from './TestimonialsBlock/RenderTestimonialsBlock'
 import { FaqBlock } from './FaqBlock/Component'
+import { RenderGalleryBlock } from './Gallery/RenderGalleryBlock'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -23,6 +24,7 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   testimonials: RenderTestimonialsBlock,
   features: FeaturesBlockComponent,
+  gallery: RenderGalleryBlock,
 }
 
 // Define a type for our blocks that includes the blockHeader property

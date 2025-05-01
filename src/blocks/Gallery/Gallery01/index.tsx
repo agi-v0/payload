@@ -1,0 +1,48 @@
+import React from 'react'
+import type { GalleryBlock } from '@/payload-types'
+import { Media } from '@/components/Media'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselIndicator,
+  CarouselItem,
+  CarouselNavigation,
+} from '@/components/ui/carousel'
+import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/utilities/ui'
+
+interface Gallery01Props {
+  images: GalleryBlock['images']
+  className?: string
+}
+
+export const Gallery01: React.FC<Gallery01Props> = ({ images, className }) => {
+  if (!images || images.length === 0) {
+    return null
+  }
+
+  return (
+    <div className={cn('py-xl container w-full', className)}>
+      <Carousel slidesPerView={1} className="w-full">
+        <CarouselContent className="-ms-xs">
+          {images.map((item, index) => (
+            <CarouselItem key={item.id || index} className="ps-xs">
+              {typeof item.image === 'object' && item.image !== null && (
+                <Media
+                  resource={item.image}
+                  className="rounded-space-sm bg-background-neutral-subtle h-full w-full overflow-clip object-cover"
+                />
+              )}
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        {images.length > 1 && (
+          <>
+            <CarouselNavigation className="mt-xs relative justify-between" />
+            <CarouselIndicator className="absolute bottom-0 h-10" />
+          </>
+        )}
+      </Carousel>
+    </div>
+  )
+}
