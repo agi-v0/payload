@@ -99,7 +99,7 @@ const AnimatedAppIcon: React.FC<{
       <Media
         resource={app.icon as MediaType}
         imgClassName="rounded-2xl sm:rounded-3xl object-cover w-full h-auto"
-        className="h-auto w-full drop-shadow-md/50"
+        className="h-auto w-full drop-shadow-sm"
       />
     </motion.div>
   )

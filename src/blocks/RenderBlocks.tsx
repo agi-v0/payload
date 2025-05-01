@@ -51,7 +51,7 @@ export const RenderBlocks: React.FC<{
         }
 
         return (
-          <div id={block.blockName || undefined} className="" key={index}>
+          <div id={block.blockName || undefined} className="pt-xl" key={index}>
             {blockHeader && <BlockHeader {...blockHeader} className="" />}
             <Block {...(block as any)} locale={locale} />
           </div>
