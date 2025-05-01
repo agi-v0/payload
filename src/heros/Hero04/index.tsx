@@ -26,8 +26,8 @@ export const Hero04: React.FC<Page['hero']> = ({
   }, [setHeaderTheme])
 
   return (
-    <section className="pb-xl gap-xs container flex flex-col pt-[20vh] md:flex-row">
-      <div className="gap-md md:pe-lg flex basis-1/2 flex-col items-center justify-center text-start">
+    <section className="pb-xl gap-xs container flex min-h-[calc(100vh-var(--header-height))] flex-col md:flex-row md:items-center">
+      <div className="gap-md md:pe-lg flex basis-1/2 flex-col items-start justify-start text-start">
         <div className="gap-sm flex max-w-3xl flex-col items-start">
           {badge?.label && (
             <Badge

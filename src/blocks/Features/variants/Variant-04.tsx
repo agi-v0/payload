@@ -15,15 +15,40 @@ export const Variant04: React.FC<FeaturesBlock> = ({ columns, blockHeader, block
             key={index}
             className="py-xl gap-xs grid grid-cols-1 items-start md:grid-cols-2 md:items-center"
           >
-            {column.richTextContent && <RichText data={column.richTextContent} className="pe-xl" />}
-            {column.image && (
-              <div className={cn('rounded-space-sm overflow-hidden')}>
-                <Media
-                  resource={column.image}
-                  className="h-auto w-full"
-                  imgClassName="w-full h-auto aspect-[4/3] object-cover"
-                />
-              </div>
+            {!column.reverseOrder ? (
+              <>
+                {column.richTextContent && (
+                  <RichText data={column.richTextContent} className="pe-xl" />
+                )}
+                {column.image && (
+                  <div
+                    className={cn('rounded-space-sm bg-background-neutral-subtle overflow-hidden')}
+                  >
+                    <Media
+                      resource={column.image}
+                      className="h-auto w-full"
+                      imgClassName="w-full h-auto aspect-[4/3] object-cover"
+                    />
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {column.image && (
+                  <div
+                    className={cn('rounded-space-sm bg-background-neutral-subtle overflow-hidden')}
+                  >
+                    <Media
+                      resource={column.image}
+                      className="h-auto w-full"
+                      imgClassName="w-full h-auto aspect-[4/3] object-cover"
+                    />
+                  </div>
+                )}
+                {column.richTextContent && (
+                  <RichText data={column.richTextContent} className="ps-xl" />
+                )}
+              </>
             )}
           </div>
         )

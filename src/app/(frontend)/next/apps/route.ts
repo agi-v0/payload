@@ -5,7 +5,7 @@ import config from '@payload-config'
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const page = parseInt(searchParams.get('page') || '1', 10)
-  const limit = 3 // Keep consistent with block
+  const limit = 6 // Keep consistent with block
 
   // Validate locale
   const localeParam = searchParams.get('locale')

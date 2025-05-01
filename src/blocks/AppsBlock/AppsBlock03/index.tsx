@@ -16,7 +16,7 @@ export const AppsBlock03: React.FC<Props> = async (props) => {
     collection: 'apps',
     locale: 'ar',
     draft: false,
-    limit: 3,
+    limit: 6,
     page: 1,
     depth: 10,
     sort: '-createdAt',

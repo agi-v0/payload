@@ -38,7 +38,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
         variant="secondary"
         color="neutral"
         size="lg"
-        className="w-12 rounded-full"
+        className="rounded-full"
         onClick={handlePrev}
         disabled={currentPage <= 1}
         aria-label="Previous page"
@@ -51,7 +51,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
         variant="secondary"
         color="neutral"
         size="lg"
-        className="w-12 rounded-full"
+        className="rounded-full"
         onClick={handleNext}
         disabled={currentPage >= totalPages}
         aria-label="Next page"
