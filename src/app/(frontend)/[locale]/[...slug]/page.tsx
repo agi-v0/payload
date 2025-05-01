@@ -64,6 +64,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   page = await queryPageBySlug({
     slug: slugPath,
     locale,
+    draft,
   })
 
   if (!page && slugPath === 'home') {
@@ -90,21 +91,29 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+  const { isEnabled: draft } = await draftMode()
   const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
   const slugPath = slugSegments.join('/') || 'home'
 
   const page = await queryPageBySlug({
     slug: slugPath,
     locale,
+    draft,
   })
 
   return generateMeta({ doc: page })
 }
 
 const queryPageBySlug = cache(
-  async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' | undefined }) => {
-    const { isEnabled: draft } = await draftMode()
-
+  async ({
+    slug,
+    locale,
+    draft,
+  }: {
+    slug: string
+    locale?: 'ar' | 'en' | undefined
+    draft: boolean
+  }) => {
     const payload = await getPayload({ config: configPromise })
 
     const result = await payload.find({
