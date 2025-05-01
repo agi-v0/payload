@@ -3661,6 +3661,7 @@ export const media = pgTable(
     category: integer('category_id').references(() => media_categories.id, {
       onDelete: 'set null',
     }),
+    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),

@@ -52,6 +52,7 @@ export const Apps: CollectionConfig<'apps'> = {
     icon: true,
     tagline: true,
     link: true,
+    name: true,
   },
   admin: {
     defaultColumns: ['icon', 'name', 'tagline', 'updatedAt'],
@@ -244,6 +245,18 @@ export const Apps: CollectionConfig<'apps'> = {
         position: 'sidebar',
       },
     },
+    // {
+    //   name: 'ecosystem',
+    //   type: 'select',
+    //   options: [
+    //     { value: 'sell', label: { en: 'Sell', ar: 'بيع' } },
+    //     { value: 'operate', label: { en: 'Operate', ar: 'تشغيل' } },
+    //     { value: 'manage', label: { en: 'Manage', ar: 'إدارة' } },
+    //   ],
+    //   admin: {
+    //     position: 'sidebar',
+    //   },
+    // },
     ...slugField(),
   ],
 

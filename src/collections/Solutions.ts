@@ -39,6 +39,8 @@ export const Solutions: CollectionConfig<'solutions'> = {
     link: true,
     slug: true,
     icon: true,
+    name: true,
+    ecosystem: true,
   },
   admin: {
     defaultColumns: ['icon', 'name', 'tagline', 'ecosystem', 'updatedAt'],
@@ -146,9 +148,9 @@ export const Solutions: CollectionConfig<'solutions'> = {
       name: 'ecosystem',
       type: 'select',
       options: [
-        { value: 'sell', label: 'Sell' },
-        { value: 'operate', label: 'Operate' },
-        { value: 'manage', label: 'Manage' },
+        { value: 'sell', label: { en: 'Sell', ar: 'بيع' } },
+        { value: 'operate', label: { en: 'Operate', ar: 'تشغيل' } },
+        { value: 'manage', label: { en: 'Manage', ar: 'إدارة' } },
       ],
       admin: {
         position: 'sidebar',

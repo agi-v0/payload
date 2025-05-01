@@ -29,8 +29,8 @@ export const AppReference: React.FC<AppReferenceProps> = ({ appReference, classN
         {appReference.value.icon && (
           <Media
             resource={appReference.value.icon}
-            className="h-14.5 w-14.5"
-            imgClassName="w-full h-full aspect-square"
+            className="size-15"
+            imgClassName="w-full h-full rounded-xl aspect-square"
           />
         )}
         <div>
@@ -45,7 +45,17 @@ export const AppReference: React.FC<AppReferenceProps> = ({ appReference, classN
       </div>
 
       {appReference.value.link && (
-        <div>{appReference.value.link && <CMSLink {...appReference.value.link} />}</div>
+        <div>
+          {appReference.value.link && (
+            <CMSLink
+              label="تعرف المزيد"
+              url={appReference.value.link.url}
+              size="sm"
+              variant="tertiary"
+              color="neutral"
+            />
+          )}
+        </div>
       )}
     </div>
   )

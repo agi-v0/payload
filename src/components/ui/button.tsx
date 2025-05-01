@@ -44,7 +44,7 @@ const buttonVariants = cva(
       {
         color: 'brand',
         variant: 'tertiary',
-        className: 'bg-brand/30 hover:bg-brand/60 text-brand-secondary',
+        className: 'bg-brand/10 hover:bg-brand/30 text-brand-secondary',
       },
       {
         color: 'brand',
@@ -59,7 +59,7 @@ const buttonVariants = cva(
       {
         color: 'neutral',
         variant: 'primary',
-        className: 'bg-neutral hover:bg-neutral/90 text-white',
+        className: 'bg-neutral hover:bg-neutral/90 text-inverted-primary',
       },
       {
         color: 'neutral',
@@ -69,7 +69,7 @@ const buttonVariants = cva(
       {
         color: 'neutral',
         variant: 'tertiary',
-        className: 'bg-neutral/30 hover:bg-neutral/60 text-base-secondary',
+        className: 'bg-neutral/10 hover:bg-neutral/30 text-base-secondary',
       },
       {
         color: 'neutral',

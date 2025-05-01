@@ -12,7 +12,6 @@ export const Variant01: React.FC<FeaturesBlock> = ({ columns }) => {
     <div className="bg-background gap-sm py-xl container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
       {columns.map((column, index) => {
         const { content, richTextContent, image, appReference, size = 'oneThird' } = column
-        console.log(appReference)
 
         const lgColSpanClass =
           size === 'full' ? 'lg:col-span-12' : size === 'half' ? 'lg:col-span-6' : ''
