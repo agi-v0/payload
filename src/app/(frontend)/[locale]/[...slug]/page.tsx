@@ -34,10 +34,13 @@ export async function generateStaticParams({
 
   const params = pages.docs
     ?.filter((doc) => {
-      return doc.slug !== 'home'
+      // Filter out the home page and any slugs that might be null/undefined
+      return doc.slug && doc.slug !== 'home'
     })
     .map(({ slug }) => {
-      return { slug }
+      // Split the full slug path into an array of segments
+      // We've already filtered for non-null slugs, but TS might not know
+      return { slug: (slug || '').split('/') }
     })
 
   return params
@@ -45,25 +48,25 @@ export async function generateStaticParams({
 
 type Args = {
   params: Promise<{
-    slug?: string
+    slug?: string[]
     locale?: 'ar' | 'en' | undefined
   }>
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug = 'home', locale = 'ar' } = await paramsPromise
-  const url = `/${locale}/` + slug
+  const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
+  const slugPath = slugSegments.join('/') || 'home'
+  const url = `/${locale}/${slugPath === 'home' ? '' : slugPath}`
 
   let page: PageType | null
 
   page = await queryPageBySlug({
-    slug,
+    slug: slugPath,
     locale,
   })
 
-  // Remove this code once your website is seeded
-  if (!page && slug === 'home') {
+  if (!page && slugPath === 'home') {
     page = null
   }
 
@@ -76,7 +79,6 @@ export default async function Page({ params: paramsPromise }: Args) {
   return (
     <article className="bg-background overflow-x-clip">
       <PageClient />
-      {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
@@ -87,10 +89,12 @@ export default async function Page({ params: paramsPromise }: Args) {
   )
 }
 
-export async function generateMetadata({ params: paramsPromise }): Promise<Metadata> {
-  const { slug = 'home', locale = 'ar' } = await paramsPromise
+export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+  const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
+  const slugPath = slugSegments.join('/') || 'home'
+
   const page = await queryPageBySlug({
-    slug,
+    slug: slugPath,
     locale,
   })
 
