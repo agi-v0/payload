@@ -8,7 +8,7 @@ import type {
   Post,
   Form,
   Page,
-  App,
+  Integration,
   Solution,
 } from '@/payload-types'
 
@@ -33,7 +33,7 @@ const collections: CollectionSlug[] = [
   'categories',
   'media',
   'pages',
-  'apps',
+  'integrations',
   'media-categories',
   'posts',
   'forms',
@@ -349,7 +349,7 @@ export const seed = async ({
   for (const appData of appDataArray) {
     payload.logger.info(`Creating app – ${appData.title}`)
     await payload.create({
-      collection: 'apps',
+      collection: 'integrations',
       depth: 0,
       data: appData,
       req,

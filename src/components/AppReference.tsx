@@ -12,7 +12,7 @@ interface AppReferenceProps {
         value: number | Solution
       } | null)
     | ({
-        relationTo: 'apps'
+        relationTo: 'integrations'
         value: number | App
       } | null)
   className?: string

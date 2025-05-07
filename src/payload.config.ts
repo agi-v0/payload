@@ -12,7 +12,7 @@ import { Media } from './collections/Media'
 import { AppIcons } from './collections/AppIcons'
 import { Pages } from './collections/Pages'
 import { Solutions } from './collections/Solutions'
-import { Apps } from './collections/Apps'
+import { Integrations } from './collections/Integrations'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
@@ -137,10 +137,10 @@ export default buildConfig({
   collections: [
     Pages,
     Posts,
-    Apps,
     Solutions,
-    AppIcons,
+    Integrations,
     Media,
+    AppIcons,
     Categories,
     MediaCategories,
     Users,

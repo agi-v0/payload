@@ -37,8 +37,8 @@ import {
 import { iconPickerField } from '@/fields/iconPickerField'
 import lucideIcons from '@/fields/iconPickerField/lucide-icons.json'
 
-export const Apps: CollectionConfig<'apps'> = {
-  slug: 'apps',
+export const Integrations: CollectionConfig<'integrations'> = {
+  slug: 'integrations',
   access: {
     create: authenticated,
     delete: authenticated,
@@ -60,7 +60,7 @@ export const Apps: CollectionConfig<'apps'> = {
     //   url: ({ data, req, locale }) => {
     //     const path = generatePreviewPath({
     //       slug: typeof data?.slug === 'string' ? data.slug : '',
-    //       collection: 'apps',
+    //       collection: 'integrations',
     //       req,
     //       locale,
     //     })
@@ -71,7 +71,7 @@ export const Apps: CollectionConfig<'apps'> = {
     // preview: (data, { req, locale }) =>
     //   generatePreviewPath({
     //     slug: typeof data?.slug === 'string' ? data.slug : '',
-    //     collection: 'apps',
+    //     collection: 'integrations',
     //     req,
     //     locale,
     //   }),
@@ -85,21 +85,21 @@ export const Apps: CollectionConfig<'apps'> = {
       localized: false,
       admin: {
         rtl: false,
-        description: 'Title of the app in English for display purposes.',
+        description: 'Title of the integration in English for display purposes.',
       },
     },
     {
       type: 'tabs',
       tabs: [
         {
-          label: 'App Info',
+          label: 'Integration Info',
           fields: [
             {
               name: 'icon',
               type: 'upload',
               relationTo: 'media',
               admin: {
-                description: 'Upload an icon for the app. 500x500px recommended.',
+                description: 'Upload an icon for the integration. 500x500px recommended.',
               },
               filterOptions: {
                 'category.slug': { equals: 'app-icon' },

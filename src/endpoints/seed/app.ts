@@ -5,7 +5,9 @@ type AppArgs = {
   imageSquare: Media
 }
 
-export const app: (args: AppArgs) => RequiredDataFromCollectionSlug<'apps'> = ({ imageSquare }) => {
+export const app: (args: AppArgs) => RequiredDataFromCollectionSlug<'integrations'> = ({
+  imageSquare,
+}) => {
   return {
     title: 'Jahez',
     icon: imageSquare,

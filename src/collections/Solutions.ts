@@ -80,7 +80,7 @@ export const Solutions: CollectionConfig<'solutions'> = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Product Info',
+          label: 'Solution Info',
           fields: [
             {
               name: 'icon',

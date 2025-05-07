@@ -69,10 +69,10 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
-    apps: App;
     solutions: Solution;
-    'app-icons': AppIcon;
+    integrations: Integration;
     media: Media;
+    'app-icons': AppIcon;
     categories: Category;
     'media-categories': MediaCategory;
     users: User;
@@ -91,10 +91,10 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
-    apps: AppsSelect<false> | AppsSelect<true>;
     solutions: SolutionsSelect<false> | SolutionsSelect<true>;
-    'app-icons': AppIconsSelect<false> | AppIconsSelect<true>;
+    integrations: IntegrationsSelect<false> | IntegrationsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'app-icons': AppIconsSelect<false> | AppIconsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'media-categories': MediaCategoriesSelect<false> | MediaCategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -228,8 +228,8 @@ export interface Page {
             value: number | Solution;
           } | null)
         | ({
-            relationTo: 'apps';
-            value: number | App;
+            relationTo: 'integrations';
+            value: number | Integration;
           } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -512,16 +512,16 @@ export interface Solution {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "apps".
+ * via the `definition` "integrations".
  */
-export interface App {
+export interface Integration {
   id: number;
   /**
-   * Title of the app in English for display purposes.
+   * Title of the integration in English for display purposes.
    */
   title: string;
   /**
-   * Upload an icon for the app. 500x500px recommended.
+   * Upload an icon for the integration. 500x500px recommended.
    */
   icon?: (number | null) | Media;
   name?: string | null;
@@ -628,8 +628,8 @@ export interface App {
             value: number | Solution;
           } | null)
         | ({
-            relationTo: 'apps';
-            value: number | App;
+            relationTo: 'integrations';
+            value: number | Integration;
           } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -689,8 +689,8 @@ export interface AppsBlock {
             value: number | Solution;
           } | null)
         | ({
-            relationTo: 'apps';
-            value: number | App;
+            relationTo: 'integrations';
+            value: number | Integration;
           } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -746,7 +746,7 @@ export interface AppsBlock {
         }[]
       | null;
   };
-  type: 'appsBlock01' | 'appsBlock02' | 'appsBlock03' | 'appsBlock04' | 'appsBlockHero';
+  type: 'appsBlockHero' | 'appsBlock01' | 'appsBlock02' | 'appsBlock03' | 'appsBlock04';
   body?: {
     badge?: {
       type?: ('label' | 'reference') | null;
@@ -758,8 +758,8 @@ export interface AppsBlock {
             value: number | Solution;
           } | null)
         | ({
-            relationTo: 'apps';
-            value: number | App;
+            relationTo: 'integrations';
+            value: number | Integration;
           } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -821,13 +821,13 @@ export interface AppsBlock {
    */
   reference?:
     | {
-        relationTo: 'apps';
-        value: number | App;
+        relationTo: 'integrations';
+        value: number | Integration;
       }[]
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'apps';
+  blockType: 'appsBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -846,8 +846,8 @@ export interface CallToActionBlock {
             value: number | Solution;
           } | null)
         | ({
-            relationTo: 'apps';
-            value: number | App;
+            relationTo: 'integrations';
+            value: number | Integration;
           } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -971,8 +971,8 @@ export interface ContentBlock {
             value: number | Solution;
           } | null)
         | ({
-            relationTo: 'apps';
-            value: number | App;
+            relationTo: 'integrations';
+            value: number | Integration;
           } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -1356,8 +1356,8 @@ export interface TestimonialsBlock {
             value: number | Solution;
           } | null)
         | ({
-            relationTo: 'apps';
-            value: number | App;
+            relationTo: 'integrations';
+            value: number | Integration;
           } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -1522,8 +1522,8 @@ export interface FeaturesBlock {
             value: number | Solution;
           } | null)
         | ({
-            relationTo: 'apps';
-            value: number | App;
+            relationTo: 'integrations';
+            value: number | Integration;
           } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -1630,8 +1630,8 @@ export interface FeaturesBlock {
               value: number | Solution;
             } | null)
           | ({
-              relationTo: 'apps';
-              value: number | App;
+              relationTo: 'integrations';
+              value: number | Integration;
             } | null);
         image?: (number | null) | Media;
         tabLabel?: string | null;
@@ -1668,8 +1668,8 @@ export interface FeaturesBlock {
                 value: number | Solution;
               } | null)
             | ({
-                relationTo: 'apps';
-                value: number | App;
+                relationTo: 'integrations';
+                value: number | Integration;
               } | null);
           /**
            * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -1720,8 +1720,8 @@ export interface FaqBlock {
             value: number | Solution;
           } | null)
         | ({
-            relationTo: 'apps';
-            value: number | App;
+            relationTo: 'integrations';
+            value: number | Integration;
           } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -1827,8 +1827,8 @@ export interface GalleryBlock {
             value: number | Solution;
           } | null)
         | ({
-            relationTo: 'apps';
-            value: number | App;
+            relationTo: 'integrations';
+            value: number | Integration;
           } | null);
       /**
        * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -2143,20 +2143,20 @@ export interface PayloadLockedDocument {
         value: number | Post;
       } | null)
     | ({
-        relationTo: 'apps';
-        value: number | App;
-      } | null)
-    | ({
         relationTo: 'solutions';
         value: number | Solution;
       } | null)
     | ({
-        relationTo: 'app-icons';
-        value: number | AppIcon;
+        relationTo: 'integrations';
+        value: number | Integration;
       } | null)
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'app-icons';
+        value: number | AppIcon;
       } | null)
     | ({
         relationTo: 'categories';
@@ -2290,7 +2290,7 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        apps?: T | AppsBlockSelect<T>;
+        appsBlock?: T | AppsBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
@@ -2824,9 +2824,35 @@ export interface PostsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "apps_select".
+ * via the `definition` "solutions_select".
  */
-export interface AppsSelect<T extends boolean = true> {
+export interface SolutionsSelect<T extends boolean = true> {
+  title?: T;
+  icon?: T;
+  name?: T;
+  tagline?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
+  publishedAt?: T;
+  ecosystem?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "integrations_select".
+ */
+export interface IntegrationsSelect<T extends boolean = true> {
   title?: T;
   icon?: T;
   name?: T;
@@ -2898,77 +2924,6 @@ export interface AppsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "solutions_select".
- */
-export interface SolutionsSelect<T extends boolean = true> {
-  title?: T;
-  icon?: T;
-  name?: T;
-  tagline?: T;
-  link?:
-    | T
-    | {
-        type?: T;
-        newTab?: T;
-        reference?: T;
-        url?: T;
-        label?: T;
-      };
-  publishedAt?: T;
-  ecosystem?: T;
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "app-icons_select".
- */
-export interface AppIconsSelect<T extends boolean = true> {
-  alt?: T;
-  caption?: T;
-  Category?: T;
-  blurhash?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-  sizes?:
-    | T
-    | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        square?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3054,6 +3009,51 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
         og?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app-icons_select".
+ */
+export interface AppIconsSelect<T extends boolean = true> {
+  alt?: T;
+  caption?: T;
+  Category?: T;
+  blurhash?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        square?:
           | T
           | {
               url?: T;
@@ -3820,12 +3820,12 @@ export interface TaskSchedulePublish {
           value: number | Post;
         } | null)
       | ({
-          relationTo: 'apps';
-          value: number | App;
-        } | null)
-      | ({
           relationTo: 'solutions';
           value: number | Solution;
+        } | null)
+      | ({
+          relationTo: 'integrations';
+          value: number | Integration;
         } | null);
     global?: string | null;
     user?: (number | null) | User;

@@ -27,7 +27,7 @@ export const AppsBlock01: React.FC<Props> = async (props) => {
   if (appIds.length > 0) {
     try {
       const result = await payload.find({
-        collection: 'apps',
+        collection: 'integrations',
         locale: 'ar',
         draft: false,
         depth: 2,
@@ -49,7 +49,7 @@ export const AppsBlock01: React.FC<Props> = async (props) => {
     }
   } else {
     const result = await payload.find({
-      collection: 'apps',
+      collection: 'integrations',
       locale: 'ar',
       draft: false,
       limit: 6,

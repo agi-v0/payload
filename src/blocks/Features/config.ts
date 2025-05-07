@@ -115,7 +115,7 @@ export const Features: Block = {
         {
           name: 'appReference',
           type: 'relationship',
-          relationTo: ['solutions', 'apps'],
+          relationTo: ['solutions', 'integrations'],
           label: 'App Reference',
           admin: {
             condition: (_, siblingData, { blockData }) => {

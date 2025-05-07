@@ -13,7 +13,7 @@ export const AppsBlock03: React.FC<Props> = async (props) => {
   const payload = await getPayload({ config })
 
   const initialAppsData = await payload.find({
-    collection: 'apps',
+    collection: 'integrations',
     locale: 'ar',
     draft: false,
     limit: 6,

@@ -90,7 +90,7 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
           condition: (_, siblingData) => siblingData?.type === 'reference',
         },
         label: 'Document to link to',
-        relationTo: ['solutions', 'apps'],
+        relationTo: ['solutions', 'integrations'],
         required: true,
       },
     ],

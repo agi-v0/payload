@@ -23,7 +23,7 @@ export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
   if (appIds.length > 0) {
     try {
       const result = await payload.find({
-        collection: 'apps',
+        collection: 'integrations',
         locale: 'ar',
         draft: false,
         depth: 2,
@@ -45,7 +45,7 @@ export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
   } else {
     // If no apps are referenced, fetch the latest ones as a fallback
     const result = await payload.find({
-      collection: 'apps',
+      collection: 'integrations',
       locale: 'ar',
       draft: false,
       depth: 2,

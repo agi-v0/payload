@@ -17,11 +17,11 @@ const fields: Field[] = [
     name: 'type',
     type: 'select',
     options: [
+      { value: 'appsBlockHero', label: 'Apps Block Hero' },
       { value: 'appsBlock01', label: 'Apps Block 01' },
       { value: 'appsBlock02', label: 'Apps Block 02' },
       { value: 'appsBlock03', label: 'Apps Block 03' },
       { value: 'appsBlock04', label: 'Apps Block 04' },
-      { value: 'appsBlockHero', label: 'Apps Block Hero' },
     ],
     required: true,
     defaultValue: 'appsBlock01',
@@ -77,7 +77,7 @@ const fields: Field[] = [
     name: 'reference',
     type: 'relationship',
     label: 'Apps to link to',
-    relationTo: ['apps'],
+    relationTo: ['integrations'],
     hasMany: true,
     admin: {
       description: 'Select the apps to link to. Leave blank to show 10 last updated apps.',
@@ -86,7 +86,7 @@ const fields: Field[] = [
 ]
 
 export const AppsBlock: Block = {
-  slug: 'apps',
+  slug: 'appsBlock',
   interfaceName: 'AppsBlock',
   fields: [blockHeader, ...fields],
 }

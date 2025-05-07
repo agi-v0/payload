@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const payload = await getPayload({ config })
 
     const appsData = await payload.find({
-      collection: 'apps',
+      collection: 'integrations',
       // Ensure the final locale value is compatible with Payload's expected type
       locale: locale as 'ar' | 'en', // Cast to expected union type
       draft: false,
