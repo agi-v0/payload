@@ -140,6 +140,9 @@ importers:
       pg-cloudflare:
         specifier: 1.1.1
         version: 1.1.1
+      plaiceholder:
+        specifier: ^3.0.0
+        version: 3.0.0(sharp@0.33.5)
       prism-react-renderer:
         specifier: ^2.4.1
         version: 2.4.1(react@19.1.0)
@@ -4463,6 +4466,11 @@ packages:
 
   pkg-types@2.1.0:
     resolution: {integrity: sha512-wmJwA+8ihJixSoHKxZJRBQG1oY8Yr9pGLzRmSsNms0iNWyHHAlZCa7mmKiFR10YPZuz/2k169JiS/inOjBCZ2A==}
+
+  plaiceholder@3.0.0:
+    resolution: {integrity: sha512-jwHxxHPnr1BwRzPCeZgEK2BMsEy2327sWynw3qb6XC/oGgGDUTPtR8pFxFQmNArhMBwhkUbUr5OPhhIJpCa8eQ==}
+    peerDependencies:
+      sharp: '>= 0.30.6'
 
   pluralize@8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
@@ -10534,6 +10542,10 @@ snapshots:
       confbox: 0.2.2
       exsolve: 1.0.5
       pathe: 2.0.3
+
+  plaiceholder@3.0.0(sharp@0.33.5):
+    dependencies:
+      sharp: 0.33.5
 
   pluralize@8.0.0: {}
 

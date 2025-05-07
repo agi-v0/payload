@@ -38,7 +38,7 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
   const testimonial = testimonials?.[0]
 
   const { authorInfo, quote, media, companyLogo, stats, rating } = testimonial
-  console.log('linkLabel', linkLabel)
+
   if (!testimonial) {
     return null
   }

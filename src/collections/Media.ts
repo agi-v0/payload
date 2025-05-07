@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
+import { generateBlurHash } from '@/utilities/generateBlurHash'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -45,6 +46,15 @@ export const Media: CollectionConfig = {
         components: {
           afterInput: ['@/components/ImageCategoryGuide'],
         },
+      },
+    },
+    {
+      name: 'blurhash',
+      type: 'text',
+      admin: {
+        hidden: true,
+        disableListColumn: true,
+        disableListFilter: true,
       },
     },
   ],
@@ -86,5 +96,8 @@ export const Media: CollectionConfig = {
         crop: 'center',
       },
     ],
+  },
+  hooks: {
+    beforeValidate: [generateBlurHash],
   },
 }

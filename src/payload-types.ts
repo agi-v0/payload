@@ -345,6 +345,7 @@ export interface Media {
     [k: string]: unknown;
   } | null;
   category?: (number | null) | MediaCategory;
+  blurhash?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1930,6 +1931,7 @@ export interface AppIcon {
     [k: string]: unknown;
   } | null;
   Category?: ('App' | 'Website') | null;
+  blurhash?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2931,6 +2933,7 @@ export interface AppIconsSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   Category?: T;
+  blurhash?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2975,6 +2978,7 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   category?: T;
+  blurhash?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
