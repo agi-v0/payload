@@ -20,16 +20,5 @@ export const FeaturesBlockComponent: React.FC<FeaturesBlockProps> = (props) => {
 
   const VariantComponent = getVariantComponent(layout)
 
-  return (
-    <VariantComponent
-      columns={columns || []}
-      blockImage={blockImage}
-      blockHeader={blockHeader}
-      link={link}
-      CTALabel={CTALabel}
-      layout={layout}
-      blockType={blockType}
-      locale={locale}
-    />
-  )
+  return <VariantComponent columns={columns || []} {...props} />
 }

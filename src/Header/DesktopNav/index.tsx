@@ -196,11 +196,13 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                     {subLink.link.type === 'reference' &&
                       subLink.link.reference?.value?.icon.url && (
                         <Image
-                          src={subLink.link.reference.value.icon.url}
+                          src={subLink.link.reference.value.icon.thumbnailURL}
                           alt={subLink.link.reference.value.icon.alt}
                           width={300}
                           height={300}
                           className="aspect-square size-10 flex-none rounded-md"
+                          priority
+                          loading="eager"
                         />
                       )}
                     <div className="me-10 flex w-full flex-col justify-start gap-1">

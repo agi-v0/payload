@@ -24,7 +24,9 @@ export const AppReference: React.FC<AppReferenceProps> = ({ appReference, classN
   if (typeof appReference.value !== 'object') return null
 
   return (
-    <div className={cn('flex justify-between gap-4 lg:gap-0', className)}>
+    <div
+      className={cn('group flex flex-row items-center justify-between gap-4 lg:gap-0', className)}
+    >
       <div className="flex items-center gap-4">
         {appReference.value.icon && (
           <Media
@@ -34,28 +36,23 @@ export const AppReference: React.FC<AppReferenceProps> = ({ appReference, classN
           />
         )}
         <div>
-          {/* TODO: CHECK Why i dont get the name */}
           {appReference.value.name && (
-            <p className="text-body-lg text-base-primary font-medium">{appReference.value.name}</p>
+            <p className="text-body-md text-base-primary font-medium">{appReference.value.name}</p>
           )}
           {appReference.value.tagline && (
-            <p className="text-body-sm text-base-secondary">{appReference.value.tagline}</p>
+            <p className="text-base-secondary text-sm">{appReference.value.tagline}</p>
           )}
         </div>
       </div>
 
       {appReference.value.link && (
-        <div>
-          {appReference.value.link && (
-            <CMSLink
-              label="تعرف المزيد"
-              url={appReference.value.link.url}
-              size="sm"
-              variant="tertiary"
-              color="neutral"
-            />
-          )}
-        </div>
+        <CMSLink
+          label="المزيد"
+          url={appReference.value.link.url}
+          size="sm"
+          variant="tertiary"
+          color="neutral"
+        />
       )}
     </div>
   )
