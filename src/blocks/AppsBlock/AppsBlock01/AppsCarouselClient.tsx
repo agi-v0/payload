@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import type { App } from '@/payload-types'
+import type { Integration } from '@/payload-types'
 import {
   Carousel,
   CarouselContent,
@@ -15,13 +15,11 @@ import RichText from '@/components/RichText'
 import { ArrowLeftIcon } from 'lucide-react'
 
 // Props for the client component
-interface AppsCarouselClientProps {
-  apps: App[]
+interface IntegrationsCarouselClientProps {
+  apps: Integration[]
 }
 
-// AppCard component, similar to before but ensure fields exist
-// Adapt this based on your actual App type fields
-const AppCard: React.FC<{ app: App }> = ({ app }) => {
+const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
   const { name, icon, tagline, overview, link, gallery } = app
 
   return (
@@ -30,7 +28,7 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
       {/* Content Section */}
       <div className="p-md flex w-full flex-col justify-between text-start">
         <div className="gap-sm flex flex-col items-start justify-start">
-          {/* App Badge (Icon + Name) */}
+          {/* Integration Badge (Icon + Name) */}
           <div className="gap-xs flex items-center justify-end">
             {icon && <Media resource={icon} className="size-16 overflow-hidden rounded-xl" />}
             {name && <span className="text-h3 text-base-secondary font-medium">{name}</span>}
@@ -76,7 +74,7 @@ const AppCard: React.FC<{ app: App }> = ({ app }) => {
 }
 
 // Main Client Component for the Carousel
-export const AppsCarouselClient: React.FC<AppsCarouselClientProps> = ({ apps }) => {
+export const AppsCarouselClient: React.FC<IntegrationsCarouselClientProps> = ({ apps }) => {
   if (!apps || apps.length === 0) {
     return null // Or render an empty state
   }

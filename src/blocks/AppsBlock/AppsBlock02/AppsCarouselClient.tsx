@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import type { App } from '@/payload-types'
+import type { Integration } from '@/payload-types'
 import {
   Carousel,
   CarouselContent,
@@ -15,12 +15,12 @@ import RichText from '@/components/RichText'
 import { ArrowLeftIcon } from 'lucide-react'
 
 interface AppsCarouselClientProps {
-  apps: App[]
+  apps: Integration[]
 }
 
 // AppCard component, similar to before but ensure fields exist
 // Adapt this based on your actual App type fields
-const AppCard: React.FC<{ app: App }> = ({ app }) => {
+const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
   const { name, icon, tagline, overview, link, gallery } = app
 
   return (

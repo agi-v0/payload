@@ -1,6 +1,6 @@
 'use client'
 
-import type { App, Media as MediaType, AppsBlock as AppsBlockType } from '@/payload-types' // Import necessary types
+import type { Integration, Media as MediaType, AppsBlock as AppsBlockType } from '@/payload-types' // Import necessary types
 import { Media } from '@/components/Media'
 import { easeIn, motion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
@@ -10,12 +10,12 @@ import { CMSLink } from '@/components/Link'
 import { cn } from '@/utilities/ui'
 
 interface AppsCarouselClientProps {
-  apps: App[]
+  apps: Integration[]
   body: AppsBlockType['body']
 }
 
 interface GridCell {
-  app: App | null
+  app: Integration | null
   delay: number
   row: number
   column: number
@@ -60,7 +60,7 @@ const GRID_CONFIG = {
 }
 
 const AnimatedAppIcon: React.FC<{
-  app: App
+  app: Integration
   delay: number
   containerRef: React.RefObject<HTMLDivElement | null>
   row: number

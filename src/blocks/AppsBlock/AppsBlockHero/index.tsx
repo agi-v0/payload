@@ -2,7 +2,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-import type { App, AppsBlock as AppsBlockProps } from '@/payload-types'
+import type { Integration, AppsBlock as AppsBlockProps } from '@/payload-types'
 import { AppsBlockGrid } from './AppsBlockGrid'
 
 export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
@@ -10,7 +10,7 @@ export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
 
   const payload = await getPayload({ config })
 
-  let fetchedApps: App[] = []
+  let fetchedApps: Integration[] = []
   let fetchError: string | null = null
 
   const appIds = Array.isArray(reference)

@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useState, useCallback } from 'react'
-import type { App, Media as MediaType } from '@/payload-types'
+import type { Integration, Media as MediaType } from '@/payload-types'
 import { CMSLink } from '../../../components/Link'
 import { Media } from '@/components/Media'
 import { PaginationControls } from './PaginationControls'
 
-type PopulatedApp = Partial<App>
+type PopulatedApp = Partial<Integration>
 
 interface AppListData {
   docs: PopulatedApp[]

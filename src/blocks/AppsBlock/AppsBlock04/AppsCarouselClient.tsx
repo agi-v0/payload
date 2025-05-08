@@ -1,13 +1,13 @@
-import type { App, Media as MediaType } from '@/payload-types' // Import necessary types
+import type { Integration, Media as MediaType } from '@/payload-types' // Import necessary types
 
 import { Media } from '@/components/Media'
 
 // Props for the client component
 interface AppsCarouselClientProps {
-  apps: App[]
+  apps: Integration[]
 }
 
-const AppCard: React.FC<{ app: App }> = ({ app }) => {
+const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
   const { name, icon, tagline, overview, link, gallery } = app
   return <Media resource={icon as MediaType} imgClassName="rounded-3xl" className="size-16" />
 }

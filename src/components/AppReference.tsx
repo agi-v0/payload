@@ -2,7 +2,7 @@ import React from 'react'
 import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
 import { Button } from '@/components/ui/button'
-import { Solution, App } from '@/payload-types'
+import { Solution, Integration } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 
 interface AppReferenceProps {
@@ -13,7 +13,7 @@ interface AppReferenceProps {
       } | null)
     | ({
         relationTo: 'integrations'
-        value: number | App
+        value: number | Integration
       } | null)
   className?: string
 }

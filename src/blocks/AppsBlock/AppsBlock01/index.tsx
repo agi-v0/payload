@@ -2,7 +2,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-import type { App, AppsBlock as AppsBlockProps } from '@/payload-types'
+import type { Integration, AppsBlock as AppsBlockProps } from '@/payload-types'
 import { AppsCarouselClient } from './AppsCarouselClient'
 
 interface Props extends AppsBlockProps {}
@@ -12,7 +12,7 @@ export const AppsBlock01: React.FC<Props> = async (props) => {
 
   const payload = await getPayload({ config })
 
-  let fetchedApps: App[] = []
+  let fetchedApps: Integration[] = []
   let fetchError: string | null = null
 
   const appIds = (
