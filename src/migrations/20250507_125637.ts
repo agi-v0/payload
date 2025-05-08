@@ -543,11 +543,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "_integrations_v" DROP COLUMN IF EXISTS "autosave";
   ALTER TABLE "_solutions_v" DROP COLUMN IF EXISTS "autosave";
   ALTER TABLE "public"."pages_blocks_apps_block" ALTER COLUMN "type" SET DATA TYPE text;
-  DROP TYPE "public"."enum_pages_blocks_apps_block_type";
+  DROP TYPE "public"."enum_pages_blocks_apps_block_type" CASCADE;
   CREATE TYPE "public"."enum_pages_blocks_apps_block_type" AS ENUM('appsBlockHero', 'appsBlock01', 'appsBlock02', 'appsBlock03', 'appsBlock04');
   ALTER TABLE "public"."pages_blocks_apps_block" ALTER COLUMN "type" SET DATA TYPE "public"."enum_pages_blocks_apps_block_type" USING "type"::"public"."enum_pages_blocks_apps_block_type";
   ALTER TABLE "public"."_pages_v_blocks_apps_block" ALTER COLUMN "type" SET DATA TYPE text;
-  DROP TYPE "public"."enum__pages_v_blocks_apps_block_type";
+  DROP TYPE "public"."enum__pages_v_blocks_apps_block_type" CASCADE;
   CREATE TYPE "public"."enum__pages_v_blocks_apps_block_type" AS ENUM('appsBlockHero', 'appsBlock01', 'appsBlock02', 'appsBlock03', 'appsBlock04');
   ALTER TABLE "public"."_pages_v_blocks_apps_block" ALTER COLUMN "type" SET DATA TYPE "public"."enum__pages_v_blocks_apps_block_type" USING "type"::"public"."enum__pages_v_blocks_apps_block_type";`)
 }
