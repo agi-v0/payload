@@ -7,7 +7,7 @@ import RichText from '@/components/RichText'
 
 import { CMSLink } from '@/components/Link'
 
-export const Variant03: React.FC<FeaturesBlock> = ({ columns }) => {
+export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
 
   return (

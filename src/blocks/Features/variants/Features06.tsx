@@ -8,7 +8,7 @@ import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
 import { Card, CardContent } from '@/components/ui/card'
 import { BlockHeader } from '@/components/BlockHeader'
 
-export const Variant06: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
+export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
   return (
     <div className="bg-background-neutral-subtle py-xl w-full">

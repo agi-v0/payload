@@ -8,7 +8,7 @@ import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 import RichText from '@/components/RichText'
 
-export const Variant04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) => {
+export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down')
   const containerRef = useRef<HTMLDivElement>(null)

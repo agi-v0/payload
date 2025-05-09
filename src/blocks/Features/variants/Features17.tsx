@@ -4,7 +4,7 @@ import { Media } from '@/components/Media'
 import { Card, CardContent } from '@/components/ui/card'
 import { BlockHeader } from '@/components/BlockHeader'
 
-export const Variant17: React.FC<FeaturesBlock> = ({ columns, blockHeader }) => {
+export const Features17: React.FC<FeaturesBlock> = ({ columns, blockHeader }) => {
   if (!columns?.length) return null
   const limitedColumns = columns.slice(0, 4)
   return (

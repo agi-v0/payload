@@ -13,7 +13,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 
-export const Variant09: React.FC<FeaturesBlock> = ({ columns }) => {
+export const Features09: React.FC<FeaturesBlock> = ({ columns }) => {
   const [activeAccordionId, setActiveAccordionId] = useState<string | null>(
     columns && columns.length > 0 ? String(0) : null,
   )

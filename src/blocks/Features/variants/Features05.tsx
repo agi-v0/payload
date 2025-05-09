@@ -7,7 +7,7 @@ import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
 import { Badge } from '@/components/ui/badge'
 
-export const Variant05: React.FC<FeaturesBlock> = ({ columns }) => {
+export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
   return (
     <div className="py-xl gap-sm container grid grid-cols-1 md:grid-cols-2">

@@ -8,7 +8,7 @@ import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
 import { Card, CardContent } from '@/components/ui/card'
 import { BlockHeader } from '@/components/BlockHeader'
 
-export const Variant07: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
+export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
   return (
     <div className={cn('gap-md rounded-space-sm container flex flex-col')}>

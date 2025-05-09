@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/carousel'
 import { Media } from '@/components/Media'
 
-export const Variant10: React.FC<FeaturesBlock> = ({ columns }) => {
+export const Features10: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (

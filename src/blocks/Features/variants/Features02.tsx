@@ -1,3 +1,4 @@
+'use client' // Added for consistency and future-proofing
 import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
 import { Badge } from '@/components/ui/badge'
@@ -6,13 +7,13 @@ import { cn } from '@/utilities/ui'
 
 import { CMSLink } from '@/components/Link'
 
-export const Variant02: React.FC<FeaturesBlock> = ({ columns }) => {
+export const Features02: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
 
   return (
     <div className="gap-sm container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
       {columns.map((column, index) => {
-        const { content, image, appReference, size = 'oneThird' } = column
+        const { content, image, /* appReference, */ size = 'oneThird' } = column // appReference seems unused, commented out
 
         const lgColSpanClass =
           size === 'full' ? 'lg:col-span-12' : size === 'half' ? 'lg:col-span-6' : ''

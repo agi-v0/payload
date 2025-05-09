@@ -8,15 +8,15 @@ import { cn } from '@/utilities/ui'
 import { Card, CardContent } from '@/components/ui/card'
 import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
 
-export const Variant13: React.FC<FeaturesBlock> = ({ columns }) => {
+export const Features12: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="gap-md py-xl container grid grid-cols-1 md:grid-cols-3">
+    <div className="py-xl gap-xs container grid grid-cols-1 md:grid-cols-3">
       {columns.map((column, index) => {
         const iconName = column.icon as keyof typeof dynamicIconImports
         return (
-          <Card key={index} className="rounded-none border-0 bg-transparent">
+          <Card key={index} className="rounded-space-sm p-md bg-card border-0">
             <CardContent key={index} className={cn('gap-md flex flex-col justify-start p-0')}>
               {column.icon && (
                 <DynamicIcon
@@ -25,12 +25,12 @@ export const Variant13: React.FC<FeaturesBlock> = ({ columns }) => {
                   color="currentColor"
                 />
               )}
-              {column.content && (
+              {column.content?.title && (
                 <div className="flex flex-col gap-2">
-                  <h3 className={`text-body-lg text-base-primary font-medium`}>
+                  <h3 className="text-body-lg text-base-primary font-medium">
                     {column.content?.title}
                   </h3>
-                  <p className={`text-body-md text-base-secondary`}>{column.content?.title}</p>
+                  <p className="text-body-md text-base-tertiary">{column.content?.title}</p>
                 </div>
               )}
             </CardContent>

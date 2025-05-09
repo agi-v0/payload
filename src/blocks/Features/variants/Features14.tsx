@@ -7,7 +7,7 @@ import { CMSLink } from '@/components/Link'
 import { LinkBlock } from '@/components/LinkBlock'
 import { cn } from '@/utilities/ui'
 
-export const Variant14: React.FC<FeaturesBlock> = ({ columns, link, CTALabel }) => {
+export const Features14: React.FC<FeaturesBlock> = ({ columns, link, CTALabel }) => {
   if (!columns?.length) return null
   const limitedColumns = columns.slice(0, 3)
   return (

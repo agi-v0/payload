@@ -10,7 +10,7 @@ import { CMSLink } from '@/components/Link'
 import { DynamicIcon } from 'lucide-react/dynamic'
 import { Button } from '@/components/ui/button'
 
-export const Variant08: React.FC<FeaturesBlock> = ({ columns }) => {
+export const Features08: React.FC<FeaturesBlock> = ({ columns }) => {
   const [carouselIndex, setCarouselIndex] = useState(0)
   if (!columns?.length) return null
 

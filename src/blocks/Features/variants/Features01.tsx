@@ -8,7 +8,7 @@ import RichText from '@/components/RichText'
 import { motion } from 'motion/react'
 import { itemVariants } from '@/utilities/motion'
 
-export const Variant01: React.FC<FeaturesBlock> = ({ columns }) => {
+export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
 
   const rows: FeaturesBlock['columns'][] = []
@@ -37,7 +37,7 @@ export const Variant01: React.FC<FeaturesBlock> = ({ columns }) => {
           })}
         >
           {row?.map((column, index) => {
-            const { content, richTextContent, image, appReference, size = 'half' } = column
+            const { richTextContent, image, appReference, size = 'half' } = column // Removed 'content' as it's unused
             return (
               <motion.div
                 key={index}
