@@ -70,8 +70,7 @@ html:not([dir='RTL']) .btn--withPopup .popup-button {
 }
 
 .doc-controls__dots {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
+  border-radius: var(--style-radius-full);
 }
 
 .nav__link {
