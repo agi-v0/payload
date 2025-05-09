@@ -24,6 +24,8 @@ import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloa
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { default as default_50fad7b62e1ba5d1034952cb18853e31 } from '@/Header/CustomRowLabelNavItems'
 import { default as default_25391bb246c1d60cf178de278309b30a } from '@/Header/CustomRowLabelTabs'
+import { default as default_5b83c0d03ff747b791bd44d436d1f222 } from '@/components/Graphics/Icon'
+import { default as default_a0dbd59c719a0d4b6169140b0f7e200a } from '@/components/Graphics/Logo'
 import { default as default_1a7510af427896d367a49dbf838d2de6 } from '@/components/BeforeDashboard'
 import { default as default_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/BeforeLogin'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
@@ -55,6 +57,8 @@ export const importMap = {
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@/Header/CustomRowLabelNavItems#default": default_50fad7b62e1ba5d1034952cb18853e31,
   "@/Header/CustomRowLabelTabs#default": default_25391bb246c1d60cf178de278309b30a,
+  "@/components/Graphics/Icon#default": default_5b83c0d03ff747b791bd44d436d1f222,
+  "@/components/Graphics/Logo#default": default_a0dbd59c719a0d4b6169140b0f7e200a,
   "@/components/BeforeDashboard#default": default_1a7510af427896d367a49dbf838d2de6,
   "@/components/BeforeLogin#default": default_8a7ab0eb7ab5c511aba12e68480bfe5e,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24

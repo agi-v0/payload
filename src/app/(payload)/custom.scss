@@ -8,10 +8,6 @@
   --style-radius-full: 999px;
 }
 
-// .btn {
-//   border-radius: var(--style-radius-s);
-// }
-
 .collapsible {
   border-radius: var(--style-radius-s);
 }
@@ -109,7 +105,8 @@ html:not([dir='RTL']) .btn--withPopup .popup-button {
 }
 
 [data-theme='light'] {
-  .login__brand {
+  .login__brand,
+  .step-nav__home {
     filter: invert(1);
     height: 32px;
     width: auto;
