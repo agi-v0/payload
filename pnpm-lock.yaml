@@ -26,6 +26,9 @@ importers:
       '@next/bundle-analyzer':
         specifier: ^15.3.2
         version: 15.3.2(bufferutil@4.0.9)(utf-8-validate@6.0.5)
+      '@next/env':
+        specifier: ^15.3.2
+        version: 15.3.2
       '@payloadcms/db-postgres':
         specifier: latest
         version: 3.35.1(@neondatabase/serverless@0.9.5)(@types/react@19.0.1)(@vercel/postgres@0.9.0)(payload@3.35.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.2)(utf-8-validate@6.0.5))(react@19.1.0)
@@ -1437,6 +1440,9 @@ packages:
 
   '@next/env@15.3.1':
     resolution: {integrity: sha512-cwK27QdzrMblHSn9DZRV+DQscHXRuJv6MydlJRpFSqJWZrTYMLzKDeyueJNN9MGd8NNiUKzDQADAf+dMLXX7YQ==}
+
+  '@next/env@15.3.2':
+    resolution: {integrity: sha512-xURk++7P7qR9JG1jJtLzPzf0qEvqCN0A/T3DXf8IPMKo9/6FfjxtEffRJIIew/bIL4T3C2jLLqBor8B/zVlx6g==}
 
   '@next/eslint-plugin-next@15.1.0':
     resolution: {integrity: sha512-+jPT0h+nelBT6HC9ZCHGc7DgGVy04cv4shYdAe6tKlEbjQUtwU3LzQhzbDHQyY2m6g39m6B0kOFVuLGBrxxbGg==}
@@ -6986,6 +6992,8 @@ snapshots:
 
   '@next/env@15.3.1': {}
 
+  '@next/env@15.3.2': {}
+
   '@next/eslint-plugin-next@15.1.0':
     dependencies:
       fast-glob: 3.3.1
@@ -10571,7 +10579,7 @@ snapshots:
 
   payload@3.35.1(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.2)(utf-8-validate@6.0.5):
     dependencies:
-      '@next/env': 15.3.1
+      '@next/env': 15.3.2
       '@payloadcms/translations': 3.35.1
       '@types/busboy': 1.5.4
       ajv: 8.17.1

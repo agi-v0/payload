@@ -28,6 +28,7 @@
     "@iconify/tools": "^4.1.2",
     "@iconify/utils": "^2.3.0",
     "@next/bundle-analyzer": "^15.3.2",
+    "@next/env": "^15.3.2",
     "@payloadcms/db-postgres": "latest",
     "@payloadcms/db-vercel-postgres": "^3.35.1",
     "@payloadcms/email-resend": "^3.35.1",
