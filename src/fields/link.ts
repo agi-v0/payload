@@ -85,6 +85,7 @@ export const link: LinkType = ({
                 value: 'custom',
               },
             ],
+            dbName: 'link_type',
           },
           {
             name: 'newTab',
@@ -190,7 +191,7 @@ export const link: LinkType = ({
         description: 'Choose the button style.',
       },
       dbName: 'link_color',
-      defaultValue: 'brand',
+      defaultValue: 'neutral',
       options: colorOptionsToUse,
     })
   }
