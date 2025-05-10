@@ -10,43 +10,34 @@ import {
   CarouselIndicator,
 } from '@/components/ui/carousel'
 
-import { ArrowDown, ArrowUp } from 'lucide-react'
-
-import { Testimonial } from '@/payload-types'
+import { CaseStudy, Testimonial, TestimonialsBlock } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
+import { Stat } from '../stat'
+import { CMSLink } from '@/components/Link'
 
 interface Props {
   testimonials: Testimonial[]
   linkLabel: string
 }
+interface TestimonialCardProps {
+  testimonial: Testimonial
+  linkLabel: string
+}
 
-const renderStat = (stat: NonNullable<Testimonial['stats']>[number], index: number) => (
-  <div key={stat.id || index} className="flex w-full flex-col justify-start">
-    <span className="text-h3 text-base-primary font-medium">
-      {stat.value}
-      {stat.isPercentage ? '%' : ''}
-    </span>
-    <div className="flex items-center gap-1">
-      {stat.isIncrease ? (
-        <ArrowUp className="text-base-tertiary size-4" />
-      ) : (
-        <ArrowDown className="text-base-tertiary size-4" />
-      )}
-      <span className="text-base-tertiary text-sm font-normal">{stat.label}</span>
-    </div>
-  </div>
-)
-
-const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }) => {
-  const { authorInfo, quote, media, companyLogo, stats } = testimonial
+const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabel }) => {
+  const { authorInfo, quote, featuredImage, companyLogo, caseStudy } = testimonial // Updated to featuredImage, stats & rating commented out
+  const { stats, slug } = caseStudy?.linkedCaseStudy as CaseStudy
 
   return (
-    <div className="bg-background-neutral rounded-space-sm grid w-full max-w-[90rem] grid-cols-1 md:auto-cols-fr lg:items-stretch">
+    <div className="bg-background-neutral rounded-space-sm grid w-full max-w-[90rem] grid-cols-1 lg:grid-cols-2 lg:items-stretch">
       <div className="gap-md p-md pb-xs md:pb-md flex w-full flex-col justify-start md:justify-between">
         <div className="gap-sm flex flex-grow flex-col justify-start">
           {companyLogo && (
-            <Media resource={companyLogo} imgClassName="h-8 w-auto opacity-50 dark:invert" />
+            <Media
+              resource={companyLogo}
+              imgClassName="h-[clamp(1.75rem,1.15rem+1.5vw,2.5rem)] w-auto opacity-50 dark:invert"
+            />
           )}
           {quote && (
             <RichText
@@ -66,7 +57,9 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
               } as React.CSSProperties
             }
           >
-            {stats.map(renderStat)}
+            {stats.map((stat, index) => (
+              <Stat key={stat.id || index} stat={stat} index={index} className="w-full p-0" />
+            ))}
           </div>
         )}
         <div className="flex flex-row items-center justify-between">
@@ -76,7 +69,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
                 <Media
                   resource={authorInfo.avatar}
                   fill
-                  className="relative h-12 w-12 overflow-hidden rounded-full"
+                  className="size-lg relative overflow-hidden rounded-full"
                   imgClassName="object-cover"
                 />
               )}
@@ -86,46 +79,46 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
               </div>
             </div>
           )}
-          <Link
-            href="/testimonials"
-            className="text-body-md text-base-secondary relative font-medium"
-          >
-            <span>Read more</span>
-          </Link>
+          {caseStudy?.linkedCaseStudy && (
+            <CMSLink
+              className="text-body-md text-base-secondary relative font-medium"
+              variant="link"
+              url={`/case-studies/${slug}`}
+            >
+              {linkLabel}
+            </CMSLink>
+          )}
         </div>
       </div>
-      {/* {media && (
-        <div className="p-xs flex items-center justify-center">
+      {featuredImage && (
+        <div className="p-xs flex items-start justify-start">
           <Media
-            resource={media}
+            resource={featuredImage}
             fill
             className="rounded-space-sm relative aspect-[4/3] h-auto w-full overflow-hidden"
             imgClassName="object-cover"
           />
         </div>
-      )} */}
+      )}
     </div>
   )
 }
 
-export const TestimonialsBlock02: React.FC<Props> = ({ testimonials }) => {
+export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }) => {
   return (
-    <section className="bg-background py-xl relative container">
-      <Carousel>
-        <CarouselContent className="items-stretch">
+    <section className="py-xl relative container">
+      <Carousel slidesPerView={1}>
+        <CarouselContent className="-ms-sm">
           {testimonials.map((testimonial, index) => (
-            <CarouselItem key={testimonial.id || index} className="basis-full">
-              <TestimonialCard testimonial={testimonial} />
+            <CarouselItem key={testimonial.id || index} className="px-xs basis-full">
+              <TestimonialCard testimonial={testimonial} linkLabel={linkLabel} />
             </CarouselItem>
           ))}
         </CarouselContent>
         {testimonials.length > 1 && (
           <>
-            <CarouselNavigation
-              className="absolute top-auto -bottom-20 left-auto w-full justify-between gap-2"
-              alwaysShow
-            />
-            <CarouselIndicator className="-bottom-20 h-12" />
+            <CarouselNavigation className="mt-xs relative justify-between" />
+            <CarouselIndicator className="absolute bottom-0 h-10" />
           </>
         )}
       </Carousel>

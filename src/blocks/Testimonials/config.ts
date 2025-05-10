@@ -32,4 +32,5 @@ export const TestimonialsBlock: Block = {
   slug: 'testimonials',
   interfaceName: 'TestimonialsBlock',
   fields: [blockHeader, ...fields],
+  dbName: 'testimonialsBlock',
 }

@@ -1,77 +1,41 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { Link } from '@/i18n/routing'
 // import { getTranslations } from 'next-intl/server' // Cannot use in client components without passing down props
 import { ArrowDown, ArrowUp, ArrowRight } from 'lucide-react'
 import { motion, useAnimation, useInView, Variants } from 'motion/react'
 
-import { Testimonial } from '@/payload-types'
+import { CaseStudy, Testimonial } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 import { LinkBlock } from '@/components/LinkBlock'
+import { containerVariants, itemVariants, itemsFling } from '@/utilities/motion'
+import { Stat } from '../stat'
 
 interface Props {
   testimonials: Testimonial[]
   linkLabel: string
 }
 
-// Animation Variants
-const containerVariants: Variants = {
-  hidden: { opacity: 0 }, // Start with container visible
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2, // Stagger children by 0.2s
-      duration: 0.5,
-    },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-}
-
 export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }) => {
   const testimonial = testimonials?.[0]
-
-  const { authorInfo, quote, media, companyLogo, stats, rating } = testimonial
-
   if (!testimonial) {
     return null
   }
 
-  const renderStat = (stat: NonNullable<Testimonial['stats']>[number], index: number) => (
-    <motion.div
-      key={stat.id || index}
-      variants={itemVariants} // Apply item animation
-      className="p-lg bg-background-neutral rounded-space-sm flex flex-col justify-center"
-    >
-      <span className="text-h3 text-base-primary font-medium">
-        {stat.value}
-        {stat.isPercentage ? '%' : ''}
-      </span>
-      <div className="flex items-center gap-1">
-        {stat.isIncrease ? (
-          <ArrowUp className="text-base-tertiary size-4" />
-        ) : (
-          <ArrowDown className="text-base-tertiary size-4" />
-        )}
-        <span className="text-base-tertiary text-base font-normal">{stat.label}</span>
-      </div>
-    </motion.div>
-  )
+  const { authorInfo, quote, featuredImage, companyLogo, caseStudy } = testimonial // Updated to featuredImage, stats & rating commented out
+  const { stats, slug } = caseStudy?.linkedCaseStudy as CaseStudy
 
   return (
-    <section className="bg-bcakground-neutral-subtle py-lg">
+    <section className="bg-background-neutral-subtle py-lg">
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: false, amount: 0.3 }}
         variants={containerVariants}
-        className="container"
+        className="py-lg container"
       >
         <motion.div
           variants={itemVariants} // Animate the main card as one item
@@ -107,10 +71,10 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
               </div>
             )}
           </div>
-          {media && (
+          {featuredImage && ( // Updated to featuredImage
             <motion.div variants={itemVariants} className="p-xs flex items-center justify-center">
               <Media
-                resource={media}
+                resource={featuredImage} // Updated to featuredImage
                 fill
                 className="rounded-space-sm relative aspect-[4/3] h-auto w-full overflow-hidden"
                 imgClassName="object-cover"
@@ -119,11 +83,15 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
           )}
         </motion.div>
         {stats && stats.length > 0 && (
-          <div className="mt-space-xs gap-xs grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map(renderStat)}
+          <div className="mt-space-xs gap-xs grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+            {stats.map((stat, index) => (
+              <motion.div key={stat.id || index} variants={itemsFling}>
+                {<Stat stat={stat} index={index} />}
+              </motion.div>
+            ))}
             {linkLabel && (
               <motion.div
-                variants={itemVariants}
+                variants={itemsFling}
                 className={cn('h-full w-full overflow-hidden', {
                   'col-span-2': stats.length < 3,
                 })}

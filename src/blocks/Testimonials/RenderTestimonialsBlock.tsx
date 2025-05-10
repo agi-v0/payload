@@ -4,15 +4,15 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import type { Page, TestimonialsBlock as TestimonialsBlockType, Testimonial } from '@/payload-types'
-import { TestimonialsBlock01 } from './TestimonialsBlock01'
-import { TestimonialsBlock02 } from './TestimonialsBlock02'
-import { TestimonialsModularGrid } from './TestimonialsModularGrid'
+import { TestimonialsBlock01 } from './variants/TestimonialsBlock01'
+import { TestimonialsBlock02 } from './variants/TestimonialsBlock02'
+import { TestimonialsModularGrid } from './variants/TestimonialsModularGrid'
 
 // Map block types to components
 const blockComponents = {
   TestimonialsBlock01: TestimonialsBlock01,
   TestimonialsBlock02: TestimonialsBlock02,
-  testimonialsModularGrid: TestimonialsModularGrid,
+  // testimonialsModularGrid: TestimonialsModularGrid,
 }
 
 export const RenderTestimonialsBlock: React.FC<TestimonialsBlockType> = async (props) => {

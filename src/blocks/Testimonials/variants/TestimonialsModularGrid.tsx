@@ -17,7 +17,7 @@ interface TestimonialsModularGridProps {
 const cellPatterns = [
   { classes: 'col-span-2', type: 'quote' }, // Wide Quote
   { classes: 'col-span-1', type: 'image' }, // Standard Image
-  { classes: 'col-span-1', type: 'stat' }, // Standard Stat
+  // { classes: 'col-span-1', type: 'stat' }, // Standard Stat
   { classes: 'col-span-1', type: 'logo' }, // Standard Logo
   { classes: 'col-span-2', type: 'quote' }, // Standard Quote
   { classes: 'col-span-1', type: 'image' }, // Standard Image
@@ -30,7 +30,7 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
   const gridItems = testimonials.map((testimonial, index) => {
     // Get the pattern for the current index
     const pattern = cellPatterns[index % cellPatterns.length]
-    const assignedType = pattern.type as 'quote' | 'image' | 'stat' | 'logo'
+    const assignedType = pattern.type as 'quote' | 'image' | 'logo' // Removed 'stat'
     const sizeClasses = pattern.classes
 
     return {
@@ -43,10 +43,10 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
     <section className="py-xl md:py-2xl lg:py-3xl container">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {gridItems.map(
-          ({ id, authorInfo, companyLogo, company, stats, quote, cellType, sizeClasses }) => {
+          ({ id, authorInfo, companyLogo, /* company, stats, */ quote, cellType, sizeClasses }) => {
             const avatar = authorInfo?.avatar as MediaType | undefined
             const logo = companyLogo as MediaType | undefined // Renamed for clarity
-            const firstStat = stats && stats.length > 0 ? stats[0] : null
+            // const firstStat = stats && stats.length > 0 ? stats[0] : null
 
             // Theme V: Background, Radius (Padding removed)
             const baseClasses =
@@ -91,17 +91,17 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
                   />
                 )}
 
-                {cellType === 'stat' && firstStat && (
-                  <>
-                    <div className="text-h3 text-base-primary flex flex-grow flex-col items-start text-start font-medium">
-                      <p className="">
-                        {firstStat.value}
-                        {firstStat.isPercentage ? '%' : ''}
-                      </p>
-                      <p className="">{firstStat.label}</p>
-                    </div>
-                  </>
-                )}
+                {/* {cellType === 'stat' && firstStat && ( */}
+                {/*  <> */}
+                {/*    <div className="text-h3 text-base-primary flex flex-grow flex-col items-start text-start font-medium"> */}
+                {/*      <p className=""> */}
+                {/*        {firstStat.value} */}
+                {/*        {firstStat.isPercentage ? '%' : ''} */}
+                {/*      </p> */}
+                {/*      <p className="">{firstStat.label}</p> */}
+                {/*    </div> */}
+                {/*  </> */}
+                {/* )} */}
 
                 {cellType === 'logo' && logo && (
                   <div className="p-md flex h-full w-full flex-col items-center justify-center">
