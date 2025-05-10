@@ -52,7 +52,7 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
     <header
       data-theme={headerTheme}
       className={cn(
-        'bg-background fixed left-0 z-50 w-full max-w-screen transition-colors duration-300',
+        'bg-background fixed left-0 z-10 w-full max-w-screen transition-colors duration-300',
         'top-0 md:top-[var(--admin-bar-height,0px)]',
         hideBackground && 'before:opacity-0 after:opacity-0',
         isMobileNavOpen && 'bg-background-neutral',
