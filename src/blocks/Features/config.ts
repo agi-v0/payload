@@ -36,6 +36,10 @@ const sizeOptions = [
 
 export const FeaturesBlock: Block = {
   slug: 'features',
+  labels: {
+    singular: 'Features',
+    plural: 'Features',
+  },
   interfaceName: 'FeaturesBlock',
   dbName: 'featuresBlock',
   fields: [

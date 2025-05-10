@@ -34,9 +34,6 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-import { iconPickerField } from '@/fields/iconPickerField'
-import lucideIcons from '@/fields/iconPickerField/lucide-icons.json'
-
 export const Integrations: CollectionConfig<'integrations'> = {
   slug: 'integrations',
   access: {
@@ -92,7 +89,7 @@ export const Integrations: CollectionConfig<'integrations'> = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Integration Info',
+          label: 'Basic Info',
           fields: [
             {
               name: 'icon',
@@ -141,7 +138,7 @@ export const Integrations: CollectionConfig<'integrations'> = {
           ],
         },
         {
-          label: 'Content',
+          label: 'Page Content',
           fields: [
             hero,
             {
@@ -158,72 +155,113 @@ export const Integrations: CollectionConfig<'integrations'> = {
                 features: ({ rootFeatures }) => {
                   return [
                     ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock, StyledList] }),
+                    HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
                   ]
                 },
               }),
               label: 'About',
             },
             {
-              name: 'features',
-              type: 'array',
+              name: 'layout',
+              type: 'blocks',
+              blocks: [],
+              blockReferences: [
+                'archive',
+                'callToAction',
+                'faqBlock',
+                'features',
+                'featuredApps',
+                'gallery',
+                'formBlock',
+                'testimonials',
+              ],
+              localized: true,
+              admin: {
+                initCollapsed: true,
+              },
+            },
+          ],
+        },
+        {
+          label: 'Company Info',
+          fields: [
+            {
+              name: 'companyName',
+              type: 'text',
+              required: true,
+              localized: true,
+              admin: {
+                description: 'Name of the company providing the integration.',
+              },
+            },
+
+            link({
+              colors: false,
+              icon: false,
+              variants: false,
+              overrides: {
+                name: 'docsLink',
+                label: 'Documentation Link',
+                admin: {
+                  description: 'URL to the documentation for the integration.',
+                },
+              },
+            }),
+            {
+              type: 'row',
               fields: [
                 {
-                  name: 'title',
-                  type: 'text',
+                  name: 'email',
+                  type: 'email',
                   required: true,
-                  localized: true,
+                  admin: {
+                    description: 'Contact email for the integration.',
+                    width: '50%',
+                  },
                 },
                 {
-                  name: 'description',
+                  name: 'phone',
                   type: 'text',
-                  localized: true,
-                },
-                iconPickerField({
-                  name: 'icon',
-                  label: 'Icon',
-                  icons: lucideIcons,
+                  required: false,
                   admin: {
-                    description:
-                      'Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/',
+                    description: 'Contact phone number for the integration.',
+                    width: '50%',
                   },
-                }),
+                },
               ],
             },
           ],
         },
-        // {
-        //   name: 'meta',
-        //   label: 'SEO',
-        //   localized: true,
-        //   fields: [
-        //     OverviewField({
-        //       titlePath: 'meta.title',
-        //       descriptionPath: 'meta.description',
-        //       imagePath: 'meta.image',
-        //     }),
-        //     MetaTitleField({
-        //       hasGenerateFn: true,
-        //     }),
-        //     MetaImageField({
-        //       relationTo: 'media',
-        //     }),
+        {
+          name: 'meta',
+          label: 'SEO',
+          localized: true,
+          fields: [
+            OverviewField({
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+              imagePath: 'meta.image',
+            }),
+            MetaTitleField({
+              hasGenerateFn: true,
+            }),
+            MetaImageField({
+              relationTo: 'media',
+            }),
 
-        //     MetaDescriptionField({}),
-        //     PreviewField({
-        //       // if the `generateUrl` function is configured
-        //       hasGenerateFn: true,
+            MetaDescriptionField({}),
+            PreviewField({
+              // if the `generateUrl` function is configured
+              hasGenerateFn: true,
 
-        //       // field paths to match the target field for data
-        //       titlePath: 'meta.title',
-        //       descriptionPath: 'meta.description',
-        //     }),
-        //   ],
-        // },
+              // field paths to match the target field for data
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+            }),
+          ],
+        },
       ],
     },
     {
@@ -245,18 +283,29 @@ export const Integrations: CollectionConfig<'integrations'> = {
         position: 'sidebar',
       },
     },
-    // {
-    //   name: 'ecosystem',
-    //   type: 'select',
-    //   options: [
-    //     { value: 'sell', label: { en: 'Sell', ar: 'بيع' } },
-    //     { value: 'operate', label: { en: 'Operate', ar: 'تشغيل' } },
-    //     { value: 'manage', label: { en: 'Manage', ar: 'إدارة' } },
-    //   ],
-    //   admin: {
-    //     position: 'sidebar',
-    //   },
-    // },
+    {
+      name: 'ecosystem',
+      type: 'select',
+      options: [
+        { value: 'sell', label: { en: 'Sell', ar: 'بيع' } },
+        { value: 'operate', label: { en: 'Operate', ar: 'تشغيل' } },
+        { value: 'manage', label: { en: 'Manage', ar: 'إدارة' } },
+      ],
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'categories',
+      type: 'relationship',
+      relationTo: 'categories',
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+
     ...slugField(),
   ],
 

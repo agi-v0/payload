@@ -4,8 +4,8 @@ import { authenticated } from '../access/authenticated'
 import { authenticatedOrPublished } from '../access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
 import {
-  BlocksFeature,
   FixedToolbarFeature,
+  HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
@@ -20,197 +20,127 @@ export const Testimonials: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ['company', 'authorInfo.name', 'authorInfo.title', 'updatedAt'],
+    defaultColumns: ['company', 'companyLogo', 'updatedAt', 'linkCaseStudy'],
     useAsTitle: 'company',
+  },
+  defaultPopulate: {
+    companyLogo: true,
+    featuredImage: true,
+    name: true,
+    title: true,
   },
   fields: [
     {
-      type: 'tabs',
-      tabs: [
+      name: 'quote',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => {
+          return [
+            ...rootFeatures,
+            // FixedToolbarFeature(),
+            // InlineToolbarFeature(),
+            // HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+          ]
+        },
+      }),
+      localized: true,
+      required: true,
+      admin: {
+        description: '',
+      },
+    },
+    {
+      name: 'company',
+      type: 'text',
+      localized: true,
+      required: true,
+    },
+    {
+      name: 'featuredImage',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
+      name: 'companyLogo',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Logo of the company.',
+      },
+    },
+    {
+      type: 'group',
+      label: 'Author Info',
+      name: 'authorInfo',
+      fields: [
         {
-          label: 'Basic Info',
+          type: 'row',
           fields: [
             {
-              name: 'company',
+              name: 'name',
+              label: 'Author Name',
+
+              type: 'text',
+              required: true,
+              localized: true,
+              admin: {
+                width: '50%',
+              },
+            },
+            {
+              name: 'title',
+              label: 'Author Title',
               type: 'text',
               localized: true,
-              required: true,
-            },
-            {
-              name: 'media',
-              type: 'upload',
-              relationTo: 'media',
               admin: {
-                description: 'Hero image for the testimonial. 4:3 aspect ratio recommended.',
+                width: '50%',
               },
-            },
-            {
-              name: 'companyLogo',
-              type: 'upload',
-              relationTo: 'media',
-              admin: {
-                description: 'Logo of the company.',
-              },
-            },
-            {
-              type: 'group',
-              label: 'Author Info',
-              name: 'authorInfo',
-              fields: [
-                {
-                  type: 'row',
-                  fields: [
-                    {
-                      name: 'name',
-                      label: 'Author Name',
-
-                      type: 'text',
-                      required: true,
-                      localized: true,
-                      admin: {
-                        width: '50%',
-                      },
-                    },
-                    {
-                      name: 'title',
-                      label: 'Author Title',
-                      type: 'text',
-                      localized: true,
-                      admin: {
-                        width: '50%',
-                      },
-                    },
-                  ],
-                },
-
-                {
-                  name: 'avatar',
-                  type: 'upload',
-                  relationTo: 'media',
-                  admin: {
-                    description: 'Avatar image for the testimonial author. 300x300px recommended.',
-                  },
-                },
-              ],
             },
           ],
         },
+
         {
-          label: 'Content',
-          fields: [
-            {
-              name: 'quote',
-              type: 'richText',
-              localized: true,
-              required: true,
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
-                },
-              }),
-            },
-            {
-              name: 'stats',
-              type: 'array',
-              fields: [
-                {
-                  type: 'row',
-                  fields: [
-                    {
-                      name: 'label',
-                      type: 'text',
-                      required: true,
-                      admin: {
-                        width: '50%',
-                        description: 'Label for the stat',
-                      },
-                      localized: true,
-                    },
-                    {
-                      name: 'value',
-                      type: 'number',
-                      required: true,
-                      admin: {
-                        width: '50%',
-                        description: 'Value for the stat',
-                      },
-                    },
-                  ],
-                },
-                {
-                  type: 'row',
-                  fields: [
-                    {
-                      type: 'checkbox',
-                      name: 'isPercentage',
-                      defaultValue: false,
-                      admin: {
-                        description: 'Whether the value is a percentage',
-                        width: '50%',
-                      },
-                    },
-                    {
-                      type: 'checkbox',
-                      name: 'isIncrease',
-                      defaultValue: true,
-                      admin: {
-                        description: 'Whether the value is an increase or decrease',
-                        width: '50%',
-                      },
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              name: 'rating',
-              type: 'number',
-              min: 1,
-              max: 5,
-              admin: {
-                description: 'Rating out of 5 stars (optional)',
-              },
-            },
-          ],
+          name: 'avatar',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Avatar image for the testimonial author. Minimum 300x300px recommended.',
+          },
         },
       ],
     },
     {
       type: 'group',
-      name: 'group',
+      name: 'caseStudy',
       label: false,
       fields: [
         {
-          name: 'featured',
+          name: 'linkCaseStudy',
+          label: 'Link Case Study',
           type: 'checkbox',
           defaultValue: false,
-          admin: {
-            description: 'Whether this testimonial should be featured prominently',
-          },
         },
-        // link({
-        //   variants: false,
-        //   colors: false,
-        //   description: false,
-        //   icon: false,
-        //   overrides: {
-        //     admin: {
-        //       position: 'sidebar',
-        //       description: 'Link to the customer story page. ',
-        //     },
-        //   },
-        // }),
         {
-          name: 'categories',
+          name: 'linkedCaseStudy',
           type: 'relationship',
-          relationTo: 'categories',
-          hasMany: true,
+          relationTo: 'case-studies',
           admin: {
-            description: 'Categories to help organize testimonials',
+            position: 'sidebar',
+            condition: (data, siblingData) => siblingData?.linkCaseStudy,
           },
         },
       ],
       admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'categories',
+      type: 'relationship',
+      relationTo: 'categories',
+      hasMany: true,
+      admin: {
+        description: 'Categories to help organize testimonials',
         position: 'sidebar',
       },
     },
@@ -220,7 +150,7 @@ export const Testimonials: CollectionConfig = {
       admin: {
         position: 'sidebar',
         date: {
-          pickerAppearance: 'dayAndTime',
+          pickerAppearance: 'dayOnly',
         },
       },
     },

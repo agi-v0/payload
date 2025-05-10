@@ -65,19 +65,32 @@ export interface Config {
   auth: {
     users: UserAuthOperations;
   };
-  blocks: {};
+  blocks: {
+    archive: ArchiveBlock;
+    callToAction: CallToActionBlock;
+    faqBlock: FaqBlock;
+    features: FeaturesBlock;
+    featuredApps: FeaturedAppsBlock;
+    gallery: GalleryBlock;
+    formBlock: FormBlock;
+    testimonials: TestimonialsBlock;
+    mediaBlock: MediaBlock;
+    styledList: StyledListBlock;
+  };
   collections: {
     pages: Page;
     posts: Post;
     solutions: Solution;
     integrations: Integration;
     media: Media;
-    'app-icons': AppIcon;
+    testimonials: Testimonial;
+    'case-studies': CaseStudy;
     categories: Category;
     'media-categories': MediaCategory;
-    users: User;
-    testimonials: Testimonial;
     faq: Faq;
+    'app-icons': AppIcon;
+    changelog: Changelog;
+    users: User;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -94,12 +107,14 @@ export interface Config {
     solutions: SolutionsSelect<false> | SolutionsSelect<true>;
     integrations: IntegrationsSelect<false> | IntegrationsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    'app-icons': AppIconsSelect<false> | AppIconsSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'media-categories': MediaCategoriesSelect<false> | MediaCategoriesSelect<true>;
-    users: UsersSelect<false> | UsersSelect<true>;
-    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
+    'app-icons': AppIconsSelect<false> | AppIconsSelect<true>;
+    changelog: ChangelogSelect<false> | ChangelogSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -155,114 +170,51 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
+ * via the `definition` "ArchiveBlock".
  */
-export interface Page {
+export interface ArchiveBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+        relationTo: 'posts';
+        value: number | Post;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'archive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
   id: number;
   title: string;
-  hero: {
-    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07' | 'none';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null)
-              | ({
-                  relationTo: 'solutions';
-                  value: number | Solution;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    supportingText?: string | null;
-    logosHeadline?: string | null;
-    logos?:
-      | {
-          logo?: (number | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-    media?: (number | null) | Media;
-    badge?: {
-      type?: ('label' | 'reference') | null;
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      reference?:
-        | ({
-            relationTo: 'solutions';
-            value: number | Solution;
-          } | null)
-        | ({
-            relationTo: 'integrations';
-            value: number | Integration;
-          } | null);
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-  };
-  layout: (
-    | ArchiveBlock
-    | CallToActionBlock
-    | FaqBlock
-    | FeaturesBlock
-    | FeaturedAppsBlock
-    | GalleryBlock
-    | FormBlock
-    | TestimonialsBlock
-  )[];
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
-  parent?: (number | null) | Page;
+  parent?: (number | null) | Category;
   breadcrumbs?:
     | {
-        doc?: (number | null) | Page;
+        doc?: (number | null) | Category;
         url?: string | null;
         label?: string | null;
         id?: string | null;
@@ -270,7 +222,6 @@ export interface Page {
     | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -427,27 +378,6 @@ export interface MediaCategory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: number;
-  title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  parent?: (number | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (number | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -463,6 +393,131 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlock".
+ */
+export interface CallToActionBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: number | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose the button style.
+           */
+          color?: ('brand' | 'neutral') | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'callToAction';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -503,6 +558,125 @@ export interface Solution {
   ecosystem?: ('sell' | 'operate' | 'manage') | null;
   slug?: string | null;
   slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  hero: {
+    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07' | 'none';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    supportingText?: string | null;
+    logosHeadline?: string | null;
+    logos?:
+      | {
+          logo?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+    media?: (number | null) | Media;
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: number | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+  };
+  layout: (
+    | ArchiveBlock
+    | CallToActionBlock
+    | FaqBlock
+    | FeaturesBlock
+    | FeaturedAppsBlock
+    | GalleryBlock
+    | FormBlock
+    | TestimonialsBlock
+  )[];
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  parent?: (number | null) | Page;
+  breadcrumbs?:
+    | {
+        doc?: (number | null) | Page;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -651,182 +825,68 @@ export interface Integration {
     };
     [k: string]: unknown;
   } | null;
-  features?:
-    | {
-        title: string;
-        description?: string | null;
-        /**
-         * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-         */
-        icon?: string | null;
-        id?: string | null;
-      }[]
+  layout?:
+    | (
+        | ArchiveBlock
+        | CallToActionBlock
+        | FaqBlock
+        | FeaturesBlock
+        | FeaturedAppsBlock
+        | GalleryBlock
+        | FormBlock
+        | TestimonialsBlock
+      )[]
     | null;
+  /**
+   * Name of the company providing the integration.
+   */
+  companyName: string;
+  /**
+   * URL to the documentation for the integration.
+   */
+  docsLink: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'solutions';
+          value: number | Solution;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
+  /**
+   * Contact email for the integration.
+   */
+  email: string;
+  /**
+   * Contact phone number for the integration.
+   */
+  phone?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
   publishedAt?: string | null;
+  ecosystem?: ('sell' | 'operate' | 'manage')[] | null;
+  categories?: (number | Category)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ArchiveBlock".
- */
-export interface ArchiveBlock {
-  introContent?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  populateBy?: ('collection' | 'selection') | null;
-  relationTo?: 'posts' | null;
-  categories?: (number | Category)[] | null;
-  limit?: number | null;
-  selectedDocs?:
-    | {
-        relationTo: 'posts';
-        value: number | Post;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'archive';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock".
- */
-export interface CallToActionBlock {
-  blockHeader: {
-    type: 'center' | 'split' | 'start';
-    badge?: {
-      type?: ('label' | 'reference') | null;
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      reference?:
-        | ({
-            relationTo: 'solutions';
-            value: number | Solution;
-          } | null)
-        | ({
-            relationTo: 'integrations';
-            value: number | Integration;
-          } | null);
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-    headerText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null)
-              | ({
-                  relationTo: 'solutions';
-                  value: number | Solution;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null)
-            | ({
-                relationTo: 'solutions';
-                value: number | Solution;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose the button style.
-           */
-          color?: ('brand' | 'neutral') | null;
-          /**
-           * Choose how the link should be rendered.
-           */
-          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'callToAction';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1207,7 +1267,7 @@ export interface FeaturedAppsBlock {
         }[]
       | null;
   };
-  type: 'appsBlockHero' | 'appsBlock01' | 'appsBlock02' | 'appsBlock03' | 'appsBlock04';
+  type: 'appsBlockHero' | 'FeaturedApps01' | 'FeaturedApps02' | 'FeaturedApps03' | 'FeaturedApps04';
   body?: {
     badge?: {
       type?: ('label' | 'reference') | null;
@@ -1288,7 +1348,7 @@ export interface FeaturedAppsBlock {
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'featuredAppsBlock';
+  blockType: 'featuredApps';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1682,23 +1742,6 @@ export interface TestimonialsBlock {
  */
 export interface Testimonial {
   id: number;
-  company: string;
-  /**
-   * Hero image for the testimonial. 4:3 aspect ratio recommended.
-   */
-  media?: (number | null) | Media;
-  /**
-   * Logo of the company.
-   */
-  companyLogo?: (number | null) | Media;
-  authorInfo: {
-    name: string;
-    title?: string | null;
-    /**
-     * Avatar image for the testimonial author. 300x300px recommended.
-     */
-    avatar?: (number | null) | Media;
-  };
   quote: {
     root: {
       type: string;
@@ -1714,6 +1757,58 @@ export interface Testimonial {
     };
     [k: string]: unknown;
   };
+  company: string;
+  featuredImage?: (number | null) | Media;
+  /**
+   * Logo of the company.
+   */
+  companyLogo?: (number | null) | Media;
+  authorInfo: {
+    name: string;
+    title?: string | null;
+    /**
+     * Avatar image for the testimonial author. Minimum 300x300px recommended.
+     */
+    avatar?: (number | null) | Media;
+  };
+  caseStudy?: {
+    linkCaseStudy?: boolean | null;
+    linkedCaseStudy?: (number | null) | CaseStudy;
+  };
+  /**
+   * Categories to help organize testimonials
+   */
+  categories?: (number | Category)[] | null;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies".
+ */
+export interface CaseStudy {
+  id: number;
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  industry?: string | null;
+  useCase?: string | null;
+  featuredImage: number | Media;
   stats?:
     | {
         /**
@@ -1735,24 +1830,49 @@ export interface Testimonial {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Rating out of 5 stars (optional)
-   */
-  rating?: number | null;
-  group?: {
-    /**
-     * Whether this testimonial should be featured prominently
-     */
-    featured?: boolean | null;
-    /**
-     * Categories to help organize testimonials
-     */
-    categories?: (number | Category)[] | null;
-  };
-  publishedAt?: string | null;
+  featuredSolutions?: (number | Solution)[] | null;
+  featuredIntegrations?: (number | Integration)[] | null;
+  layout?:
+    | (
+        | ArchiveBlock
+        | CallToActionBlock
+        | FaqBlock
+        | FeaturesBlock
+        | FeaturedAppsBlock
+        | GalleryBlock
+        | FormBlock
+        | TestimonialsBlock
+      )[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock".
+ */
+export interface MediaBlock {
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StyledListBlock".
+ */
+export interface StyledListBlock {
+  listStyle?: ('bullet' | 'check' | 'numbered' | 'feature') | null;
+  items: {
+    text: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'styledList';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1807,6 +1927,49 @@ export interface AppIcon {
       filename?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "changelog".
+ */
+export interface Changelog {
+  id: number;
+  /**
+   * Title of the changelog entry.
+   */
+  title: string;
+  /**
+   * Date of the changelog entry.
+   */
+  date: string;
+  /**
+   * Version number associated with the changelog entry.
+   */
+  version: string;
+  /**
+   * Detailed description of the changes.
+   */
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Categories for the changelog entry.
+   */
+  categories?: ('bug-fix' | 'feature' | 'improvement' | 'security' | 'other')[] | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2001,8 +2164,12 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'app-icons';
-        value: number | AppIcon;
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'case-studies';
+        value: number | CaseStudy;
       } | null)
     | ({
         relationTo: 'categories';
@@ -2013,16 +2180,20 @@ export interface PayloadLockedDocument {
         value: number | MediaCategory;
       } | null)
     | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'testimonials';
-        value: number | Testimonial;
-      } | null)
-    | ({
         relationTo: 'faq';
         value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'app-icons';
+        value: number | AppIcon;
+      } | null)
+    | ({
+        relationTo: 'changelog';
+        value: number | Changelog;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2133,18 +2304,7 @@ export interface PagesSelect<T extends boolean = true> {
               icon_position?: T;
             };
       };
-  layout?:
-    | T
-    | {
-        archive?: T | ArchiveBlockSelect<T>;
-        callToAction?: T | CallToActionBlockSelect<T>;
-        faqBlock?: T | FaqBlockSelect<T>;
-        features?: T | FeaturesBlockSelect<T>;
-        featuredAppsBlock?: T | FeaturedAppsBlockSelect<T>;
-        gallery?: T | GalleryBlockSelect<T>;
-        formBlock?: T | FormBlockSelect<T>;
-        testimonials?: T | TestimonialsBlockSelect<T>;
-      };
+  layout?: T | {};
   meta?:
     | T
     | {
@@ -2167,389 +2327,6 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ArchiveBlock_select".
- */
-export interface ArchiveBlockSelect<T extends boolean = true> {
-  introContent?: T;
-  populateBy?: T;
-  relationTo?: T;
-  categories?: T;
-  limit?: T;
-  selectedDocs?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock_select".
- */
-export interface CallToActionBlockSelect<T extends boolean = true> {
-  blockHeader?:
-    | T
-    | {
-        type?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  richText?: T;
-  links?:
-    | T
-    | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              color?: T;
-              variant?: T;
-            };
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FaqBlock_select".
- */
-export interface FaqBlockSelect<T extends boolean = true> {
-  blockHeader?:
-    | T
-    | {
-        type?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  faqs?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeaturesBlock_select".
- */
-export interface FeaturesBlockSelect<T extends boolean = true> {
-  blockHeader?:
-    | T
-    | {
-        type?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  layout?: T;
-  blockImage?: T;
-  CTALabel?: T;
-  link?:
-    | T
-    | {
-        type?: T;
-        newTab?: T;
-        reference?: T;
-        url?: T;
-        label?: T;
-      };
-  columns?:
-    | T
-    | {
-        size?: T;
-        appReference?: T;
-        image?: T;
-        tabLabel?: T;
-        icon?: T;
-        content?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-            };
-        richTextContent?: T;
-        enableBadge?: T;
-        enableCta?: T;
-        reverseOrder?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeaturedAppsBlock_select".
- */
-export interface FeaturedAppsBlockSelect<T extends boolean = true> {
-  blockHeader?:
-    | T
-    | {
-        type?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  type?: T;
-  body?:
-    | T
-    | {
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  media?: T;
-  reference?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "GalleryBlock_select".
- */
-export interface GalleryBlockSelect<T extends boolean = true> {
-  blockHeader?:
-    | T
-    | {
-        type?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  type?: T;
-  images?:
-    | T
-    | {
-        image?: T;
-        panel?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-            };
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormBlock_select".
- */
-export interface FormBlockSelect<T extends boolean = true> {
-  form?: T;
-  enableIntro?: T;
-  introContent?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TestimonialsBlock_select".
- */
-export interface TestimonialsBlockSelect<T extends boolean = true> {
-  blockHeader?:
-    | T
-    | {
-        type?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  type?: T;
-  selectedTestimonials?: T;
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2670,15 +2447,29 @@ export interface IntegrationsSelect<T extends boolean = true> {
       };
   gallery?: T;
   content?: T;
-  features?:
+  layout?: T | {};
+  companyName?: T;
+  docsLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
+  email?: T;
+  phone?: T;
+  meta?:
     | T
     | {
         title?: T;
+        image?: T;
         description?: T;
-        icon?: T;
-        id?: T;
       };
   publishedAt?: T;
+  ecosystem?: T;
+  categories?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2782,6 +2573,103 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  quote?: T;
+  company?: T;
+  featuredImage?: T;
+  companyLogo?: T;
+  authorInfo?:
+    | T
+    | {
+        name?: T;
+        title?: T;
+        avatar?: T;
+      };
+  caseStudy?:
+    | T
+    | {
+        linkCaseStudy?: T;
+        linkedCaseStudy?: T;
+      };
+  categories?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies_select".
+ */
+export interface CaseStudiesSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  industry?: T;
+  useCase?: T;
+  featuredImage?: T;
+  stats?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        isPercentage?: T;
+        isIncrease?: T;
+        id?: T;
+      };
+  featuredSolutions?: T;
+  featuredIntegrations?: T;
+  layout?: T | {};
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  slugLock?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-categories_select".
+ */
+export interface MediaCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "app-icons_select".
  */
 export interface AppIconsSelect<T extends boolean = true> {
@@ -2827,32 +2715,14 @@ export interface AppIconsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories_select".
+ * via the `definition` "changelog_select".
  */
-export interface CategoriesSelect<T extends boolean = true> {
+export interface ChangelogSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
-  slugLock?: T;
-  parent?: T;
-  breadcrumbs?:
-    | T
-    | {
-        doc?: T;
-        url?: T;
-        label?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media-categories_select".
- */
-export interface MediaCategoriesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  slugLock?: T;
+  date?: T;
+  version?: T;
+  description?: T;
+  categories?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2871,53 +2741,6 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials_select".
- */
-export interface TestimonialsSelect<T extends boolean = true> {
-  company?: T;
-  media?: T;
-  companyLogo?: T;
-  authorInfo?:
-    | T
-    | {
-        name?: T;
-        title?: T;
-        avatar?: T;
-      };
-  quote?: T;
-  stats?:
-    | T
-    | {
-        label?: T;
-        value?: T;
-        isPercentage?: T;
-        isIncrease?: T;
-        id?: T;
-      };
-  rating?: T;
-  group?:
-    | T
-    | {
-        featured?: T;
-        categories?: T;
-      };
-  publishedAt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq_select".
- */
-export interface FaqSelect<T extends boolean = true> {
-  question?: T;
-  answer?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3594,20 +3417,6 @@ export interface TaskSchedulePublish {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "StyledListBlock".
- */
-export interface StyledListBlock {
-  listStyle?: ('bullet' | 'check' | 'numbered' | 'feature') | null;
-  items: {
-    text: string;
-    id?: string | null;
-  }[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'styledList';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "BannerBlock".
  */
 export interface BannerBlock {
@@ -3641,16 +3450,6 @@ export interface CodeBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'code';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock".
- */
-export interface MediaBlock {
-  media: number | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

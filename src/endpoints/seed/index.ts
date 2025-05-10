@@ -10,6 +10,7 @@ import type {
   Page,
   Integration,
   Solution,
+  CaseStudy,
 } from '@/payload-types'
 
 import { contactForm as contactFormData } from './contact-form'
@@ -42,6 +43,7 @@ const collections: CollectionSlug[] = [
   'search',
   'testimonials',
   'solutions',
+  'case-studies',
 ]
 const globals: GlobalSlug[] = ['header', 'footer']
 
@@ -71,14 +73,18 @@ export const seed = async ({
       payload.updateGlobal({ slug, data: {}, depth: 0, context: { disableRevalidate: true } }),
     ),
   )
-  await Promise.all(
-    collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
+  for (const collection of collections) {
+    payload.logger.info(`Clearing data from collection: ${collection}`)
+    await payload.db.deleteMany({ collection, req, where: {} })
+  }
+
+  const versionedCollections = collections.filter((collection) =>
+    Boolean(payload.collections[collection].config.versions),
   )
-  await Promise.all(
-    collections
-      .filter((collection) => Boolean(payload.collections[collection].config.versions))
-      .map((collection) => payload.db.deleteVersions({ collection, req, where: {} })),
-  )
+  for (const collection of versionedCollections) {
+    payload.logger.info(`Clearing versions from collection: ${collection}`)
+    await payload.db.deleteVersions({ collection, req, where: {} })
+  }
 
   payload.logger.info(`— Seeding demo author and user...`)
   // Clear existing demo user first
@@ -261,80 +267,8 @@ export const seed = async ({
     // mediaDocs.imageSquare = await payload.findByID({ collection: 'media', id: mediaDocs.imageSquare.id, req })
   }
 
-  payload.logger.info('— Seeding posts sequentially…')
-
-  // 6. Define posts data and dependencies
-  const postsData = [
-    {
-      fn: post1,
-      heroKey: 'image1',
-      blockKey: 'image2',
-      key: 'post1',
-    },
-    {
-      fn: post2,
-      heroKey: 'image2',
-      blockKey: 'image3',
-      key: 'post2',
-    },
-    {
-      fn: post3,
-      heroKey: 'image3',
-      blockKey: 'image1',
-      key: 'post3',
-    },
-  ]
-
-  // 7. Create posts sequentially and store results
-  const createdPosts: { [key: string]: Post } = {}
-  for (const postInfo of postsData) {
-    payload.logger.info(`Creating post – ${postInfo.key}`)
-    const heroImage = mediaDocs[postInfo.heroKey]
-    const blockImage = mediaDocs[postInfo.blockKey]
-    const post = await payload.create({
-      collection: 'posts',
-      data: postInfo.fn({ heroImage, blockImage, author: demoAuthor }),
-      req,
-      depth: 0,
-      context: { disableRevalidate: true },
-    })
-    createdPosts[postInfo.key] = post
-  }
-
-  // 8. Update posts with related posts
-  payload.logger.info('— Updating related posts...')
-  await payload.update({
-    id: createdPosts.post1.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [createdPosts.post2.id, createdPosts.post3.id],
-    },
-    req,
-  })
-  await payload.update({
-    id: createdPosts.post2.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [createdPosts.post1.id, createdPosts.post3.id],
-    },
-    req,
-  })
-  await payload.update({
-    id: createdPosts.post3.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [createdPosts.post1.id, createdPosts.post2.id],
-    },
-    req,
-  })
-
-  payload.logger.info(`— Seeding contact form...`)
-  const contactForm = await payload.create({
-    collection: 'forms',
-    depth: 0,
-    data: contactFormData,
-    req,
-  })
+  payload.logger.info('— Seeding solutions...')
+  const solutionsSlugToIdMap = await seedSolutions(payload, { imageSquare: mediaDocs.imageSquare })
 
   payload.logger.info(`— Seeding apps sequentially...`)
   const appDataArray = Array.from({ length: 10 }).map((_, i) => {
@@ -344,21 +278,124 @@ export const seed = async ({
     appData.name = `تطبيق ${i + 1}`
     appData.slug = `app-${i + 1}`
     appData.tagline = `${appData.tagline} - ${i + 1}`
+    // Add new fields
+    appData.companyName = `شركة ${i + 1}`
+    appData.docsLink = {
+      type: 'custom',
+      newTab: false,
+      url: `https://docs.example.com/app-${i + 1}`,
+      label: `Documentation for App ${i + 1}`,
+    }
+    appData.email = `contact${i + 1}@example.com`
+    appData.phone = `+1234567890${i}`
+    appData.ecosystem = ['sell'] // Example value, can be randomized or set based on logic
+    appData.categories = [] // Assuming no categories for simplicity, can be populated with actual category IDs
     return appData
   })
 
+  const createdIntegrations: Integration[] = []
   for (const appData of appDataArray) {
     payload.logger.info(`Creating app – ${appData.title}`)
-    await payload.create({
+    const createdIntegration = (await payload.create({
       collection: 'integrations',
       depth: 0,
       data: appData,
       req,
-    })
+    })) as Integration
+    createdIntegrations.push(createdIntegration)
   }
 
-  payload.logger.info(`— Seeding solutions...`) // Assuming seedSolutions handles its own logging/sequence if needed
-  const solutionsSlugToIdMap = await seedSolutions(payload, { imageSquare: mediaDocs.imageSquare })
+  payload.logger.info('— Seeding case studies...')
+  const caseStudiesDataArray = Array.from({ length: 6 }).map((_, i) => ({
+    title: `دراسة حالة ${i + 1}: كيف حققنا النمو مع العميل`,
+    content: {
+      root: {
+        type: 'root',
+        children: [
+          {
+            type: 'paragraph',
+            version: 1,
+            children: [
+              {
+                type: 'text',
+                text: `مقدمة تفصيلية حول دراسة الحالة رقم ${i + 1}. في هذا التحليل، نستعرض التحديات التي واجهها العميل وكيف ساهمت حلولنا المبتكرة في تحقيق نتائج ملموسة превосходя توقعاتهم الأولية. تم تطبيق استراتيجيات مخصصة لضمان أقصى استفادة من الموارد المتاحة وتحقيق نمو مستدام على المدى الطويل.`,
+                format: '' as const,
+                style: '',
+              },
+            ],
+            direction: 'rtl' as const,
+            format: '' as const,
+            indent: 0,
+          },
+          {
+            type: 'paragraph',
+            version: 1,
+            children: [
+              {
+                type: 'text',
+                text: `القسم الثاني من المحتوى يشرح الخطوات العملية التي تم اتخاذها. وقد شمل ذلك تحليل البيانات، وتطوير المنتج، وإطلاق حملات تسويقية مستهدفة. كانت النتائج باهرة، حيث شهد العميل زيادة في المبيعات بنسبة ${(i + 1) * 7}% وتحسنًا ملحوظًا في تفاعل المستخدمين.`,
+                format: '' as const,
+                style: '',
+              },
+            ],
+            direction: 'rtl' as const,
+            format: '' as const,
+            indent: 0,
+          },
+        ],
+        direction: 'rtl' as const,
+        format: '' as const,
+        indent: 0,
+        version: 1,
+      },
+    },
+    industry: `صناعة التكنولوجيا والحلول الرقمية ${i + 1}`,
+    useCase: `حالة استخدام متقدمة ${i + 1}`,
+    featuredImage: mediaDocs.image169.id,
+    stats: [
+      {
+        label: `زيادة في الإيرادات الفصلية رقم ${i + 1}`,
+        value: (i + 1) * 12,
+        isPercentage: true,
+        isIncrease: true,
+      },
+      {
+        label: `تحسين كفاءة التشغيل رقم ${i + 1}`,
+        value: (i + 1) * 6,
+        isPercentage: false,
+        isIncrease: true,
+      },
+    ],
+    featuredSolutions: Object.values(solutionsSlugToIdMap)
+      .slice(i % 3, (i % 3) + (i % 2 === 0 ? 1 : 2))
+      .map((id) => Number(id)),
+    featuredIntegrations: createdIntegrations
+      .slice(i % 5, (i % 5) + (i % 2 === 0 ? 1 : 2))
+      .map((int) => Number(int.id)),
+    layout: [],
+    slug: `case-study-${i + 1}`,
+  }))
+
+  const createdCaseStudies: CaseStudy[] = []
+  for (const caseStudyData of caseStudiesDataArray) {
+    payload.logger.info(`Creating case study – ${caseStudyData.title}`)
+    const caseStudy = (await payload.create({
+      collection: 'case-studies',
+      depth: 0,
+      data: caseStudyData,
+      req,
+      locale: 'ar',
+    })) as CaseStudy
+    createdCaseStudies.push(caseStudy)
+  }
+
+  payload.logger.info(`— Seeding contact form...`)
+  const contactForm = await payload.create({
+    collection: 'forms',
+    depth: 0,
+    data: contactFormData,
+    req,
+  })
 
   payload.logger.info(`— Seeding pages sequentially...`)
   const pagesData = [
@@ -393,8 +430,99 @@ export const seed = async ({
     createdPages[pageInfo.key] = page
   }
 
-  payload.logger.info(`— Seeding testimonials...`) // Assuming seedTestimonials handles its own logging/sequence
-  await seedTestimonials(payload, { placeholder: mediaDocs.hero1, logo: mediaDocs.logo })
+  payload.logger.info(`— Seeding testimonials...`)
+  const testimonialsDataArray = Array.from({ length: 10 }).map((_, i) => ({
+    quote: {
+      root: {
+        type: 'root',
+        children: [
+          {
+            type: 'paragraph',
+            version: 1,
+            children: [
+              {
+                type: 'text',
+                text: `هذا هو اقتباس الشهادة للشركة ${i + 1}.`,
+                format: '' as const,
+                style: '',
+              },
+            ],
+            direction: 'rtl' as const,
+            format: '' as const,
+            indent: 0,
+          },
+        ],
+        direction: 'rtl' as const,
+        format: '' as const,
+        indent: 0,
+        version: 1,
+      },
+    },
+    company: `شركة ${i + 1}`,
+    featuredImage: mediaDocs.image1.id, // Assuming image1 is suitable
+    companyLogo: mediaDocs.logo.id, // Assuming logo is suitable
+    authorInfo: {
+      name: `المؤلف ${i + 1}`,
+      title: `اللقب ${i + 1}`,
+      avatar: mediaDocs.imageSquare.id, // Assuming imageSquare is suitable
+    },
+    caseStudy: {
+      linkCaseStudy: createdCaseStudies[i % createdCaseStudies.length] ? true : false,
+      linkedCaseStudy: createdCaseStudies[i % createdCaseStudies.length]?.id || null,
+    },
+    categories: [], // Assuming no categories for simplicity
+    publishedAt: new Date().toISOString(),
+  }))
+
+  for (const testimonialData of testimonialsDataArray) {
+    payload.logger.info(`Creating testimonial – ${testimonialData.company}`)
+    await payload.create({
+      collection: 'testimonials',
+      depth: 0,
+      data: testimonialData,
+      req,
+    })
+  }
+
+  payload.logger.info(`— Seeding changelog entries...`)
+  const changelogDataArray = Array.from({ length: 10 }).map((_, i) => ({
+    title: `Changelog Entry ${i + 1}`,
+    date: new Date().toISOString(),
+    version: `1.0.${i + 1}`,
+    description: {
+      root: {
+        type: 'root',
+        children: [
+          {
+            type: 'paragraph',
+            version: 1,
+            children: [{ text: `This is a description for changelog entry ${i + 1}.` }],
+          },
+        ],
+        direction: 'rtl' as const,
+        format: '' as const,
+        indent: 0,
+        version: 1,
+      },
+    },
+    categories: ['feature', 'improvement'] as (
+      | 'bug-fix'
+      | 'feature'
+      | 'improvement'
+      | 'security'
+      | 'other'
+    )[],
+  }))
+
+  for (const changelogData of changelogDataArray) {
+    payload.logger.info(`Creating changelog entry – ${changelogData.title}`)
+    await payload.create({
+      collection: 'changelog',
+      depth: 0,
+      data: changelogData,
+      req,
+    })
+  }
 
   payload.logger.info(`— Seeding globals sequentially...`)
 

@@ -7,6 +7,13 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { Footer } from './Footer/config'
+import { Header } from './Header/config'
+import { plugins } from './plugins'
+import { defaultLexical } from '@/fields/defaultLexical'
+import { getServerSideURL } from './utilities/getURL'
+
+//collections
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { AppIcons } from './collections/AppIcons'
@@ -15,17 +22,26 @@ import { Solutions } from './collections/Solutions'
 import { Integrations } from './collections/Integrations'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
-import { Footer } from './Footer/config'
-import { Header } from './Header/config'
-import { plugins } from './plugins'
-import { defaultLexical } from '@/fields/defaultLexical'
-import { getServerSideURL } from './utilities/getURL'
 import { MediaCategories } from './collections/MediaCategories'
 import { Testimonials } from './collections/Testimonials'
+import { Changelog } from './collections/Changelog'
+import { FAQ } from './collections/FAQ'
+import { CaseStudies } from './collections/CaseStudies'
 
+//blocks
+import { Archive } from '@/blocks/ArchiveBlock/config'
+import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
+import { CallToAction } from '@/blocks/CallToAction/config'
+import { Content } from '@/blocks/Content/config'
+import { FeaturesBlock } from '@/blocks/Features/config'
+import { FormBlock } from '@/blocks/Form/config'
+import { MediaBlock } from '@/blocks/MediaBlock/config'
+import { StyledList } from '@/blocks/StyledList/config'
+import { TestimonialsBlock } from '@/blocks/Testimonials/config'
+import { GalleryBlock } from '@/blocks/Gallery/config'
+import { FaqBlock } from '@/blocks/FAQ/config'
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
-import { FAQ } from './collections/FAQ'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -47,7 +63,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    user: Users.slug,
+
     livePreview: {
       breakpoints: [
         {
@@ -72,12 +88,14 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: 'Marn POS',
-      title: 'Marn Website Admin Panel',
-      description: 'This is the admin panel for the Marn Website',
+      title: 'Marn POS Admin Panel',
+      description:
+        'Easily manage your Marn POS website with our user-friendly admin panel, developed by Studio Valence.',
       openGraph: {
-        title: 'Marn Website Admin Panel',
-        description: 'This is the admin panel for the Marn Website',
-        siteName: 'Marn Website Admin Panel',
+        title: 'Marn POS Admin Panel',
+        description:
+          'Easily manage your Marn POS website with our user-friendly admin panel, developed by Studio Valence.',
+        siteName: 'Marn POS Admin Panel',
         images: [
           {
             url: '',
@@ -102,9 +120,50 @@ export default buildConfig({
         },
       ],
     },
+    user: Users.slug,
   },
-  // This config helps us configure global or default features that the other editors can inherit
+  db: vercelPostgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI || '',
+    },
+    // push: false, // disable push mode
+  }),
+  blocks: [
+    Archive,
+    CallToAction,
+    // Content,
+    FaqBlock,
+    FeaturesBlock,
+    FeaturedAppsBlock,
+    GalleryBlock,
+    FormBlock,
+    TestimonialsBlock,
+
+    MediaBlock,
+    StyledList,
+  ],
+  collections: [
+    Pages,
+    Posts,
+    Solutions,
+    Integrations,
+    Media,
+    Testimonials,
+    CaseStudies,
+    Categories,
+    MediaCategories,
+    FAQ,
+    AppIcons,
+    Changelog,
+    Users,
+  ],
+  cors: [getServerSideURL()].filter(Boolean),
   editor: defaultLexical,
+  email: resendAdapter({
+    defaultFromAddress: process.env.RESEND_EMAIL || '',
+    defaultFromName: 'Payload CMS',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
   i18n: {
     supportedLanguages: { en, ar },
   },
@@ -131,27 +190,6 @@ export default buildConfig({
     defaultLocale: 'ar', // required
     fallback: true, // defaults to true
   },
-  db: vercelPostgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI || '',
-    },
-    // push: false, // disable push mode
-  }),
-
-  collections: [
-    Pages,
-    Posts,
-    Solutions,
-    Integrations,
-    Media,
-    AppIcons,
-    Categories,
-    MediaCategories,
-    Users,
-    Testimonials,
-    FAQ,
-  ],
-  cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
     ...plugins,
@@ -195,9 +233,4 @@ export default buildConfig({
     },
     tasks: [],
   },
-  email: resendAdapter({
-    defaultFromAddress: process.env.RESEND_EMAIL || '',
-    defaultFromName: 'Payload CMS',
-    apiKey: process.env.RESEND_API_KEY || '',
-  }),
 })

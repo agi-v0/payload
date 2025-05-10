@@ -18,13 +18,13 @@ const fields: Field[] = [
     type: 'select',
     options: [
       { value: 'appsBlockHero', label: 'Apps Block Hero' },
-      { value: 'appsBlock01', label: 'Apps Block 01' },
-      { value: 'appsBlock02', label: 'Apps Block 02' },
-      { value: 'appsBlock03', label: 'Apps Block 03' },
-      { value: 'appsBlock04', label: 'Apps Block 04' },
+      { value: 'FeaturedApps01', label: 'Apps Block 01' },
+      { value: 'FeaturedApps02', label: 'Apps Block 02' },
+      { value: 'FeaturedApps03', label: 'Apps Block 03' },
+      { value: 'FeaturedApps04', label: 'Apps Block 04' },
     ],
     required: true,
-    defaultValue: 'appsBlock01',
+    defaultValue: 'FeaturedApps01',
   },
   {
     name: 'body',
@@ -86,8 +86,12 @@ const fields: Field[] = [
 ]
 
 export const FeaturedAppsBlock: Block = {
-  slug: 'featuredAppsBlock',
+  slug: 'featuredApps',
   interfaceName: 'FeaturedAppsBlock',
+  labels: {
+    singular: 'Featured App',
+    plural: 'Featured Apps',
+  },
   fields: [blockHeader, ...fields],
   dbName: 'featuredAppsBlock',
 }
