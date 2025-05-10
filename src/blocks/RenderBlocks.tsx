@@ -6,7 +6,7 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
-import { FeaturesBlockComponent } from '@/blocks/Features/Component'
+import { RenderFeaturesBlock } from '@/blocks/Features/RenderFeaturesBlock'
 import { BlockHeader } from '@/components/BlockHeader'
 import { BlockHeaderType } from '@/types/blockHeader'
 import { RenderAppsBlock } from './AppsBlock/RenderAppsBlock'
@@ -23,11 +23,10 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   testimonials: RenderTestimonialsBlock,
-  features: FeaturesBlockComponent,
+  features: RenderFeaturesBlock,
   gallery: RenderGalleryBlock,
 }
 
-// Define a type for our blocks that includes the blockHeader property
 type BlockWithHeader = {
   blockHeader?: BlockHeaderType
 } & Page['layout'][0]
@@ -53,8 +52,12 @@ export const RenderBlocks: React.FC<{
         }
 
         return (
-          <div id={block.blockName || undefined} className="pt-xl" key={index}>
-            {blockHeader && <BlockHeader {...blockHeader} className="" />}
+          <div id={block.blockName || undefined} className="py-xl" key={index}>
+            {blockHeader &&
+              block?.blockType === 'features' &&
+              ['06', '07', '17'].includes(block.layout) === false && (
+                <BlockHeader {...blockHeader} className="" />
+              )}
             <Block {...(block as any)} locale={locale} />
           </div>
         )

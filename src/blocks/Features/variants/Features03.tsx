@@ -7,40 +7,43 @@ import RichText from '@/components/RichText'
 
 import { CMSLink } from '@/components/Link'
 
+const colSpanClass = {
+  full: 'md:col-span-4 lg:col-span-12',
+  half: 'md:col-span-2 lg:col-span-6',
+  oneThird: 'md:col-span-2 lg:col-span-4',
+  twoThirds: 'md:col-span-2 lg:col-span-2',
+}
+
 export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
 
   return (
     <div className="bg-background py-xl gap-md container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
       {columns.map((column, index) => {
-        const { image, appReference, size = 'oneThird', richTextContent } = column
-        //assign lg:col-span-12 to full width size, and lg:col-span-6 to all other sizes
-        const lgColSpanClass = size === 'full' ? 'lg:col-span-12' : 'lg:col-span-6'
+        const { image, size = 'full', richTextContent } = column
+        const lgColSpanClass = colSpanClass[size || 'full']
 
         return (
           <div key={index} className={cn('col-span-full', lgColSpanClass)}>
             <div
-              className={cn('gap-md flex flex-col', {
-                'lg:flex-row lg:items-center lg:justify-start': size === 'full',
+              className={cn('gap-sm flex flex-col', {
+                'md:flex-row md:items-center md:justify-start': size === 'full',
               })}
             >
               {image && (
-                <div
+                <Media
+                  resource={image}
                   className={cn('rounded-space-sm overflow-hidden', {
                     'lg:basis-1/2': size === 'full', // Adjust width for full-size columns
                     'w-full': size !== 'full', // Full width for non-full-size columns
                   })}
-                >
-                  <Media
-                    resource={image}
-                    className="h-auto w-full"
-                    imgClassName="w-full h-auto aspect-[16/9] object-cover"
-                  />
-                </div>
+                  imgClassName="w-full h-auto aspect-[16/9] object-cover"
+                />
               )}
               <div
-                className={cn('gap-md flex flex-col items-start', {
-                  'lg:ps-xl w-full lg:basis-1/2': size === 'full',
+                className={cn('gap-sm flex flex-col items-start', {
+                  'md:px-md w-full lg:basis-1/2': size === 'full',
+                  'md:px-sm': size !== 'full',
                 })}
               >
                 {column.enableBadge && column.badge && (
@@ -53,9 +56,7 @@ export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
                 )}
                 {richTextContent && <RichText data={richTextContent} />}
                 {column.enableCta && column.link?.label && (
-                  <div>
-                    <CMSLink {...column.link} />
-                  </div>
+                  <CMSLink className="mt-auto w-fit" size="md" {...column.link} />
                 )}
               </div>
             </div>

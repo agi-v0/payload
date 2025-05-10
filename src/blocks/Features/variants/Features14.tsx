@@ -11,7 +11,7 @@ export const Features14: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
   if (!columns?.length) return null
   const limitedColumns = columns.slice(0, 3)
   return (
-    <div className="py-xl container grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="py-xl container grid grid-cols-1 gap-4 md:grid-cols-4">
       {limitedColumns.map((column, index) => {
         return (
           <Card key={index} className="overflow-hidden rounded-none bg-transparent !p-0">

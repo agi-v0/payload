@@ -1,21 +1,17 @@
-'use client'
-
 import React from 'react'
 import { Media } from '@/components/Media'
-import { cn } from '@/utilities/ui'
 import { FeaturesBlock } from '@/payload-types'
 import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
-import { Card, CardContent } from '@/components/ui/card'
 import { BlockHeader } from '@/components/BlockHeader'
 
 export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
   return (
     <div className="bg-background-neutral-subtle py-xl w-full">
-      <div className="container">
-        <div className="gap-md rounded-space-sm p-md bg-background flex flex-col">
-          <div className="flex flex-col lg:flex-row">
-            <div className="gap-md pe-md flex w-full flex-col lg:basis-1/2">
+      <div className="py-xl container">
+        <div className="gap-md rounded-space-sm p-md bg-background-neutral flex flex-col">
+          <div className="gap-sm flex flex-col md:flex-row">
+            <div className="gap-md md:pe-md md:pt-md flex w-full flex-col lg:basis-1/2">
               {blockHeader && (
                 <BlockHeader
                   {...blockHeader}
@@ -36,7 +32,7 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
             )}
           </div>
           <div
-            className="gap-xs grid grid-cols-1 md:grid-cols-(--columns)"
+            className="gap-xs grid grid-cols-2 md:grid-cols-(--columns)"
             style={
               { '--columns': `repeat(${columns.length}, minmax(0, 1fr))` } as React.CSSProperties
             }
@@ -56,7 +52,7 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
                   )}
                   <div className="flex flex-col gap-2">
                     {content?.title && (
-                      <h3 className="text-body-lg text-base-primary font-medium">
+                      <h3 className="text-body-md text-base-primary font-medium">
                         {content.title}
                       </h3>
                     )}

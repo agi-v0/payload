@@ -22,9 +22,9 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
           />
         )}
       </div>
-      <hr className="border-base-primary/10" />
+      <hr className="border-border" />
       <div
-        className="gap-xs grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
+        className="gap-xs grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4"
         style={{ '--columns': `repeat(${columns.length}, minmax(0, 1fr))` } as React.CSSProperties}
       >
         {columns.map((column, index) => {
@@ -45,7 +45,7 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
               )}
               <div className="flex flex-col gap-2">
                 {content?.title && (
-                  <h3 className="text-body-lg text-base-primary font-medium">{content.title}</h3>
+                  <h3 className="text-body-md text-base-primary font-medium">{content.title}</h3>
                 )}
                 {content?.subtitle && (
                   <p className="text-body-sm text-base-secondary">{content.subtitle}</p>

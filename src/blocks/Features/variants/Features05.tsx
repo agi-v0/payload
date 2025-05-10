@@ -14,17 +14,14 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
       {columns.map((column, index) => {
         const { image, enableBadge, badge, richTextContent, enableCta, link } = column
         return (
-          <Card
-            key={index}
-            className="md:bg-inverted-primary overflow-hidden border-0 bg-transparent"
-          >
-            <CardContent className="flex flex-col gap-6 p-0 md:p-8">
+          <Card key={index} className="overflow-hidden border-0">
+            <CardContent className="gap-sm flex flex-col">
               {image && (
                 <div className="h-auto w-full">
                   <Media
                     resource={image}
-                    className="h-auto w-full"
-                    imgClassName="w-full h-auto aspect-[16/9] object-cover rounded-space-sm"
+                    className="rounded-space-sm h-auto w-full overflow-hidden"
+                    imgClassName="w-full h-auto object-cover"
                   />
                 </div>
               )}
@@ -40,9 +37,7 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
                 <RichText className={cn('mx-0')} data={richTextContent} enableGutter={false} />
               )}
               {enableCta && link?.label && (
-                <div>
-                  <CMSLink {...link} />
-                </div>
+                <CMSLink {...link} variant="primary" className="mt-auto" />
               )}
             </CardContent>
           </Card>

@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { CMSLink } from '@/components/Link'
 import { Card, CardContent } from '@/components/ui/card'
@@ -22,7 +20,7 @@ export const Features10: React.FC<FeaturesBlock> = ({ columns }) => {
         slidesPerView={{
           sm: 1, //   ≥640px: 1 slide
           md: 2, //   ≥768px: 2 slides
-          lg: 4, //  ≥1024px: 4 slides
+          lg: 3, //  ≥1024px: 4 slides
         }}
       >
         {columns.length > 1 && <CarouselNavigation className="mb-xs relative justify-start" />}
@@ -32,13 +30,11 @@ export const Features10: React.FC<FeaturesBlock> = ({ columns }) => {
               <Card className="p-sm h-full transition-colors">
                 <CardContent className="rounded-space-sm gap-xs flex h-full flex-col items-start">
                   {column.image && (
-                    <div className="rounded-space-xs overflow-hidden">
-                      <Media
-                        resource={column.image}
-                        className="h-auto w-full"
-                        imgClassName="w-full h-auto aspect-square object-cover"
-                      />
-                    </div>
+                    <Media
+                      resource={column.image}
+                      className="rounded-space-sm h-auto w-full overflow-hidden"
+                      imgClassName="w-full h-auto aspect-square object-cover"
+                    />
                   )}
                   {column.content && (
                     <div>
@@ -54,7 +50,7 @@ export const Features10: React.FC<FeaturesBlock> = ({ columns }) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselIndicator className="mt-xs relative bottom-0 h-10" />
+        {columns.length > 1 && <CarouselIndicator className="mt-xs relative bottom-0 h-10" />}
       </Carousel>
     </div>
   )

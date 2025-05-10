@@ -3,6 +3,9 @@
     "title": "Hello world!",
     "about": "Go to the about page"
   },
+  "General": {
+    "readMore": "Learn more"
+  },
   "TestimonialsBlock": {
     "readMore": "Read story"
   },

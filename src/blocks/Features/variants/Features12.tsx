@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
 
@@ -12,7 +10,7 @@ export const Features12: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="py-xl gap-xs container grid grid-cols-1 md:grid-cols-3">
+    <div className="py-xl gap-xs container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
       {columns.map((column, index) => {
         const iconName = column.icon as keyof typeof dynamicIconImports
         return (

@@ -163,7 +163,7 @@ export const Features: Block = {
           icons: lucideIcons,
           admin: {
             condition: (_, siblingData, { blockData }) =>
-              ['06', '07', '09', '12', '13'].includes(blockData?.layout),
+              ['06', '07', '09', '11', '12', '13'].includes(blockData?.layout),
           },
         }),
 
@@ -191,7 +191,7 @@ export const Features: Block = {
           editor: richTextEditor,
           admin: {
             condition: (_, siblingData, { blockData }) =>
-              ['01', '03', '04', '05'].includes(blockData?.layout),
+              ['01', '03', '04', '05', '11'].includes(blockData?.layout),
           },
         },
         {

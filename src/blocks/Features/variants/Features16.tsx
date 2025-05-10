@@ -9,7 +9,7 @@ export const Features16: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
   if (!columns?.length) return null
   const limitedColumns = columns.slice(0, 4)
   return (
-    <div className="py-xl container grid grid-cols-1 grid-rows-3 gap-6 md:my-12 md:grid-cols-2 md:gap-4">
+    <div className="py-xl container grid grid-cols-1 gap-6 md:my-12 md:grid-cols-2 md:gap-4">
       {limitedColumns.map((column, index) => {
         return (
           <Card key={index} className="overflow-hidden rounded-none border-0 bg-transparent p-0">
@@ -36,7 +36,12 @@ export const Features16: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
         )
       })}
       {link?.label && (
-        <LinkBlock link={link} className="" label={link?.label} CTALabel={CTALabel || ''} />
+        <LinkBlock
+          link={link}
+          className="md:col-span-2"
+          label={link?.label}
+          CTALabel={CTALabel || ''}
+        />
       )}
     </div>
   )

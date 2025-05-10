@@ -18,9 +18,11 @@ import { Features14 } from './variants/Features14'
 import { Features15 } from './variants/Features15'
 import { Features16 } from './variants/Features16'
 import { Features17 } from './variants/Features17'
+import { useTranslations } from 'next-intl'
 
 type FeaturesBlockWithLocale = FeaturesBlock & {
   locale?: string
+  readMoreLabel?: string
 }
 
 const featureVariants: Record<string, React.FC<FeaturesBlockWithLocale>> = {
@@ -44,6 +46,7 @@ const featureVariants: Record<string, React.FC<FeaturesBlockWithLocale>> = {
 }
 
 export const RenderFeaturesBlock: React.FC<FeaturesBlockWithLocale> = (props) => {
+  const t = useTranslations('General')
   const { layout = '01' } = props
 
   const FeaturesBlockComponent = featureVariants[layout]
@@ -54,5 +57,5 @@ export const RenderFeaturesBlock: React.FC<FeaturesBlockWithLocale> = (props) =>
     return <DefaultVariant {...props} />
   }
 
-  return <FeaturesBlockComponent {...props} />
+  return <FeaturesBlockComponent {...props} readMoreLabel={t('readMore')} />
 }

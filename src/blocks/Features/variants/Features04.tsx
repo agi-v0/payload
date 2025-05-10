@@ -7,6 +7,8 @@ import { BlockHeader } from '@/components/BlockHeader'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 import RichText from '@/components/RichText'
+import { CMSLink } from '@/components/Link'
+import { Badge } from '@/components/ui/badge'
 
 export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) => {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -48,7 +50,12 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
     >
       <div className="sticky top-0 flex h-screen items-center justify-center">
         <div className="container">
-          <div className="gap-xs grid grid-cols-1 items-center md:grid-cols-2">
+          <motion.div
+            className={cn(
+              'gap-xs flex flex-col items-center md:flex-row',
+              activeColumn?.reverseOrder && 'md:flex-row-reverse',
+            )}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${activeIndex}-image`}
@@ -56,16 +63,16 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: scrollDirection === 'down' ? -20 : 20 }}
                 transition={{ duration: 0.3 }}
+                layout
                 className={cn(
-                  'rounded-space-sm bg-background-neutral-subtle order-1 overflow-hidden',
-                  activeColumn?.reverseOrder && 'md:order-2',
+                  'rounded-space-sm bg-background-neutral-subtle w-full overflow-hidden',
                 )}
               >
                 {activeColumn?.image && (
                   <Media
                     resource={activeColumn.image}
                     className="h-auto w-full"
-                    imgClassName="w-full h-auto aspect-[4/3] object-cover"
+                    imgClassName="w-full h-auto object-cover"
                   />
                 )}
               </motion.div>
@@ -74,22 +81,37 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${activeIndex}-text`}
-                initial={{ opacity: 0, y: scrollDirection === 'down' ? 20 : -20 }}
+                initial={{
+                  opacity: 0,
+                  // y: scrollDirection === 'down' ? 20 : -20
+                }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: scrollDirection === 'down' ? -20 : 20 }}
+                exit={{
+                  opacity: 0,
+                  // y: scrollDirection === 'down' ? -20 : 20
+                }}
                 transition={{ duration: 0.3, delay: 0.1 }}
+                layout
                 className={cn(
-                  'order-2 flex items-center justify-center',
-                  activeColumn?.reverseOrder && 'md:order-1',
-                  activeColumn?.reverseOrder ? 'pe-xl' : 'ps-xl',
+                  'gap-sm md:px-xl mt-sm flex w-full flex-col items-start justify-start md:mt-0',
+                  // { 'md:pe-xl': activeColumn.reverseOrder },
                 )}
               >
-                {activeColumn?.richTextContent && (
-                  <RichText data={activeColumn.richTextContent} className="" />
+                {activeColumn?.enableBadge && activeColumn?.badge && (
+                  <Badge
+                    variant={activeColumn.badge?.color}
+                    icon={activeColumn.badge.icon}
+                    icon_position={activeColumn.badge.icon_position}
+                    label={activeColumn.badge?.label}
+                  />
+                )}
+                {activeColumn?.richTextContent && <RichText data={activeColumn.richTextContent} />}
+                {activeColumn?.enableCta && activeColumn?.link?.label && (
+                  <CMSLink size="lg" variant="primary" {...activeColumn.link} />
                 )}
               </motion.div>
             </AnimatePresence>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

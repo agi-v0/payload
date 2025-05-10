@@ -33,7 +33,7 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
         <div
           key={index}
           className={cn('gap-sm grid w-full grid-cols-1', {
-            'lg:grid-cols-2': row?.length === 2,
+            'md:grid-cols-2': row?.length === 2,
           })}
         >
           {row?.map((column, index) => {
@@ -50,21 +50,15 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
               >
                 {appReference && <AppReference appReference={appReference} className="mb-md" />}
                 <div
-                  className={cn('lg:gap-sm gap-lg flex flex-col', {
-                    'lg:flex-row': size === 'full',
+                  className={cn('gap-md flex flex-col', {
+                    'md:flex-row': size === 'full' || row?.length === 1,
                   })}
                 >
                   {richTextContent && (
-                    <div
-                      className={cn('gap-sm flex flex-col', {
-                        'pe-md w-full lg:basis-1/2': size === 'full',
-                      })}
-                    >
-                      <RichText data={richTextContent} />
-                    </div>
+                    <RichText data={richTextContent} className={cn('pe-md w-full')} />
                   )}
                   {image && (
-                    <div className="rounded-space-sm bg-background-neutral-subtle overflow-hidden">
+                    <div className="rounded-space-sm bg-background-neutral-subtle h-auto w-full overflow-hidden">
                       <Media
                         resource={image}
                         className="group h-auto w-full"

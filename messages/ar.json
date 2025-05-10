@@ -3,9 +3,13 @@
     "title": "Hello world!",
     "about": "Go to the about page"
   },
+  "General": {
+    "readMore": "المزيد"
+  },
   "TestimonialsBlock": {
     "readMore": "إقرأ القصة"
   },
+  "readMore": "إقرأ القصة",
   "Footer": {
     "allRightsReserved": "© {year} مرن. جميع الحقوق محفوظة.",
     "termsAndConditions": "الشروط والأحكام",
