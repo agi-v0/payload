@@ -28,6 +28,7 @@ import { image43 } from './image-4-3'
 import { imageSquare } from './image-square'
 import { app } from './app'
 import { seedSolutions } from './solutions'
+import { seedFeaturesShowcasePage } from './features-showcase-page'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -575,6 +576,24 @@ export const seed = async ({
     slug: 'footer',
     data: footerData as any,
   })
+
+  // Seed Features Showcase Page (New Addition)
+  payload.logger.info('— Attempting to seed Features Showcase Page...')
+  try {
+    await seedFeaturesShowcasePage(
+      payload,
+      {
+        image169: mediaDocs.image169,
+        image43: mediaDocs.image43,
+        imageSquare: mediaDocs.imageSquare,
+        image1: mediaDocs.image1, // Assuming image1 is suitable for meta
+        // Ensure all media needed by seedFeaturesShowcasePage is passed
+      },
+      demoAuthor,
+    )
+  } catch (error: any) {
+    payload.logger.error(`Could not seed Features Showcase Page: ${error.message}`)
+  }
 
   payload.logger.info('Seeded database successfully!')
 }
