@@ -314,7 +314,7 @@ function CarouselContent({ children, className, transition }: CarouselContentPro
         }
       }
       className={cn(
-        'flex items-center',
+        'flex items-stretch',
         !disableDrag && 'cursor-grab active:cursor-grabbing',
         className,
       )}

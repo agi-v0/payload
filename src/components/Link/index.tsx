@@ -6,6 +6,7 @@ import React from 'react'
 
 import type { Page, Post, Solution } from '@/payload-types'
 import { DynamicIcon } from 'lucide-react/dynamic'
+import { CaretLeft } from '@/icons/caret-left-filled'
 
 export type CMSLinkType = {
   variant?: 'inline' | ButtonProps['variant'] | null
@@ -29,7 +30,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const {
     type,
     color = 'neutral',
-    variant = 'ghost',
+    variant = 'link',
     children,
     className,
     label,
@@ -56,7 +57,11 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   /* Ensure we don't break any styles set by richText */
   if (variant === 'inline') {
     return (
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <Link
+        className={cn('text-base-secondary underline-offset-4 hover:underline', className)}
+        href={href || url || ''}
+        {...newTabProps}
+      >
         {label && label}
         {children && children}
       </Link>
@@ -65,10 +70,13 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   return (
     <Button asChild className={className} size={size} variant={variant} color={color || 'neutral'}>
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <Link className={cn('group', className)} href={href || url || ''} {...newTabProps}>
         {icon && <DynamicIcon name={icon as any} className="size-3" />}
         {label && label}
         {children && children}
+        {variant === 'link' && (
+          <CaretLeft className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180" />
+        )}
       </Link>
     </Button>
   )

@@ -6,10 +6,10 @@ import type { AppIcon as AppIconType } from '@/payload-types'
 
 export interface Props {
   alt?: string
-  className?: string
+  className?: React.HTMLAttributes<HTMLDivElement>['className']
   fill?: boolean // for NextImage only
   htmlElement?: ElementType | null
-  imgClassName?: string
+  imgClassName?: React.HTMLAttributes<HTMLImageElement>['className']
   onClick?: () => void
   onLoad?: () => void
   loading?: 'lazy' | 'eager' // for NextImage only

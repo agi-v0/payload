@@ -5,12 +5,12 @@ import { cn } from '@/utilities/ui'
 import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
 
 const badgeVariants = cva(
-  'focus:ring-ring inline-flex max-w-max items-center gap-1 rounded-md px-1.5 py-1 text-sm font-medium transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none',
+  'focus:ring-ring inline-flex max-w-max items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none',
   {
     variants: {
       variant: {
-        blue: 'bg-blue-100 text-blue-600 disabled:bg-blue-50 disabled:text-blue-500/70',
-        red: 'bg-red-100 text-red-600 disabled:bg-red-50 disabled:text-red-500/70',
+        blue: 'bg-sky-100 text-sky-500 disabled:bg-sky-50 disabled:text-sky-500/70 dark:bg-sky-500/20',
+        red: 'bg-red-100 text-red-600 disabled:bg-red-50 disabled:text-red-500/70 dark:bg-red-900',
         green: 'bg-green-100 text-green-600 disabled:bg-green-50 disabled:text-green-500/70',
         yellow: 'bg-yellow-100 text-yellow-600 disabled:bg-yellow-50 disabled:text-yellow-500/70',
       },

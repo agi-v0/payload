@@ -51,7 +51,11 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
                   <NavigationMenuItem key={i + 'dropdown'}>
                     {tab.enableDirectLink && tab.link ? (
                       <NavigationMenuTrigger className="rounded-full">
-                        <CMSLink {...tab.link} variant="inline" className={'group'}>
+                        <CMSLink
+                          {...tab.link}
+                          variant="inline"
+                          className="group hover:text-base-primary hover:no-underline"
+                        >
                           {tab.label}
                         </CMSLink>
                       </NavigationMenuTrigger>
@@ -107,6 +111,7 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
                         className={cn(navigationMenuTriggerStyle(), 'rounded-full')}
                         label={tab.label}
                         {...tab.link}
+                        variant="inline"
                       />
                     </NavigationMenuLink>
                   </NavigationMenuItem>

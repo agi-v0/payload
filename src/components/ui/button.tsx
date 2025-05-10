@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/utilities/ui'
 
 const buttonVariants = cva(
-  'ring-offset-background focus-visible:ring-ring focus-visible:secondary-none inline-flex items-center justify-center gap-2 rounded-full text-(length:--text-body-l) font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rtl:tracking-normal [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  'ring-offset-background focus-visible:ring-ring focus-visible:secondary-none inline-flex items-center justify-center gap-2 rounded-full text-(length:--text-body-sm) font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rtl:tracking-normal [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -15,7 +15,7 @@ const buttonVariants = cva(
         tertiary: '',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         ghost: 'bg-transparent',
-        link: 'text-base-primary underline-offset-4 hover:underline',
+        link: 'text-base-secondary hover:text-base-secondary/90 p-0',
       },
       color: {
         brand: '',
@@ -25,7 +25,7 @@ const buttonVariants = cva(
         clear: '',
         default: 'h-10 px-4 py-2',
         sm: 'h-9 px-3 py-2 text-sm',
-        md: 'h-10 px-4 py-2',
+        md: 'h-11 px-4 py-2',
         lg: 'h-13 px-5 py-3',
         icon: 'h-10 w-10',
       },
@@ -54,7 +54,7 @@ const buttonVariants = cva(
       {
         color: 'brand',
         variant: 'link',
-        className: 'text-brand-primary hover:text-brand-primary/90',
+        className: 'text-brand-primary hover:text-brand-primary/90 p-0',
       },
       {
         color: 'neutral',
@@ -79,13 +79,13 @@ const buttonVariants = cva(
       {
         color: 'neutral',
         variant: 'link',
-        className: 'text-base-primary hover:text-base-primary/90',
+        className: 'text-base-secondary hover:text-base-secondary/90 p-0',
       },
     ],
     defaultVariants: {
       variant: 'primary',
       size: 'lg',
-      color: 'brand',
+      color: 'neutral',
     },
   },
 )

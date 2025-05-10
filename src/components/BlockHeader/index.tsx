@@ -58,27 +58,24 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
           enableGutter={false}
         />
       )}
-      {links && (
-        <div
+      {Array.isArray(links) && links.length > 0 && (
+        <ul
           className={cn(
             'col-span-2 row-start-3 justify-self-stretch md:col-span-1 md:justify-self-auto',
+            'flex flex-col gap-1 md:flex-row md:gap-4',
             type === 'split' ? 'md:col-start-2' : '',
             type === 'center' ? 'md:col-span-2' : '',
             linksClassName,
           )}
         >
-          {Array.isArray(links) && links.length > 0 && (
-            <ul className="flex flex-col gap-1 md:flex-row md:gap-4">
-              {links.map(({ link }, i) => {
-                return (
-                  <li key={i}>
-                    <CMSLink className="w-full" size={'lg'} {...link} />
-                  </li>
-                )
-              })}
-            </ul>
-          )}
-        </div>
+          {links.map(({ link }, i) => {
+            return (
+              <li key={i}>
+                <CMSLink className="w-full" size={'lg'} {...link} />
+              </li>
+            )
+          })}
+        </ul>
       )}
     </div>
   )
