@@ -34,9 +34,10 @@ const sizeOptions = [
   { label: 'Two Thirds', value: 'twoThirds' },
 ]
 
-export const Features: Block = {
+export const FeaturesBlock: Block = {
   slug: 'features',
   interfaceName: 'FeaturesBlock',
+  dbName: 'featuresBlock',
   fields: [
     blockHeader,
     {

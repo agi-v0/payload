@@ -239,17 +239,14 @@ export interface Page {
     };
   };
   layout: (
-    | AppsBlock
-    | CallToActionBlock
-    | ContentBlock
-    | MediaBlock
     | ArchiveBlock
-    | FormBlock
-    | StyledListBlock
-    | TestimonialsBlock
-    | FeaturesBlock
+    | CallToActionBlock
     | FaqBlock
+    | FeaturesBlock
+    | FeaturedAppsBlock
     | GalleryBlock
+    | FormBlock
+    | TestimonialsBlock
   )[];
   meta?: {
     title?: string | null;
@@ -674,9 +671,473 @@ export interface Integration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "AppsBlock".
+ * via the `definition` "ArchiveBlock".
  */
-export interface AppsBlock {
+export interface ArchiveBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+        relationTo: 'posts';
+        value: number | Post;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'archive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlock".
+ */
+export interface CallToActionBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: number | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose the button style.
+           */
+          color?: ('brand' | 'neutral') | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'callToAction';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock".
+ */
+export interface FaqBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: number | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Select the FAQs to display. Leave blank to display latest 6 FAQs.
+   */
+  faqs: (number | Faq)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: number;
+  question?: string | null;
+  answer?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturesBlock".
+ */
+export interface FeaturesBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: number | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  layout:
+    | '01'
+    | '02'
+    | '03'
+    | '04'
+    | '05'
+    | '06'
+    | '07'
+    | '08'
+    | '09'
+    | '10'
+    | '11'
+    | '12'
+    | '13'
+    | '14'
+    | '15'
+    | '16'
+    | '17';
+  blockImage?: (number | null) | Media;
+  /**
+   * Extra text to display alongside the link
+   */
+  CTALabel?: string | null;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'solutions';
+          value: number | Solution;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
+  columns?:
+    | {
+        size?: ('half' | 'full' | 'oneThird' | 'twoThirds') | null;
+        appReference?:
+          | ({
+              relationTo: 'solutions';
+              value: number | Solution;
+            } | null)
+          | ({
+              relationTo: 'integrations';
+              value: number | Integration;
+            } | null);
+        image?: (number | null) | Media;
+        tabLabel?: string | null;
+        icon?: string | null;
+        content?: {
+          title: string;
+          subtitle?: string | null;
+        };
+        richTextContent?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        enableBadge?: boolean | null;
+        enableCta?: boolean | null;
+        reverseOrder?: boolean | null;
+        badge?: {
+          type?: ('label' | 'reference') | null;
+          label?: string | null;
+          color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+          reference?:
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
+              } | null)
+            | ({
+                relationTo: 'integrations';
+                value: number | Integration;
+              } | null);
+          /**
+           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+           */
+          icon?: string | null;
+          icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+        };
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'features';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedAppsBlock".
+ */
+export interface FeaturedAppsBlock {
   blockHeader: {
     type: 'center' | 'split' | 'start';
     badge?: {
@@ -827,13 +1288,13 @@ export interface AppsBlock {
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'appsBlock';
+  blockType: 'featuredAppsBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock".
+ * via the `definition` "GalleryBlock".
  */
-export interface CallToActionBlock {
+export interface GalleryBlock {
   blockHeader: {
     type: 'center' | 'split' | 'start';
     badge?: {
@@ -903,227 +1364,29 @@ export interface CallToActionBlock {
         }[]
       | null;
   };
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?:
+  /**
+   * Select the layout for the gallery.
+   */
+  type: 'gallery01' | 'gallery02' | 'gallery03';
+  images?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null)
-            | ({
-                relationTo: 'solutions';
-                value: number | Solution;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose the button style.
-           */
-          color?: ('brand' | 'neutral') | null;
-          /**
-           * Choose how the link should be rendered.
-           */
-          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+        /**
+         * Select an image for the gallery.
+         */
+        image: number | Media;
+        /**
+         * Title and description for the transition panel.
+         */
+        panel?: {
+          title?: string | null;
+          description?: string | null;
         };
         id?: string | null;
       }[]
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'cta';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlock".
- */
-export interface ContentBlock {
-  blockHeader: {
-    type: 'center' | 'split' | 'start';
-    badge?: {
-      type?: ('label' | 'reference') | null;
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      reference?:
-        | ({
-            relationTo: 'solutions';
-            value: number | Solution;
-          } | null)
-        | ({
-            relationTo: 'integrations';
-            value: number | Integration;
-          } | null);
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-    headerText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null)
-              | ({
-                  relationTo: 'solutions';
-                  value: number | Solution;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  columns?:
-    | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-        richText?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        enableLink?: boolean | null;
-        link?: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null)
-            | ({
-                relationTo: 'solutions';
-                value: number | Solution;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose the button style.
-           */
-          color?: ('brand' | 'neutral') | null;
-          /**
-           * Choose how the link should be rendered.
-           */
-          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'content';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock".
- */
-export interface MediaBlock {
-  media: number | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ArchiveBlock".
- */
-export interface ArchiveBlock {
-  introContent?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  populateBy?: ('collection' | 'selection') | null;
-  relationTo?: 'posts' | null;
-  categories?: (number | Category)[] | null;
-  limit?: number | null;
-  selectedDocs?:
-    | {
-        relationTo: 'posts';
-        value: number | Post;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'archive';
+  blockType: 'gallery';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1327,20 +1590,6 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "StyledListBlock".
- */
-export interface StyledListBlock {
-  listStyle?: ('bullet' | 'check' | 'numbered' | 'feature') | null;
-  items: {
-    text: string;
-    id?: string | null;
-  }[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'styledList';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
@@ -1504,409 +1753,6 @@ export interface Testimonial {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeaturesBlock".
- */
-export interface FeaturesBlock {
-  blockHeader: {
-    type: 'center' | 'split' | 'start';
-    badge?: {
-      type?: ('label' | 'reference') | null;
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      reference?:
-        | ({
-            relationTo: 'solutions';
-            value: number | Solution;
-          } | null)
-        | ({
-            relationTo: 'integrations';
-            value: number | Integration;
-          } | null);
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-    headerText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null)
-              | ({
-                  relationTo: 'solutions';
-                  value: number | Solution;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  layout:
-    | '01'
-    | '02'
-    | '03'
-    | '04'
-    | '05'
-    | '06'
-    | '07'
-    | '08'
-    | '09'
-    | '10'
-    | '11'
-    | '12'
-    | '13'
-    | '14'
-    | '15'
-    | '16'
-    | '17';
-  blockImage?: (number | null) | Media;
-  /**
-   * Extra text to display alongside the link
-   */
-  CTALabel?: string | null;
-  link: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: number | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: number | Post;
-        } | null)
-      | ({
-          relationTo: 'solutions';
-          value: number | Solution;
-        } | null);
-    url?: string | null;
-    label: string;
-  };
-  columns?:
-    | {
-        size?: ('half' | 'full' | 'oneThird' | 'twoThirds') | null;
-        appReference?:
-          | ({
-              relationTo: 'solutions';
-              value: number | Solution;
-            } | null)
-          | ({
-              relationTo: 'integrations';
-              value: number | Integration;
-            } | null);
-        image?: (number | null) | Media;
-        tabLabel?: string | null;
-        icon?: string | null;
-        content?: {
-          title: string;
-          subtitle?: string | null;
-        };
-        richTextContent?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        enableBadge?: boolean | null;
-        enableCta?: boolean | null;
-        reverseOrder?: boolean | null;
-        badge?: {
-          type?: ('label' | 'reference') | null;
-          label?: string | null;
-          color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-          reference?:
-            | ({
-                relationTo: 'solutions';
-                value: number | Solution;
-              } | null)
-            | ({
-                relationTo: 'integrations';
-                value: number | Integration;
-              } | null);
-          /**
-           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-           */
-          icon?: string | null;
-          icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-        };
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null)
-            | ({
-                relationTo: 'solutions';
-                value: number | Solution;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'features';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FaqBlock".
- */
-export interface FaqBlock {
-  blockHeader: {
-    type: 'center' | 'split' | 'start';
-    badge?: {
-      type?: ('label' | 'reference') | null;
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      reference?:
-        | ({
-            relationTo: 'solutions';
-            value: number | Solution;
-          } | null)
-        | ({
-            relationTo: 'integrations';
-            value: number | Integration;
-          } | null);
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-    headerText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null)
-              | ({
-                  relationTo: 'solutions';
-                  value: number | Solution;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  /**
-   * Select the FAQs to display. Leave blank to display latest 6 FAQs.
-   */
-  faqs: (number | Faq)[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'faqBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq".
- */
-export interface Faq {
-  id: number;
-  question?: string | null;
-  answer?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "GalleryBlock".
- */
-export interface GalleryBlock {
-  blockHeader: {
-    type: 'center' | 'split' | 'start';
-    badge?: {
-      type?: ('label' | 'reference') | null;
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      reference?:
-        | ({
-            relationTo: 'solutions';
-            value: number | Solution;
-          } | null)
-        | ({
-            relationTo: 'integrations';
-            value: number | Integration;
-          } | null);
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-    headerText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null)
-              | ({
-                  relationTo: 'solutions';
-                  value: number | Solution;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  /**
-   * Select the layout for the gallery.
-   */
-  type: 'gallery01' | 'gallery02' | 'gallery03';
-  images?:
-    | {
-        /**
-         * Select an image for the gallery.
-         */
-        image: number | Media;
-        /**
-         * Title and description for the transition panel.
-         */
-        panel?: {
-          title?: string | null;
-          description?: string | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'gallery';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2290,17 +2136,14 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        appsBlock?: T | AppsBlockSelect<T>;
-        cta?: T | CallToActionBlockSelect<T>;
-        content?: T | ContentBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
-        formBlock?: T | FormBlockSelect<T>;
-        styledList?: T | StyledListBlockSelect<T>;
-        testimonials?: T | TestimonialsBlockSelect<T>;
-        features?: T | FeaturesBlockSelect<T>;
+        callToAction?: T | CallToActionBlockSelect<T>;
         faqBlock?: T | FaqBlockSelect<T>;
+        features?: T | FeaturesBlockSelect<T>;
+        featuredAppsBlock?: T | FeaturedAppsBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
       };
   meta?:
     | T
@@ -2327,75 +2170,15 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "AppsBlock_select".
+ * via the `definition` "ArchiveBlock_select".
  */
-export interface AppsBlockSelect<T extends boolean = true> {
-  blockHeader?:
-    | T
-    | {
-        type?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  type?: T;
-  body?:
-    | T
-    | {
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  media?: T;
-  reference?: T;
+export interface ArchiveBlockSelect<T extends boolean = true> {
+  introContent?: T;
+  populateBy?: T;
+  relationTo?: T;
+  categories?: T;
+  limit?: T;
+  selectedDocs?: T;
   id?: T;
   blockName?: T;
 }
@@ -2458,9 +2241,9 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlock_select".
+ * via the `definition` "FaqBlock_select".
  */
-export interface ContentBlockSelect<T extends boolean = true> {
+export interface FaqBlockSelect<T extends boolean = true> {
   blockHeader?:
     | T
     | {
@@ -2493,116 +2276,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  columns?:
-    | T
-    | {
-        size?: T;
-        richText?: T;
-        enableLink?: T;
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              color?: T;
-              variant?: T;
-            };
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock_select".
- */
-export interface MediaBlockSelect<T extends boolean = true> {
-  media?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ArchiveBlock_select".
- */
-export interface ArchiveBlockSelect<T extends boolean = true> {
-  introContent?: T;
-  populateBy?: T;
-  relationTo?: T;
-  categories?: T;
-  limit?: T;
-  selectedDocs?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FormBlock_select".
- */
-export interface FormBlockSelect<T extends boolean = true> {
-  form?: T;
-  enableIntro?: T;
-  introContent?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "StyledListBlock_select".
- */
-export interface StyledListBlockSelect<T extends boolean = true> {
-  listStyle?: T;
-  items?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TestimonialsBlock_select".
- */
-export interface TestimonialsBlockSelect<T extends boolean = true> {
-  blockHeader?:
-    | T
-    | {
-        type?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
-        headerText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-      };
-  type?: T;
-  selectedTestimonials?: T;
+  faqs?: T;
   id?: T;
   blockName?: T;
 }
@@ -2699,9 +2373,9 @@ export interface FeaturesBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FaqBlock_select".
+ * via the `definition` "FeaturedAppsBlock_select".
  */
-export interface FaqBlockSelect<T extends boolean = true> {
+export interface FeaturedAppsBlockSelect<T extends boolean = true> {
   blockHeader?:
     | T
     | {
@@ -2734,7 +2408,40 @@ export interface FaqBlockSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  faqs?: T;
+  type?: T;
+  body?:
+    | T
+    | {
+        badge?:
+          | T
+          | {
+              type?: T;
+              label?: T;
+              color?: T;
+              reference?: T;
+              icon?: T;
+              icon_position?: T;
+            };
+        headerText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    color?: T;
+                    variant?: T;
+                  };
+              id?: T;
+            };
+      };
+  media?: T;
+  reference?: T;
   id?: T;
   blockName?: T;
 }
@@ -2788,6 +2495,59 @@ export interface GalleryBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormBlock_select".
+ */
+export interface FormBlockSelect<T extends boolean = true> {
+  form?: T;
+  enableIntro?: T;
+  introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock_select".
+ */
+export interface TestimonialsBlockSelect<T extends boolean = true> {
+  blockHeader?:
+    | T
+    | {
+        type?: T;
+        badge?:
+          | T
+          | {
+              type?: T;
+              label?: T;
+              color?: T;
+              reference?: T;
+              icon?: T;
+              icon_position?: T;
+            };
+        headerText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    color?: T;
+                    variant?: T;
+                  };
+              id?: T;
+            };
+      };
+  type?: T;
+  selectedTestimonials?: T;
   id?: T;
   blockName?: T;
 }
@@ -3834,6 +3594,20 @@ export interface TaskSchedulePublish {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StyledListBlock".
+ */
+export interface StyledListBlock {
+  listStyle?: ('bullet' | 'check' | 'numbered' | 'feature') | null;
+  items: {
+    text: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'styledList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "BannerBlock".
  */
 export interface BannerBlock {
@@ -3867,6 +3641,16 @@ export interface CodeBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'code';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock".
+ */
+export interface MediaBlock {
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -7,7 +7,7 @@ import { AppsCarouselClient } from './AppsCarouselClient'
 
 interface Props extends AppsBlockProps {}
 
-export const AppsBlock04: React.FC<Props> = async (props) => {
+export const FeaturedApps04: React.FC<Props> = async (props) => {
   const { reference } = props
 
   const payload = await getPayload({ config })

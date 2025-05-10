@@ -8,6 +8,8 @@ import {
 
 export const Banner: Block = {
   slug: 'banner',
+  interfaceName: 'BannerBlock',
+  dbName: 'bannerBlock',
   fields: [
     {
       name: 'style',
@@ -35,5 +37,4 @@ export const Banner: Block = {
       required: true,
     },
   ],
-  interfaceName: 'BannerBlock',
 }

@@ -85,8 +85,9 @@ const fields: Field[] = [
   },
 ]
 
-export const AppsBlock: Block = {
-  slug: 'appsBlock',
-  interfaceName: 'AppsBlock',
+export const FeaturedAppsBlock: Block = {
+  slug: 'featuredAppsBlock',
+  interfaceName: 'FeaturedAppsBlock',
   fields: [blockHeader, ...fields],
+  dbName: 'featuredAppsBlock',
 }

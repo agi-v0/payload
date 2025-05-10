@@ -11,8 +11,9 @@ import { linkGroup } from '../../fields/linkGroup'
 import { blockHeader } from '../../components/BlockHeader/config'
 
 export const CallToAction: Block = {
-  slug: 'cta',
+  slug: 'callToAction',
   interfaceName: 'CallToActionBlock',
+  dbName: 'callToActionBlock',
   fields: [
     blockHeader,
     {

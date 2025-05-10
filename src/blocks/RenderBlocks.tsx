@@ -9,9 +9,9 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { RenderFeaturesBlock } from '@/blocks/Features/RenderFeaturesBlock'
 import { BlockHeader } from '@/components/BlockHeader'
 import { BlockHeaderType } from '@/types/blockHeader'
-import { RenderAppsBlock } from './AppsBlock/RenderAppsBlock'
-import { RenderTestimonialsBlock } from './TestimonialsBlock/RenderTestimonialsBlock'
-import { FaqBlock } from './FaqBlock/Component'
+import { RenderAppsBlock } from './FeaturedApps/RenderAppsBlock'
+import { RenderTestimonialsBlock } from './Testimonials/RenderTestimonialsBlock'
+import { FaqBlock } from './FAQ/Component'
 import { RenderGalleryBlock } from './Gallery/RenderGalleryBlock'
 
 const blockComponents = {

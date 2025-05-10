@@ -7,7 +7,7 @@ import { AppsListClientWrapper } from './AppsListClientWrapper'
 
 interface Props extends AppsBlockProps {}
 
-export const AppsBlock03: React.FC<Props> = async (props) => {
+export const FeaturedApps03: React.FC<Props> = async (props) => {
   const { reference, media } = props
 
   const payload = await getPayload({ config })

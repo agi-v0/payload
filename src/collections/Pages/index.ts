@@ -3,14 +3,14 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { Archive } from '@/blocks/ArchiveBlock/config'
-import { AppsBlock } from '@/blocks/AppsBlock/config'
+import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { Content } from '@/blocks/Content/config'
-import { Features } from '@/blocks/Features/config'
+import { FeaturesBlock } from '@/blocks/Features/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { StyledList } from '@/blocks/StyledList/config'
-import { TestimonialsBlock } from '@/blocks/TestimonialsBlock/config'
+import { TestimonialsBlock } from '@/blocks/Testimonials/config'
 import { GalleryBlock } from '@/blocks/Gallery/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -25,7 +25,7 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { FaqBlock } from '@/blocks/FaqBlock/config'
+import { FaqBlock } from '@/blocks/FAQ/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -85,17 +85,17 @@ export const Pages: CollectionConfig<'pages'> = {
               name: 'layout',
               type: 'blocks',
               blocks: [
-                AppsBlock,
-                CallToAction,
-                Content,
-                MediaBlock,
                 Archive,
-                FormBlock,
-                StyledList,
-                TestimonialsBlock,
-                Features,
+                CallToAction,
+                // Content,
+                // MediaBlock,
                 FaqBlock,
+                FeaturesBlock,
+                FeaturedAppsBlock,
                 GalleryBlock,
+                FormBlock,
+                // StyledList,
+                TestimonialsBlock,
               ],
               required: true,
               localized: true,
