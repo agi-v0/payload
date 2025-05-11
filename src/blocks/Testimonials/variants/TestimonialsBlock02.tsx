@@ -26,8 +26,8 @@ interface TestimonialCardProps {
 }
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabel }) => {
-  const { authorInfo, quote, featuredImage, companyLogo, caseStudy } = testimonial // Updated to featuredImage, stats & rating commented out
-  const { stats, slug } = caseStudy?.linkedCaseStudy as CaseStudy
+  const { authorInfo, quote, featuredImage, companyLogo, caseStudy } = testimonial
+  const { stats, slug } = caseStudy?.linkCaseStudy ? (caseStudy.linkedCaseStudy as CaseStudy) : {}
 
   return (
     <div className="bg-background-neutral rounded-space-sm grid w-full max-w-[90rem] grid-cols-1 lg:grid-cols-2 lg:items-stretch">

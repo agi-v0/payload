@@ -25,8 +25,8 @@ export const TestimonialsBlock01: React.FC<Props> = ({ testimonials, linkLabel }
     return null
   }
 
-  const { authorInfo, quote, featuredImage, companyLogo, caseStudy } = testimonial // Updated to featuredImage, stats & rating commented out
-  const { stats, slug } = caseStudy?.linkedCaseStudy as CaseStudy
+  const { authorInfo, quote, featuredImage, companyLogo, caseStudy } = testimonial
+  const { stats, slug } = caseStudy?.linkCaseStudy ? (caseStudy.linkedCaseStudy as CaseStudy) : {}
 
   return (
     <section className="bg-background-neutral-subtle py-lg">
