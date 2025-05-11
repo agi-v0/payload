@@ -54,9 +54,8 @@ const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
             // Use text size, color variables, and explicit gap
             className="text-body-lg mt-space-xs text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
             label="المزيد"
-          >
-            <ArrowLeftIcon className="size-5" />
-          </CMSLink>
+            variant="link"
+          />
         )}
       </div>
     </div>
@@ -70,7 +69,13 @@ export const AppsCarouselClient: React.FC<AppsCarouselClientProps> = ({ apps }) 
   }
   return (
     <div className="relative container w-full">
-      <Carousel>
+      <Carousel
+        slidesPerView={{
+          sm: 1, //   ≥640px: 1 slide
+          md: 2, //   ≥768px: 2 slides
+          lg: 3, //  ≥1024px: 3 slides
+        }}
+      >
         <CarouselContent className="-ml-4 items-stretch">
           {apps.map((app, index) => (
             <CarouselItem
@@ -81,14 +86,10 @@ export const AppsCarouselClient: React.FC<AppsCarouselClientProps> = ({ apps }) 
             </CarouselItem>
           ))}
         </CarouselContent>
-        {apps.length > 3 && (
+        {apps.length > 1 && (
           <>
-            <CarouselNavigation
-              className="absolute top-auto -bottom-20 left-auto w-full justify-between gap-2"
-              classNameButton=""
-              alwaysShow
-            />
-            <CarouselIndicator className="-bottom-20 h-12" />
+            <CarouselNavigation className="mt-xs relative justify-between" />
+            <CarouselIndicator className="absolute bottom-0 h-10" />
           </>
         )}
       </Carousel>

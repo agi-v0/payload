@@ -17,9 +17,8 @@ const appsBlocks = {
   featuredAppsBlockHero: AppsBlockHero,
 }
 
-export const RenderAppsBlock: React.FC<AppsBlockProps> = (props) => {
+export const RenderFeaturedAppsBlock: React.FC<AppsBlockProps> = (props) => {
   const { type } = props || {}
-
   if (!type) return null
 
   const AppsBlockToRender = appsBlocks[type as keyof typeof appsBlocks]

@@ -9,14 +9,13 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { RenderFeaturesBlock } from '@/blocks/Features/RenderFeaturesBlock'
 import { BlockHeader } from '@/components/BlockHeader'
 import { BlockHeaderType } from '@/types/blockHeader'
-import { RenderAppsBlock } from './FeaturedApps/RenderAppsBlock'
+import { RenderFeaturedAppsBlock } from './FeaturedApps/RenderFeaturedAppsBlock'
 import { RenderTestimonialsBlock } from './Testimonials/RenderTestimonialsBlock'
 import { FaqBlock } from './FAQ/Component'
 import { RenderGalleryBlock } from './Gallery/RenderGalleryBlock'
 
 const blockComponents = {
   archive: ArchiveBlock,
-  apps: RenderAppsBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
   faqBlock: FaqBlock,
@@ -25,6 +24,7 @@ const blockComponents = {
   testimonials: RenderTestimonialsBlock,
   features: RenderFeaturesBlock,
   gallery: RenderGalleryBlock,
+  featuredApps: RenderFeaturedAppsBlock,
 }
 
 type BlockWithHeader = {
@@ -54,8 +54,8 @@ export const RenderBlocks: React.FC<{
         return (
           <div id={block.blockName || undefined} className="py-xl" key={index}>
             {blockHeader &&
-              block?.blockType === 'features' &&
-              ['06', '07', '17'].includes(block.layout) === false && (
+              !(block?.blockType === 'features' && ['06', '07', '17'].includes(block.layout)) &&
+              !(block.blockType === 'featuredApps' && block.type === 'appsBlockHero') && (
                 <BlockHeader {...blockHeader} className="" />
               )}
             <Block {...(block as any)} locale={locale} />

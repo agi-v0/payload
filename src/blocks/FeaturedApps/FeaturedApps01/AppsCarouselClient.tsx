@@ -54,9 +54,7 @@ const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
             {...link}
             className="text-body-md text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
             label="المزيد"
-          >
-            <ArrowLeftIcon className="size-4" />
-          </CMSLink>
+          />
         )}
       </div>
 

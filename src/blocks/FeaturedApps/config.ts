@@ -18,53 +18,13 @@ const fields: Field[] = [
     type: 'select',
     options: [
       { value: 'appsBlockHero', label: 'Apps Block Hero' },
-      { value: 'FeaturedApps01', label: 'Apps Block 01' },
-      { value: 'FeaturedApps02', label: 'Apps Block 02' },
-      { value: 'FeaturedApps03', label: 'Apps Block 03' },
-      { value: 'FeaturedApps04', label: 'Apps Block 04' },
+      { value: 'featuredApps01', label: 'Apps Block 01' },
+      { value: 'featuredApps02', label: 'Apps Block 02' },
+      { value: 'featuredApps03', label: 'Apps Block 03' },
+      { value: 'featuredApps04', label: 'Apps Block 04' },
     ],
     required: true,
-    defaultValue: 'FeaturedApps01',
-  },
-  {
-    name: 'body',
-    type: 'group',
-    fields: [
-      badge({}),
-      // {
-      //   name: 'richTextStandard',
-      //   type: 'richText',
-      //   editor: standardEditor,
-      //   label: 'Content',
-      //   localized: true,
-      //   admin: {
-      //     condition: (_, siblingData) => {
-      //       return siblingData?.type !== 'blockheader04'
-      //     },
-      //   },
-      // },
-      {
-        name: 'headerText',
-        type: 'richText',
-        editor: lexicalEditor({
-          features: ({ rootFeatures }) => {
-            return [
-              ...rootFeatures,
-              HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-              FixedToolbarFeature(),
-              InlineToolbarFeature(),
-            ]
-          },
-        }),
-        label: false,
-        localized: true,
-      },
-      linkGroup({
-        overrides: {
-          maxRows: 2,
-        },
-      }),
-    ],
+    defaultValue: 'featuredApps01',
   },
   {
     name: 'media',
@@ -89,7 +49,7 @@ export const FeaturedAppsBlock: Block = {
   slug: 'featuredApps',
   interfaceName: 'FeaturedAppsBlock',
   labels: {
-    singular: 'Featured App',
+    singular: 'Featured Apps',
     plural: 'Featured Apps',
   },
   fields: [blockHeader, ...fields],
