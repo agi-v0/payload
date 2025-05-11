@@ -75,8 +75,7 @@ export const FeaturesBlock: Block = {
       relationTo: 'media',
       label: 'Image',
       admin: {
-        condition: (_, siblingData, { blockData }) =>
-          ['04', '06', '07'].includes(blockData?.layout),
+        condition: (_, siblingData, { blockData }) => ['04', '06', '07'].includes(blockData?.type),
       },
     },
     {
@@ -98,7 +97,7 @@ export const FeaturesBlock: Block = {
       ],
       admin: {
         condition: (_, siblingData, { blockData }) =>
-          ['14', '15', '16', '17'].includes(blockData?.layout),
+          ['14', '15', '16', '17'].includes(blockData?.type),
       },
     },
     {
@@ -113,7 +112,7 @@ export const FeaturesBlock: Block = {
           options: sizeOptions,
           admin: {
             condition: (_, siblingData, { blockData }) => {
-              return ['01', '02', '03', '05'].includes(blockData?.layout)
+              return ['01', '02', '03', '05'].includes(blockData?.type)
             },
           },
         },
@@ -124,7 +123,7 @@ export const FeaturesBlock: Block = {
           label: 'App Reference',
           admin: {
             condition: (_, siblingData, { blockData }) => {
-              return ['01'].includes(blockData?.layout)
+              return ['01'].includes(blockData?.type)
             },
           },
         },
@@ -149,7 +148,7 @@ export const FeaturesBlock: Block = {
                 '15',
                 '16',
                 '17',
-              ].includes(blockData?.layout),
+              ].includes(blockData?.type),
           },
         },
 
@@ -158,7 +157,7 @@ export const FeaturesBlock: Block = {
           type: 'text',
           label: 'Tab Label',
           admin: {
-            condition: (_, siblingData, { blockData }) => ['08'].includes(blockData?.layout),
+            condition: (_, siblingData, { blockData }) => ['08'].includes(blockData?.type),
           },
         },
 
@@ -168,7 +167,7 @@ export const FeaturesBlock: Block = {
           icons: lucideIcons,
           admin: {
             condition: (_, siblingData, { blockData }) =>
-              ['06', '07', '09', '11', '12', '13'].includes(blockData?.layout),
+              ['06', '07', '09', '11', '12', '13'].includes(blockData?.type),
           },
         }),
 
@@ -186,7 +185,7 @@ export const FeaturesBlock: Block = {
           ],
           admin: {
             condition: (_, siblingData, { blockData }) =>
-              !['01', '03', '04', '05'].includes(blockData?.layout),
+              !['01', '03', '04', '05'].includes(blockData?.type),
           },
         },
         {
@@ -196,7 +195,7 @@ export const FeaturesBlock: Block = {
           editor: richTextEditor,
           admin: {
             condition: (_, siblingData, { blockData }) =>
-              ['01', '03', '04', '05', '11'].includes(blockData?.layout),
+              ['01', '03', '04', '05', '11'].includes(blockData?.type),
           },
         },
         {
@@ -208,7 +207,7 @@ export const FeaturesBlock: Block = {
               type: 'checkbox',
               admin: {
                 condition: (_, siblingData, { blockData }) =>
-                  ['02', '03', '04', '05', '08'].includes(blockData?.layout),
+                  ['02', '03', '04', '05', '08'].includes(blockData?.type),
                 width: '50%',
               },
             },
@@ -218,7 +217,7 @@ export const FeaturesBlock: Block = {
               type: 'checkbox',
               admin: {
                 condition: (_, siblingData, { blockData }) =>
-                  ['02', '03', '04', '05', '08'].includes(blockData?.layout),
+                  ['02', '03', '04', '05', '08'].includes(blockData?.type),
                 width: '50%',
               },
             },
@@ -227,7 +226,7 @@ export const FeaturesBlock: Block = {
               label: 'Reverse Order',
               type: 'checkbox',
               admin: {
-                condition: (_, siblingData, { blockData }) => ['04'].includes(blockData?.layout),
+                condition: (_, siblingData, { blockData }) => ['04'].includes(blockData?.type),
               },
             },
           ],
