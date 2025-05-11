@@ -1,19 +1,5 @@
 import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
-import type {
-  Header,
-  MediaCategory,
-  Category,
-  User,
-  Media,
-  Post,
-  Form,
-  Page,
-  Integration,
-  Solution,
-  CaseStudy,
-  Testimonial,
-  Footer,
-} from '@/payload-types'
+import type { Header, Form, Footer } from '@/payload-types'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
@@ -98,10 +84,10 @@ export const seed = async ({
         disableRevalidate: true,
       },
     }),
-  ]),
-    await Promise.all(
-      collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
-    )
+  ])
+  await Promise.all(
+    collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
+  )
 
   await Promise.all(
     collections
