@@ -2,7 +2,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-import type { Integration, AppsBlock as AppsBlockProps } from '@/payload-types'
+import type { Integration, FeaturedAppsBlock as AppsBlockProps } from '@/payload-types'
 import { AppsCarouselClient } from './AppsCarouselClient'
 
 interface Props extends AppsBlockProps {}

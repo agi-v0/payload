@@ -108,6 +108,13 @@ export const app: (args: AppArgs) => RequiredDataFromCollectionSlug<'integration
         direction: null,
       },
     },
+    companyName: 'Jahez Company',
+    docsLink: {
+      type: 'custom',
+      url: '/jahez-docs',
+      label: 'Documentation',
+    },
+    email: 'contact@jahez.com',
     slug: 'app-slug',
   }
 }

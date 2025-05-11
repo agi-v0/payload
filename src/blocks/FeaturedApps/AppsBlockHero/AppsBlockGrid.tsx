@@ -1,6 +1,10 @@
 'use client'
 
-import type { Integration, Media as MediaType, AppsBlock as AppsBlockType } from '@/payload-types' // Import necessary types
+import type {
+  Integration,
+  Media as MediaType,
+  FeaturedAppsBlock as AppsBlockType,
+} from '@/payload-types' // Import necessary types
 import { Media } from '@/components/Media'
 import { easeIn, motion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
@@ -8,10 +12,11 @@ import { Badge } from '@/components/ui/badge'
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
 import { cn } from '@/utilities/ui'
+import { BlockHeaderType } from '@/types/blockHeader'
 
 interface AppsCarouselClientProps {
   apps: Integration[]
-  body: AppsBlockType['body']
+  blockHeader: BlockHeaderType
 }
 
 interface GridCell {
@@ -106,8 +111,8 @@ const AnimatedAppIcon: React.FC<{
 }
 
 // Content section with responsive styles
-const ContentSection: React.FC<{ body: AppsBlockType['body'] }> = ({ body }) => {
-  const { badge, headerText, links } = body || {}
+const ContentSection: React.FC<{ blockHeader: BlockHeaderType }> = ({ blockHeader }) => {
+  const { badge, headerText, links } = blockHeader || {}
 
   return (
     <div className="flex h-full flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8">
@@ -133,7 +138,7 @@ const ContentSection: React.FC<{ body: AppsBlockType['body'] }> = ({ body }) => 
 }
 
 // Main Client Component for the Carousel
-export const AppsBlockGrid: React.FC<AppsCarouselClientProps> = ({ apps, body }) => {
+export const AppsBlockGrid: React.FC<AppsCarouselClientProps> = ({ apps, blockHeader }) => {
   const [gridCells, setGridCells] = useState<GridCell[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
@@ -277,7 +282,7 @@ export const AppsBlockGrid: React.FC<AppsCarouselClientProps> = ({ apps, body })
               height: '100%',
             }}
           >
-            <ContentSection body={body} />
+            <ContentSection blockHeader={blockHeader} />
           </div>
         </div>
       </motion.div>

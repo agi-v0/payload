@@ -2,7 +2,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-import type { AppsBlock as AppsBlockProps } from '@/payload-types'
+import type { FeaturedAppsBlock as AppsBlockProps } from '@/payload-types'
 import { AppsListClientWrapper } from './AppsListClientWrapper'
 
 interface Props extends AppsBlockProps {}
