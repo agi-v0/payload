@@ -399,7 +399,7 @@ export interface User {
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
-  type: '01' | '02' | '03' | '04';
+  type: '01' | '02' | '03' | '04' | '05' | '06' | '07';
   badge?: {
     type?: ('label' | 'reference') | null;
     label?: string | null;
@@ -1035,7 +1035,7 @@ export interface FeaturesBlock {
         }[]
       | null;
   };
-  layout:
+  type:
     | '01'
     | '02'
     | '03'

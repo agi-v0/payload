@@ -102,7 +102,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
     layout: [
       {
         blockType: 'features',
-        layout: '02',
+        type: '02',
         blockImage: image169.id,
         blockName: null,
 

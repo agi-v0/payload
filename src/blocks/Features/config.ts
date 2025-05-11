@@ -45,7 +45,7 @@ export const FeaturesBlock: Block = {
   fields: [
     blockHeader,
     {
-      name: 'layout',
+      name: 'type',
       type: 'select',
       defaultValue: '01',
       options: [

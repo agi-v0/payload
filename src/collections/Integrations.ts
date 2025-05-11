@@ -11,7 +11,6 @@ import { Code } from '../blocks/Code/config'
 import { FormBlock } from '../blocks/Form/config'
 import { Archive } from '../blocks/ArchiveBlock/config'
 import { CallToAction } from '../blocks/CallToAction/config'
-import { Content } from '../blocks/Content/config'
 
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../hooks/populatePublishedAt'

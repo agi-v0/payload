@@ -52,7 +52,7 @@ export const RenderBlocks: React.FC<{
         return (
           <div id={block.blockName || undefined} className="py-xl" key={index}>
             {blockHeader &&
-              !(block?.blockType === 'features' && ['06', '07', '17'].includes(block.layout)) &&
+              !(block?.blockType === 'features' && ['06', '07', '17'].includes(block.type)) &&
               !(block.blockType === 'featuredApps' && block.type === 'appsBlockHero') && (
                 <BlockHeader {...blockHeader} className="" />
               )}

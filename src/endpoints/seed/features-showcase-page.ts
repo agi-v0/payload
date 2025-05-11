@@ -125,7 +125,7 @@ export const seedFeaturesShowcasePage = async (
 ): Promise<Page | null> => {
   payload.logger.info('— Seeding Features Showcase Page (Arabic)')
 
-  const layouts: FeaturesBlock['layout'][] = [
+  const types: FeaturesBlock['type'][] = [
     '01',
     '02',
     '03',
@@ -169,14 +169,14 @@ export const seedFeaturesShowcasePage = async (
     'أدر أعمالك من أي مكان وفي أي وقت عبر نظامنا السحابي.',
   ]
 
-  const arabicFeatureLongSubtitlesForLayout04 = [
+  const arabicFeatureLongSubtitlesFortype04 = [
     'تابع مخزونك بدقة وتجنب النقص أو الفائض. يوفر نظامنا تحديثات آنية لمستويات المخزون عبر جميع الفروع، مع تنبيهات ذكية للمنتجات منخفضة المخزون وإمكانية إجراء جرد شامل بسهولة فائقة، مما يمكنك من اتخاذ قرارات شراء مستنيرة وتحسين دورة رأس المال بشكل فعال.',
     'احصل على رؤى قيمة حول أداء مبيعاتك لاتخاذ قرارات أفضل. يقدم النظام لوحات معلومات تفاعلية وتقارير قابلة للتخصيص بالكامل، تغطي كل جانب من جوانب عمليات البيع، بما في ذلك أداء المنتجات، سلوك العملاء، وكفاءة الموظفين، مما يساعدك على تحديد الاتجاهات واستغلال الفرص الجديدة.',
     'تمتع بتجربة استخدام سلسة لا تتطلب تدريبًا معقدًا. تم تصميم واجهة المستخدم بعناية لتكون بديهية وسريعة الاستجابة، مما يقلل من وقت تدريب الموظفين الجدد ويزيد من كفاءتهم التشغيلية. يدعم النظام تخصيص الواجهة لتناسب احتياجات عملك الفريدة.',
     'فريق دعمنا الفني المتخصص جاهز لمساعدتك في أي وقت، على مدار الساعة. سواء كنت بحاجة إلى مساعدة في الإعداد الأولي، أو لديك استفسارات تشغيلية، أو واجهت تحديًا تقنيًا، يمكنك الاعتماد على خبرائنا لتقديم حلول سريعة وفعالة لضمان استمرارية أعمالك دون انقطاع.',
   ]
 
-  const sizesForLayout02: Array<NonNullable<FeaturesBlock['columns']>[0]['size']> = [
+  const sizesFortype02: Array<NonNullable<FeaturesBlock['columns']>[0]['size']> = [
     'full',
     'half',
     'half',
@@ -187,14 +187,14 @@ export const seedFeaturesShowcasePage = async (
     'oneThird',
   ]
 
-  for (const layout of layouts) {
-    const headerTitleText = `ميزات النظام (${layout}) - ${arabicFeatureTitles[featuresBlocks.length % arabicFeatureTitles.length]}`
+  for (const type of types) {
+    const headerTitleText = `ميزات النظام (${type}) - ${arabicFeatureTitles[featuresBlocks.length % arabicFeatureTitles.length]}`
     const headerDescriptionText =
       arabicFeatureSubtitles[featuresBlocks.length % arabicFeatureSubtitles.length]
 
     const blockHeaderData: FeaturesBlock['blockHeader'] = {
       type: 'center',
-      badge: { type: 'label', label: `Features ${layout}` } as any,
+      badge: { type: 'label', label: `Features ${type}` } as any,
       headerText: generateLexicalContent([
         { type: 'h2', text: headerTitleText, direction: 'rtl' },
         { type: 'p', text: headerDescriptionText, direction: 'rtl' },
@@ -204,38 +204,38 @@ export const seedFeaturesShowcasePage = async (
 
     const block: Partial<FeaturesBlock> = {
       blockType: 'features',
-      layout: layout,
+      type: type,
       blockHeader: blockHeaderData,
-      blockImage: ['04', '06', '07'].includes(layout) ? media.image169.id : undefined,
+      blockImage: ['04', '06', '07'].includes(type) ? media.image169.id : undefined,
       columns: [],
     }
 
-    if (['14', '15', '16', '17'].includes(layout)) {
-      block.CTALabel = `اكتشف المزيد عن الميزة ${layout}`
+    if (['14', '15', '16', '17'].includes(type)) {
+      block.CTALabel = `اكتشف المزيد عن الميزة ${type}`
       block.link = {
         type: 'custom',
-        url: `/learn-more/${layout}`,
-        label: `تفاصيل الميزة ${layout}`,
+        url: `/learn-more/${type}`,
+        label: `تفاصيل الميزة ${type}`,
         newTab: false,
       } as any
     }
 
     let numCols = 1
-    if (layout === '02') {
-      numCols = sizesForLayout02.length
-    } else if (['01', '08', '09', '10', '11', '12', '13'].includes(layout)) {
+    if (type === '02') {
+      numCols = sizesFortype02.length
+    } else if (['01', '08', '09', '10', '11', '12', '13'].includes(type)) {
       numCols = 3
-    } else if (layout === '03') {
+    } else if (type === '03') {
       numCols = 3
-    } else if (layout === '04') {
+    } else if (type === '04') {
       numCols = 4
-    } else if (layout === '05') {
+    } else if (type === '05') {
       numCols = 2
-    } else if (['06', '07'].includes(layout)) {
+    } else if (['06', '07'].includes(type)) {
       numCols = 4
-    } else if (['14', '15'].includes(layout)) {
+    } else if (['14', '15'].includes(type)) {
       numCols = 3
-    } else if (['16', '17'].includes(layout)) {
+    } else if (['16', '17'].includes(type)) {
       numCols = 4
     }
 
@@ -245,31 +245,31 @@ export const seedFeaturesShowcasePage = async (
       const colTitle =
         arabicFeatureTitles[(featuresBlocks.length * numCols + i) % arabicFeatureTitles.length]
       const colSubtitle =
-        layout === '04'
-          ? arabicFeatureLongSubtitlesForLayout04[i % arabicFeatureLongSubtitlesForLayout04.length]
+        type === '04'
+          ? arabicFeatureLongSubtitlesFortype04[i % arabicFeatureLongSubtitlesFortype04.length]
           : arabicFeatureSubtitles[
               (featuresBlocks.length * numCols + i) % arabicFeatureSubtitles.length
             ]
 
       let columnSize: NonNullable<FeaturesBlock['columns']>[0]['size'] = undefined
-      if (layout === '02') {
-        columnSize = sizesForLayout02[i]
-      } else if (layout === '03') {
+      if (type === '02') {
+        columnSize = sizesFortype02[i]
+      } else if (type === '03') {
         if (i === 0) {
           columnSize = 'full'
         } else {
           columnSize = 'half'
         }
-      } else if (layout === '04') {
+      } else if (type === '04') {
         columnSize = 'half'
-      } else if (['01', '05'].includes(layout)) {
+      } else if (['01', '05'].includes(type)) {
         columnSize = 'half'
       }
 
       const column: Partial<NonNullable<FeaturesBlock['columns']>[0]> = {
-        id: `col-${layout}-${i}`,
+        id: `col-${type}-${i}`,
         size: columnSize,
-        appReference: layout === '01' ? undefined : undefined,
+        appReference: type === '01' ? undefined : undefined,
         image: [
           '01',
           '02',
@@ -284,38 +284,38 @@ export const seedFeaturesShowcasePage = async (
           '15',
           '16',
           '17',
-        ].includes(layout)
+        ].includes(type)
           ? media.image43.id
           : undefined,
-        tabLabel: layout === '08' ? `تبويب ${i + 1}` : undefined,
-        icon: ['06', '07', '09', '11', '12', '13'].includes(layout) ? getNextIcon() : undefined,
-        content: !['01', '03', '04', '05'].includes(layout)
+        tabLabel: type === '08' ? `تبويب ${i + 1}` : undefined,
+        icon: ['06', '07', '09', '11', '12', '13'].includes(type) ? getNextIcon() : undefined,
+        content: !['01', '03', '04', '05'].includes(type)
           ? {
               title: colTitle,
               subtitle: colSubtitle,
             }
           : undefined,
-        richTextContent: ['01', '03', '04', '05', '11'].includes(layout)
+        richTextContent: ['01', '03', '04', '05', '11'].includes(type)
           ? generateLexicalContent([
               { type: 'h3', text: colTitle, direction: 'rtl' },
               { type: 'p', text: colSubtitle, direction: 'rtl' },
             ])
           : undefined,
-        enableBadge: ['02', '03', '04', '05', '08'].includes(layout) ? true : undefined,
-        enableCta: ['02', '03', '04', '05', '08'].includes(layout) ? true : undefined,
-        reverseOrder: layout === '04' && i % 2 !== 0 ? true : undefined,
+        enableBadge: ['02', '03', '04', '05', '08'].includes(type) ? true : undefined,
+        enableCta: ['02', '03', '04', '05', '08'].includes(type) ? true : undefined,
+        reverseOrder: type === '04' && i % 2 !== 0 ? true : undefined,
       }
 
       if (column.enableBadge) {
         column.badge = {
-          label: layout === '02' ? `ميزات${layout}` : `ميزة ${i + 1}`,
+          label: type === '02' ? `ميزات${type}` : `ميزة ${i + 1}`,
           type: 'label',
         } as any
       }
       if (column.enableCta) {
         column.link = {
           type: 'custom',
-          url: `/column-cta/${layout}-${i}`,
+          url: `/column-cta/${type}-${i}`,
           label: `إجراء ${i + 1}`,
           newTab: false,
         } as any

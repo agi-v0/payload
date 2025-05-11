@@ -47,15 +47,9 @@ const featureVariants: Record<string, React.FC<FeaturesBlockWithLocale>> = {
 
 export const RenderFeaturesBlock: React.FC<FeaturesBlockWithLocale> = (props) => {
   const t = useTranslations('General')
-  const { layout = '01' } = props
+  const { type = '01' } = props
 
-  const FeaturesBlockComponent = featureVariants[layout]
-
-  if (!FeaturesBlockComponent) {
-    console.warn(`Variant "${layout}" not found for FeaturesBlock. Rendering default (01).`)
-    const DefaultVariant = featureVariants['01']
-    return <DefaultVariant {...props} />
-  }
+  const FeaturesBlockComponent = featureVariants[type]
 
   return <FeaturesBlockComponent {...props} readMoreLabel={t('readMore')} />
 }

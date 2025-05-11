@@ -2,16 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
-import { Archive } from '@/blocks/ArchiveBlock/config'
-import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
-import { CallToAction } from '@/blocks/CallToAction/config'
-import { Content } from '@/blocks/Content/config'
-import { FeaturesBlock } from '@/blocks/Features/config'
-import { FormBlock } from '@/blocks/Form/config'
-import { MediaBlock } from '@/blocks/MediaBlock/config'
-import { StyledList } from '@/blocks/StyledList/config'
-import { TestimonialsBlock } from '@/blocks/Testimonials/config'
-import { GalleryBlock } from '@/blocks/Gallery/config'
+
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
@@ -25,7 +16,6 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { FaqBlock } from '@/blocks/FAQ/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
