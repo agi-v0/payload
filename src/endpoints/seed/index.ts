@@ -11,6 +11,8 @@ import type {
   Integration,
   Solution,
   CaseStudy,
+  Testimonial,
+  Footer,
 } from '@/payload-types'
 
 import { contactForm as contactFormData } from './contact-form'
@@ -27,9 +29,12 @@ import { seedTestimonials } from './testimonials'
 import { image169 } from './image-16-9'
 import { image43 } from './image-4-3'
 import { imageSquare } from './image-square'
-import { app } from './app'
+import { seedIntegrations } from './integrations'
 import { seedSolutions } from './solutions'
 import { seedFeaturesShowcasePage } from './features-showcase-page'
+import { image3 } from './image-3'
+import { seedChangelog } from './changelog'
+import { seedCaseStudies } from './case-studies'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -41,6 +46,8 @@ const collections: CollectionSlug[] = [
   'forms',
   'form-submissions',
   'search',
+  'changelog',
+  'faq',
   'testimonials',
   'solutions',
   'case-studies',
@@ -57,6 +64,7 @@ console.log('NEXT_PUBLIC_SERVER_URL', NEXT_PUBLIC_SERVER_URL)
 // i.e. running `yarn seed` locally instead of using the admin UI within an active app
 // The app is not running to revalidate the pages and so the API routes are not available
 // These error messages can be ignored: `Error hitting revalidate route for...`
+
 export const seed = async ({
   payload,
   req,
@@ -65,29 +73,44 @@ export const seed = async ({
   req: PayloadRequest
 }): Promise<void> => {
   payload.logger.info('Seeding database...')
-
-  // 1. Clear globals & collections (can stay parallel)
   payload.logger.info(`— Clearing collections and globals...`)
-  await Promise.all(
-    globals.map((slug) =>
-      payload.updateGlobal({ slug, data: {}, depth: 0, context: { disableRevalidate: true } }),
-    ),
-  )
-  for (const collection of collections) {
-    payload.logger.info(`Clearing data from collection: ${collection}`)
-    await payload.db.deleteMany({ collection, req, where: {} })
-  }
 
-  const versionedCollections = collections.filter((collection) =>
-    Boolean(payload.collections[collection].config.versions),
+  // clear the database
+  await Promise.all([
+    payload.updateGlobal({
+      slug: 'header',
+      data: {
+        tabs: [],
+        cta: [],
+      },
+      depth: 0,
+      context: {
+        disableRevalidate: true,
+      },
+    }),
+    payload.updateGlobal({
+      slug: 'footer',
+      data: {
+        columns: [],
+      },
+      depth: 0,
+      context: {
+        disableRevalidate: true,
+      },
+    }),
+  ]),
+    await Promise.all(
+      collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
+    )
+
+  await Promise.all(
+    collections
+      .filter((collection) => Boolean(payload.collections[collection].config.versions))
+      .map((collection) => payload.db.deleteVersions({ collection, req, where: {} })),
   )
-  for (const collection of versionedCollections) {
-    payload.logger.info(`Clearing versions from collection: ${collection}`)
-    await payload.db.deleteVersions({ collection, req, where: {} })
-  }
 
   payload.logger.info(`— Seeding demo author and user...`)
-  // Clear existing demo user first
+
   await payload.delete({
     collection: 'users',
     depth: 0,
@@ -97,18 +120,8 @@ export const seed = async ({
       },
     },
   })
-  const demoAuthor = (await payload.create({
-    collection: 'users',
-    data: {
-      name: 'Demo Author',
-      email: 'demo-author@example.com',
-      password: 'password',
-    },
-    req,
-    depth: 0,
-  })) as User
 
-  payload.logger.info('— Seeding categories sequentially...')
+  payload.logger.info('— Seeding categories...')
 
   // 2. Build an array of category create operations
   const categoryCreates = [
@@ -166,367 +179,201 @@ export const seed = async ({
     },
   ]
 
-  // 3. Run category creations one at a time and store results
-  const createdCategories: (MediaCategory | Category)[] = []
-  for (const op of categoryCreates) {
-    payload.logger.info(
-      `Creating ${op.collection} – ${op.data.title || op.data.slug || 'Untitled'}`,
-    )
-    if (op.collection === 'media-categories') {
-      const createdDoc = await payload.create({
-        collection: op.collection,
+  // 3. Create categories in parallel (no interdependencies)
+  const categoryPromises = categoryCreates.map(async (op) => {
+    try {
+      return await payload.create({
+        collection: op.collection as CollectionSlug,
         data: op.data,
         req,
         depth: 0,
       })
-      createdCategories.push(createdDoc)
-    } else if (op.collection === 'categories') {
-      const createdDoc = await payload.create({
-        collection: op.collection,
-        data: op.data,
-        req,
-        depth: 0,
-      })
-      createdCategories.push(createdDoc)
+    } catch (error) {
+      payload.logger.error(
+        `Failed to create ${op.collection} ${op.data.title || op.data.slug || 'Untitled'}: ${error instanceof Error ? error.message : String(error)}`,
+      )
+      return null
     }
-  }
-  // Find the 'App Icons' media category ID for later use
-  const appIconsCategoryId = createdCategories.find(
-    (cat) => 'slug' in cat && cat.slug === 'app-icon', // Use type guard
-  )?.id
-
-  payload.logger.info('— Seeding media sequentially...')
-
-  // 4. Fetch files first (can be parallel)
-  const mediaFileSources = [
-    {
-      url: 'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
-      data: image1,
-      key: 'image1',
-    },
-    {
-      url: 'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
-      data: image2,
-      key: 'image2',
-    },
-    {
-      url: 'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
-      data: image2, // Using image2 data for post 3 as in original code
-      key: 'image3',
-    },
-    { url: `${NEXT_PUBLIC_SERVER_URL}/marn-logo.png`, data: imageLogo, key: 'logo' },
-    { url: `${NEXT_PUBLIC_SERVER_URL}/marn-placeholder.png`, data: imageHero1, key: 'hero1' },
-    {
-      url: `${NEXT_PUBLIC_SERVER_URL}/marn-placeholder-16x9.png`,
-      data: image169,
-      key: 'image169',
-    },
-    {
-      url: `${NEXT_PUBLIC_SERVER_URL}/marn-placeholder-4x3.png`,
-      data: image43,
-      key: 'image43',
-    },
-    {
-      url: `${NEXT_PUBLIC_SERVER_URL}/marn-placeholder-1x1.png`,
-      data: imageSquare,
-      key: 'imageSquare',
-    },
-  ]
-
-  const fetchedFiles = await Promise.all(
-    mediaFileSources.map((src) => fetchFileByURL(payload, src.url)), // Pass payload
-  )
-
-  // 5. Create media documents sequentially, storing results in a map
-  const mediaDocs: { [key: string]: Media } = {}
-  for (let i = 0; i < mediaFileSources.length; i++) {
-    const source = mediaFileSources[i]
-    const file = fetchedFiles[i]
-    payload.logger.info(`Creating media – ${file.name}`)
-    const createdMedia = await payload.create({
-      collection: 'media',
-      data: source.data,
-      file: file,
-      req,
-      depth: 0,
-    })
-    mediaDocs[source.key] = createdMedia
-  }
-
-  // Update imageSquareDoc with its category
-  if (mediaDocs.imageSquare && appIconsCategoryId) {
-    await payload.update({
-      id: mediaDocs.imageSquare.id,
-      collection: 'media',
-      data: {
-        category: appIconsCategoryId,
-      },
-      req,
-    })
-    // Refresh the doc in our map if needed, though likely not necessary for seed script
-    // mediaDocs.imageSquare = await payload.findByID({ collection: 'media', id: mediaDocs.imageSquare.id, req })
-  }
-
-  payload.logger.info('— Seeding solutions...')
-  const solutionsSlugToIdMap = await seedSolutions(payload, { imageSquare: mediaDocs.imageSquare })
-
-  payload.logger.info(`— Seeding apps sequentially...`)
-  const appDataArray = Array.from({ length: 10 }).map((_, i) => {
-    const appData = app({ imageSquare: mediaDocs.imageSquare })
-    // Make each app unique
-    appData.title = `App ${i + 1}`
-    appData.name = `تطبيق ${i + 1}`
-    appData.slug = `app-${i + 1}`
-    appData.tagline = `${appData.tagline} - ${i + 1}`
-    // Add new fields
-    appData.companyName = `شركة ${i + 1}`
-    appData.docsLink = {
-      type: 'custom',
-      newTab: false,
-      url: `https://docs.example.com/app-${i + 1}`,
-      label: `Documentation for App ${i + 1}`,
-    }
-    appData.email = `contact${i + 1}@example.com`
-    appData.phone = `+1234567890${i}`
-    appData.ecosystem = ['sell'] // Example value, can be randomized or set based on logic
-    appData.categories = [] // Assuming no categories for simplicity, can be populated with actual category IDs
-    return appData
   })
 
-  const createdIntegrations: Integration[] = []
-  for (const appData of appDataArray) {
-    payload.logger.info(`Creating app – ${appData.title}`)
-    const createdIntegration = (await payload.create({
-      collection: 'integrations',
-      depth: 0,
-      data: appData,
-      req,
-    })) as Integration
-    createdIntegrations.push(createdIntegration)
-  }
+  const categoryResults = await Promise.all(categoryPromises)
+  const createdCategories = categoryResults.filter(Boolean)
 
-  payload.logger.info('— Seeding case studies...')
-  const caseStudiesDataArray = Array.from({ length: 6 }).map((_, i) => ({
-    title: `دراسة حالة ${i + 1}: كيف حققنا النمو مع العميل`,
-    content: {
-      root: {
-        type: 'root',
-        children: [
-          {
-            type: 'paragraph',
-            version: 1,
-            children: [
-              {
-                type: 'text',
-                text: `مقدمة تفصيلية حول دراسة الحالة رقم ${i + 1}. في هذا التحليل، نستعرض التحديات التي واجهها العميل وكيف ساهمت حلولنا المبتكرة في تحقيق نتائج ملموسة превосходя توقعاتهم الأولية. تم تطبيق استراتيجيات مخصصة لضمان أقصى استفادة من الموارد المتاحة وتحقيق نمو مستدام على المدى الطويل.`,
-                format: '' as const,
-                style: '',
-              },
-            ],
-            direction: 'rtl' as const,
-            format: '' as const,
-            indent: 0,
-          },
-          {
-            type: 'paragraph',
-            version: 1,
-            children: [
-              {
-                type: 'text',
-                text: `القسم الثاني من المحتوى يشرح الخطوات العملية التي تم اتخاذها. وقد شمل ذلك تحليل البيانات، وتطوير المنتج، وإطلاق حملات تسويقية مستهدفة. كانت النتائج باهرة، حيث شهد العميل زيادة في المبيعات بنسبة ${(i + 1) * 7}% وتحسنًا ملحوظًا في تفاعل المستخدمين.`,
-                format: '' as const,
-                style: '',
-              },
-            ],
-            direction: 'rtl' as const,
-            format: '' as const,
-            indent: 0,
-          },
-        ],
-        direction: 'rtl' as const,
-        format: '' as const,
-        indent: 0,
-        version: 1,
+  // Find the 'App Icons' media category ID for later use
+  const appIconsCategory = createdCategories.find(
+    (cat) => cat && 'slug' in cat && cat.slug === 'app-icon', // Use type guard with null check
+  )
+
+  payload.logger.info('— Seeding media...')
+
+  const [
+    // image1Buffer,
+    // image2Buffer,
+    // image3Buffer,
+    logoBuffer,
+    hero1Buffer,
+    image169Buffer,
+    image43Buffer,
+    imageSquareBuffer,
+  ] = await Promise.all([
+    // fetchFileByURL(
+    //   'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
+    // ),
+    // fetchFileByURL(
+    //   'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
+    // ),
+    // fetchFileByURL(
+    //   'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
+    // ),
+    fetchFileByURL(`${NEXT_PUBLIC_SERVER_URL}/marn-logo.png`),
+    fetchFileByURL(`${NEXT_PUBLIC_SERVER_URL}/marn-placeholder.png`),
+    fetchFileByURL(`${NEXT_PUBLIC_SERVER_URL}/marn-placeholder-16x9.png`),
+    fetchFileByURL(`${NEXT_PUBLIC_SERVER_URL}/marn-placeholder-4x3.png`),
+    fetchFileByURL(`${NEXT_PUBLIC_SERVER_URL}/marn-placeholder-1x1.png`),
+  ])
+
+  const [
+    // image1Doc,
+    // image2Doc,
+    // image3Doc,
+    logoDoc,
+    hero1Doc,
+    image169Doc,
+    image43Doc,
+    imageSquareDoc,
+  ] = await Promise.all([
+    // payload.create({
+    //   collection: 'media',
+    //   data: image1,
+    //   file: image1Buffer,
+    // }),
+    // payload.create({
+    //   collection: 'media',
+    //   data: image2,
+    //   file: image2Buffer,
+    // }),
+    // payload.create({
+    //   collection: 'media',
+    //   data: image3,
+    //   file: image3Buffer,
+    // }),
+    payload.create({
+      collection: 'media',
+      data: imageLogo,
+      file: logoBuffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: imageHero1,
+      file: hero1Buffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: image169,
+      file: image169Buffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: image43,
+      file: image43Buffer,
+    }),
+    payload.create({
+      collection: 'media',
+      data: imageSquare,
+      file: imageSquareBuffer,
+    }),
+  ])
+
+  await payload.update({
+    id: imageSquareDoc.id,
+    collection: 'media',
+    data: {
+      category: {
+        id: appIconsCategory?.id,
       },
     },
-    industry: `صناعة التكنولوجيا والحلول الرقمية ${i + 1}`,
-    useCase: `حالة استخدام متقدمة ${i + 1}`,
-    featuredImage: mediaDocs.image169.id,
-    stats: [
-      {
-        label: `زيادة في الإيرادات الفصلية رقم ${i + 1}`,
-        value: (i + 1) * 12,
-        isPercentage: true,
-        isIncrease: true,
-      },
-      {
-        label: `تحسين كفاءة التشغيل رقم ${i + 1}`,
-        value: (i + 1) * 6,
-        isPercentage: false,
-        isIncrease: true,
-      },
-    ],
-    featuredSolutions: Object.values(solutionsSlugToIdMap)
-      .slice(i % 3, (i % 3) + (i % 2 === 0 ? 1 : 2))
-      .map((id) => Number(id)),
-    featuredIntegrations: createdIntegrations
-      .slice(i % 5, (i % 5) + (i % 2 === 0 ? 1 : 2))
-      .map((int) => Number(int.id)),
-    layout: [],
-    slug: `case-study-${i + 1}`,
-  }))
+  })
 
-  const createdCaseStudies: CaseStudy[] = []
-  for (const caseStudyData of caseStudiesDataArray) {
-    payload.logger.info(`Creating case study – ${caseStudyData.title}`)
-    const caseStudy = (await payload.create({
-      collection: 'case-studies',
-      depth: 0,
-      data: caseStudyData,
-      req,
-      locale: 'ar',
-    })) as CaseStudy
-    createdCaseStudies.push(caseStudy)
-  }
+  payload.logger.info('— Seeding solutions...')
+  const solutionsSlugToIdMap = await seedSolutions(payload, {
+    imageSquareId: imageSquareDoc?.id,
+  })
+
+  payload.logger.info(`— Seeding integrations...`)
+  const integrationsSlugToIdMap = await seedIntegrations(payload, {
+    imageSquareId: imageSquareDoc?.id,
+  })
 
   payload.logger.info(`— Seeding contact form...`)
-  const contactForm = await payload.create({
+  const contactForm = (await payload.create({
     collection: 'forms',
     depth: 0,
     data: contactFormData,
     req,
-  })
+  })) as Form
 
-  payload.logger.info(`— Seeding pages sequentially...`)
+  payload.logger.info(`— Seeding pages...`)
+  const featuresShowcasePageData = seedFeaturesShowcasePage({
+    image169: image169Doc,
+    image43: image43Doc,
+    imageSquare: imageSquareDoc,
+  })
   const pagesData = [
     {
-      locale: 'ar',
+      locale: 'ar' as const,
       data: home({
-        heroImage: mediaDocs.hero1,
-        metaImage: mediaDocs.image2,
-        image169: mediaDocs.image169,
-        image43: mediaDocs.image43,
-        imageSquare: mediaDocs.imageSquare,
+        heroImage: hero1Doc,
+        metaImage: image169Doc,
+        image169: image169Doc,
+        image43: image43Doc,
+        imageSquare: imageSquareDoc,
       }),
       key: 'home',
     },
     {
-      locale: 'ar',
-      data: contactPageData({ contactForm: contactForm }),
+      locale: 'ar' as const,
+      data: contactPageData({ contactForm }),
       key: 'contact',
     },
+    {
+      locale: 'ar' as const,
+      data: featuresShowcasePageData,
+      key: 'features',
+    },
   ]
+  await Promise.all(
+    pagesData.map(async (page) => {
+      return await payload.create({
+        collection: 'pages',
+        depth: 0,
+        data: page.data,
+        locale: page.locale,
+      })
+    }),
+  )
 
-  const createdPages: { [key: string]: Page } = {}
-  for (const pageInfo of pagesData) {
-    payload.logger.info(`Creating page – ${pageInfo.key} (${pageInfo.locale})`)
-    const page = await payload.create({
-      collection: 'pages',
-      depth: 0,
-      locale: pageInfo.locale as 'ar' | 'en',
-      data: pageInfo.data,
-      req,
-    })
-    createdPages[pageInfo.key] = page
-  }
+  // Seed Case Studies using the new function and get the map
+  const caseStudiesSlugToIdMap = await seedCaseStudies(payload, req, {
+    image169Doc,
+    solutionsSlugToIdMap, // Pass the solutions map
+    integrationsSlugToIdMap, // Pass the integrations map
+  })
 
   payload.logger.info(`— Seeding testimonials...`)
-  const testimonialsDataArray = Array.from({ length: 10 }).map((_, i) => ({
-    quote: {
-      root: {
-        type: 'root',
-        children: [
-          {
-            type: 'paragraph',
-            version: 1,
-            children: [
-              {
-                type: 'text',
-                text: `هذا هو اقتباس الشهادة للشركة ${i + 1}.`,
-                format: '' as const,
-                style: '',
-              },
-            ],
-            direction: 'rtl' as const,
-            format: '' as const,
-            indent: 0,
-          },
-        ],
-        direction: 'rtl' as const,
-        format: '' as const,
-        indent: 0,
-        version: 1,
-      },
-    },
-    company: `شركة ${i + 1}`,
-    featuredImage: mediaDocs.image1.id, // Assuming image1 is suitable
-    companyLogo: mediaDocs.logo.id, // Assuming logo is suitable
-    authorInfo: {
-      name: `المؤلف ${i + 1}`,
-      title: `اللقب ${i + 1}`,
-      avatar: mediaDocs.imageSquare.id, // Assuming imageSquare is suitable
-    },
-    caseStudy: {
-      linkCaseStudy: createdCaseStudies[i % createdCaseStudies.length] ? true : false,
-      linkedCaseStudy: createdCaseStudies[i % createdCaseStudies.length]?.id || null,
-    },
-    categories: [], // Assuming no categories for simplicity
-    publishedAt: new Date().toISOString(),
-  }))
+  await seedTestimonials({
+    payload,
+    req,
+    image1: image43Doc,
+    logo: logoDoc,
+    imageSquare: imageSquareDoc,
+    caseStudies: caseStudiesSlugToIdMap, // Pass the fetched case studies
+  })
 
-  for (const testimonialData of testimonialsDataArray) {
-    payload.logger.info(`Creating testimonial – ${testimonialData.company}`)
-    await payload.create({
-      collection: 'testimonials',
-      depth: 0,
-      data: testimonialData,
-      req,
-    })
-  }
+  payload.logger.info(`— Seeding changelog...`)
+  await seedChangelog(payload, req)
 
-  payload.logger.info(`— Seeding changelog entries...`)
-  const changelogDataArray = Array.from({ length: 10 }).map((_, i) => ({
-    title: `Changelog Entry ${i + 1}`,
-    date: new Date().toISOString(),
-    version: `1.0.${i + 1}`,
-    description: {
-      root: {
-        type: 'root',
-        children: [
-          {
-            type: 'paragraph',
-            version: 1,
-            children: [{ text: `This is a description for changelog entry ${i + 1}.` }],
-          },
-        ],
-        direction: 'rtl' as const,
-        format: '' as const,
-        indent: 0,
-        version: 1,
-      },
-    },
-    categories: ['feature', 'improvement'] as (
-      | 'bug-fix'
-      | 'feature'
-      | 'improvement'
-      | 'security'
-      | 'other'
-    )[],
-  }))
+  payload.logger.info(`— Seeding globals...`)
 
-  for (const changelogData of changelogDataArray) {
-    payload.logger.info(`Creating changelog entry – ${changelogData.title}`)
-    await payload.create({
-      collection: 'changelog',
-      depth: 0,
-      data: changelogData,
-      req,
-    })
-  }
-
-  payload.logger.info(`— Seeding globals sequentially...`)
-
-  // Header Data (using solution IDs)
   const headerData: Partial<Header> = {
     tabs: [
       {
@@ -541,9 +388,45 @@ export const seed = async ({
             listLinks: {
               tag: 'بيع',
               links: [
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['cashier'] as any }, label: 'الكاشير', description: 'تسجيل المبيعات بمرونة وسرعة على أي جهاز', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['paysync'] as any }, label: 'شاشة السداد', description: 'عرض الطلبات والدفع بشكل مباشر للعميل', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['kiosk'] as any }, label: 'الطلب الذاتي', description: 'خلي العملاء يطلبون بأنفسهم ويقل الضغط على الموظفين', icon: null } }, // prettier-ignore
+                {
+                  link: {
+                    type: 'reference',
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions',
+                      value: solutionsSlugToIdMap['cashier'] as any,
+                    },
+                    label: 'الكاشير',
+                    description: 'تسجيل المبيعات بمرونة وسرعة على أي جهاز',
+                    icon: null,
+                  },
+                },
+                {
+                  link: {
+                    type: 'reference',
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions',
+                      value: solutionsSlugToIdMap['paysync'] as any,
+                    },
+                    label: 'شاشة السداد',
+                    description: 'عرض الطلبات والدفع بشكل مباشر للعميل',
+                    icon: null,
+                  },
+                },
+                {
+                  link: {
+                    type: 'reference',
+                    newTab: false,
+                    reference: {
+                      relationTo: 'solutions',
+                      value: solutionsSlugToIdMap['kiosk'] as any,
+                    },
+                    label: 'الطلب الذاتي',
+                    description: 'خلي العملاء يطلبون بأنفسهم ويقل الضغط على الموظفين',
+                    icon: null,
+                  },
+                },
               ],
             },
           },
@@ -671,7 +554,7 @@ export const seed = async ({
   }
 
   // Footer Data
-  const footerData = {
+  const footerData: Partial<Footer> = {
     columns: [
       {
         label: 'الحلول',
@@ -692,62 +575,39 @@ export const seed = async ({
     ],
   }
 
-  payload.logger.info('Updating global – header (ar)')
-  await payload.updateGlobal({
-    slug: 'header',
-    locale: 'ar',
-    data: headerData,
-  })
-
-  payload.logger.info('Updating global – footer')
-  await payload.updateGlobal({
-    slug: 'footer',
-    data: footerData as any,
-  })
-
-  // Seed Features Showcase Page (New Addition)
-  payload.logger.info('— Attempting to seed Features Showcase Page...')
-  try {
-    await seedFeaturesShowcasePage(
-      payload,
-      {
-        image169: mediaDocs.image169,
-        image43: mediaDocs.image43,
-        imageSquare: mediaDocs.imageSquare,
-        image1: mediaDocs.image1, // Assuming image1 is suitable for meta
-        // Ensure all media needed by seedFeaturesShowcasePage is passed
-      },
-      demoAuthor,
-    )
-  } catch (error: any) {
-    payload.logger.error(`Could not seed Features Showcase Page: ${error.message}`)
-  }
+  await Promise.all([
+    payload.logger.info('Updating global – header (ar)'),
+    payload.updateGlobal({
+      slug: 'header',
+      locale: 'ar',
+      data: headerData,
+    }),
+    payload.logger.info('Updating global – footer'),
+    payload.updateGlobal({
+      slug: 'footer',
+      data: footerData,
+    }),
+  ])
 
   payload.logger.info('Seeded database successfully!')
 }
 
-async function fetchFileByURL(payload: Payload, url: string): Promise<File> {
-  payload.logger.info(`Fetching file from URL: ${url}`)
+async function fetchFileByURL(url: string): Promise<File> {
   const res = await fetch(url, {
     credentials: 'include',
     method: 'GET',
   })
 
   if (!res.ok) {
-    payload.logger.error(`Failed to fetch file from ${url}, status: ${res.status}`)
     throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`)
   }
 
   const data = await res.arrayBuffer()
-  const filename = url.split('/').pop() || `file-${Date.now()}`
-  const mimetype = `image/${url.split('.').pop()}`
-
-  payload.logger.info(`Fetched file: ${filename} (${(data.byteLength / 1024).toFixed(2)} KB)`)
 
   return {
-    name: filename,
+    name: url.split('/').pop() || `file-${Date.now()}`,
     data: Buffer.from(data),
-    mimetype: mimetype,
+    mimetype: `image/${url.split('.').pop()}`,
     size: data.byteLength,
   }
 }

@@ -113,17 +113,13 @@ type CommonPayloadLink = {
   color?: string | null // if your link field has colors
 }
 
-export const seedFeaturesShowcasePage = async (
-  payload: Payload,
-  media: {
-    image169: Media
-    image43: Media
-    imageSquare: Media
-    image1: Media // Used for meta image
-  },
-  demoAuthor: User,
-): Promise<Page | null> => {
-  payload.logger.info('— Seeding Features Showcase Page (Arabic)')
+export const seedFeaturesShowcasePage = (media: {
+  image169: Media | null
+  image43: Media | null
+  imageSquare: Media | null
+}) => {
+  // If any essential media is missing, consider returning null or a page without those media elements.
+  // For this example, we'll proceed and rely on optional chaining for IDs.
 
   const types: FeaturesBlock['type'][] = [
     '01',
@@ -145,7 +141,7 @@ export const seedFeaturesShowcasePage = async (
     '17',
   ]
 
-  const featuresBlocks: Partial<FeaturesBlock>[] = []
+  const featuresBlocks: FeaturesBlock[] = []
 
   const arabicFeatureTitles = [
     'إدارة المخزون بكفاءة',
@@ -153,6 +149,9 @@ export const seedFeaturesShowcasePage = async (
     'واجهة سهلة الاستخدام',
     'دعم فني سريع ومتجاوب',
     'التكامل مع الأنظمة الأخرى',
+    'أمان عالي للبيانات',
+    'برامج ولاء العملاء',
+    'الوصول السحابي للنظام',
     'أمان عالي للبيانات',
     'برامج ولاء العملاء',
     'الوصول السحابي للنظام',
@@ -167,6 +166,9 @@ export const seedFeaturesShowcasePage = async (
     'نضمن حماية بيانات عملك وعملائك بأحدث تقنيات الأمان.',
     'عزز ولاء عملائك وقدم لهم مكافآت وعروض خاصة.',
     'أدر أعمالك من أي مكان وفي أي وقت عبر نظامنا السحابي.',
+    'تابع مخزونك بدقة وتجنب النقص أو الفائض.',
+    'احصل على رؤى قيمة حول أداء مبيعاتك لاتخاذ قرارات أفضل.',
+    'تمتع بتجربة استخدام سلسة لا تتطلب تدريبًا معقدًا.',
   ]
 
   const arabicFeatureLongSubtitlesFortype04 = [
@@ -206,7 +208,7 @@ export const seedFeaturesShowcasePage = async (
       blockType: 'features',
       type: type,
       blockHeader: blockHeaderData,
-      blockImage: ['04', '06', '07'].includes(type) ? media.image169.id : undefined,
+      blockImage: ['04', '06', '07'].includes(type) ? media.image169?.id : undefined,
       columns: [],
     }
 
@@ -266,63 +268,89 @@ export const seedFeaturesShowcasePage = async (
         columnSize = 'half'
       }
 
-      const column: Partial<NonNullable<FeaturesBlock['columns']>[0]> = {
+      // Initialize columnData with mandatory 'id'
+      const columnData: Partial<NonNullable<FeaturesBlock['columns']>[0]> = {
         id: `col-${type}-${i}`,
-        size: columnSize,
-        appReference: type === '01' ? undefined : undefined,
-        image: [
-          '01',
-          '02',
-          '03',
-          '04',
-          '05',
-          '08',
-          '09',
-          '10',
-          '11',
-          '14',
-          '15',
-          '16',
-          '17',
-        ].includes(type)
-          ? media.image43.id
-          : undefined,
-        tabLabel: type === '08' ? `تبويب ${i + 1}` : undefined,
-        icon: ['06', '07', '09', '11', '12', '13'].includes(type) ? getNextIcon() : undefined,
-        content: !['01', '03', '04', '05'].includes(type)
-          ? {
-              title: colTitle,
-              subtitle: colSubtitle,
-            }
-          : undefined,
-        richTextContent: ['01', '03', '04', '05', '11'].includes(type)
-          ? generateLexicalContent([
-              { type: 'h3', text: colTitle, direction: 'rtl' },
-              { type: 'p', text: colSubtitle, direction: 'rtl' },
-            ])
-          : undefined,
-        enableBadge: ['02', '03', '04', '05', '08'].includes(type) ? true : undefined,
-        enableCta: ['02', '03', '04', '05', '08'].includes(type) ? true : undefined,
-        reverseOrder: type === '04' && i % 2 !== 0 ? true : undefined,
       }
 
-      if (column.enableBadge) {
-        column.badge = {
-          label: type === '02' ? `ميزات${type}` : `ميزة ${i + 1}`,
-          type: 'label',
-        } as any
+      // Conditionally add 'size'
+      if (columnSize !== undefined) {
+        columnData.size = columnSize
       }
-      if (column.enableCta) {
-        column.link = {
-          type: 'custom',
+
+      // Conditionally add 'appReference' - Placeholder: No actual data to link yet from seed.
+      // If appReference were to be seeded for type '01', it would be added here:
+      // if (type === '01') {
+      //   columnData.appReference = { relationTo: 'solutions', value: 'some-solution-id' };
+      // }
+
+      // Conditionally add 'image'
+      if (
+        ['01', '02', '03', '04', '05', '08', '09', '10', '11', '14', '15', '16', '17'].includes(
+          type,
+        )
+      ) {
+        columnData.image = media.image43?.id
+      }
+
+      // Conditionally add 'tabLabel'
+      if (type === '08') {
+        columnData.tabLabel = `تبويب ${i + 1}`
+      }
+
+      // Conditionally add 'icon'
+      if (['06', '07', '09', '11', '12', '13'].includes(type)) {
+        columnData.icon = getNextIcon()
+      }
+
+      // Conditionally add 'content' group (with title and subtitle)
+      // This aligns with FeaturesBlock/config.ts: content group is active when NOT types 01, 03, 04, 05,
+      if (!['01', '03', '04', '05'].includes(type)) {
+        columnData.content = {
+          title: colTitle,
+          subtitle: colSubtitle,
+        }
+      }
+
+      // Conditionally add 'richTextContent'
+      // This aligns with FeaturesBlock/config.ts: richTextContent is active for types 01, 03, 04, 05, 11
+      if (['01', '03', '04', '05', '11'].includes(type)) {
+        columnData.richTextContent = generateLexicalContent([
+          { type: 'h3', text: colTitle, direction: 'rtl' },
+          { type: 'p', text: colSubtitle, direction: 'rtl' },
+        ])
+      }
+
+      // Conditionally add 'enableBadge' and 'badge'
+      const shouldEnableBadge = ['02', '03', '04', '05', '08'].includes(type)
+      if (shouldEnableBadge) {
+        columnData.enableBadge = true
+        // Ensure the badge structure matches what your 'badge' field expects
+        columnData.badge = {
+          label: type === '02' ? `ميزات${type}` : `ميزة ${i + 1}`,
+          type: 'label', // Assuming 'type' is part of your badge field structure
+        } as any // Cast as 'any' or use the specific BadgeField type if available
+      }
+
+      // Conditionally add 'enableCta' and 'link'
+      const shouldEnableCta = ['02', '03', '04', '05', '08'].includes(type)
+      if (shouldEnableCta) {
+        columnData.enableCta = true
+        // Ensure the link structure matches your 'link' field expects
+        columnData.link = {
+          type: 'custom', // Assuming 'type' distinguishes between reference and custom URLs
           url: `/column-cta/${type}-${i}`,
           label: `إجراء ${i + 1}`,
           newTab: false,
-        } as any
-      } else {
-        column.link = undefined
+        } as any // Cast as 'any' or use the specific LinkField type if available
       }
-      currentBlockColumns.push(column as NonNullable<FeaturesBlock['columns']>[0])
+
+      // Conditionally add 'reverseOrder'
+      if (type === '04' && i % 2 !== 0) {
+        columnData.reverseOrder = true
+      }
+
+      currentBlockColumns.push(columnData as NonNullable<FeaturesBlock['columns']>[0])
     }
     block.columns = currentBlockColumns
     featuresBlocks.push(block as FeaturesBlock)
@@ -330,24 +358,6 @@ export const seedFeaturesShowcasePage = async (
 
   const pageTitle = 'features' // Arabic Page Title
   const pageSlug = 'features' // Can keep slug in English or change
-
-  try {
-    const existingPage = await payload.find({
-      collection: 'pages',
-      where: { slug: { equals: pageSlug } },
-      locale: 'ar', // Changed to AR
-      depth: 0,
-    })
-    if (existingPage.docs.length > 0) {
-      payload.logger.info(`— Deleting existing '${pageTitle}' page (ar)...`)
-      await payload.delete({
-        collection: 'pages',
-        id: existingPage.docs[0].id,
-      })
-    }
-  } catch (e: any) {
-    payload.logger.error(`Error deleting existing page '${pageTitle}' (ar): ${e.message}`)
-  }
 
   const heroData: Page['hero'] = {
     type: 'hero01',
@@ -360,7 +370,7 @@ export const seedFeaturesShowcasePage = async (
         direction: 'rtl',
       },
     ]),
-    media: undefined,
+    media: media.image169?.id,
     links: [
       {
         link: {
@@ -374,52 +384,23 @@ export const seedFeaturesShowcasePage = async (
     ],
   }
 
-  try {
-    const showcasePageData: Omit<Page, 'id' | 'updatedAt' | 'createdAt' | 'sizes'> & {
-      author?: User | string
-    } = {
-      title: pageTitle,
-      slug: pageSlug,
-      _status: 'published',
-      hero: heroData,
-      layout: featuresBlocks as FeaturesBlock[],
-      author: demoAuthor,
-      breadcrumbs: [{ label: pageTitle, url: `/${pageSlug}`, id: `bc-ar-${pageSlug}` }], // Arabic breadcrumb
-      meta: {
-        title: `ميتا: ${pageTitle}`,
-        description:
-          'استكشف مجموعة متنوعة من تصميمات بلوكات الميزات وكيف يمكنها عرض خصائص نظام نقاط البيع بفعالية باللغة العربية.',
-        image: media.image1.id,
-      },
-      publishedAt: new Date().toISOString(),
-    }
+  const showcasePageData: Omit<Page, 'id' | 'updatedAt' | 'createdAt' | 'sizes'> & {
+    author?: User | string
+  } = {
+    title: pageTitle,
+    slug: pageSlug,
 
-    const showcasePage = await payload.create({
-      collection: 'pages',
-      locale: 'ar', // Changed to AR
-      data: showcasePageData as any,
-      depth: 0,
-      context: { disableRevalidate: true },
-    })
+    hero: heroData,
+    layout: featuresBlocks,
 
-    payload.logger.info(
-      `✔ Seeded Features Showcase Page (Arabic, improved rich text in columns) successfully at /${pageSlug} (ar)`,
-    )
-    return showcasePage as Page
-  } catch (e: any) {
-    payload.logger.error(
-      `Error seeding Features Showcase Page (Arabic, improved rich text in columns): ${e.message}`,
-    )
-    if (e.data?.errors) {
-      e.data.errors.forEach((err: any) =>
-        payload.logger.error(`Payload error (ar): ${JSON.stringify(err)}`),
-      )
-    }
-    if (e.response?.data?.errors) {
-      e.response.data.errors.forEach((err: any) =>
-        payload.logger.error(`Payload API error (ar): ${JSON.stringify(err)}`),
-      )
-    }
-    return null
+    breadcrumbs: [{ label: pageTitle, url: `/${pageSlug}`, id: `bc-ar-${pageSlug}` }], // Arabic breadcrumb
+    meta: {
+      title: `ميتا: ${pageTitle}`,
+      description:
+        'استكشف مجموعة متنوعة من تصميمات بلوكات الميزات وكيف يمكنها عرض خصائص نظام نقاط البيع بفعالية باللغة العربية.',
+    },
+    _status: 'published',
   }
+
+  return showcasePageData as Page
 }

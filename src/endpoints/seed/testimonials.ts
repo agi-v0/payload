@@ -1,305 +1,89 @@
-import type { Media } from '@/payload-types'
-import { Payload } from 'payload'
+import type { Payload, PayloadRequest } from 'payload'
+import type { Media, CaseStudy } from '@/payload-types'
 
-type TestimonialsArgs = {
-  placeholder: Media
-  logo: Media
+export interface TestimonialsResult {
+  testimonials: any[]
 }
 
-export const seedTestimonials = async (
-  payload: Payload,
-  { placeholder, logo }: TestimonialsArgs,
-): Promise<void> => {
-  payload.logger.info('Seeding testimonials...')
-
-  const format = '' as '' | 'left' | 'start' | 'center' | 'right' | 'end' | 'justify'
-
-  const testimonials = [
-    {
-      authorInfo: {
-        title: 'مدير تقني',
-        name: 'أحمد المنصوري',
-        avatar: placeholder.id,
+export async function seedTestimonials({
+  payload,
+  req,
+  image1,
+  logo,
+  imageSquare,
+  caseStudies,
+}: {
+  payload: Payload
+  req: PayloadRequest
+  image1: Media
+  logo: Media
+  imageSquare: Media
+  caseStudies: Record<string, number>
+}): Promise<TestimonialsResult> {
+  // Reduce the number of testimonials in production to improve performance
+  const testimonialCount = process.env.NODE_ENV === 'production' ? 5 : 10
+  const testimonialsDataArray = Array.from({ length: testimonialCount }).map((_, i) => ({
+    quote: {
+      root: {
+        type: 'root',
+        children: [
+          {
+            type: 'paragraph',
+            version: 1,
+            children: [
+              {
+                type: 'text',
+                text: `هذا هو اقتباس الشهادة للشركة ${i + 1}.`,
+                format: '' as const,
+                style: '',
+              },
+            ],
+            direction: 'rtl' as const,
+            format: '' as const,
+            indent: 0,
+          },
+        ],
+        direction: 'rtl' as const,
+        format: '' as const,
+        indent: 0,
+        version: 1,
       },
-      company: 'شركة التقنية العربية',
-      companyLogo: logo.id,
-      media: placeholder.id,
-
-      quote: {
-        root: {
-          type: 'root',
-          format,
-          indent: 0,
-          version: 1,
-          children: [
-            {
-              type: 'paragraph',
-              format,
-              indent: 0,
-              version: 1,
-              children: [
-                {
-                  mode: 'normal',
-                  text: 'لقد ساعدنا مرن في تحسين عملياتنا التقنية بشكل كبير. الدعم الفني ممتاز والمنصة سهلة الاستخدام وقوية في نفس الوقت.',
-                  type: 'text',
-                  style: '',
-                  detail: 0,
-                  format: 0,
-                  version: 1,
-                },
-              ],
-              direction: 'rtl' as 'rtl' | 'ltr' | null,
-              textFormat: 0,
-            },
-          ],
-          direction: 'rtl' as 'rtl' | 'ltr' | null,
-        },
-      },
-      stats: [
-        {
-          label: 'زيادة في الإنتاجية',
-          value: 42,
-          isPercentage: true,
-          isIncrease: true,
-        },
-        {
-          label: 'توفير الوقت',
-          value: 35,
-          isPercentage: true,
-          isIncrease: true,
-        },
-      ],
-      rating: 5,
-      featured: true,
     },
-    {
-      authorInfo: {
-        title: 'مديرة المشاريع',
-        name: 'فاطمة الزهراء',
-        avatar: placeholder.id,
-      },
-      company: 'مؤسسة الابتكار الرقمي',
-      media: placeholder.id,
-      companyLogo: logo.id,
-
-      quote: {
-        root: {
-          type: 'root',
-          format,
-          indent: 0,
-          version: 1,
-          children: [
-            {
-              type: 'paragraph',
-              format,
-              indent: 0,
-              version: 1,
-              children: [
-                {
-                  mode: 'normal',
-                  text: 'أنا سعيدة جدًا بالتعاون مع مرن. لقد تمكنا من تنفيذ مشاريعنا بسرعة أكبر وبجودة عالية. الخدمات المقدمة متميزة جدًا.',
-                  type: 'text',
-                  style: '',
-                  detail: 0,
-                  format: 0,
-                  version: 1,
-                },
-              ],
-              direction: 'rtl' as 'rtl' | 'ltr' | null,
-              textFormat: 0,
-            },
-          ],
-          direction: 'rtl' as 'rtl' | 'ltr' | null,
-        },
-      },
-      stats: [
-        {
-          label: 'تقليل التكاليف',
-          value: 28,
-          isPercentage: true,
-          isIncrease: true,
-        },
-      ],
-      rating: 4,
-      featured: false,
+    company: `شركة ${i + 1}`,
+    featuredImage: image1.id,
+    companyLogo: logo.id,
+    authorInfo: {
+      name: `المؤلف ${i + 1}`,
+      title: `اللقب ${i + 1}`,
+      avatar: imageSquare.id,
     },
-    {
-      authorInfo: {
-        title: 'الرئيس التنفيذي',
-        name: 'محمد العتيبي',
-        avatar: placeholder.id,
-      },
-      company: 'مجموعة الخليج للاستثمار',
-      media: placeholder.id,
-      companyLogo: logo.id,
-
-      quote: {
-        root: {
-          type: 'root',
-          format,
-          indent: 0,
-          version: 1,
-          children: [
-            {
-              type: 'paragraph',
-              format,
-              indent: 0,
-              version: 1,
-              children: [
-                {
-                  mode: 'normal',
-                  text: 'لم أكن أتوقع هذا المستوى من الاحترافية والكفاءة. تقنيات مرن ساهمت في تسريع نمو أعمالنا ووسعت آفاق استثماراتنا بشكل ملحوظ.',
-                  type: 'text',
-                  style: '',
-                  detail: 0,
-                  format: 0,
-                  version: 1,
-                },
-              ],
-              direction: 'rtl' as 'rtl' | 'ltr' | null,
-              textFormat: 0,
-            },
-          ],
-          direction: 'rtl' as 'rtl' | 'ltr' | null,
-        },
-      },
-      stats: [
-        {
-          label: 'زيادة في الإيرادات',
-          value: 65,
-          isPercentage: true,
-          isIncrease: true,
-        },
-        {
-          label: 'توسع في قاعدة العملاء',
-          value: 120,
-          isPercentage: false,
-          isIncrease: true,
-        },
-      ],
-      rating: 5,
-      featured: true,
+    caseStudy: {
+      linkCaseStudy: caseStudies[`case-study-${i + 1}`] ? true : false,
+      linkedCaseStudy: caseStudies[`case-study-${i + 1}`] || null,
     },
-    {
-      authorInfo: {
-        title: 'مديرة التسويق',
-        name: 'نورة القحطاني',
-        avatar: placeholder.id,
-      },
-      company: 'شركة الإعمار والتطوير',
-      media: placeholder.id,
-      companyLogo: logo.id,
+    categories: [],
+    publishedAt: new Date().toISOString(),
+  }))
 
-      quote: {
-        root: {
-          type: 'root',
-          format,
-          indent: 0,
-          version: 1,
-          children: [
-            {
-              type: 'paragraph',
-              format,
-              indent: 0,
-              version: 1,
-              children: [
-                {
-                  mode: 'normal',
-                  text: 'لقد كانت تجربتي مع مرن رائعة جدًا. ساعدتنا المنصة في تطوير استراتيجيات تسويقية فعالة وزيادة تفاعل العملاء مع منتجاتنا.',
-                  type: 'text',
-                  style: '',
-                  detail: 0,
-                  format: 0,
-                  version: 1,
-                },
-              ],
-              direction: 'rtl' as 'rtl' | 'ltr' | null,
-              textFormat: 0,
-            },
-          ],
-          direction: 'rtl' as 'rtl' | 'ltr' | null,
-        },
-      },
-      stats: [
-        {
-          label: 'زيادة في معدل التحويل',
-          value: 45,
-          isPercentage: true,
-          isIncrease: true,
-        },
-      ],
-      rating: 4,
-      featured: false,
-    },
-    {
-      authorInfo: {
-        title: 'مدير تقنية المعلومات',
-        name: 'عبدالله السعدون',
-        avatar: placeholder.id,
-      },
-      company: 'مستشفى الشفاء التخصصي',
-      media: placeholder.id,
-      companyLogo: logo.id,
+  // Create testimonials in parallel
+  const testimonialPromises = testimonialsDataArray.map(async (testimonialData) => {
+    try {
+      return await payload.create({
+        collection: 'testimonials',
+        depth: 0,
+        data: testimonialData,
+        req,
+      })
+    } catch (error) {
+      payload.logger.error(
+        `Failed to create testimonial for ${testimonialData.company}: ${error instanceof Error ? error.message : String(error)}`,
+      )
+      return null
+    }
+  })
 
-      quote: {
-        root: {
-          type: 'root',
-          format,
-          indent: 0,
-          version: 1,
-          children: [
-            {
-              type: 'paragraph',
-              format,
-              indent: 0,
-              version: 1,
-              children: [
-                {
-                  mode: 'normal',
-                  text: 'ساعدتنا حلول مرن على تحسين خدماتنا الصحية الرقمية وتطوير بنيتنا التحتية التقنية. نحن ممتنون للدعم المستمر والحلول المبتكرة.',
-                  type: 'text',
-                  style: '',
-                  detail: 0,
-                  format: 0,
-                  version: 1,
-                },
-              ],
-              direction: 'rtl' as 'rtl' | 'ltr' | null,
-              textFormat: 0,
-            },
-          ],
-          direction: 'rtl' as 'rtl' | 'ltr' | null,
-        },
-      },
-      stats: [
-        {
-          label: 'تقليل وقت الانتظار',
-          value: 38,
-          isPercentage: true,
-          isIncrease: true,
-        },
-        {
-          label: 'تحسين تجربة المرضى',
-          value: 52,
-          isPercentage: true,
-          isIncrease: true,
-        },
-      ],
-      rating: 5,
-      featured: false,
-    },
-  ]
+  const testimonialResults = await Promise.all(testimonialPromises)
+  const testimonials = testimonialResults.filter(Boolean)
 
-  // Add testimonials to database
-  for (const testimonial of testimonials) {
-    await payload.create({
-      collection: 'testimonials',
-      data: {
-        ...testimonial,
-        _status: 'published',
-      },
-    })
-  }
-
-  payload.logger.info('Seeding testimonials complete!')
+  return { testimonials }
 }

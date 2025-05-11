@@ -2,11 +2,11 @@ import type { RequiredDataFromCollectionSlug } from 'payload'
 import type { Media } from '@/payload-types'
 
 type HomeArgs = {
-  heroImage: Media
-  metaImage: Media
-  image169: Media
-  image43: Media
-  imageSquare: Media
+  heroImage: Media | null
+  metaImage: Media | null
+  image169: Media | null
+  image43: Media | null
+  imageSquare: Media | null
 }
 
 export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
@@ -90,7 +90,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
       supportingText: null,
       logosHeadline: null,
       logos: [],
-      media: image169.id,
+      media: image169?.id,
       badge: {
         label: null,
         color: 'blue',
@@ -103,7 +103,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
       {
         blockType: 'features',
         type: '02',
-        blockImage: image169.id,
+        blockImage: image169?.id,
         blockName: null,
 
         columns: [
@@ -114,7 +114,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
             tabLabel: null,
             enableBadge: false,
             enableCta: false,
-            image: image43.id,
+            image: image43?.id,
             content: {
               title: 'استخدمه عند الكاونتر، أو كمحطة متنقلة في المحل—الكاشير يتكيف مع مشروعك',
               copy: 'توافق الأجهزة المتعددة يتيح لك أخذ الطلبات سواء أثناء التنقل أو من على الطاولة.',
@@ -136,7 +136,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           {
             size: 'half',
             appReference: null,
-            image: image43.id,
+            image: image43?.id,
             icon: null,
             tabLabel: null,
             enableBadge: false,
@@ -162,7 +162,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           {
             size: 'half',
             appReference: null,
-            image: image43.id,
+            image: image43?.id,
             icon: null,
             tabLabel: null,
             enableBadge: null,
@@ -188,7 +188,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           {
             size: 'twoThirds',
             appReference: null,
-            image: image43.id,
+            image: image43?.id,
             icon: null,
             tabLabel: null,
             enableBadge: null,
@@ -214,7 +214,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           {
             size: 'oneThird',
             appReference: null,
-            image: image43.id,
+            image: image43?.id,
             icon: null,
             tabLabel: null,
             enableBadge: null,
@@ -338,7 +338,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
 
     meta: {
       title: null,
-      image: image169.id,
+      image: image169?.id,
       description: null,
     },
     slug: 'home',
