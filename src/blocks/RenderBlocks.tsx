@@ -2,8 +2,6 @@ import { Fragment } from 'react'
 
 import { Page } from '@/payload-types'
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
-import { ContentBlock } from '@/blocks/Content/Component'
-import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { RenderFeaturesBlock } from '@/blocks/Features/RenderFeaturesBlock'
@@ -13,18 +11,18 @@ import { RenderFeaturedAppsBlock } from './FeaturedApps/RenderFeaturedAppsBlock'
 import { RenderTestimonialsBlock } from './Testimonials/RenderTestimonialsBlock'
 import { FaqBlock } from './FAQ/Component'
 import { RenderGalleryBlock } from './Gallery/RenderGalleryBlock'
+import { RenderCallToActionBlock } from './CallToAction/RenderCallToActionBlock'
 
 const blockComponents = {
   archive: ArchiveBlock,
-  content: ContentBlock,
-  cta: CallToActionBlock,
+  cta: RenderCallToActionBlock,
   faqBlock: FaqBlock,
+  featuredApps: RenderFeaturedAppsBlock,
+  features: RenderFeaturesBlock,
   formBlock: FormBlock,
+  gallery: RenderGalleryBlock,
   mediaBlock: MediaBlock,
   testimonials: RenderTestimonialsBlock,
-  features: RenderFeaturesBlock,
-  gallery: RenderGalleryBlock,
-  featuredApps: RenderFeaturedAppsBlock,
 }
 
 type BlockWithHeader = {

@@ -20,8 +20,8 @@ import type {
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
 import { BannerBlock } from '@/blocks/Banner/Component'
-import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/utilities/ui'
+import { CallToAction01 } from '@/blocks/CallToAction/CallToAction01'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -54,7 +54,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
       />
     ),
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
-    cta: ({ node }) => <CallToActionBlock {...node.fields} />,
+    cta: ({ node }) => <CallToAction01 {...node.fields} />,
     styledList: ({ node }) => <StyledListBlock className="col-start-2" {...node.fields} />,
   },
 })

@@ -399,74 +399,25 @@ export interface User {
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
-  blockHeader: {
-    type: 'center' | 'split' | 'start';
-    badge?: {
-      type?: ('label' | 'reference') | null;
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      reference?:
-        | ({
-            relationTo: 'solutions';
-            value: number | Solution;
-          } | null)
-        | ({
-            relationTo: 'integrations';
-            value: number | Integration;
-          } | null);
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-    headerText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null)
-              | ({
-                  relationTo: 'solutions';
-                  value: number | Solution;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
+  type: '01' | '02' | '03' | '04';
+  badge?: {
+    type?: ('label' | 'reference') | null;
+    label?: string | null;
+    color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+    reference?:
+      | ({
+          relationTo: 'solutions';
+          value: number | Solution;
+        } | null)
+      | ({
+          relationTo: 'integrations';
+          value: number | Integration;
+        } | null);
+    /**
+     * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+     */
+    icon?: string | null;
+    icon_position?: ('flex-row' | 'flex-row-reverse') | null;
   };
   richText?: {
     root: {
@@ -483,6 +434,7 @@ export interface CallToActionBlock {
     };
     [k: string]: unknown;
   } | null;
+  media?: (number | null) | Media;
   links?:
     | {
         link: {
@@ -515,6 +467,20 @@ export interface CallToActionBlock {
         id?: string | null;
       }[]
     | null;
+  supportingText?: string | null;
+  list?:
+    | {
+        /**
+         * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+         */
+        icon?: string | null;
+        title?: string | null;
+        subtitle?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  enableForm?: boolean | null;
+  form?: (number | null) | Form;
   id?: string | null;
   blockName?: string | null;
   blockType: 'callToAction';
