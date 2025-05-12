@@ -162,7 +162,7 @@ export const Solutions: CollectionConfig<'solutions'> = {
       relationTo: 'categories',
       filterOptions: (data) => {
         return {
-          family: {
+          'parent.slug': {
             equals: 'ecosystems',
           },
         }

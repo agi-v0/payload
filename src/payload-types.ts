@@ -86,7 +86,6 @@ export interface Config {
     testimonials: Testimonial;
     'case-studies': CaseStudy;
     categories: Category;
-    'media-categories': MediaCategory;
     faq: Faq;
     changelog: Changelog;
     users: User;
@@ -109,7 +108,6 @@ export interface Config {
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    'media-categories': MediaCategoriesSelect<false> | MediaCategoriesSelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
     changelog: ChangelogSelect<false> | ChangelogSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -207,7 +205,6 @@ export interface ArchiveBlock {
 export interface Category {
   id: number;
   title: string;
-  family?: ('ecosystems' | 'integrations' | 'blog' | 'other') | null;
   slug?: string | null;
   slugLock?: boolean | null;
   parent?: (number | null) | Category;
@@ -292,9 +289,8 @@ export interface Media {
     [k: string]: unknown;
   } | null;
   locale?: ('en' | 'ar') | null;
-  category?: (number | null) | MediaCategory;
+  category?: (number | null) | Category;
   blurhash?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -364,18 +360,6 @@ export interface Media {
       filename?: string | null;
     };
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media-categories".
- */
-export interface MediaCategory {
-  id: number;
-  title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2029,10 +2013,6 @@ export interface PayloadLockedDocument {
         value: number | Category;
       } | null)
     | ({
-        relationTo: 'media-categories';
-        value: number | MediaCategory;
-      } | null)
-    | ({
         relationTo: 'faq';
         value: number | Faq;
       } | null)
@@ -2335,7 +2315,6 @@ export interface MediaSelect<T extends boolean = true> {
   locale?: T;
   category?: T;
   blurhash?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2484,7 +2463,6 @@ export interface CaseStudiesSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
-  family?: T;
   slug?: T;
   slugLock?: T;
   parent?: T;
@@ -2496,17 +2474,6 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media-categories_select".
- */
-export interface MediaCategoriesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
 }

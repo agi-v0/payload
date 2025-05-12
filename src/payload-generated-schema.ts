@@ -387,12 +387,6 @@ export const enum__case_studies_v_published_locale = pgEnum(
   'enum__case_studies_v_published_locale',
   ['en', 'ar'],
 )
-export const enum_categories_family = pgEnum('enum_categories_family', [
-  'ecosystems',
-  'integrations',
-  'blog',
-  'other',
-])
 export const enum_changelog_categories = pgEnum('enum_changelog_categories', [
   'bug-fix',
   'feature',
@@ -3858,11 +3852,10 @@ export const media = pgTable(
     alt: varchar('alt').notNull(),
     caption: jsonb('caption'),
     locale: enum_media_locale('locale'),
-    category: integer('category_id').references(() => media_categories.id, {
+    category: integer('category_id').references(() => categories.id, {
       onDelete: 'set null',
     }),
     blurhash: varchar('blurhash'),
-    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -4761,7 +4754,6 @@ export const categories = pgTable(
   'categories',
   {
     id: serial('id').primaryKey(),
-    family: enum_categories_family('family'),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
     parent: integer('parent_id').references((): AnyPgColumn => categories.id, {
@@ -4800,27 +4792,6 @@ export const categories_locales = pgTable(
       foreignColumns: [categories.id],
       name: 'categories_locales_parent_id_fk',
     }).onDelete('cascade'),
-  }),
-)
-
-export const media_categories = pgTable(
-  'media_categories',
-  {
-    id: serial('id').primaryKey(),
-    title: varchar('title').notNull(),
-    slug: varchar('slug'),
-    slugLock: boolean('slug_lock').default(true),
-    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
-      .defaultNow()
-      .notNull(),
-    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
-      .defaultNow()
-      .notNull(),
-  },
-  (columns) => ({
-    media_categories_slug_idx: index('media_categories_slug_idx').on(columns.slug),
-    media_categories_updated_at_idx: index('media_categories_updated_at_idx').on(columns.updatedAt),
-    media_categories_created_at_idx: index('media_categories_created_at_idx').on(columns.createdAt),
   }),
 )
 
@@ -5787,7 +5758,6 @@ export const payload_locked_documents_rels = pgTable(
     testimonialsID: integer('testimonials_id'),
     'case-studiesID': integer('case_studies_id'),
     categoriesID: integer('categories_id'),
-    'media-categoriesID': integer('media_categories_id'),
     faqID: integer('faq_id'),
     changelogID: integer('changelog_id'),
     usersID: integer('users_id'),
@@ -5825,9 +5795,6 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_categories_id_idx: index(
       'payload_locked_documents_rels_categories_id_idx',
     ).on(columns.categoriesID),
-    payload_locked_documents_rels_media_categories_id_idx: index(
-      'payload_locked_documents_rels_media_categories_id_idx',
-    ).on(columns['media-categoriesID']),
     payload_locked_documents_rels_faq_id_idx: index('payload_locked_documents_rels_faq_id_idx').on(
       columns.faqID,
     ),
@@ -5896,11 +5863,6 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns['categoriesID']],
       foreignColumns: [categories.id],
       name: 'payload_locked_documents_rels_categories_fk',
-    }).onDelete('cascade'),
-    'media-categoriesIdFk': foreignKey({
-      columns: [columns['media-categoriesID']],
-      foreignColumns: [media_categories.id],
-      name: 'payload_locked_documents_rels_media_categories_fk',
     }).onDelete('cascade'),
     faqIdFk: foreignKey({
       columns: [columns['faqID']],
@@ -8232,9 +8194,9 @@ export const relations__integrations_v = relations(_integrations_v, ({ one, many
   }),
 }))
 export const relations_media = relations(media, ({ one }) => ({
-  category: one(media_categories, {
+  category: one(categories, {
     fields: [media.category],
-    references: [media_categories.id],
+    references: [categories.id],
     relationName: 'category',
   }),
 }))
@@ -8673,7 +8635,6 @@ export const relations_categories = relations(categories, ({ one, many }) => ({
     relationName: '_locales',
   }),
 }))
-export const relations_media_categories = relations(media_categories, () => ({}))
 export const relations_faq_locales = relations(faq_locales, ({ one }) => ({
   _parentID: one(faq, {
     fields: [faq_locales._parentID],
@@ -9124,11 +9085,6 @@ export const relations_payload_locked_documents_rels = relations(
       references: [categories.id],
       relationName: 'categories',
     }),
-    'media-categoriesID': one(media_categories, {
-      fields: [payload_locked_documents_rels['media-categoriesID']],
-      references: [media_categories.id],
-      relationName: 'media-categories',
-    }),
     faqID: one(faq, {
       fields: [payload_locked_documents_rels.faqID],
       references: [faq.id],
@@ -9519,7 +9475,6 @@ type DatabaseSchema = {
   enum__case_studies_v_blocks_faq_block_block_header_badge_type: typeof enum__case_studies_v_blocks_faq_block_block_header_badge_type
   enum__case_studies_v_version_status: typeof enum__case_studies_v_version_status
   enum__case_studies_v_published_locale: typeof enum__case_studies_v_published_locale
-  enum_categories_family: typeof enum_categories_family
   enum_changelog_categories: typeof enum_changelog_categories
   enum_redirects_to_type: typeof enum_redirects_to_type
   enum_forms_confirmation_type: typeof enum_forms_confirmation_type
@@ -9669,7 +9624,6 @@ type DatabaseSchema = {
   categories_breadcrumbs: typeof categories_breadcrumbs
   categories: typeof categories
   categories_locales: typeof categories_locales
-  media_categories: typeof media_categories
   faq: typeof faq
   faq_locales: typeof faq_locales
   changelog_categories: typeof changelog_categories
@@ -9876,7 +9830,6 @@ type DatabaseSchema = {
   relations_categories_breadcrumbs: typeof relations_categories_breadcrumbs
   relations_categories_locales: typeof relations_categories_locales
   relations_categories: typeof relations_categories
-  relations_media_categories: typeof relations_media_categories
   relations_faq_locales: typeof relations_faq_locales
   relations_faq: typeof relations_faq
   relations_changelog_categories: typeof relations_changelog_categories

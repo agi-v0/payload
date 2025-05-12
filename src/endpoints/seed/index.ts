@@ -23,20 +23,18 @@ import { seedChangelog } from './changelog'
 import { seedCaseStudies } from './case-studies'
 
 const collections: CollectionSlug[] = [
-  'categories',
-  'media',
   'pages',
-  'integrations',
-  'media-categories',
   'posts',
-  'forms',
-  'form-submissions',
-  'search',
+  'users',
+  'case-studies',
+  'categories',
   'changelog',
   'faq',
-  'testimonials',
+  'integrations',
+  // 'logos',
+  'media',
   'solutions',
-  'case-studies',
+  'testimonials',
 ]
 const globals: GlobalSlug[] = ['header', 'footer']
 
@@ -109,66 +107,98 @@ export const seed = async ({
 
   payload.logger.info('— Seeding categories...')
 
+  //Parent Categories
+  const parentCategoriesData = [
+    { collection: 'categories', data: { title: 'Ecosystems', slug: 'ecosystems' } },
+    { collection: 'categories', data: { title: 'Integrations', slug: 'integrations' } },
+    { collection: 'categories', data: { title: 'Media', slug: 'media' } },
+    { collection: 'categories', data: { title: 'Blog', slug: 'blog' } },
+    { collection: 'categories', data: { title: 'Other', slug: 'other' } },
+  ]
+
+  const [ecosystems, integrations, media, blog, other] = await Promise.all(
+    parentCategoriesData.map(async (op) => {
+      return await payload.create({
+        collection: op.collection as CollectionSlug,
+        data: op.data,
+        req,
+        depth: 0,
+        locale: 'ar',
+      })
+    }),
+  )
+
   // 2. Build an array of category create operations
   const categoryCreates = [
     // Media Categories
-    { collection: 'media-categories', data: { title: 'App Icons', slug: 'app-icon' } },
-    { collection: 'media-categories', data: { title: 'Hero Images' } },
-    { collection: 'media-categories', data: { title: 'Feature Images' } },
-    { collection: 'media-categories', data: { title: 'Blog Images' } },
-    { collection: 'media-categories', data: { title: 'OG Images' } },
-    { collection: 'media-categories', data: { title: 'Customer Logos' } },
-    { collection: 'media-categories', data: { title: 'Team Photos' } },
-    { collection: 'media-categories', data: { title: 'Background Textures' } },
-    // Categories
+    {
+      collection: 'categories',
+      data: { title: 'App Icons', slug: 'app-icon', parent: { id: media.id } },
+    },
+    { collection: 'categories', data: { title: 'Hero Images', parent: { id: media.id } } },
+    { collection: 'categories', data: { title: 'Feature Images', parent: { id: media.id } } },
+    { collection: 'categories', data: { title: 'Blog Images', parent: { id: media.id } } },
+    { collection: 'categories', data: { title: 'OG Images', parent: { id: media.id } } },
+    { collection: 'categories', data: { title: 'Customer Logos', parent: { id: media.id } } },
+    { collection: 'categories', data: { title: 'Team Photos', parent: { id: media.id } } },
+    { collection: 'categories', data: { title: 'Background Textures', parent: { id: media.id } } },
+    // Integrations Categories
     {
       collection: 'categories',
       data: {
         title: 'إدارة المطاعم',
-        breadcrumbs: [{ label: 'إدارة المطاعم', url: '/restaurant-management' }],
+        slug: '',
+        parent: { id: integrations.id },
       },
     },
     {
       collection: 'categories',
       data: {
         title: 'إدارة المخزون',
-        breadcrumbs: [{ label: 'إدارة المخزون', url: '/inventory-management' }],
+        slug: '',
+        parent: { id: integrations.id },
       },
     },
     {
       collection: 'categories',
       data: {
         title: 'تقارير المبيعات',
-        breadcrumbs: [{ label: 'تقارير المبيعات', url: '/sales-reports' }],
+        slug: '',
+        parent: { id: integrations.id },
       },
     },
     {
       collection: 'categories',
       data: {
         title: 'إدارة الموظفين',
-        breadcrumbs: [{ label: 'إدارة الموظفين', url: '/staff-management' }],
+        slug: '',
+        parent: { id: integrations.id },
       },
     },
     {
       collection: 'categories',
       data: {
         title: 'برامج نقاط البيع',
-        breadcrumbs: [{ label: 'برامج نقاط البيع', url: '/pos-software' }],
+        slug: '',
+        parent: { id: integrations.id },
       },
     },
+
     {
       collection: 'categories',
       data: {
         title: 'خدمة العملاء',
-        breadcrumbs: [{ label: 'خدمة العملاء', url: '/customer-service' }],
+        slug: '',
+        parent: { id: integrations.id },
       },
     },
+    // Ecosystems Categories
     {
       collection: 'categories',
       data: {
         title: 'البيع',
         slug: 'sell',
-        family: 'ecosystems',
+        parent: { id: ecosystems.id },
       },
     },
     {
@@ -176,7 +206,7 @@ export const seed = async ({
       data: {
         title: 'التشغيل',
         slug: 'operate',
-        family: 'ecosystems',
+        parent: { id: ecosystems.id },
       },
     },
     {
@@ -184,7 +214,7 @@ export const seed = async ({
       data: {
         title: 'الإدارة',
         slug: 'manage',
-        family: 'ecosystems',
+        parent: { id: ecosystems.id },
       },
     },
   ]

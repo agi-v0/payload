@@ -6,23 +6,21 @@ import sharp from 'sharp' // sharp-import
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
+import { getServerSideURL } from './utilities/getURL'
 
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
-import { getServerSideURL } from './utilities/getURL'
 
 //collections
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
-// import { AppIcons } from './collections/AppIcons'
 import { Pages } from './collections/Pages'
 import { Solutions } from './collections/Solutions'
 import { Integrations } from './collections/Integrations'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
-import { MediaCategories } from './collections/MediaCategories'
 import { Testimonials } from './collections/Testimonials'
 import { Changelog } from './collections/Changelog'
 import { FAQ } from './collections/FAQ'
@@ -150,9 +148,7 @@ export default buildConfig({
     Testimonials,
     CaseStudies,
     Categories,
-    MediaCategories,
     FAQ,
-    // AppIcons,
     Changelog,
     Users,
   ],

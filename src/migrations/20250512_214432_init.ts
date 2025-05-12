@@ -85,7 +85,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__case_studies_v_blocks_faq_block_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum__case_studies_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__case_studies_v_published_locale" AS ENUM('en', 'ar');
-  CREATE TYPE "public"."enum_categories_family" AS ENUM('ecosystems', 'integrations', 'blog', 'other');
   CREATE TYPE "public"."enum_changelog_categories" AS ENUM('bug-fix', 'feature', 'improvement', 'security', 'other');
   CREATE TYPE "public"."enum_redirects_to_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_forms_confirmation_type" AS ENUM('message', 'redirect');
@@ -1707,7 +1706,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "categories" (
   	"id" serial PRIMARY KEY NOT NULL,
-  	"family" "enum_categories_family",
   	"slug" varchar,
   	"slug_lock" boolean DEFAULT true,
   	"parent_id" integer,
@@ -1720,15 +1718,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" integer NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "media_categories" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"title" varchar NOT NULL,
-  	"slug" varchar,
-  	"slug_lock" boolean DEFAULT true,
-  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "faq" (
@@ -2113,7 +2102,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"testimonials_id" integer,
   	"case_studies_id" integer,
   	"categories_id" integer,
-  	"media_categories_id" integer,
   	"faq_id" integer,
   	"changelog_id" integer,
   	"users_id" integer,
@@ -3454,7 +3442,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "media" ADD CONSTRAINT "media_category_id_media_categories_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."media_categories"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "media" ADD CONSTRAINT "media_category_id_categories_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."categories"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -4019,12 +4007,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   DO $$ BEGIN
    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_categories_fk" FOREIGN KEY ("media_categories_id") REFERENCES "public"."media_categories"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -4666,9 +4648,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "categories_updated_at_idx" ON "categories" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "categories_created_at_idx" ON "categories" USING btree ("created_at");
   CREATE UNIQUE INDEX IF NOT EXISTS "categories_locales_locale_parent_id_unique" ON "categories_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "media_categories_slug_idx" ON "media_categories" USING btree ("slug");
-  CREATE INDEX IF NOT EXISTS "media_categories_updated_at_idx" ON "media_categories" USING btree ("updated_at");
-  CREATE INDEX IF NOT EXISTS "media_categories_created_at_idx" ON "media_categories" USING btree ("created_at");
   CREATE INDEX IF NOT EXISTS "faq_updated_at_idx" ON "faq" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "faq_created_at_idx" ON "faq" USING btree ("created_at");
   CREATE UNIQUE INDEX IF NOT EXISTS "faq_locales_locale_parent_id_unique" ON "faq_locales" USING btree ("_locale","_parent_id");
@@ -4774,7 +4753,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_testimonials_id_idx" ON "payload_locked_documents_rels" USING btree ("testimonials_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_case_studies_id_idx" ON "payload_locked_documents_rels" USING btree ("case_studies_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_categories_id_idx" ON "payload_locked_documents_rels" USING btree ("categories_id");
-  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_media_categories_id_idx" ON "payload_locked_documents_rels" USING btree ("media_categories_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_faq_id_idx" ON "payload_locked_documents_rels" USING btree ("faq_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_changelog_id_idx" ON "payload_locked_documents_rels" USING btree ("changelog_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_users_id_idx" ON "payload_locked_documents_rels" USING btree ("users_id");
@@ -4973,7 +4951,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "categories_breadcrumbs" CASCADE;
   DROP TABLE "categories" CASCADE;
   DROP TABLE "categories_locales" CASCADE;
-  DROP TABLE "media_categories" CASCADE;
   DROP TABLE "faq" CASCADE;
   DROP TABLE "faq_locales" CASCADE;
   DROP TABLE "changelog_categories" CASCADE;
@@ -5121,7 +5098,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__case_studies_v_blocks_faq_block_block_header_badge_type";
   DROP TYPE "public"."enum__case_studies_v_version_status";
   DROP TYPE "public"."enum__case_studies_v_published_locale";
-  DROP TYPE "public"."enum_categories_family";
   DROP TYPE "public"."enum_changelog_categories";
   DROP TYPE "public"."enum_redirects_to_type";
   DROP TYPE "public"."enum_forms_confirmation_type";

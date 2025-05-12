@@ -49,7 +49,10 @@ export const Media: CollectionConfig = {
     {
       name: 'category',
       type: 'relationship',
-      relationTo: 'media-categories',
+      relationTo: 'categories',
+      filterOptions: {
+        'parent.slug': { equals: 'media' },
+      },
       admin: {
         components: {
           afterInput: ['@/components/ImageCategoryGuide'],
