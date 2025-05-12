@@ -3856,6 +3856,7 @@ export const media = pgTable(
       onDelete: 'set null',
     }),
     blurhash: varchar('blurhash'),
+    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
