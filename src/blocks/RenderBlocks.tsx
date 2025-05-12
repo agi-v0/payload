@@ -15,7 +15,7 @@ import { RenderCallToActionBlock } from './CallToAction/RenderCallToActionBlock'
 
 const blockComponents = {
   archive: ArchiveBlock,
-  cta: RenderCallToActionBlock,
+  callToAction: RenderCallToActionBlock,
   faqBlock: FaqBlock,
   featuredApps: RenderFeaturedAppsBlock,
   features: RenderFeaturesBlock,
@@ -50,7 +50,7 @@ export const RenderBlocks: React.FC<{
         }
 
         return (
-          <div id={block.blockName || undefined} className="py-xl" key={index}>
+          <div id={block.blockName || undefined} className="*:first:pt-xl *:last:pb-xl" key={index}>
             {blockHeader &&
               !(block?.blockType === 'features' && ['06', '07', '17'].includes(block.type)) &&
               !(block.blockType === 'featuredApps' && block.type === 'appsBlockHero') && (

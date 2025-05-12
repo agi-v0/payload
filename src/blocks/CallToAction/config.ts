@@ -88,20 +88,23 @@ export const CallToAction: Block = {
           type: 'textarea',
         },
       ],
+      admin: {
+        condition: (_, { type }) => ['02'].includes(type),
+      },
     },
-    {
-      name: 'enableForm',
-      type: 'checkbox',
-      label: 'Include Form',
-      defaultValue: false,
-    },
+    // {
+    //   name: 'enableForm',
+    //   type: 'checkbox',
+    //   label: 'Include Form',
+    //   defaultValue: false,
+    // },
     {
       name: 'form',
       type: 'relationship',
       relationTo: 'forms',
       required: false,
       admin: {
-        condition: (_, { enableForm }) => Boolean(enableForm),
+        condition: (_, { type }) => ['06', '07'].includes(type),
       },
     },
   ],

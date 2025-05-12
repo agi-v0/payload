@@ -1,44 +1,15 @@
 .prose {
-  --prose-color: var(--color-base-secondary);
-  --prose-heading-color: var(--color-base-primary);
-  --prose-strong-color: var(--color-base-primary);
-  --prose-link-color: var(--color-base-primary);
-  --prose-code-color: var(--color-base-primary);
+  --prose-color: theme(--color-base-secondary);
+  --prose-heading-color: theme(--color-base-primary);
+  --prose-strong-color: theme(--color-base-primary);
+  --prose-link-color: theme(--color-base-primary);
+  --prose-code-color: theme(--color-base-secondary);
   --prose-marker-color: color-mix(in oklab, var(--color-gray-700) 25%, transparent);
   --prose-link-underline-color: var(--color-sky-400);
   --prose-th-borders: var(--color-gray-300);
   --prose-td-borders: var(--color-gray-200);
   --prose-hr-color: color-mix(in oklab, var(--color-gray-950) 5%, transparent);
   --prose-blockquote-border-color: var(--color-gray-300);
-
-  /* &:where(.dark, .dark *) {
-    --prose-color: var(--color-base-secondary);
-    --prose-heading-color: var(--color-base-primary);
-    --prose-strong-color: var(--color-base-primary);
-    --prose-link-color: var(--color-base-primary);
-    --prose-code-color: var(--color-base-primary);
-    --prose-marker-color: color-mix(in oklab, var(--color-gray-300) 35%, transparent);
-    --prose-link-underline-color: var(--color-sky-400);
-    --prose-th-borders: var(--color-gray-600);
-    --prose-td-borders: var(--color-gray-700);
-    --prose-hr-color: color-mix(in oklab, var(--color-white) 10%, transparent);
-    --prose-blockquote-border-color: var(--color-gray-600);
-  } */
-  @media (prefers-color-scheme: dark) {
-    &:where(.system, .system *) {
-      --prose-color: var(--color-gray-300);
-      --prose-heading-color: var(--color-white);
-      --prose-strong-color: var(--color-white);
-      --prose-link-color: var(--color-white);
-      --prose-code-color: var(--color-white);
-      --prose-marker-color: color-mix(in oklab, var(--color-gray-300) 35%, transparent);
-      --prose-link-underline-color: var(--color-sky-400);
-      --prose-th-borders: var(--color-gray-600);
-      --prose-td-borders: var(--color-gray-700);
-      --prose-hr-color: color-mix(in oklab, var(--color-white) 10%, transparent);
-      --prose-blockquote-border-color: var(--color-gray-600);
-    }
-  }
 
   color: var(--prose-color);
   font-size: var(--text-sm);
@@ -60,7 +31,7 @@
     font-size: var(--text-h1);
     line-height: calc(28 / 18);
     letter-spacing: -0.025em;
-    color: var(--prose-code-color);
+    color: var(--prose-heading-color);
     font-weight: var(--font-weight-medium);
     margin-top: calc(var(--spacing) * 20);
   }
@@ -69,7 +40,7 @@
     font-size: var(--text-h2);
     line-height: calc(28 / 18);
     letter-spacing: -0.025em;
-    color: var(--prose-code-color);
+    color: var(--prose-heading-color);
     font-weight: var(--font-weight-medium);
     margin-top: calc(var(--spacing) * 20);
   }
@@ -108,7 +79,7 @@
   p:where(:not(.not-prose, .not-prose *)) {
     font-size: var(--text-body-md);
     line-height: 1.5;
-    color: var(--color-base-secondary);
+    color: var(--prose-color);
     font-weight: var(--font-weight-normal);
   }
 

@@ -2,7 +2,12 @@
 @import 'tw-animate-css';
 @import './typography.css' layer(components);
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+/* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
+@variant dark {
+  &:where([data-theme='dark'], [data-theme='dark'] *) {
+    @slot;
+  }
+}
 
 /* @config '../../../../tailwind.config.mjs'; */
 
@@ -70,7 +75,7 @@
   --chart-3: hsl(197 37% 24%);
   --chart-4: hsl(43 74% 66%);
   --chart-5: hsl(27 87% 67%);
-  --radius: 0.6rem;
+  /* --radius: 0.5rem; */
 
   --brand: var(--color-marn-500);
   --neutral: var(--color-neutral-950);
@@ -150,10 +155,10 @@
 @theme inline {
   --breakpoint-2xl: 90rem;
 
-  --radius-sm: calc(var(--radius) - 4px);
+  /* --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 4px); */
 
   --radius-space-sm: clamp(1rem, 0.6rem + 1vw, 1.5rem);
 

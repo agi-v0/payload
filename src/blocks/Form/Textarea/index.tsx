@@ -30,9 +30,10 @@ export const Textarea: React.FC<
 }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name}>{label}</Label>
+      {/* <Label htmlFor={name}>{label}</Label> */}
 
       <TextAreaComponent
+        placeholder={label}
         defaultValue={defaultValue}
         id={name}
         rows={rows}
