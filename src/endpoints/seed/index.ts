@@ -163,6 +163,30 @@ export const seed = async ({
         breadcrumbs: [{ label: 'خدمة العملاء', url: '/customer-service' }],
       },
     },
+    {
+      collection: 'categories',
+      data: {
+        title: 'البيع',
+        slug: 'sell',
+        family: 'ecosystems',
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'التشغيل',
+        slug: 'operate',
+        family: 'ecosystems',
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'الإدارة',
+        slug: 'manage',
+        family: 'ecosystems',
+      },
+    },
   ]
 
   // 3. Create categories in parallel (no interdependencies)
@@ -173,6 +197,7 @@ export const seed = async ({
         data: op.data,
         req,
         depth: 0,
+        locale: 'ar',
       })
     } catch (error) {
       payload.logger.error(
@@ -188,6 +213,14 @@ export const seed = async ({
   // Find the 'App Icons' media category ID for later use
   const appIconsCategory = createdCategories.find(
     (cat) => cat && 'slug' in cat && cat.slug === 'app-icon', // Use type guard with null check
+  )
+
+  const sellCategory = createdCategories.find((cat) => cat && 'slug' in cat && cat.slug === 'sell')
+  const operateCategory = createdCategories.find(
+    (cat) => cat && 'slug' in cat && cat.slug === 'operate',
+  )
+  const manageCategory = createdCategories.find(
+    (cat) => cat && 'slug' in cat && cat.slug === 'manage',
   )
 
   payload.logger.info('— Seeding media...')
@@ -279,11 +312,20 @@ export const seed = async ({
       },
     },
   })
+  if (sellCategory?.id == null || operateCategory?.id == null || manageCategory?.id == null) {
+    throw new Error('One or more required category IDs are missing')
+  }
 
   payload.logger.info('— Seeding solutions...')
-  const solutionsSlugToIdMap = await seedSolutions(payload, {
-    imageSquareId: imageSquareDoc?.id,
-  })
+  const solutionsSlugToIdMap = await seedSolutions(
+    payload,
+    { imageSquareId: imageSquareDoc?.id },
+    {
+      sellCategoryId: sellCategory?.id,
+      operateCategoryId: operateCategory?.id,
+      manageCategoryId: manageCategory?.id,
+    },
+  )
 
   payload.logger.info(`— Seeding integrations...`)
   const integrationsSlugToIdMap = await seedIntegrations(payload, {

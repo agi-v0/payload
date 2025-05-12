@@ -33,7 +33,6 @@ export const CallToAction: Block = {
       required: true,
     },
     badge({}),
-
     {
       name: 'richText',
       type: 'richText',
@@ -88,6 +87,7 @@ export const CallToAction: Block = {
           type: 'textarea',
         },
       ],
+      localized: true,
       admin: {
         condition: (_, { type }) => ['02'].includes(type),
       },

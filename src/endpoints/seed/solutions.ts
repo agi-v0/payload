@@ -4,6 +4,11 @@ import type { Media, Solution } from '@/payload-types'
 export const seedSolutions = async (
   payload: Payload,
   { imageSquareId }: { imageSquareId?: number },
+  {
+    sellCategoryId,
+    operateCategoryId,
+    manageCategoryId,
+  }: { sellCategoryId: number; operateCategoryId: number; manageCategoryId: number },
 ): Promise<Record<string, number>> => {
   const solutionsData = [
     {
@@ -17,7 +22,7 @@ export const seedSolutions = async (
         url: '/solutions/cashier',
         label: 'الكاشير',
       },
-      ecosystem: 'sell' as const,
+      ecosystem: sellCategoryId,
       slug: 'cashier',
     },
     {
@@ -31,7 +36,7 @@ export const seedSolutions = async (
         url: '/solutions/paysync',
         label: 'شاشة السداد',
       },
-      ecosystem: 'sell' as const,
+      ecosystem: sellCategoryId,
       slug: 'paysync',
     },
     {
@@ -45,7 +50,7 @@ export const seedSolutions = async (
         url: '/solutions/kiosk',
         label: 'الطلب الذاتي',
       },
-      ecosystem: 'sell' as const,
+      ecosystem: sellCategoryId,
       slug: 'kiosk',
     },
     {
@@ -59,7 +64,7 @@ export const seedSolutions = async (
         url: '/solutions/orderstation',
         label: 'محطة الطلبات',
       },
-      ecosystem: 'operate' as const,
+      ecosystem: operateCategoryId,
       slug: 'orderstation',
     },
     {
@@ -73,7 +78,7 @@ export const seedSolutions = async (
         url: '/solutions/products',
         label: 'المنتجات',
       },
-      ecosystem: 'operate' as const,
+      ecosystem: operateCategoryId,
       slug: 'products',
     },
     {
@@ -87,7 +92,7 @@ export const seedSolutions = async (
         url: '/solutions/inventory',
         label: 'المخزون',
       },
-      ecosystem: 'operate' as const,
+      ecosystem: operateCategoryId,
       slug: 'inventory',
     },
     {
@@ -101,7 +106,7 @@ export const seedSolutions = async (
         url: '/solutions/analytics',
         label: 'التحليلات',
       },
-      ecosystem: 'manage' as const,
+      ecosystem: manageCategoryId,
       slug: 'analytics',
     },
     {
@@ -115,7 +120,7 @@ export const seedSolutions = async (
         url: '/solutions/branches',
         label: 'الفروع',
       },
-      ecosystem: 'manage' as const,
+      ecosystem: manageCategoryId,
       slug: 'branches',
     },
     {
@@ -129,7 +134,7 @@ export const seedSolutions = async (
         url: '/solutions/customers',
         label: 'العملاء',
       },
-      ecosystem: 'manage' as const,
+      ecosystem: manageCategoryId,
       slug: 'customers',
     },
     {
@@ -143,7 +148,7 @@ export const seedSolutions = async (
         url: '/solutions/accouting',
         label: 'المالية',
       },
-      ecosystem: 'manage' as const,
+      ecosystem: manageCategoryId,
       slug: 'accouting',
     },
   ]

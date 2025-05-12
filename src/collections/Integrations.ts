@@ -78,17 +78,17 @@ export const Integrations: CollectionConfig<'integrations'> = {
       name: 'title',
       type: 'text',
       required: true,
-      localized: false,
       admin: {
+        description:
+          'Internal page title used to identify this entry in the CMS and generate the URL slug. English only.',
         rtl: false,
-        description: 'Title of the integration in English for display purposes.',
       },
     },
     {
       type: 'tabs',
       tabs: [
         {
-          label: 'Basic Info',
+          label: 'Info',
           fields: [
             {
               name: 'icon',
@@ -134,10 +134,56 @@ export const Integrations: CollectionConfig<'integrations'> = {
                 description: 'Link to page on Marn.com or alternative site',
               },
             },
+            ///
+            {
+              name: 'companyName',
+              type: 'text',
+              required: true,
+              localized: true,
+              admin: {
+                description: 'Name of the company providing the integration.',
+              },
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'email',
+                  type: 'email',
+                  required: true,
+                  admin: {
+                    description: 'Contact email for the integration.',
+                    width: '50%',
+                  },
+                },
+                {
+                  name: 'phone',
+                  type: 'text',
+                  required: false,
+                  admin: {
+                    description: 'Contact phone number for the integration.',
+                    width: '50%',
+                  },
+                },
+              ],
+            },
+
+            link({
+              colors: false,
+              icon: false,
+              variants: false,
+              overrides: {
+                name: 'docsLink',
+                label: 'Documentation Link',
+                admin: {
+                  description: 'URL to the documentation for the integration.',
+                },
+              },
+            }),
           ],
         },
         {
-          label: 'Page Content',
+          label: 'Content',
           fields: [
             hero,
             {
@@ -176,63 +222,14 @@ export const Integrations: CollectionConfig<'integrations'> = {
                 'formBlock',
                 'testimonials',
               ],
-              localized: true,
+
               admin: {
                 initCollapsed: true,
               },
             },
           ],
         },
-        {
-          label: 'Company Info',
-          fields: [
-            {
-              name: 'companyName',
-              type: 'text',
-              required: true,
-              localized: true,
-              admin: {
-                description: 'Name of the company providing the integration.',
-              },
-            },
 
-            link({
-              colors: false,
-              icon: false,
-              variants: false,
-              overrides: {
-                name: 'docsLink',
-                label: 'Documentation Link',
-                admin: {
-                  description: 'URL to the documentation for the integration.',
-                },
-              },
-            }),
-            {
-              type: 'row',
-              fields: [
-                {
-                  name: 'email',
-                  type: 'email',
-                  required: true,
-                  admin: {
-                    description: 'Contact email for the integration.',
-                    width: '50%',
-                  },
-                },
-                {
-                  name: 'phone',
-                  type: 'text',
-                  required: false,
-                  admin: {
-                    description: 'Contact phone number for the integration.',
-                    width: '50%',
-                  },
-                },
-              ],
-            },
-          ],
-        },
         {
           name: 'meta',
           label: 'SEO',

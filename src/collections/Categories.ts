@@ -22,6 +22,17 @@ export const Categories: CollectionConfig = {
       localized: true,
       required: true,
     },
+    {
+      name: 'family',
+      type: 'select',
+      options: [
+        { label: 'Ecosystems', value: 'ecosystems' },
+        { label: 'Integrations', value: 'integrations' },
+        { label: 'Blog', value: 'blog' },
+        { label: 'Other', value: 'other' },
+      ],
+    },
+
     ...slugField(),
   ],
 }

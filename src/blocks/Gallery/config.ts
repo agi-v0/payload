@@ -12,6 +12,7 @@ const imageEntry: Field[] = [
     admin: {
       description: 'Select an image for the gallery.',
     },
+    localized: true,
   },
   {
     name: 'panel',
@@ -21,10 +22,12 @@ const imageEntry: Field[] = [
       {
         name: 'title',
         type: 'text',
+        localized: true,
       },
       {
         name: 'description',
         type: 'textarea',
+        localized: true,
       },
     ],
     admin: {
@@ -55,7 +58,6 @@ const fields: Field[] = [
     type: 'array',
     minRows: 1,
     fields: imageEntry,
-    localized: true,
   },
 ]
 

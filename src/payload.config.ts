@@ -16,7 +16,7 @@ import { getServerSideURL } from './utilities/getURL'
 //collections
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
-import { AppIcons } from './collections/AppIcons'
+// import { AppIcons } from './collections/AppIcons'
 import { Pages } from './collections/Pages'
 import { Solutions } from './collections/Solutions'
 import { Integrations } from './collections/Integrations'
@@ -152,7 +152,7 @@ export default buildConfig({
     Categories,
     MediaCategories,
     FAQ,
-    AppIcons,
+    // AppIcons,
     Changelog,
     Users,
   ],
@@ -164,6 +164,7 @@ export default buildConfig({
     apiKey: process.env.RESEND_API_KEY || '',
   }),
   i18n: {
+    fallbackLanguage: 'en',
     supportedLanguages: { en, ar },
   },
   localization: {
@@ -174,6 +175,7 @@ export default buildConfig({
           ar: 'الإنجليزية',
         },
         code: 'en',
+        rtl: false,
       },
       {
         label: {

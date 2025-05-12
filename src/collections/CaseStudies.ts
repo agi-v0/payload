@@ -66,6 +66,11 @@ export const CaseStudies: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      admin: {
+        description:
+          'Internal page title used to identify this entry in the CMS and generate the URL slug. English only.',
+        rtl: false,
+      },
     },
     {
       name: 'content',
@@ -90,10 +95,12 @@ export const CaseStudies: CollectionConfig = {
         {
           name: 'industry',
           type: 'text',
+          localized: true,
         },
         {
           name: 'useCase',
           type: 'text',
+          localized: true,
         },
       ],
     },
@@ -107,6 +114,7 @@ export const CaseStudies: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
+      localized: true,
     },
     {
       name: 'stats',
@@ -187,12 +195,11 @@ export const CaseStudies: CollectionConfig = {
         'formBlock',
         'testimonials',
       ],
-      localized: true,
+
       admin: {
         initCollapsed: true,
       },
     },
-
     ...slugField(),
   ],
   hooks: {

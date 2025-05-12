@@ -59,6 +59,7 @@ export const Testimonials: CollectionConfig = {
       name: 'featuredImage',
       type: 'upload',
       relationTo: 'media',
+      localized: true,
     },
     {
       name: 'companyLogo',

@@ -23,6 +23,9 @@ export const Media: CollectionConfig = {
     read: anyone,
     update: authenticated,
   },
+  admin: {
+    defaultColumns: ['filename', 'alt', 'category', 'locale'],
+  },
   fields: [
     {
       name: 'alt',
@@ -39,6 +42,11 @@ export const Media: CollectionConfig = {
       }),
     },
     {
+      name: 'locale',
+      type: 'select',
+      options: ['en', 'ar'],
+    },
+    {
       name: 'category',
       type: 'relationship',
       relationTo: 'media-categories',
@@ -48,6 +56,7 @@ export const Media: CollectionConfig = {
         },
       },
     },
+
     {
       name: 'blurhash',
       type: 'text',

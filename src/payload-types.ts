@@ -88,7 +88,6 @@ export interface Config {
     categories: Category;
     'media-categories': MediaCategory;
     faq: Faq;
-    'app-icons': AppIcon;
     changelog: Changelog;
     users: User;
     redirects: Redirect;
@@ -112,7 +111,6 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'media-categories': MediaCategoriesSelect<false> | MediaCategoriesSelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
-    'app-icons': AppIconsSelect<false> | AppIconsSelect<true>;
     changelog: ChangelogSelect<false> | ChangelogSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
@@ -209,6 +207,7 @@ export interface ArchiveBlock {
 export interface Category {
   id: number;
   title: string;
+  family?: ('ecosystems' | 'integrations' | 'blog' | 'other') | null;
   slug?: string | null;
   slugLock?: boolean | null;
   parent?: (number | null) | Category;
@@ -292,8 +291,10 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
+  locale?: ('en' | 'ar') | null;
   category?: (number | null) | MediaCategory;
   blurhash?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -491,7 +492,7 @@ export interface CallToActionBlock {
 export interface Solution {
   id: number;
   /**
-   * Title of the app in English for display purposes.
+   * Internal page title used to identify this entry in the CMS and generate the URL slug. English only.
    */
   title: string;
   /**
@@ -520,7 +521,10 @@ export interface Solution {
     label: string;
   };
   publishedAt?: string | null;
-  ecosystem?: ('sell' | 'operate' | 'manage') | null;
+  /**
+   * Link this item to an ecosystem category. The list is filtered to show only categories from the "ecosystems" family.
+   */
+  ecosystem?: (number | null) | Category;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -533,6 +537,9 @@ export interface Solution {
  */
 export interface Page {
   id: number;
+  /**
+   * Internal page title used to identify this entry in the CMS and generate the URL slug. English only.
+   */
   title: string;
   hero: {
     type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07' | 'none';
@@ -653,7 +660,7 @@ export interface Page {
 export interface Integration {
   id: number;
   /**
-   * Title of the integration in English for display purposes.
+   * Internal page title used to identify this entry in the CMS and generate the URL slug. English only.
    */
   title: string;
   /**
@@ -678,6 +685,40 @@ export interface Integration {
     [k: string]: unknown;
   } | null;
   link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'solutions';
+          value: number | Solution;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
+  /**
+   * Name of the company providing the integration.
+   */
+  companyName: string;
+  /**
+   * Contact email for the integration.
+   */
+  email: string;
+  /**
+   * Contact phone number for the integration.
+   */
+  phone?: string | null;
+  /**
+   * URL to the documentation for the integration.
+   */
+  docsLink: {
     type?: ('reference' | 'custom') | null;
     newTab?: boolean | null;
     reference?:
@@ -802,40 +843,6 @@ export interface Integration {
         | TestimonialsBlock
       )[]
     | null;
-  /**
-   * Name of the company providing the integration.
-   */
-  companyName: string;
-  /**
-   * URL to the documentation for the integration.
-   */
-  docsLink: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: number | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: number | Post;
-        } | null)
-      | ({
-          relationTo: 'solutions';
-          value: number | Solution;
-        } | null);
-    url?: string | null;
-    label: string;
-  };
-  /**
-   * Contact email for the integration.
-   */
-  email: string;
-  /**
-   * Contact phone number for the integration.
-   */
-  phone?: string | null;
   meta?: {
     title?: string | null;
     /**
@@ -1687,6 +1694,9 @@ export interface Testimonial {
  */
 export interface CaseStudy {
   id: number;
+  /**
+   * Internal page title used to identify this entry in the CMS and generate the URL slug. English only.
+   */
   title: string;
   content: {
     root: {
@@ -1770,60 +1780,6 @@ export interface StyledListBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'styledList';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "app-icons".
- */
-export interface AppIcon {
-  id: number;
-  alt: string;
-  caption?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  Category?: ('App' | 'Website') | null;
-  blurhash?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    square?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2081,10 +2037,6 @@ export interface PayloadLockedDocument {
         value: number | Faq;
       } | null)
     | ({
-        relationTo: 'app-icons';
-        value: number | AppIcon;
-      } | null)
-    | ({
         relationTo: 'changelog';
         value: number | Changelog;
       } | null)
@@ -2301,6 +2253,18 @@ export interface IntegrationsSelect<T extends boolean = true> {
         url?: T;
         label?: T;
       };
+  companyName?: T;
+  email?: T;
+  phone?: T;
+  docsLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
   hero?:
     | T
     | {
@@ -2345,18 +2309,6 @@ export interface IntegrationsSelect<T extends boolean = true> {
   gallery?: T;
   content?: T;
   layout?: T | {};
-  companyName?: T;
-  docsLink?:
-    | T
-    | {
-        type?: T;
-        newTab?: T;
-        reference?: T;
-        url?: T;
-        label?: T;
-      };
-  email?: T;
-  phone?: T;
   meta?:
     | T
     | {
@@ -2380,8 +2332,10 @@ export interface IntegrationsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  locale?: T;
   category?: T;
   blurhash?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2530,6 +2484,7 @@ export interface CaseStudiesSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
+  family?: T;
   slug?: T;
   slugLock?: T;
   parent?: T;
@@ -2564,51 +2519,6 @@ export interface FaqSelect<T extends boolean = true> {
   answer?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "app-icons_select".
- */
-export interface AppIconsSelect<T extends boolean = true> {
-  alt?: T;
-  caption?: T;
-  Category?: T;
-  blurhash?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-  sizes?:
-    | T
-    | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        square?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

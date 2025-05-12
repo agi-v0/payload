@@ -83,6 +83,10 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
         path={path || field.name}
         readOnly={Boolean(readOnly)}
       />
+      <div className="field-description field-description-title">
+        The slug is shared between EN and AR and is automatically generated from the title. Unlock
+        to override.
+      </div>
     </div>
   )
 }

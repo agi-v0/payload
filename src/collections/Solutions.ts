@@ -70,60 +70,60 @@ export const Solutions: CollectionConfig<'solutions'> = {
       name: 'title',
       type: 'text',
       required: true,
-      localized: false,
       admin: {
+        description:
+          'Internal page title used to identify this entry in the CMS and generate the URL slug. English only.',
         rtl: false,
-        description: 'Title of the app in English for display purposes.',
+      },
+    },
+    // {
+    //   type: 'tabs',
+    //   tabs: [
+    //     {
+    //       label: 'Solution Info',
+    //       fields: [
+
+    //       ],
+    //     },
+    //   ],
+    // },
+    {
+      name: 'icon',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Upload an icon for the solution. 500x500px recommended.',
+      },
+      filterOptions: {
+        'category.slug': { equals: 'app-icon' },
       },
     },
     {
-      type: 'tabs',
-      tabs: [
-        {
-          label: 'Solution Info',
-          fields: [
-            {
-              name: 'icon',
-              type: 'upload',
-              relationTo: 'media',
-              admin: {
-                description: 'Upload an icon for the solution. 500x500px recommended.',
-              },
-              filterOptions: {
-                'category.slug': { equals: 'app-icon' },
-              },
-            },
-            {
-              name: 'name',
-              label: 'Name',
-              type: 'text',
-              localized: true,
-            },
-            {
-              name: 'tagline',
-              label: 'Tagline',
-              type: 'text',
-              localized: true,
-            },
-
-            {
-              type: 'collapsible',
-              label: 'Link',
-              fields: [
-                link({
-                  variants: false,
-                  colors: false,
-                  description: false,
-                  icon: false,
-                }),
-              ],
-              admin: {
-                description: 'Link to page on Marn.com/solutions/[solution-slug] if available.',
-              },
-            },
-          ],
-        },
+      name: 'name',
+      label: 'Name',
+      type: 'text',
+      localized: true,
+    },
+    {
+      name: 'tagline',
+      label: 'Tagline',
+      type: 'text',
+      localized: true,
+    },
+    {
+      type: 'collapsible',
+      label: 'Link',
+      fields: [
+        link({
+          variants: false,
+          colors: false,
+          description: false,
+          icon: false,
+        }),
       ],
+      admin: {
+        description: 'Link to page on Marn.com/solutions/[slug] if available.',
+      },
     },
     {
       name: 'appPreview',
@@ -144,18 +144,36 @@ export const Solutions: CollectionConfig<'solutions'> = {
         position: 'sidebar',
       },
     },
+    // {
+    //   name: 'ecosystem',
+    //   type: 'select',
+    //   options: [
+    //     { value: 'sell', label: { en: 'Sell', ar: 'بيع' } },
+    //     { value: 'operate', label: { en: 'Operate', ar: 'تشغيل' } },
+    //     { value: 'manage', label: { en: 'Manage', ar: 'إدارة' } },
+    //   ],
+    //   admin: {
+    //     position: 'sidebar',
+    //   },
+    // },
     {
       name: 'ecosystem',
-      type: 'select',
-      options: [
-        { value: 'sell', label: { en: 'Sell', ar: 'بيع' } },
-        { value: 'operate', label: { en: 'Operate', ar: 'تشغيل' } },
-        { value: 'manage', label: { en: 'Manage', ar: 'إدارة' } },
-      ],
+      type: 'relationship',
+      relationTo: 'categories',
+      filterOptions: (data) => {
+        return {
+          family: {
+            equals: 'ecosystems',
+          },
+        }
+      },
       admin: {
         position: 'sidebar',
+        description:
+          'Link this item to an ecosystem category. The list is filtered to show only categories from the "ecosystems" family.',
       },
     },
+
     ...slugField(),
   ],
 

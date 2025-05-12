@@ -19,6 +19,16 @@ import {
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
+  labels: {
+    singular: {
+      en: 'Page',
+      ar: 'الصفحة',
+    },
+    plural: {
+      en: 'Pages',
+      ar: 'الصفحات',
+    },
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -59,11 +69,14 @@ export const Pages: CollectionConfig<'pages'> = {
       name: 'title',
       type: 'text',
       required: true,
-      localized: true,
+      admin: {
+        description:
+          'Internal page title used to identify this entry in the CMS and generate the URL slug. English only.',
+        rtl: false,
+      },
     },
     {
       type: 'tabs',
-
       tabs: [
         {
           fields: [hero],
@@ -86,7 +99,6 @@ export const Pages: CollectionConfig<'pages'> = {
                 'testimonials',
               ],
               required: true,
-              localized: true,
               admin: {
                 initCollapsed: true,
               },

@@ -77,6 +77,7 @@ export const FeaturesBlock: Block = {
       admin: {
         condition: (_, siblingData, { blockData }) => ['04', '06', '07'].includes(blockData?.type),
       },
+      localized: true,
     },
     {
       type: 'collapsible',
@@ -86,6 +87,7 @@ export const FeaturesBlock: Block = {
           name: 'CTALabel',
           type: 'text',
           label: 'CTA Label Text',
+          localized: true,
           admin: {
             description: 'Extra text to display alongside the link',
           },
@@ -132,6 +134,7 @@ export const FeaturesBlock: Block = {
           type: 'upload',
           relationTo: 'media',
           label: 'Image',
+          localized: true,
           admin: {
             condition: (_, siblingData, { blockData }) =>
               [
@@ -156,6 +159,7 @@ export const FeaturesBlock: Block = {
           name: 'tabLabel',
           type: 'text',
           label: 'Tab Label',
+          localized: true,
           admin: {
             condition: (_, siblingData, { blockData }) => ['08'].includes(blockData?.type),
           },
@@ -176,11 +180,12 @@ export const FeaturesBlock: Block = {
           label: false,
           name: 'content',
           fields: [
-            { name: 'title', type: 'text', label: 'Title', required: true },
+            { name: 'title', type: 'text', label: 'Title', required: true, localized: true },
             {
               name: 'subtitle',
               type: 'textarea',
               label: 'Subtitle',
+              localized: true,
             },
           ],
           admin: {
@@ -197,6 +202,7 @@ export const FeaturesBlock: Block = {
             condition: (_, siblingData, { blockData }) =>
               ['01', '03', '04', '05', '11'].includes(blockData?.type),
           },
+          localized: true,
         },
         {
           type: 'row',
