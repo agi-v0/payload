@@ -28,7 +28,7 @@ export const Features12: React.FC<FeaturesBlock> = ({ columns }) => {
                   <h3 className="text-body-lg text-base-primary font-medium">
                     {column.content?.title}
                   </h3>
-                  <p className="text-body-md text-base-tertiary">{column.content?.title}</p>
+                  <p className="text-body-md text-base-tertiary">{column.content?.subtitle}</p>
                 </div>
               )}
             </CardContent>

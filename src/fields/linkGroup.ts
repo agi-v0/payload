@@ -34,7 +34,6 @@ export const linkGroup: LinkGroupType = ({
       {
         name: 'links',
         type: 'array',
-        localized: true,
         fields: [
           link({
             variants,

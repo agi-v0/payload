@@ -479,7 +479,6 @@ export interface CallToActionBlock {
         id?: string | null;
       }[]
     | null;
-  enableForm?: boolean | null;
   form?: (number | null) | Form;
   id?: string | null;
   blockName?: string | null;

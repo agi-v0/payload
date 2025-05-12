@@ -181,9 +181,10 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                     {...subLink.link}
                     icon={null}
                     label={null}
+                    variant="inline"
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      'ease-in-out-quad relative h-fit w-full rounded-2xl px-3 text-base transition-all duration-300 hover:px-4 [&_svg]:size-5',
+                      'ease-in-out-quad relative h-fit w-full gap-4 rounded-2xl px-3 text-base transition-all duration-300 hover:px-4 [&_svg]:size-5',
                     )}
                   >
                     {subLink.link.icon && (

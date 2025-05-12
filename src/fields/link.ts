@@ -160,6 +160,7 @@ export const link: LinkType = ({
       name: 'description',
       label: 'Description',
       type: 'text',
+      localized: true,
     })
   }
 

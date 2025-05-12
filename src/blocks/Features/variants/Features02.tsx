@@ -33,10 +33,11 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
           {
             key: index,
             className: cn(
-              'gap-md group rounded-space-sm bg-background-neutral p-md col-span-4 flex flex-col transition-all duration-300 hover:no-underline hover:shadow-lg',
+              'gap-md group rounded-space-sm bg-background-neutral p-md col-span-4 flex flex-col transition-all duration-300 hover:no-underline',
               lgColSpanClass,
               {
                 'lg:flex-row': size === 'full', // Adjust layout for full-size columns
+                'hover:shadow-lg': column.enableCta && column.link?.label,
               },
             ),
             ...(column.link?.label ? { ...column.link, label: null, variant: 'inline' } : {}),

@@ -243,7 +243,7 @@ function CarouselIndicator({ className, classNameButton }: CarouselIndicatorProp
   return (
     <div
       className={cn(
-        'pointer-events-none absolute z-10 flex w-full items-center justify-center',
+        'pointer-events-none absolute z-1 flex w-full items-center justify-center',
         className,
       )}
     >
@@ -336,7 +336,7 @@ function CarouselItem({ children, className }: CarouselItemProps) {
 
   return (
     <motion.div
-      className={cn('overflow-hidden', className)}
+      className={cn('flex items-center overflow-hidden', className)}
       style={{
         flexBasis: `${basis}%`,
         flexGrow: 0,

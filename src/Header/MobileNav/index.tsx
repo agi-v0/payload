@@ -40,7 +40,7 @@ interface MobileNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdA
 }
 
 const navigationMenuTriggerStyle = cva(
-  'focus:text-base-primary data-[closed]:text-base-secondary inline-flex w-full items-center justify-start gap-2 bg-transparent py-4 text-(length:--text-h3) font-medium text-(color:--color-base-secondary) transition-colors group-data-[expanded]:text-(color:--color-base-primary) hover:text-(color:--color-base-primary) focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-transparent data-[state=open]:focus:bg-transparent',
+  'focus:text-base-primary data-[closed]:text-base-secondary inline-flex w-full items-center justify-start gap-2 bg-transparent py-4 text-(length:--text-h3) font-medium text-(color:--color-base-secondary) transition-colors group-data-[expanded]:text-(color:--color-base-primary) hover:text-(color:--color-base-primary) hover:no-underline focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-transparent data-[state=open]:focus:bg-transparent',
 )
 
 export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
@@ -142,7 +142,7 @@ interface MobileNavItemProps {
 function MobileNavItem({ item, onClick }: MobileNavItemProps) {
   // Base class for all nav items in the submenu for consistent padding/hover
   const baseItemClasses =
-    'text-base-secondary h-fit hover:bg-background-neutral-subtle hover:text-base-primary block rounded-space-sm py-2 text-(length:--text-body-md) px-3'
+    'text-base-secondary hover:no-underline h-fit hover:bg-background-neutral-subtle hover:text-base-primary block rounded-space-sm py-2 text-(length:--text-body-md) px-3'
 
   switch (item.style) {
     case 'featured':
@@ -163,7 +163,7 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && onClick()}
             >
-              <CMSLink {...subLink.link} className={cn(baseItemClasses)} />
+              <CMSLink {...subLink.link} variant="inline" className={baseItemClasses} />
             </div>
           ))}
         </div>
@@ -193,6 +193,7 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                   {...subLink.link}
                   label={undefined}
                   icon={undefined}
+                  variant="inline"
                   className={cn(
                     baseItemClasses,
                     'group flex items-center justify-start gap-2', // Use flex, add gap
