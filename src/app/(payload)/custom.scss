@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-
-:root {
-  --font-body: 'Rubik', sans-serif;
-  --style-radius-s: 8px;
-  --style-radius-m: 12px;
-  --style-radius-l: 16px;
-  --style-radius-full: 999px;
+@layer payload {
+  :root {
+    --font-body: 'Rubik', sans-serif;
+    --style-radius-s: 8px;
+    --style-radius-m: 12px;
+    --style-radius-l: 16px;
+    --style-radius-full: 999px;
+  }
 }
-
 .collapsible {
   border-radius: var(--style-radius-s);
 }
