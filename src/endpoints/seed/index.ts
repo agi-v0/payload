@@ -128,8 +128,8 @@ export const seed = async ({
     }),
   )
 
-  // 2. Build an array of category create operations
-  const categoryCreates = [
+  //Child categories
+  const childCategoriesData = [
     // Media Categories
     {
       collection: 'categories',
@@ -143,55 +143,55 @@ export const seed = async ({
     { collection: 'categories', data: { title: 'Team Photos', parent: { id: media.id } } },
     { collection: 'categories', data: { title: 'Background Textures', parent: { id: media.id } } },
     // Integrations Categories
-    {
-      collection: 'categories',
-      data: {
-        title: 'إدارة المطاعم',
-        slug: '',
-        parent: { id: integrations.id },
-      },
-    },
-    {
-      collection: 'categories',
-      data: {
-        title: 'إدارة المخزون',
-        slug: '',
-        parent: { id: integrations.id },
-      },
-    },
-    {
-      collection: 'categories',
-      data: {
-        title: 'تقارير المبيعات',
-        slug: '',
-        parent: { id: integrations.id },
-      },
-    },
-    {
-      collection: 'categories',
-      data: {
-        title: 'إدارة الموظفين',
-        slug: '',
-        parent: { id: integrations.id },
-      },
-    },
-    {
-      collection: 'categories',
-      data: {
-        title: 'برامج نقاط البيع',
-        slug: '',
-        parent: { id: integrations.id },
-      },
-    },
+    // {
+    //   collection: 'categories',
+    //   data: {
+    //     title: 'إدارة المطاعم',
+    //     // slug: '',
+    //     parent: { id: integrations.id },
+    //   },
+    // },
+    // {
+    //   collection: 'categories',
+    //   data: {
+    //     title: 'إدارة المخزون',
+    //     // slug: '',
+    //     parent: { id: integrations.id },
+    //   },
+    // },
+    // {
+    //   collection: 'categories',
+    //   data: {
+    //     title: 'تقارير المبيعات',
+    //     // slug: '',
+    //     parent: { id: integrations.id },
+    //   },
+    // },
+    // {
+    //   collection: 'categories',
+    //   data: {
+    //     title: 'إدارة الموظفين',
+    //     // slug: '',
+    //     parent: { id: integrations.id },
+    //   },
+    // },
+    // {
+    //   collection: 'categories',
+    //   data: {
+    //     title: 'برامج نقاط البيع',
+    //     // slug: '',
+    //     parent: { id: integrations.id },
+    //   },
+    // },
 
-    {
-      collection: 'categories',
-      data: {
-        title: 'خدمة العملاء',
-        slug: '',
-        parent: { id: integrations.id },
-      },
-    },
+    // {
+    //   collection: 'categories',
+    //   data: {
+    //     title: 'خدمة العملاء',
+    //     // slug: '',
+    //     parent: { id: integrations.id },
+    //   },
+    // },
     // Ecosystems Categories
     {
       collection: 'categories',
@@ -219,39 +219,26 @@ export const seed = async ({
     },
   ]
 
-  // 3. Create categories in parallel (no interdependencies)
-  const categoryPromises = categoryCreates.map(async (op) => {
-    try {
-      return await payload.create({
-        collection: op.collection as CollectionSlug,
-        data: op.data,
-        req,
-        depth: 0,
-        locale: 'ar',
-      })
-    } catch (error) {
-      payload.logger.error(
-        `Failed to create ${op.collection} ${op.data.title || op.data.slug || 'Untitled'}: ${error instanceof Error ? error.message : String(error)}`,
-      )
-      return null
-    }
+  for (const op of childCategoriesData) {
+    console.log('seeding ', op.data.title)
+    await payload.create({
+      collection: op.collection as CollectionSlug,
+      data: op.data,
+      req,
+      depth: 0,
+    })
+  }
+
+  const { docs: categories } = await payload.find({
+    collection: 'categories',
+    where: {
+      slug: {
+        in: ['app-icon', 'sell', 'operate', 'manage'],
+      },
+    },
   })
 
-  const categoryResults = await Promise.all(categoryPromises)
-  const createdCategories = categoryResults.filter(Boolean)
-
-  // Find the 'App Icons' media category ID for later use
-  const appIconsCategory = createdCategories.find(
-    (cat) => cat && 'slug' in cat && cat.slug === 'app-icon', // Use type guard with null check
-  )
-
-  const sellCategory = createdCategories.find((cat) => cat && 'slug' in cat && cat.slug === 'sell')
-  const operateCategory = createdCategories.find(
-    (cat) => cat && 'slug' in cat && cat.slug === 'operate',
-  )
-  const manageCategory = createdCategories.find(
-    (cat) => cat && 'slug' in cat && cat.slug === 'manage',
-  )
+  const [appIconsCategory, sellCategory, operateCategory, manageCategory] = categories
 
   payload.logger.info('— Seeding media...')
 
