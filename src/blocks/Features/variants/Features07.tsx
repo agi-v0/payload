@@ -13,16 +13,23 @@ import { containerVariants, itemsFling } from '@/utilities/motion'
 export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
   return (
-    <div className={cn('gap-md rounded-space-sm container flex flex-col')}>
+    <div className="gap-md rounded-space-sm py-xl container flex flex-col">
       <div className={cn('gap-sm flex flex-col')}>
         {blockHeader && <BlockHeader {...blockHeader} type="center" />}
-        {blockImage && (
-          <Media
-            resource={blockImage}
-            className="rounded-space-sm h-auto w-full overflow-hidden lg:basis-1/2"
-            imgClassName="w-full h-auto aspect-[16/9] object-cover"
-          />
-        )}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+        >
+          {blockImage && (
+            <Media
+              resource={blockImage}
+              className="rounded-space-sm h-auto w-full overflow-hidden lg:basis-1/2"
+              imgClassName="w-full h-auto aspect-[16/9] object-cover"
+            />
+          )}
+        </motion.div>
       </div>
       <hr className="border-border" />
       <motion.div

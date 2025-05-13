@@ -12,7 +12,13 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
   return (
     <div className="bg-background-neutral-subtle py-xl w-full">
       <div className="py-xl container">
-        <div className="gap-md rounded-space-sm p-md bg-background-neutral flex flex-col">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+          className="gap-md rounded-space-sm p-md bg-background-neutral flex flex-col"
+        >
           <div className="gap-sm flex flex-col md:flex-row">
             <div className="gap-md md:pe-md md:pt-md flex w-full flex-col lg:basis-1/2">
               {blockHeader && (
@@ -75,7 +81,7 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
               )
             })}
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )

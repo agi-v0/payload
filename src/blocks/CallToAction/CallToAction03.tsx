@@ -7,6 +7,9 @@ import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 
+import * as motion from 'motion/react-client'
+import { containerVariants } from '@/utilities/motion'
+
 export const CallToAction03: React.FC<CTABlockProps> = ({
   badge,
   richText,
@@ -17,7 +20,13 @@ export const CallToAction03: React.FC<CTABlockProps> = ({
 }) => {
   return (
     <div className="py-xl container">
-      <div className="bg-background-neutral gap-sm rounded-space-sm flex flex-col items-center">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+        className="bg-background-neutral gap-sm rounded-space-sm flex flex-col items-center"
+      >
         <div className="gap-sm px-md pt-xl flex flex-col items-center">
           {richText && (
             <RichText className="mb-0 text-center" data={richText} enableGutter={false} />
@@ -29,7 +38,7 @@ export const CallToAction03: React.FC<CTABlockProps> = ({
           </div>
         </div>
         {media && <Media resource={media} className="m-sm rounded-space-md overflow-hidden" />}
-      </div>
+      </motion.div>
     </div>
   )
 }

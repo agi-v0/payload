@@ -1,4 +1,8 @@
+'use client'
 import React from 'react'
+import { motion } from 'motion/react'
+import { containerVariants, itemsFling } from '@/utilities/motion'
+import { cn } from '@/utilities/ui'
 
 import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
 import type { CMSLinkType } from '@/components/Link'
@@ -10,7 +14,15 @@ import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
 export const CallToAction02: React.FC<CTABlockProps> = ({ links, richText, list }) => {
   return (
     <div className="py-xl container">
-      <div className="bg-background-neutral gap-xl px-xl rounded-space-sm flex flex-col items-center py-[calc(var(--spacing-xl)*2)]">
+      <motion.div
+        className={cn(
+          'bg-background-neutral gap-xl px-xl rounded-space-sm flex flex-col items-center py-[calc(var(--spacing-xl)*2)]',
+        )}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+      >
         <div className="gap-lg flex flex-col items-center">
           {richText && (
             <RichText className="mb-0 text-center" data={richText} enableGutter={false} />
@@ -32,7 +44,11 @@ export const CallToAction02: React.FC<CTABlockProps> = ({ links, richText, list 
             {list.map((column, index) => {
               const { title, subtitle, icon } = column
               return (
-                <div key={index} className="gap-sm flex flex-col items-start">
+                <motion.div
+                  key={index}
+                  variants={itemsFling}
+                  className="gap-sm flex flex-col items-start"
+                >
                   {icon && (
                     <div className="bg-background-neutral-subtle p-xs inline rounded-full">
                       <DynamicIcon
@@ -48,12 +64,12 @@ export const CallToAction02: React.FC<CTABlockProps> = ({ links, richText, list 
                     )}
                     {subtitle && <p className="text-body-sm text-base-secondary">{subtitle}</p>}
                   </div>
-                </div>
+                </motion.div>
               )
             })}
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   )
 }
