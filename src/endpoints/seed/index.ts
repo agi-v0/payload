@@ -1,5 +1,5 @@
 import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
-import type { Header, Form, Footer } from '@/payload-types'
+import type { Header, Form, Footer, Category } from '@/payload-types'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
@@ -59,6 +59,7 @@ export const seed = async ({
   payload.logger.info('Seeding database...')
   payload.logger.info(`— Clearing collections and globals...`)
 
+  req.locale = 'ar'
   // clear the database
   await Promise.all([
     payload.updateGlobal({
@@ -71,6 +72,7 @@ export const seed = async ({
       context: {
         disableRevalidate: true,
       },
+      req,
     }),
     payload.updateGlobal({
       slug: 'footer',
@@ -81,6 +83,7 @@ export const seed = async ({
       context: {
         disableRevalidate: true,
       },
+      req,
     }),
   ])
   await Promise.all(
@@ -124,31 +127,70 @@ export const seed = async ({
         req,
         depth: 0,
         locale: 'ar',
+        context: {
+          locale: 'ar',
+        },
       })
     }),
   )
+  payload.logger.info('✓ Seeded parent categories...')
 
   //Child categories
   const childCategoriesData = [
     // Media Categories
     {
       collection: 'categories',
-      data: { title: 'App Icons', slug: 'app-icon', parent: { id: media.id } },
+      data: {
+        title: 'App Icons',
+        breadcrumbs: [
+          {
+            label: 'App Icons',
+            url: '/media/app-icons',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        slug: 'app-icons',
+        parent: media.id,
+      },
     },
-    { collection: 'categories', data: { title: 'Hero Images', parent: { id: media.id } } },
-    { collection: 'categories', data: { title: 'Feature Images', parent: { id: media.id } } },
-    { collection: 'categories', data: { title: 'Blog Images', parent: { id: media.id } } },
-    { collection: 'categories', data: { title: 'OG Images', parent: { id: media.id } } },
-    { collection: 'categories', data: { title: 'Customer Logos', parent: { id: media.id } } },
-    { collection: 'categories', data: { title: 'Team Photos', parent: { id: media.id } } },
-    { collection: 'categories', data: { title: 'Background Textures', parent: { id: media.id } } },
+    // {
+    //   collection: 'categories',
+    //   data: { title: 'Hero Images', slug: 'hero-images' },
+    // },
+    // {
+    //   collection: 'categories',
+    //   data: { title: 'Feature Images', slug: 'feature-images' },
+    // },
+    // {
+    //   collection: 'categories',
+    //   data: { title: 'Blog Images', slug: 'blog-images' },
+    // },
+    // {
+    //   collection: 'categories',
+    //   data: { title: 'OG Images', slug: 'og-images' },
+    // },
+    // {
+    //   collection: 'categories',
+    //   data: { title: 'Customer Logos', slug: 'customer-logos' },
+    // },
+    // {
+    //   collection: 'categories',
+    //   data: { title: 'Team Photos', slug: 'team-photos' },
+    // },
+    // {
+    //   collection: 'categories',
+    //   data: { title: 'Background Textures', slug: 'background-textures' },
+    // },
     // Integrations Categories
     // {
     //   collection: 'categories',
     //   data: {
     //     title: 'إدارة المطاعم',
     //     // slug: '',
-    //     parent: { id: integrations.id },
+    //     parent: integrations.id,
     //   },
     // },
     // {
@@ -156,7 +198,7 @@ export const seed = async ({
     //   data: {
     //     title: 'إدارة المخزون',
     //     // slug: '',
-    //     parent: { id: integrations.id },
+    //     parent: integrations.id,
     //   },
     // },
     // {
@@ -164,7 +206,7 @@ export const seed = async ({
     //   data: {
     //     title: 'تقارير المبيعات',
     //     // slug: '',
-    //     parent: { id: integrations.id },
+    //     parent: integrations.id,
     //   },
     // },
     // {
@@ -172,7 +214,7 @@ export const seed = async ({
     //   data: {
     //     title: 'إدارة الموظفين',
     //     // slug: '',
-    //     parent: { id: integrations.id },
+    //     parent: integrations.id,
     //   },
     // },
     // {
@@ -180,7 +222,7 @@ export const seed = async ({
     //   data: {
     //     title: 'برامج نقاط البيع',
     //     // slug: '',
-    //     parent: { id: integrations.id },
+    //     parent: integrations.id,
     //   },
     // },
 
@@ -189,7 +231,7 @@ export const seed = async ({
     //   data: {
     //     title: 'خدمة العملاء',
     //     // slug: '',
-    //     parent: { id: integrations.id },
+    //     parent: integrations.id,
     //   },
     // },
     // Ecosystems Categories
@@ -197,48 +239,76 @@ export const seed = async ({
       collection: 'categories',
       data: {
         title: 'البيع',
+        breadcrumbs: [
+          { label: 'sell', url: '/ecosystems/sell' },
+          { label: 'Ecosystems', url: '/ecosystems' },
+        ],
         slug: 'sell',
-        parent: { id: ecosystems.id },
+
+        parent: ecosystems.id,
       },
     },
     {
       collection: 'categories',
       data: {
         title: 'التشغيل',
+        breadcrumbs: [
+          { label: 'operate', url: '/ecosystems/operate' },
+          { label: 'Ecosystems', url: '/ecosystems' },
+        ],
         slug: 'operate',
-        parent: { id: ecosystems.id },
+
+        parent: ecosystems.id,
       },
     },
     {
       collection: 'categories',
       data: {
         title: 'الإدارة',
+        breadcrumbs: [
+          { label: 'manage', url: '/ecosystems/manage' },
+          { label: 'Ecosystems', url: '/ecosystems' },
+        ],
         slug: 'manage',
-        parent: { id: ecosystems.id },
+        parent: ecosystems.id,
       },
     },
   ]
 
-  for (const op of childCategoriesData) {
-    console.log('seeding ', op.data.title)
-    await payload.create({
-      collection: op.collection as CollectionSlug,
-      data: op.data,
-      req,
-      depth: 0,
-    })
-  }
+  await Promise.all(
+    childCategoriesData.map(async (op) => {
+      return await payload.create({
+        collection: op.collection as CollectionSlug,
+        data: op.data,
+        req,
+        depth: 0,
+        locale: 'ar',
+      })
+    }),
+  )
 
-  const { docs: categories } = await payload.find({
+  payload.logger.info('✓ Seeded child categories...')
+
+  const categories = await payload.find({
     collection: 'categories',
     where: {
       slug: {
-        in: ['app-icon', 'sell', 'operate', 'manage'],
+        in: ['app-icons', 'sell', 'operate', 'manage'],
       },
     },
   })
+  const categoriesMap = categories.docs.reduce(
+    (acc, category) => {
+      acc[category?.slug ?? ''] = category
+      return acc
+    },
+    {} as Record<string, Category>,
+  )
 
-  const [appIconsCategory, sellCategory, operateCategory, manageCategory] = categories
+  const appIconsCategory = categoriesMap['app-icons']
+  const sellCategory = categoriesMap['sell']
+  const operateCategory = categoriesMap['operate']
+  const manageCategory = categoriesMap['manage']
 
   payload.logger.info('— Seeding media...')
 
@@ -324,10 +394,9 @@ export const seed = async ({
     id: imageSquareDoc.id,
     collection: 'media',
     data: {
-      category: {
-        id: appIconsCategory?.id,
-      },
+      category: appIconsCategory.id,
     },
+    req,
   })
   if (sellCategory?.id == null || operateCategory?.id == null || manageCategory?.id == null) {
     throw new Error('One or more required category IDs are missing')
@@ -336,6 +405,7 @@ export const seed = async ({
   payload.logger.info('— Seeding solutions...')
   const solutionsSlugToIdMap = await seedSolutions(
     payload,
+    req,
     { imageSquareId: imageSquareDoc?.id },
     {
       sellCategoryId: sellCategory?.id,
@@ -345,7 +415,7 @@ export const seed = async ({
   )
 
   payload.logger.info(`— Seeding integrations...`)
-  const integrationsSlugToIdMap = await seedIntegrations(payload, {
+  const integrationsSlugToIdMap = await seedIntegrations(payload, req, {
     imageSquareId: imageSquareDoc?.id,
   })
 
@@ -393,6 +463,7 @@ export const seed = async ({
         depth: 0,
         data: page.data,
         locale: page.locale,
+        req,
       })
     }),
   )
@@ -626,11 +697,13 @@ export const seed = async ({
       slug: 'header',
       locale: 'ar',
       data: headerData,
+      req,
     }),
     payload.logger.info('Updating global – footer'),
     payload.updateGlobal({
       slug: 'footer',
       data: footerData,
+      req,
     }),
   ])
 

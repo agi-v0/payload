@@ -95,7 +95,7 @@ export const Solutions: CollectionConfig<'solutions'> = {
         description: 'Upload an icon for the solution. 500x500px recommended.',
       },
       filterOptions: {
-        'category.slug': { equals: 'app-icon' },
+        'category.slug': { equals: 'app-icons' },
       },
     },
     {

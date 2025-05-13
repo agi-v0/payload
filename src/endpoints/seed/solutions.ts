@@ -1,8 +1,9 @@
-import type { Payload } from 'payload'
+import type { Payload, PayloadRequest } from 'payload'
 import type { Media, Solution } from '@/payload-types'
 
 export const seedSolutions = async (
   payload: Payload,
+  req: PayloadRequest,
   { imageSquareId }: { imageSquareId?: number },
   {
     sellCategoryId,
@@ -13,7 +14,7 @@ export const seedSolutions = async (
   const solutionsData = [
     {
       title: 'Cashier',
-      ...(imageSquareId && imageSquareId > 0 && { icon: imageSquareId }),
+      icon: imageSquareId,
       name: 'الكاشير',
       tagline: 'تسجيل المبيعات بمرونة وسرعة على أي جهاز',
       link: {
@@ -27,7 +28,7 @@ export const seedSolutions = async (
     },
     {
       title: 'PaySync',
-      ...(imageSquareId && imageSquareId > 0 && { icon: imageSquareId }),
+      icon: imageSquareId,
       name: 'شاشة السداد',
       tagline: 'عرض الطلبات والدفع بشكل مباشر للعميل',
       link: {
@@ -41,7 +42,7 @@ export const seedSolutions = async (
     },
     {
       title: 'Kiosk',
-      ...(imageSquareId && imageSquareId > 0 && { icon: imageSquareId }),
+      icon: imageSquareId,
       name: 'الطلب الذاتي',
       tagline: 'خلي العملاء يطلبون بأنفسهم ويقل الضغط على الموظفين',
       link: {
@@ -55,7 +56,7 @@ export const seedSolutions = async (
     },
     {
       title: 'OrderStation',
-      ...(imageSquareId && imageSquareId > 0 && { icon: imageSquareId }),
+      icon: imageSquareId,
       name: 'محطة الطلبات',
       tagline: 'إدارة جميع الطلبات من مكان واحد – حضوري وتوصيل',
       link: {
@@ -69,7 +70,7 @@ export const seedSolutions = async (
     },
     {
       title: 'Products',
-      ...(imageSquareId && imageSquareId > 0 && { icon: imageSquareId }),
+      icon: imageSquareId,
       name: 'المنتجات',
       tagline: 'نظّم منتجاتك، الأسعار، والعروض بسهولة',
       link: {
@@ -83,7 +84,7 @@ export const seedSolutions = async (
     },
     {
       title: 'Inventory',
-      ...(imageSquareId && imageSquareId > 0 && { icon: imageSquareId }),
+      icon: imageSquareId,
       name: 'المخزون',
       tagline: 'تابع الكميات وتفادى النقص أو الهدر تلقائيًا',
       link: {
@@ -97,7 +98,7 @@ export const seedSolutions = async (
     },
     {
       title: 'Analytics',
-      ...(imageSquareId && imageSquareId > 0 && { icon: imageSquareId }),
+      icon: imageSquareId,
       name: 'التحليلات',
       tagline: 'تقارير فورية عن المبيعات والأرباح تساعدك تتخذ قرارات',
       link: {
@@ -111,7 +112,7 @@ export const seedSolutions = async (
     },
     {
       title: 'Branches',
-      ...(imageSquareId && imageSquareId > 0 && { icon: imageSquareId }),
+      icon: imageSquareId,
       name: 'الفروع',
       tagline: 'راقب كل فروعك وتقاريرها من نفس اللوحة',
       link: {
@@ -125,7 +126,7 @@ export const seedSolutions = async (
     },
     {
       title: 'Customers',
-      ...(imageSquareId && imageSquareId > 0 && { icon: imageSquareId }),
+      icon: imageSquareId,
       name: 'العملاء',
       tagline: 'احفظ بيانات عملاءك وفعّل برامج الولاء',
       link: {
@@ -139,7 +140,7 @@ export const seedSolutions = async (
     },
     {
       title: 'Accounting',
-      ...(imageSquareId && imageSquareId > 0 && { icon: imageSquareId }),
+      icon: imageSquareId,
       name: 'المالية',
       tagline: 'تتبّع المصاريف، الضرائب، والتدفق المالي بسهولة',
       link: {
@@ -159,6 +160,8 @@ export const seedSolutions = async (
         collection: 'solutions',
         depth: 0,
         data: solution,
+        locale: 'ar',
+        req,
       }),
     ),
   )

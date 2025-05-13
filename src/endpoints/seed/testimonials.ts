@@ -21,7 +21,7 @@ export async function seedTestimonials({
   caseStudies: Record<string, number>
 }): Promise<TestimonialsResult> {
   // Reduce the number of testimonials in production to improve performance
-  const testimonialCount = process.env.NODE_ENV === 'production' ? 5 : 10
+  const testimonialCount = 10
   const testimonialsDataArray = Array.from({ length: testimonialCount }).map((_, i) => ({
     quote: {
       root: {

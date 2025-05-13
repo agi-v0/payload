@@ -2,7 +2,7 @@ import type { Payload, PayloadRequest } from 'payload'
 import type { Changelog } from '@/payload-types' // Assuming Changelog type exists
 
 export const seedChangelog = async (payload: Payload, req: PayloadRequest): Promise<void> => {
-  const changelogCount = process.env.NODE_ENV === 'production' ? 5 : 10
+  const changelogCount = 10
   const changelogDataArray = Array.from({ length: changelogCount }).map(
     (_, i) =>
       ({

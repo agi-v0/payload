@@ -15,7 +15,7 @@ export const seedCaseStudies = async (
   },
 ): Promise<{ [key: string]: number }> => {
   payload.logger.info('— Seeding case studies...')
-  const caseStudyCount = process.env.NODE_ENV === 'production' ? 3 : 6
+  const caseStudyCount = 6
   const caseStudiesDataArray = Array.from({ length: caseStudyCount }).map((_, i) => {
     const caseStudyDataBase: Omit<
       CaseStudy,
@@ -74,6 +74,7 @@ export const seedCaseStudies = async (
         collection: 'case-studies',
         depth: 0,
         data: caseStudy,
+        req,
       }),
     ),
   )

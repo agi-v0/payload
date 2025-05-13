@@ -1,4 +1,4 @@
-import type { Payload, RequiredDataFromCollectionSlug } from 'payload'
+import type { Payload, PayloadRequest, RequiredDataFromCollectionSlug } from 'payload'
 import type { Media, Integration } from '@/payload-types'
 
 type IntegrationDataArgs = {
@@ -120,6 +120,7 @@ const createIntegrationObject = (
 
 export const seedIntegrations = async (
   payload: Payload,
+  req: PayloadRequest,
   { imageSquareId }: { imageSquareId?: number }, // Can be string from payload types
 ): Promise<Record<string, number>> => {
   const integrationsToSeed = [
@@ -176,7 +177,7 @@ export const seedIntegrations = async (
   ]
 
   // In production, we might want to limit the number of integrations seeded
-  const integrationCount = process.env.NODE_ENV === 'production' ? 3 : integrationsToSeed.length
+  const integrationCount = integrationsToSeed.length
 
   const createdIntegrationsPromises = integrationsToSeed
     .slice(0, integrationCount)
@@ -185,6 +186,7 @@ export const seedIntegrations = async (
         collection: 'integrations',
         depth: 0,
         data: integrationData,
+        req,
       }),
     )
 
