@@ -331,3 +331,7 @@
   width: 100%;
   max-width: theme(--breakpoint-2xl);
 }
+
+@utility shadow-border {
+  box-shadow: 0 0 0 1px var(--color-border);
+}

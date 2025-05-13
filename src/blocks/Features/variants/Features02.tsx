@@ -1,5 +1,4 @@
 'use client'
-import React from 'react'
 import { FeaturesBlock } from '@/payload-types'
 import { Badge } from '@/components/ui/badge'
 import { Media } from '@/components/Media'
@@ -8,7 +7,7 @@ import { cn } from '@/utilities/ui'
 import { CMSLink } from '@/components/Link'
 import { CaretLeft } from '@/icons/caret-left-filled'
 import * as motion from 'motion/react-client'
-import { containerVariants, itemsFling, itemVariants } from '@/utilities/motion'
+import { itemVariants } from '@/utilities/motion'
 
 const colSpanClass = {
   full: 'md:col-span-4 lg:col-span-12',
@@ -28,24 +27,34 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
   if (!safeColumns.length) return null
 
   return (
-    <motion.div className="gap-sm py-xl container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
+    <div className="gap-sm py-xl container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
       {safeColumns.map((column, index) => {
         const { content, image, size } = column
         const lgColSpanClass = colSpanClass[size || 'full']
         return (
           <motion.div
             key={index}
+            custom={index}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={itemVariants}
             className={cn(
-              'gap-md group rounded-space-sm bg-background-neutral p-md col-span-4 flex flex-col transition-all duration-300 hover:no-underline',
+              'gap-md group rounded-space-sm bg-background-neutral p-md col-span-4 flex flex-col',
               lgColSpanClass,
               {
                 'lg:flex-row': size === 'full',
-                'hover:shadow-lg': column.enableCta && column.link?.label,
+                'hover:shadow-border': column.enableCta && column.link?.label,
               },
             )}
           >
             {column.enableCta && column.link?.label ? (
-              <CMSLink {...column.link} label={null} variant="inline">
+              <CMSLink
+                {...column.link}
+                label={null}
+                variant="inline"
+                className="contents hover:no-underline"
+              >
                 <FeatureCardContent column={column} readMoreLabel={readMoreLabel} />
               </CMSLink>
             ) : (
@@ -54,7 +63,7 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
           </motion.div>
         )
       })}
-    </motion.div>
+    </div>
   )
 }
 
