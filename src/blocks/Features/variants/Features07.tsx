@@ -7,6 +7,8 @@ import { FeaturesBlock } from '@/payload-types'
 import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
 import { Card, CardContent } from '@/components/ui/card'
 import { BlockHeader } from '@/components/BlockHeader'
+import { motion } from 'motion/react'
+import { containerVariants, itemsFling } from '@/utilities/motion'
 
 export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
@@ -23,16 +25,21 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
         )}
       </div>
       <hr className="border-border" />
-      <div
+      <motion.div
         className="gap-xs grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4"
         style={{ '--columns': `repeat(${columns.length}, minmax(0, 1fr))` } as React.CSSProperties}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
       >
         {columns.map((column, index) => {
           const { content, icon } = column
           return (
-            <div
+            <motion.div
               key={index}
               className="gap-sm bg-background-neutral rounded-space-sm p-sm flex flex-col items-start"
+              variants={itemsFling}
             >
               {icon && (
                 <div className="bg-background-neutral-subtle p-xs inline rounded-full">
@@ -51,10 +58,10 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
                   <p className="text-body-sm text-base-secondary">{content.subtitle}</p>
                 )}
               </div>
-            </div>
+            </motion.div>
           )
         })}
-      </div>
+      </motion.div>
     </div>
   )
 }

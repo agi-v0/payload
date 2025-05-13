@@ -53,7 +53,7 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
           <motion.div
             className={cn(
               'gap-xs flex flex-col items-center md:flex-row',
-              activeColumn?.reverseOrder && 'md:flex-row-reverse',
+              // activeColumn?.reverseOrder && 'md:flex-row-reverse',
             )}
           >
             <AnimatePresence mode="wait">
@@ -63,7 +63,6 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: scrollDirection === 'down' ? -20 : 20 }}
                 transition={{ duration: 0.3 }}
-                layout
                 className={cn(
                   'rounded-space-sm bg-background-neutral-subtle w-full overflow-hidden',
                 )}
@@ -83,15 +82,14 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 key={`${activeIndex}-text`}
                 initial={{
                   opacity: 0,
-                  // y: scrollDirection === 'down' ? 20 : -20
+                  y: scrollDirection === 'down' ? 20 : -20,
                 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{
                   opacity: 0,
-                  // y: scrollDirection === 'down' ? -20 : 20
+                  y: scrollDirection === 'down' ? -20 : 20,
                 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
-                layout
                 className={cn(
                   'gap-sm md:px-xl mt-sm flex w-full flex-col items-start justify-start md:mt-0',
                   // { 'md:pe-xl': activeColumn.reverseOrder },

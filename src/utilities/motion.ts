@@ -5,7 +5,7 @@ export const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.1,
       transition: {
         type: 'spring',
         stiffness: 800,
@@ -34,10 +34,27 @@ export const itemsFling: Variants = {
     opacity: 1,
     y: 0,
     transition: {
+      // type: 'spring',
+      // stiffness: 150,
+      // damping: 19,
+      // mass: 1.2,
       type: 'spring',
-      stiffness: 150,
-      damping: 19,
-      mass: 1.2,
+      stiffness: 800,
+      damping: 100,
+      mass: 4,
+    },
+  },
+}
+export const itemsFling2: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 200,
+      damping: 20,
+      mass: 1,
     },
   },
 }

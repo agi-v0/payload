@@ -50,7 +50,7 @@ export const Features11: React.FC<Features11Props> = ({ columns, locale }) => {
         {columns.length > 1 && <CarouselNavigation className="mb-xs relative justify-start" />}
         <CarouselContent className="">
           {columns.map((column, idx) => (
-            <CarouselItem key={idx} className="px-2xs -self-stretch">
+            <CarouselItem key={idx} className="px-2xs">
               <MorphingDialog
                 onOpenChange={(isOpen) => {
                   if (!isOpen) {

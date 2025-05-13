@@ -1,8 +1,11 @@
+'use client'
 import React from 'react'
 import { Media } from '@/components/Media'
 import { FeaturesBlock } from '@/payload-types'
 import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
 import { BlockHeader } from '@/components/BlockHeader'
+import { motion } from 'motion/react'
+import { containerVariants, itemsFling } from '@/utilities/motion'
 
 export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
@@ -31,16 +34,24 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
               </div>
             )}
           </div>
-          <div
+          <motion.div
             className="gap-xs grid grid-cols-2 md:grid-cols-(--columns)"
             style={
               { '--columns': `repeat(${columns.length}, minmax(0, 1fr))` } as React.CSSProperties
             }
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.3 }}
           >
             {columns.map((column, index) => {
               const { content, icon } = column
               return (
-                <div key={index} className="gap-sm flex flex-col items-start">
+                <motion.div
+                  key={index}
+                  className="gap-sm flex flex-col items-start"
+                  variants={itemsFling}
+                >
                   {icon && (
                     <div className="bg-background-neutral-subtle p-xs inline rounded-full">
                       <DynamicIcon
@@ -60,10 +71,10 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
                       <p className="text-body-sm text-base-secondary">{content.subtitle}</p>
                     )}
                   </div>
-                </div>
+                </motion.div>
               )
             })}
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

@@ -29,12 +29,12 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
                 <Button
                   key={column.id || `tab-${index}`}
                   type="button"
-                  size="sm"
+                  size="md"
                   variant="ghost"
                   color="neutral"
                   onClick={() => setCarouselIndex(index)}
                   className={cn(
-                    'relative inline-flex items-center gap-1 rounded-full px-4 font-medium transition-colors duration-200',
+                    'relative inline-flex items-center gap-1 rounded-full px-4 text-base font-medium transition-colors duration-200',
                     index === carouselIndex
                       ? 'bg-neutral hover:bg-neutral/90 text-inverted-primary'
                       : '',
@@ -58,10 +58,6 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
       >
         <CarouselContent
           className="w-full"
-          // transition={{
-          //   ease: [0.77, 0, 0.175, 1],
-          //   duration: 1,
-          // }}
           transition={{
             type: 'spring',
             stiffness: 800,
@@ -89,7 +85,9 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
                       {column.content && (
                         <div className="gap-sm flex grow auto-rows-auto flex-col">
                           {column.content.title && (
-                            <h3 className="text-h3 font-medium">{column.content.title}</h3>
+                            <h3 className="text-h3 text-base-primary font-medium">
+                              {column.content.title}
+                            </h3>
                           )}
                           {column.content.subtitle && (
                             <p className="text-body-md">{column.content.subtitle}</p>

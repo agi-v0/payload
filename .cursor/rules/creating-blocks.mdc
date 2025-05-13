@@ -17,10 +17,8 @@ src/
 │   ├── [BlockName]/                 # Example: TestimonialsBlock
 │   │   ├── config.ts                # Payload Block Schema definition
 │   │   ├── Render[BlockName].tsx    # Router/Data Fetching Component (Server Component)
-│   │   ├── [VariantName01]/         # Example: TestimonialsBlock01
-│   │   │   └── index.tsx            # Component for Variant 01 (Client or Server)
-│   │   ├── [VariantName02]/         # Example: TestimonialsSlider
-│   │   │   └── index.tsx            # Component for Variant 02
+│   │   ├── VariantName01.tsx         # Example: TestimonialsBlock01 
+│   │   ├── VariantName02.tsx         # Example: TestimonialsBlock02
 │   │   └── ...                      # Other variants
 │   └── BlockHeader/                 # Reusable Block Header components/config
 │       ├── config.ts
@@ -240,3 +238,20 @@ const blockComponents = {
 ```
 
 By following these steps, you create modular, type-safe, and flexible blocks that can easily accommodate different designs and integrate smoothly with Payload and Next.js. Remember that regenerating types is the most crucial step after schema modifications.
+
+# Animation in Payload CMS Block Variants
+
+To add animation to a Payload CMS block variant (e.g., a Features block), use the new `motion/react` library (Framer Motion v11+). The recommended approach is as follows:
+
+- Mark the file as a client component with `'use client'` at the top.
+- Import `motion` from `motion/react` and animation variants (e.g., `containerVariants`, `itemsFling`) from [`src/utilities/motion.ts`](mdc:src/utilities/motion.ts).
+- Wrap the grid/container in a `motion.div` using `containerVariants` for staggered child animation.
+- Wrap each child/card in a `motion.div` using `itemsFling` (or another suitable variant). Do **not** use the `custom={index}` prop if `staggerChildren` is set on the container.
+- Use the `viewport` prop on the container for scroll-based animation triggers. For example: `viewport={{ once: false, amount: 0.3 }}`.
+- See [`src/blocks/Features/variants/Features05.tsx`](mdc:src/blocks/Features/variants/Features05.tsx) for a complete implementation example.
+
+**Best Practices:**
+- Use animation variants from the shared motion utilities for consistency.
+- Prefer `staggerChildren` on the container for sequencing, and avoid per-item delays unless needed.
+- Use `viewport={{ once: false, amount: 0.3 }}` for repeated animation on scroll, or `once: true` for one-time animation.
+- Keep animation logic declarative and colocated with the block variant component.

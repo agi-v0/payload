@@ -88,7 +88,7 @@ export const Features09: React.FC<FeaturesBlock> = ({ columns }) => {
           {columns[parseInt(activeAccordionId)].image && (
             <Media
               resource={columns[parseInt(activeAccordionId)].image || undefined}
-              className="rounded-space-sm hidden h-auto w-full overflow-hidden md:block"
+              className="rounded-space-sm hidden h-auto w-full overflow-hidden md:sticky md:top-[calc(var(--header-height)+var(--admin-bar-height))] md:block"
               imgClassName="w-full h-auto object-cover"
             />
           )}

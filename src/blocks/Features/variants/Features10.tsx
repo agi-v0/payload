@@ -24,9 +24,9 @@ export const Features10: React.FC<FeaturesBlock> = ({ columns }) => {
         }}
       >
         {columns.length > 1 && <CarouselNavigation className="mb-xs relative justify-start" />}
-        <CarouselContent className="">
+        <CarouselContent className="-ms-xs">
           {columns.map((column, index) => (
-            <CarouselItem key={index} className="px-2xs">
+            <CarouselItem key={index} className="ps-xs">
               <Card className="p-sm h-full transition-colors">
                 <CardContent className="rounded-space-sm gap-xs flex h-full flex-col items-start">
                   {column.image && (
