@@ -16,7 +16,7 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
           className="gap-md rounded-space-sm p-md bg-background-neutral flex flex-col"
         >
           <div className="gap-sm flex flex-col md:flex-row">
@@ -48,7 +48,7 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
           >
             {columns.map((column, index) => {
               const { content, icon } = column

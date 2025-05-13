@@ -21,7 +21,7 @@ export const CallToAction02: React.FC<CTABlockProps> = ({ links, richText, list 
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.3 }}
       >
         <div className="gap-lg flex flex-col items-center">
           {richText && (

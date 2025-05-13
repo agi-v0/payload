@@ -20,7 +20,7 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           {blockImage && (
             <Media
@@ -38,7 +38,7 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.3 }}
       >
         {columns.map((column, index) => {
           const { content, icon } = column

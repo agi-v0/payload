@@ -18,7 +18,7 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.3 }}
     >
       {columns.map((column, index) => {
         const { image, enableBadge, badge, richTextContent, enableCta, link } = column

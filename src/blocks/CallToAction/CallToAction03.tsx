@@ -24,7 +24,7 @@ export const CallToAction03: React.FC<CTABlockProps> = ({
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.3 }}
         className="bg-background-neutral gap-sm rounded-space-sm flex flex-col items-center"
       >
         <div className="gap-sm px-md pt-xl flex flex-col items-center">
