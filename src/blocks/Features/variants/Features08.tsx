@@ -85,14 +85,7 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
                   },
                   <>
                     <div className={cn('gap-md grid h-full grid-rows-[auto_1fr_auto] items-start')}>
-                      {column.enableBadge && column.badge && (
-                        <Badge
-                          variant={column.badge?.color}
-                          icon={column.badge.icon}
-                          icon_position={column.badge.icon_position}
-                          label={column.badge?.label}
-                        />
-                      )}
+                      {column.enableBadge && column.badge && <Badge {...column.badge} />}
                       {column.content && (
                         <div className="gap-sm flex grow auto-rows-auto flex-col">
                           {column.content.title && (

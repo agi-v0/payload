@@ -98,13 +98,9 @@ export const Features04: React.FC<FeaturesBlock> = ({ columns, blockHeader }) =>
                 )}
               >
                 {activeColumn?.enableBadge && activeColumn?.badge && (
-                  <Badge
-                    variant={activeColumn.badge?.color}
-                    icon={activeColumn.badge.icon}
-                    icon_position={activeColumn.badge.icon_position}
-                    label={activeColumn.badge?.label}
-                  />
+                  <Badge {...activeColumn.badge} />
                 )}
+
                 {activeColumn?.richTextContent && <RichText data={activeColumn.richTextContent} />}
                 {activeColumn?.enableCta && activeColumn?.link?.label && (
                   <CMSLink size="lg" variant="primary" {...activeColumn.link} />

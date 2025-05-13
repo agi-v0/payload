@@ -46,14 +46,7 @@ export const Features03: React.FC<FeaturesBlock> = ({ columns }) => {
                   'md:px-sm': size !== 'full',
                 })}
               >
-                {column.enableBadge && column.badge && (
-                  <Badge
-                    variant={column.badge?.color}
-                    icon={column.badge.icon}
-                    icon_position={column.badge.icon_position}
-                    label={column.badge?.label}
-                  />
-                )}
+                {column.enableBadge && column.badge && <Badge {...column.badge} />}
                 {richTextContent && <RichText data={richTextContent} />}
                 {column.enableCta && column.link?.label && (
                   <CMSLink className="mt-auto w-fit" size="md" {...column.link} />

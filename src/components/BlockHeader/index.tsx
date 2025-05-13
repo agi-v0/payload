@@ -34,15 +34,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
       )}
       data-theme="light"
     >
-      {badge?.label && (
-        <Badge
-          className={cn('col-span-2', badgeClassName)}
-          label={badge?.label}
-          icon={badge?.icon}
-          icon_position={badge?.icon_position}
-          variant={badge?.color}
-        />
-      )}
+      {badge?.label && <Badge {...badge} className={cn('col-span-2', badgeClassName)} />}
       {headerText && (
         <RichText
           className={cn(

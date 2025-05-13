@@ -48,14 +48,7 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
                 'lg:pe-md lg:basis-1/2': size === 'full',
               })}
             >
-              {column.enableBadge && column.badge && (
-                <Badge
-                  variant={column.badge?.color}
-                  icon={column.badge.icon}
-                  icon_position={column.badge.icon_position}
-                  label={column.badge?.label}
-                />
-              )}
+              {column.enableBadge && column.badge && <Badge {...column.badge} />}
               {content && (
                 <div className="gap-xs flex flex-col">
                   {content.title && (

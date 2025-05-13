@@ -29,14 +29,7 @@ export const Hero01: React.FC<Page['hero']> = ({
     <section className="pb-xl gap-lg container flex flex-col pt-[20vh]">
       <div className="gap-md flex flex-col items-center justify-center text-center">
         <div className="gap-sm flex max-w-3xl flex-col items-center">
-          {badge?.label && (
-            <Badge
-              label={badge?.label}
-              icon={badge?.icon}
-              icon_position={badge?.icon_position}
-              variant={badge?.color}
-            />
-          )}
+          {badge?.label && <Badge {...badge} />}
 
           {richText && (
             <RichText

@@ -29,14 +29,7 @@ export const Hero04: React.FC<Page['hero']> = ({
     <section className="py-xl gap-xs container flex h-fit min-h-screen flex-col md:flex-row md:items-center">
       <div className="gap-md md:pe-lg flex basis-1/2 flex-col items-start justify-start text-start">
         <div className="gap-sm flex max-w-3xl flex-col items-start">
-          {badge?.label && (
-            <Badge
-              label={badge?.label}
-              icon={badge?.icon}
-              icon_position={badge?.icon_position}
-              variant={badge?.color}
-            />
-          )}
+          {badge?.label && <Badge {...badge} />}
 
           {richText && (
             <RichText className={cn('[&>p]:text-body-lg')} data={richText} enableGutter={false} />
