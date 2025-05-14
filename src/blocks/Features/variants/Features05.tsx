@@ -14,7 +14,7 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns?.length) return null
   return (
     <motion.div
-      className="py-xl gap-sm container grid grid-cols-1 md:grid-cols-2"
+      className="py-xl gap-xs container grid grid-cols-1 md:grid-cols-2"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"

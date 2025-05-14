@@ -14,6 +14,8 @@ const colSpanClass = {
   half: 'md:col-span-2 lg:col-span-6',
   oneThird: 'md:col-span-2 lg:col-span-4',
   twoThirds: 'md:col-span-2 lg:col-span-8',
+  sixtyPercent: 'md:col-span-2 lg:col-span-7',
+  fortyPercent: 'md:col-span-2 lg:col-span-5',
 }
 
 type ColumnsType = NonNullable<FeaturesBlock['columns']>
@@ -27,7 +29,7 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
   if (!safeColumns.length) return null
 
   return (
-    <div className="gap-sm py-xl container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
+    <div className="gap-xs py-xl container grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12">
       {safeColumns.map((column, index) => {
         const { content, image, size } = column
         const lgColSpanClass = colSpanClass[size || 'full']
@@ -45,6 +47,7 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
               {
                 'lg:flex-row': size === 'full',
                 'hover:shadow-border': column.enableCta && column.link?.label,
+                // 'lg:col-span-3': size === 'oneThird',
               },
             )}
           >

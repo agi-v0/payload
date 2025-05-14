@@ -32,6 +32,8 @@ const sizeOptions = [
   { label: 'Full', value: 'full' },
   { label: 'One Third', value: 'oneThird' },
   { label: 'Two Thirds', value: 'twoThirds' },
+  { label: '60 Percent', value: 'sixtyPercent' },
+  { label: '40 Percent', value: 'fortyPercent' },
 ]
 
 export const FeaturesBlock: Block = {

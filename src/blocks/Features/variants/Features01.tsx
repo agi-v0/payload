@@ -28,11 +28,11 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
   }
 
   return (
-    <div className="bg-background gap-sm py-xl container grid grid-cols-1">
+    <div className="bg-background gap-xs py-xl container grid grid-cols-1">
       {rows.map((row, index) => (
         <div
           key={index}
-          className={cn('gap-sm grid w-full grid-cols-1', {
+          className={cn('gap-xs grid w-full grid-cols-1', {
             'md:grid-cols-2': row?.length === 2,
           })}
         >

@@ -1069,7 +1069,7 @@ export interface FeaturesBlock {
   };
   columns?:
     | {
-        size?: ('half' | 'full' | 'oneThird' | 'twoThirds') | null;
+        size?: ('half' | 'full' | 'oneThird' | 'twoThirds' | 'sixtyPercent' | 'fortyPercent') | null;
         appReference?:
           | ({
               relationTo: 'solutions';
