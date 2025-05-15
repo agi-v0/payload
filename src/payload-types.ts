@@ -1226,9 +1226,14 @@ export interface FeaturedAppsBlock {
   type: 'appsGridHero' | 'featuredApps01' | 'featuredApps02' | 'featuredApps03' | 'featuredApps04';
   media?: (number | null) | Media;
   /**
-   * Select the apps to link to. Leave blank to show 10 last updated apps.
+   * Select the apps to link to.
    */
-  reference?: (number | Integration)[] | null;
+  reference?:
+    | {
+        relationTo: 'integrations';
+        value: number | Integration;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'featuredApps';

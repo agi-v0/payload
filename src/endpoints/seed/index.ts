@@ -1,4 +1,11 @@
-import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
+import type {
+  CollectionSlug,
+  GlobalSlug,
+  Payload,
+  PayloadRequest,
+  File,
+  TypedLocale,
+} from 'payload'
 import type { Header, Form, Footer, Category } from '@/payload-types'
 
 import { contactForm as contactFormData } from './contact-form'
@@ -156,34 +163,186 @@ export const seed = async ({
         parent: media.id,
       },
     },
-    // {
-    //   collection: 'categories',
-    //   data: { title: 'Hero Images', slug: 'hero-images' },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: { title: 'Feature Images', slug: 'feature-images' },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: { title: 'Blog Images', slug: 'blog-images' },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: { title: 'OG Images', slug: 'og-images' },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: { title: 'Customer Logos', slug: 'customer-logos' },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: { title: 'Team Photos', slug: 'team-photos' },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: { title: 'Background Textures', slug: 'background-textures' },
-    // },
+    {
+      collection: 'categories',
+      data: {
+        title: 'Hero Images',
+        slug: 'hero-images',
+        breadcrumbs: [
+          {
+            label: 'App Icons',
+            url: '/media/app-icons',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        parent: media.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'Feature Images',
+        slug: 'feature-images',
+        breadcrumbs: [
+          {
+            label: 'Feature Images',
+            url: '/media/feature-images',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        parent: media.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'Blog Images',
+        slug: 'blog-images',
+        breadcrumbs: [
+          {
+            label: 'Blog Images',
+            url: '/media/blog-images',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        parent: media.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'OG Images',
+        slug: 'og-images',
+        breadcrumbs: [
+          {
+            label: 'OG Images',
+            url: '/media/og-images',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        parent: media.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'Customer Logos',
+        slug: 'customer-logos',
+        breadcrumbs: [
+          {
+            label: 'Customer Logos',
+            url: '/media/customer-logos',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        parent: media.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'Team Photos',
+        slug: 'team-photos',
+        breadcrumbs: [
+          {
+            label: 'Team Photos',
+            url: '/media/team-photos',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        parent: media.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'Backgrounds',
+        slug: 'backgrounds',
+        breadcrumbs: [
+          {
+            label: 'Backgrounds',
+            url: '/media/backgrounds',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        parent: media.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'Lottie',
+        slug: 'lottie',
+        breadcrumbs: [
+          {
+            label: 'Lottie',
+            url: '/media/lottie',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        parent: media.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'Videos',
+        slug: 'videos',
+        breadcrumbs: [
+          {
+            label: 'Videos',
+            url: '/media/videos',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        parent: media.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'Illustrations',
+        slug: 'illustrations',
+        breadcrumbs: [
+          {
+            label: 'Illustrations',
+            url: '/media/illustrations',
+          },
+          {
+            label: 'Media',
+            url: '/media',
+          },
+        ],
+        parent: media.id,
+      },
+    },
     // Integrations Categories
     // {
     //   collection: 'categories',
@@ -280,7 +439,7 @@ export const seed = async ({
       return await payload.create({
         collection: op.collection as CollectionSlug,
         data: op.data,
-        req,
+
         depth: 0,
         locale: 'ar',
       })
@@ -394,9 +553,9 @@ export const seed = async ({
     id: imageSquareDoc.id,
     collection: 'media',
     data: {
-      category: appIconsCategory.id,
+      category: [appIconsCategory.id],
     },
-    req,
+    locale: 'ar',
   })
   if (sellCategory?.id == null || operateCategory?.id == null || manageCategory?.id == null) {
     throw new Error('One or more required category IDs are missing')
@@ -424,6 +583,7 @@ export const seed = async ({
     collection: 'forms',
     depth: 0,
     data: contactFormData,
+    locale: 'ar',
     req,
   })) as Form
 
@@ -435,7 +595,7 @@ export const seed = async ({
   })
   const pagesData = [
     {
-      locale: 'ar' as const,
+      locale: 'ar' as TypedLocale,
       data: home({
         heroImage: hero1Doc,
         metaImage: image169Doc,
@@ -446,16 +606,17 @@ export const seed = async ({
       key: 'home',
     },
     {
-      locale: 'ar' as const,
+      locale: 'ar' as TypedLocale,
       data: contactPageData({ contactForm }),
       key: 'contact',
     },
     {
-      locale: 'ar' as const,
+      locale: 'ar' as TypedLocale,
       data: featuresShowcasePageData,
       key: 'features',
     },
   ]
+  await console.log(pagesData.map((page) => page.data.title))
   await Promise.all(
     pagesData.map(async (page) => {
       return await payload.create({
@@ -463,7 +624,6 @@ export const seed = async ({
         depth: 0,
         data: page.data,
         locale: page.locale,
-        req,
       })
     }),
   )
@@ -668,7 +828,6 @@ export const seed = async ({
       { link: { type: 'custom', newTab: false, url: '/contact-us', label: 'تواصل معنا', color: 'neutral', variant: 'primary' } }, // prettier-ignore
     ],
   }
-
   // Footer Data
   const footerData: Partial<Footer> = {
     columns: [
@@ -697,13 +856,12 @@ export const seed = async ({
       slug: 'header',
       locale: 'ar',
       data: headerData,
-      req,
     }),
     payload.logger.info('Updating global – footer'),
     payload.updateGlobal({
       slug: 'footer',
       data: footerData,
-      req,
+      locale: 'ar',
     }),
   ])
 

@@ -74,7 +74,6 @@ export const seedCaseStudies = async (
         collection: 'case-studies',
         depth: 0,
         data: caseStudy,
-        req,
       }),
     ),
   )

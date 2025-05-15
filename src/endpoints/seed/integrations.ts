@@ -186,7 +186,6 @@ export const seedIntegrations = async (
         collection: 'integrations',
         depth: 0,
         data: integrationData,
-        req,
       }),
     )
 
