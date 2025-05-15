@@ -14,6 +14,7 @@ export const Categories: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+    defaultColumns: ['title', 'slug', 'parent'],
   },
   fields: [
     {
@@ -22,17 +23,6 @@ export const Categories: CollectionConfig = {
       localized: true,
       required: true,
     },
-    // {
-    //   name: 'family',
-    //   type: 'select',
-    //   options: [
-    //     { label: 'Ecosystems', value: 'ecosystems' },
-    //     { label: 'Integrations', value: 'integrations' },
-    //     { label: 'Media', value: 'media' },
-    //     { label: 'Blog', value: 'blog' },
-    //     { label: 'Other', value: 'other' },
-    //   ],
-    // },
 
     ...slugField(),
   ],

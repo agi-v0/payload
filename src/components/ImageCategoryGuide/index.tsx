@@ -37,7 +37,7 @@ const categories = [
   },
 ]
 
-const ImageCategoryGuide: React.FC = (props) => {
+const ImageCategoryGuide = (props: any) => {
   return (
     <div className="image-category-guide">
       <div className="field-description image-category-guide__description">

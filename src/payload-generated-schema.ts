@@ -66,6 +66,8 @@ export const enum_featuresBlock_columns_size = pgEnum('enum_featuresBlock_column
   'full',
   'oneThird',
   'twoThirds',
+  'sixtyPercent',
+  'fortyPercent',
 ])
 export const enum_featuresBlock_columns_badge_type = pgEnum(
   'enum_featuresBlock_columns_badge_type',
@@ -108,7 +110,7 @@ export const enum_featuredAppsBlock_block_header_badge_type = pgEnum(
   ['label', 'reference'],
 )
 export const enum_featuredAppsBlock_type = pgEnum('enum_featuredAppsBlock_type', [
-  'appsBlockHero',
+  'appsGridHero',
   'featuredApps01',
   'featuredApps02',
   'featuredApps03',
@@ -189,6 +191,8 @@ export const enum__featuresBlock_v_columns_size = pgEnum('enum__featuresBlock_v_
   'full',
   'oneThird',
   'twoThirds',
+  'sixtyPercent',
+  'fortyPercent',
 ])
 export const enum__featuresBlock_v_columns_badge_type = pgEnum(
   'enum__featuresBlock_v_columns_badge_type',
@@ -230,7 +234,7 @@ export const enum__featuredAppsBlock_v_block_header_badge_type = pgEnum(
   ['label', 'reference'],
 )
 export const enum__featuredAppsBlock_v_type = pgEnum('enum__featuredAppsBlock_v_type', [
-  'appsBlockHero',
+  'appsGridHero',
   'featuredApps01',
   'featuredApps02',
   'featuredApps03',
@@ -3852,9 +3856,6 @@ export const media = pgTable(
     alt: varchar('alt').notNull(),
     caption: jsonb('caption'),
     locale: enum_media_locale('locale'),
-    category: integer('category_id').references(() => categories.id, {
-      onDelete: 'set null',
-    }),
     blurhash: varchar('blurhash'),
     prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -3916,7 +3917,6 @@ export const media = pgTable(
     sizes_og_filename: varchar('sizes_og_filename'),
   },
   (columns) => ({
-    media_category_idx: index('media_category_idx').on(columns.category),
     media_updated_at_idx: index('media_updated_at_idx').on(columns.updatedAt),
     media_created_at_idx: index('media_created_at_idx').on(columns.createdAt),
     media_filename_idx: uniqueIndex('media_filename_idx').on(columns.filename),
@@ -3941,6 +3941,33 @@ export const media = pgTable(
     media_sizes_og_sizes_og_filename_idx: index('media_sizes_og_sizes_og_filename_idx').on(
       columns.sizes_og_filename,
     ),
+  }),
+)
+
+export const media_rels = pgTable(
+  'media_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: integer('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    categoriesID: integer('categories_id'),
+  },
+  (columns) => ({
+    order: index('media_rels_order_idx').on(columns.order),
+    parentIdx: index('media_rels_parent_idx').on(columns.parent),
+    pathIdx: index('media_rels_path_idx').on(columns.path),
+    media_rels_categories_id_idx: index('media_rels_categories_id_idx').on(columns.categoriesID),
+    parentFk: foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [media.id],
+      name: 'media_rels_parent_fk',
+    }).onDelete('cascade'),
+    categoriesIdFk: foreignKey({
+      columns: [columns['categoriesID']],
+      foreignColumns: [categories.id],
+      name: 'media_rels_categories_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -8194,11 +8221,21 @@ export const relations__integrations_v = relations(_integrations_v, ({ one, many
     relationName: '_rels',
   }),
 }))
-export const relations_media = relations(media, ({ one }) => ({
-  category: one(categories, {
-    fields: [media.category],
+export const relations_media_rels = relations(media_rels, ({ one }) => ({
+  parent: one(media, {
+    fields: [media_rels.parent],
+    references: [media.id],
+    relationName: '_rels',
+  }),
+  categoriesID: one(categories, {
+    fields: [media_rels.categoriesID],
     references: [categories.id],
-    relationName: 'category',
+    relationName: 'categories',
+  }),
+}))
+export const relations_media = relations(media, ({ many }) => ({
+  _rels: many(media_rels, {
+    relationName: '_rels',
   }),
 }))
 export const relations_testimonials_locales = relations(testimonials_locales, ({ one }) => ({
@@ -9598,6 +9635,7 @@ type DatabaseSchema = {
   _integrations_v_locales: typeof _integrations_v_locales
   _integrations_v_rels: typeof _integrations_v_rels
   media: typeof media
+  media_rels: typeof media_rels
   testimonials: typeof testimonials
   testimonials_locales: typeof testimonials_locales
   testimonials_rels: typeof testimonials_rels
@@ -9803,6 +9841,7 @@ type DatabaseSchema = {
   relations__integrations_v_locales: typeof relations__integrations_v_locales
   relations__integrations_v_rels: typeof relations__integrations_v_rels
   relations__integrations_v: typeof relations__integrations_v
+  relations_media_rels: typeof relations_media_rels
   relations_media: typeof relations_media
   relations_testimonials_locales: typeof relations_testimonials_locales
   relations_testimonials_rels: typeof relations_testimonials_rels

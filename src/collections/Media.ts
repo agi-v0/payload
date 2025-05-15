@@ -53,9 +53,11 @@ export const Media: CollectionConfig = {
       filterOptions: {
         'parent.slug': { equals: 'media' },
       },
+      hasMany: true,
       admin: {
         components: {
           afterInput: ['@/components/ImageCategoryGuide'],
+          Field: '@/components/CategoryChipSelect',
         },
       },
     },

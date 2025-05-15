@@ -289,7 +289,7 @@ export interface Media {
     [k: string]: unknown;
   } | null;
   locale?: ('en' | 'ar') | null;
-  category?: (number | null) | Category;
+  category?: (number | Category)[] | null;
   blurhash?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -1223,17 +1223,12 @@ export interface FeaturedAppsBlock {
         }[]
       | null;
   };
-  type: 'appsBlockHero' | 'featuredApps01' | 'featuredApps02' | 'featuredApps03' | 'featuredApps04';
+  type: 'appsGridHero' | 'featuredApps01' | 'featuredApps02' | 'featuredApps03' | 'featuredApps04';
   media?: (number | null) | Media;
   /**
    * Select the apps to link to. Leave blank to show 10 last updated apps.
    */
-  reference?:
-    | {
-        relationTo: 'integrations';
-        value: number | Integration;
-      }[]
-    | null;
+  reference?: (number | Integration)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'featuredApps';
