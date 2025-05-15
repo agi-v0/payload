@@ -7,14 +7,14 @@ import { FeaturedApps01 } from './FeaturedApps01'
 import { FeaturedApps02 } from './FeaturedApps02'
 import { FeaturedApps03 } from './FeaturedApps03'
 import { FeaturedApps04 } from './FeaturedApps04'
-import { AppsBlockHero } from './AppsBlockHero'
+import { AppsGridHero } from './AppsGridHero'
 
 const appsBlocks = {
   featuredApps01: FeaturedApps01,
   featuredApps02: FeaturedApps02,
   featuredApps03: FeaturedApps03,
   featuredApps04: FeaturedApps04,
-  featuredAppsBlockHero: AppsBlockHero,
+  featuredAppsBlockHero: AppsGridHero,
 }
 
 export const RenderFeaturedAppsBlock: React.FC<AppsBlockProps> = (props) => {
@@ -24,6 +24,7 @@ export const RenderFeaturedAppsBlock: React.FC<AppsBlockProps> = (props) => {
   const AppsBlockToRender = appsBlocks[type as keyof typeof appsBlocks]
 
   if (!AppsBlockToRender) return null
+  console.log('props', props)
 
   return <AppsBlockToRender {...props} />
 }

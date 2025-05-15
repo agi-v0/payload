@@ -14,7 +14,7 @@ import { CMSLink } from '@/components/Link'
 import { cn } from '@/utilities/ui'
 import { BlockHeaderType } from '@/types/blockHeader'
 
-interface AppsCarouselClientProps {
+interface AppsGridClientProps {
   apps: Integration[]
   blockHeader: BlockHeaderType
 }
@@ -138,7 +138,7 @@ const ContentSection: React.FC<{ blockHeader: BlockHeaderType }> = ({ blockHeade
 }
 
 // Main Client Component for the Carousel
-export const AppsBlockGrid: React.FC<AppsCarouselClientProps> = ({ apps, blockHeader }) => {
+export const AppsGrid: React.FC<AppsGridClientProps> = ({ apps, blockHeader }) => {
   const [gridCells, setGridCells] = useState<GridCell[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)

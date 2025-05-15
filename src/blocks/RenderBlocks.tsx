@@ -53,7 +53,7 @@ export const RenderBlocks: React.FC<{
           <div id={block.blockName || undefined} className="*:first:pt-xl *:last:pb-xl" key={index}>
             {blockHeader &&
               !(block?.blockType === 'features' && ['06', '07', '17'].includes(block.type)) &&
-              !(block.blockType === 'featuredApps' && block.type === 'appsBlockHero') && (
+              !(block.blockType === 'featuredApps' && block.type === 'appsGridHero') && (
                 <BlockHeader {...blockHeader} className="" />
               )}
             <Block {...(block as any)} locale={locale} />

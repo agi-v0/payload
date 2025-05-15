@@ -3,9 +3,9 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import type { Integration, FeaturedAppsBlock as AppsBlockProps } from '@/payload-types'
-import { AppsBlockGrid } from './AppsBlockGrid'
+import { AppsGrid } from './AppsGrid'
 
-export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
+export const AppsGridHero: React.FC<AppsBlockProps> = async (props) => {
   const { reference, blockHeader } = props
 
   const payload = await getPayload({ config })
@@ -60,7 +60,7 @@ export const AppsBlockHero: React.FC<AppsBlockProps> = async (props) => {
     <div className="py-lg w-full">
       {fetchError && <p className="container text-center">{fetchError}</p>}
       {!fetchError && fetchedApps.length > 0 && (
-        <AppsBlockGrid apps={fetchedApps} blockHeader={blockHeader} />
+        <AppsGrid apps={fetchedApps} blockHeader={blockHeader} />
       )}
     </div>
   )

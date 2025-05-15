@@ -17,7 +17,7 @@ const fields: Field[] = [
     name: 'type',
     type: 'select',
     options: [
-      { value: 'appsBlockHero', label: 'Apps Block Hero' },
+      { value: 'appsGridHero', label: 'Apps Grid Hero' },
       { value: 'featuredApps01', label: 'Apps Block 01' },
       { value: 'featuredApps02', label: 'Apps Block 02' },
       { value: 'featuredApps03', label: 'Apps Block 03' },
@@ -31,16 +31,26 @@ const fields: Field[] = [
     type: 'upload',
     localized: true,
     relationTo: 'media',
-    required: false,
   },
   {
     name: 'reference',
     type: 'relationship',
     label: 'Apps to link to',
-    relationTo: ['integrations'],
+    relationTo: 'integrations',
     hasMany: true,
     admin: {
       description: 'Select the apps to link to. Leave blank to show 10 last updated apps.',
+    },
+    defaultValue: async ({ user, locale, req }) => {
+      const { docs } = await req.payload.find({
+        collection: 'integrations',
+        limit: 10,
+        sort: 'updatedAt',
+        depth: 0,
+        locale,
+      })
+      console.log(docs)
+      return docs.map((app) => app.id)
     },
   },
 ]
