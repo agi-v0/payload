@@ -38,7 +38,6 @@ export const RenderBlocks: React.FC<{
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) {
     return null
   }
-
   return (
     <Fragment>
       {blocks.map((block, index) => {
@@ -53,7 +52,7 @@ export const RenderBlocks: React.FC<{
           <div id={block.blockName || undefined} className="*:first:pt-xl *:last:pb-xl" key={index}>
             {blockHeader &&
               !(block?.blockType === 'features' && ['06', '07', '17'].includes(block.type)) &&
-              !(block.blockType === 'featuredApps' && block.type === 'appsGridHero') && (
+              !(block.blockType === 'featuredApps' && block.type === '01') && (
                 <BlockHeader {...blockHeader} className="" />
               )}
             <Block {...(block as any)} locale={locale} />

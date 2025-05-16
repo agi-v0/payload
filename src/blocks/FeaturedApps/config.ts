@@ -17,52 +17,81 @@ const fields: Field[] = [
     name: 'type',
     type: 'select',
     options: [
-      { value: 'appsGridHero', label: 'Apps Grid Hero' },
-      { value: 'featuredApps01', label: 'Apps Block 01' },
-      { value: 'featuredApps02', label: 'Apps Block 02' },
-      { value: 'featuredApps03', label: 'Apps Block 03' },
-      { value: 'featuredApps04', label: 'Apps Block 04' },
+      { value: '01', label: '01 - Apps Grid Hero' },
+      { value: '02', label: '02 - Animated Icons' },
+      { value: '03', label: '03 - Carousel (full width card)' },
+      { value: '04', label: '04 - Carousel (3 slides per view)' },
+      { value: '05', label: '05 - List with image' },
+      { value: '06', label: '06 - Grouped Cards' },
     ],
     required: true,
-    defaultValue: 'featuredApps01',
+    defaultValue: '04',
   },
   {
     name: 'media',
     type: 'upload',
-    localized: true,
+    // localized: true,
     relationTo: 'media',
   },
   {
-    name: 'reference',
+    name: 'apps',
     type: 'relationship',
     label: 'Apps to link to',
     relationTo: ['integrations'],
     hasMany: true,
+    // localized: true,
     admin: {
       description: 'Select the apps to link to. ',
+      condition: (_, siblingData, { blockData }) => {
+        return !['06'].includes(blockData?.type)
+      },
     },
-    // defaultValue: async ({ user, locale, req }) => {
-    //   const { docs } = await req.payload.find({
-    //     collection: 'integrations',
-    //     limit: 10,
-    //     sort: 'updatedAt',
-    //     depth: 0,
+    defaultValue: async ({ user, locale, req }) => {
+      const { docs } = await req.payload.find({
+        collection: 'integrations',
+        limit: 10,
+        sort: 'updatedAt',
+      })
 
-    //     locale,
-    //   })
-    //   console.log(docs)
-    //   return docs.map((app) => app.id)
-    // },
+      return docs.map((app) => ({ relationTo: 'integrations', value: app.id }))
+    },
+  },
+  {
+    name: 'cards',
+    type: 'array',
+    fields: [
+      {
+        name: 'title',
+        type: 'text',
+        localized: true,
+      },
+      {
+        name: 'description',
+        type: 'textarea',
+        localized: true,
+      },
+      {
+        name: 'appReference',
+        type: 'relationship',
+        relationTo: ['integrations', 'solutions'],
+        hasMany: true,
+      },
+    ],
+    admin: {
+      condition: (_, siblingData, { blockData }) => {
+        return ['06'].includes(blockData?.type)
+      },
+    },
   },
 ]
 
 export const FeaturedAppsBlock: Block = {
   slug: 'featuredApps',
-  interfaceName: 'FeaturedAppsBlock',
   labels: {
     singular: 'Featured Apps',
     plural: 'Featured Apps',
   },
   fields: [blockHeader, ...fields],
+  interfaceName: 'FeaturedAppsBlock',
   dbName: 'featuredAppsBlock',
 }

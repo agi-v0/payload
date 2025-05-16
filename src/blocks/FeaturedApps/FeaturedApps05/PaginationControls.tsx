@@ -37,7 +37,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
       <Button
         variant="secondary"
         color="neutral"
-        size="lg"
+        size="icon"
         className="rounded-full"
         onClick={handlePrev}
         disabled={currentPage <= 1}
@@ -50,7 +50,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
       <Button
         variant="secondary"
         color="neutral"
-        size="lg"
+        size="icon"
         className="rounded-full"
         onClick={handleNext}
         disabled={currentPage >= totalPages}

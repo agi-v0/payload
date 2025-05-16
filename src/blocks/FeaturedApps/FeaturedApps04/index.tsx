@@ -1,70 +1,98 @@
+'use client'
+
 import React from 'react'
-import { getPayload } from 'payload'
-import config from '@payload-config'
+import type { Integration } from '@/payload-types'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNavigation,
+  CarouselIndicator,
+} from '@/components/ui/carousel'
+import { Media } from '@/components/Media'
+import { CMSLink } from '@/components/Link'
+import RichText from '@/components/RichText'
+import { ArrowLeftIcon } from 'lucide-react'
+import { TypedLocale } from 'payload'
+import { BlockHeaderType } from '@/types/blockHeader'
 
-import type { Integration, FeaturedAppsBlock as AppsBlockProps } from '@/payload-types'
-import { AppsCarouselClient } from './AppsCarouselClient'
+interface AppsCarouselClientProps {
+  apps: Integration[]
+  blockHeader: BlockHeaderType
+  locale?: TypedLocale
+}
 
-interface Props extends AppsBlockProps {}
+// AppCard component, similar to before but ensure fields exist
+// Adapt this based on your actual App type fields
+const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
+  const { name, icon, tagline, overview, link, gallery } = app
 
-export const FeaturedApps04: React.FC<Props> = async (props) => {
-  const { reference } = props
+  return (
+    <div className="bg-background-neutral rounded-space-sm flex h-full w-full flex-col overflow-hidden lg:flex-row">
+      <div className="p-md flex w-full flex-col justify-between text-start">
+        <div className="gap-sm flex flex-col items-start justify-start">
+          {/* App Badge (Icon + Name) */}
+          <div className="gap-xs flex items-center justify-end">
+            {icon && <Media resource={icon} className="size-8 overflow-hidden rounded-md" />}
+            {name && <span className="text-body-lg text-base-secondary font-medium">{name}</span>}
+          </div>
+          {/* Title and Description */}
+          <div className="gap-xs flex flex-col">
+            {tagline && <h3 className="text-h4 text-base-primary font-medium">{tagline}</h3>}
+            {overview && (
+              <RichText
+                data={overview}
+                enableGutter={true}
+                className="text-body-sm text-base-secondary font-normal"
+              />
+            )}
+          </div>
+        </div>
+        {/* Link Button */}
+        {link && (
+          <CMSLink
+            {...link}
+            // Use text size, color variables, and explicit gap
+            className="text-body-lg mt-space-xs text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
+            label="المزيد"
+            variant="link"
+          />
+        )}
+      </div>
+    </div>
+  )
+}
 
-  const payload = await getPayload({ config })
-
-  let fetchedApps: Integration[] = []
-  let fetchError: string | null = null
-
-  const appIds = (
-    Array.isArray(reference)
-      ? reference?.map((ref) => {
-          const id = typeof ref.value === 'object' ? ref.value?.id : ref.value
-          return id ? String(id) : null
-        })
-      : []
-  ).filter((id): id is string => id !== null)
-
-  if (appIds.length > 0) {
-    try {
-      const result = await payload.find({
-        collection: 'integrations',
-        locale: 'ar',
-        draft: false,
-        depth: 2,
-        where: {
-          id: {
-            in: appIds,
-          },
-        },
-      })
-
-      fetchedApps = result.docs || []
-
-      if (fetchedApps.length > 0) {
-        fetchedApps.sort((a, b) => appIds.indexOf(String(a.id)) - appIds.indexOf(String(b.id)))
-      }
-    } catch (error) {
-      console.error('Error fetching referenced apps:', error)
-      fetchError = 'Failed to load app data.'
-    }
-  } else {
-    // If no apps are referenced, fetch the latest ones as a fallback
-    const result = await payload.find({
-      collection: 'integrations',
-      locale: 'ar',
-      draft: false,
-      depth: 2,
-      limit: 8,
-      sort: '-updatedAt',
-    })
-
-    fetchedApps = result.docs || []
+// Main Client Component for the Carousel
+export const FeaturedApps04: React.FC<AppsCarouselClientProps> = (props) => {
+  const { apps } = props
+  if (!apps || apps.length === 0) {
+    return null // Or render an empty state
   }
 
   return (
-    <div className="py-lg">
-      {fetchError && <p className="container text-center">{fetchError}</p>}
-      {!fetchError && fetchedApps.length > 0 && <AppsCarouselClient apps={fetchedApps} />}
+    <div className="py-md container">
+      <Carousel
+        slidesPerView={{
+          sm: 1, //   ≥640px: 1 slide
+          md: 2, //   ≥768px: 2 slides
+          lg: 3, //  ≥1024px: 3 slides
+        }}
+      >
+        <CarouselContent className="-ms-xs">
+          {apps.map((app, index) => (
+            <CarouselItem key={app.id || index} className="ps-xs">
+              <AppCard app={app} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        {apps.length > 1 && (
+          <>
+            <CarouselNavigation className="mt-xs relative justify-between" />
+            <CarouselIndicator className="absolute bottom-0 h-10" />
+          </>
+        )}
+      </Carousel>
     </div>
   )
 }

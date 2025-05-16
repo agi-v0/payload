@@ -1,30 +1,65 @@
 import React from 'react'
+import { getPayload, TypedLocale } from 'payload'
+import config from '@payload-config'
 
-import { FeaturedAppsBlock as AppsBlockProps } from '@/payload-types'
-import { Page } from '@/payload-types'
+import { FeaturedAppsBlock, Integration, Media } from '@/payload-types'
 
-import { FeaturedApps01 } from './FeaturedApps01'
-import { FeaturedApps02 } from './FeaturedApps02'
 import { FeaturedApps03 } from './FeaturedApps03'
 import { FeaturedApps04 } from './FeaturedApps04'
+import { FeaturedApps05 } from './FeaturedApps05'
 import { AppsGridHero } from './AppsGridHero'
+// import { AppsCarouselClient } from './FeaturedApps01'
 
 const appsBlocks = {
-  featuredApps01: FeaturedApps01,
-  featuredApps02: FeaturedApps02,
-  featuredApps03: FeaturedApps03,
-  featuredApps04: FeaturedApps04,
-  featuredAppsBlockHero: AppsGridHero,
+  '01': AppsGridHero,
+  // featuredApps02: FeaturedApps02,
+  '03': FeaturedApps03,
+  '04': FeaturedApps04,
+  '05': FeaturedApps05,
 }
 
-export const RenderFeaturedAppsBlock: React.FC<AppsBlockProps> = (props) => {
-  const { type } = props || {}
+type FeaturedAppsBlockWithLocale = FeaturedAppsBlock & {
+  locale: TypedLocale
+}
+
+export const RenderFeaturedAppsBlock: React.FC<FeaturedAppsBlockWithLocale> = async (props) => {
+  const { type, apps, blockHeader, media, locale } = props || {}
   if (!type) return null
+
+  // let appsList = apps?.map((ref) => (typeof ref.value === 'object' ? ref.value : '')) || []
+  let appsList: Integration[] =
+    apps?.filter((ref) => typeof ref.value === 'object').map((ref) => ref.value as Integration) ||
+    []
+
+  const payload = await getPayload({ config })
+
+  if (!appsList || appsList.length == 0) {
+    const result = await payload.find({
+      collection: 'integrations',
+      locale: locale || 'ar',
+      draft: false,
+      where: {
+        id: {
+          in: apps?.map((app) => app.value),
+        },
+      },
+      limit: 13,
+      depth: 2,
+      sort: '-updatedAt',
+    })
+    appsList = result.docs
+  }
 
   const AppsBlockToRender = appsBlocks[type as keyof typeof appsBlocks]
 
   if (!AppsBlockToRender) return null
-  console.log('props', props)
 
-  return <AppsBlockToRender {...props} />
+  return (
+    <AppsBlockToRender
+      apps={appsList}
+      media={media as Media}
+      blockHeader={blockHeader}
+      locale={locale}
+    />
+  )
 }

@@ -23,12 +23,12 @@ interface AppListData {
 
 interface AppsListClientWrapperProps {
   initialData: AppListData
-  blockMedia?: MediaType | string | number | null
+  media?: MediaType | string | number | null
 }
 
 export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
   initialData,
-  blockMedia,
+  media,
 }) => {
   const [appsData, setAppsData] = useState<AppListData>(initialData)
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -63,7 +63,7 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
       {appsData.docs.map(({ name, tagline, icon, link }, index) => (
         <CMSLink
           {...link}
-          key={name}
+          key={index}
           label={null}
           className="px-xs hover:bg-background-neutral flex h-fit w-full flex-row items-center justify-start gap-4 rounded-3xl whitespace-normal transition-colors"
         >
@@ -86,8 +86,8 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
 
   return (
     <div className="py-xl container">
-      <div className="grid grid-cols-2">
-        <div className="md:pe-xl flex flex-col">
+      <div className="gap-xs grid grid-cols-1 md:grid-cols-2">
+        <div className="lg:pe-md flex flex-col">
           <PaginationControls
             totalPages={appsData.totalPages ?? 1}
             currentPage={currentPage}
@@ -100,8 +100,8 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
         </div>
 
         <div className="aspect-square h-auto w-full select-none">
-          {blockMedia && typeof blockMedia === 'object' && (
-            <Media imgClassName="rounded-3xl object-cover" priority resource={blockMedia} />
+          {media && typeof media === 'object' && (
+            <Media imgClassName="rounded-3xl object-cover" resource={media} />
           )}
         </div>
       </div>
