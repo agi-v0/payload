@@ -1,8 +1,10 @@
 import type { Payload, PayloadRequest, RequiredDataFromCollectionSlug } from 'payload'
-import type { Media, Integration } from '@/payload-types'
+import type { Media, Integration, Category } from '@/payload-types'
 
 type IntegrationDataArgs = {
   imageSquare?: Media | number // Allow ID or full object
+
+  ecosystems?: Category[]
 }
 
 // Function to generate a single integration object
@@ -103,16 +105,18 @@ const createIntegrationObject = (
         direction: null,
       },
     },
-    companyName: details.companyName || `${details.title} Company`,
+    company: details.company || {
+      name: details.title,
+      email: `contact@${details.slug}.com`,
+      phone: undefined,
+    },
     docsLink: details.docsLink || {
       type: 'custom',
       url: `/docs/${details.slug}`,
       label: `Documentation for ${details.title}`,
     },
-    email: details.email || `contact@${details.slug}.com`,
     categories: details.categories || [],
-    ecosystem: details.ecosystem || ['sell'], // Default ecosystem
-    phone: details.phone || undefined,
+    layout: [],
     // Spreading other potential details, including title, name, slug
     ...details,
   }
@@ -121,7 +125,8 @@ const createIntegrationObject = (
 export const seedIntegrations = async (
   payload: Payload,
   req: PayloadRequest,
-  { imageSquareId }: { imageSquareId?: number }, // Can be string from payload types
+  imageSquareId: number,
+  ecosystems: Category[],
 ): Promise<Record<string, number>> => {
   const integrationsToSeed = [
     createIntegrationObject(
@@ -130,7 +135,7 @@ export const seedIntegrations = async (
         name: 'جاهز',
         slug: 'jahez',
         tagline: 'إدارة رقمية للقسائم والخصومات',
-        ecosystem: ['operate', 'sell'],
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -140,7 +145,7 @@ export const seedIntegrations = async (
         name: 'بونات',
         slug: 'bonat',
         tagline: 'نظام نقاط بيع متكامل للمطاعم والمقاهي',
-        ecosystem: ['sell', 'manage'],
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -150,7 +155,7 @@ export const seedIntegrations = async (
         name: 'أودو',
         slug: 'odoo',
         tagline: 'مجموعة تطبيقات أعمال شاملة لتلبية جميع احتياجاتك',
-        ecosystem: ['manage', 'operate'],
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -160,7 +165,7 @@ export const seedIntegrations = async (
         name: 'زابير',
         slug: 'zapier',
         tagline: 'أتمتة سير العمل بين تطبيقاتك المختلفة',
-        ecosystem: ['operate'],
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -170,7 +175,107 @@ export const seedIntegrations = async (
         name: 'سلاك',
         slug: 'slack',
         tagline: 'منصة تواصل وتعاون للفرق',
-        ecosystem: ['manage'],
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
+      },
+      { imageSquare: imageSquareId },
+    ),
+    createIntegrationObject(
+      {
+        title: 'Jahez',
+        name: 'جاهز',
+        slug: 'jahez',
+        tagline: 'إدارة رقمية للقسائم والخصومات',
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
+      },
+      { imageSquare: imageSquareId },
+    ),
+    createIntegrationObject(
+      {
+        title: 'Bonat',
+        name: 'بونات',
+        slug: 'bonat',
+        tagline: 'نظام نقاط بيع متكامل للمطاعم والمقاهي',
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
+      },
+      { imageSquare: imageSquareId },
+    ),
+    createIntegrationObject(
+      {
+        title: 'Odoo',
+        name: 'أودو',
+        slug: 'odoo',
+        tagline: 'مجموعة تطبيقات أعمال شاملة لتلبية جميع احتياجاتك',
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
+      },
+      { imageSquare: imageSquareId },
+    ),
+    createIntegrationObject(
+      {
+        title: 'Zapier',
+        name: 'زابير',
+        slug: 'zapier',
+        tagline: 'أتمتة سير العمل بين تطبيقاتك المختلفة',
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
+      },
+      { imageSquare: imageSquareId },
+    ),
+    createIntegrationObject(
+      {
+        title: 'Slack',
+        name: 'سلاك',
+        slug: 'slack',
+        tagline: 'منصة تواصل وتعاون للفرق',
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
+      },
+      { imageSquare: imageSquareId },
+    ),
+    createIntegrationObject(
+      {
+        title: 'Jahez',
+        name: 'جاهز',
+        slug: 'jahez',
+        tagline: 'إدارة رقمية للقسائم والخصومات',
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
+      },
+      { imageSquare: imageSquareId },
+    ),
+    createIntegrationObject(
+      {
+        title: 'Bonat',
+        name: 'بونات',
+        slug: 'bonat',
+        tagline: 'نظام نقاط بيع متكامل للمطاعم والمقاهي',
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
+      },
+      { imageSquare: imageSquareId },
+    ),
+    createIntegrationObject(
+      {
+        title: 'Odoo',
+        name: 'أودو',
+        slug: 'odoo',
+        tagline: 'مجموعة تطبيقات أعمال شاملة لتلبية جميع احتياجاتك',
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
+      },
+      { imageSquare: imageSquareId },
+    ),
+    createIntegrationObject(
+      {
+        title: 'Zapier',
+        name: 'زابير',
+        slug: 'zapier',
+        tagline: 'أتمتة سير العمل بين تطبيقاتك المختلفة',
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
+      },
+      { imageSquare: imageSquareId },
+    ),
+    createIntegrationObject(
+      {
+        title: 'Slack',
+        name: 'سلاك',
+        slug: 'slack',
+        tagline: 'منصة تواصل وتعاون للفرق',
+        ecosystem: ecosystems?.slice(0, 2).map((cat) => cat.id) || [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -186,6 +291,7 @@ export const seedIntegrations = async (
         collection: 'integrations',
         depth: 0,
         data: integrationData,
+        locale: 'ar',
       }),
     )
 

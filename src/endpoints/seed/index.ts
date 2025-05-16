@@ -574,9 +574,11 @@ export const seed = async ({
   )
 
   payload.logger.info(`— Seeding integrations...`)
-  const integrationsSlugToIdMap = await seedIntegrations(payload, req, {
-    imageSquareId: imageSquareDoc?.id,
-  })
+  const integrationsSlugToIdMap = await seedIntegrations(payload, req, imageSquareDoc?.id, [
+    sellCategory,
+    operateCategory,
+    manageCategory,
+  ])
 
   payload.logger.info(`— Seeding contact form...`)
   const contactForm = (await payload.create({

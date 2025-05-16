@@ -41,14 +41,14 @@ export const Integrations: CollectionConfig<'integrations'> = {
     read: authenticatedOrPublished,
     update: authenticated,
   },
-  // This config controls what's populated by default when a page is referenced
-  // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
-  // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'pages'>
+
   defaultPopulate: {
     icon: true,
     tagline: true,
     link: true,
     name: true,
+    title: true,
+    overview: true,
   },
   admin: {
     defaultColumns: ['icon', 'name', 'tagline', 'updatedAt'],
@@ -136,34 +136,40 @@ export const Integrations: CollectionConfig<'integrations'> = {
             },
             ///
             {
-              name: 'companyName',
-              type: 'text',
-              required: true,
-              localized: true,
-              admin: {
-                description: 'Name of the company providing the integration.',
-              },
-            },
-            {
-              type: 'row',
+              name: 'company',
+              type: 'group',
               fields: [
                 {
-                  name: 'email',
-                  type: 'email',
+                  name: 'name',
+                  type: 'text',
                   required: true,
+                  localized: true,
                   admin: {
-                    description: 'Contact email for the integration.',
-                    width: '50%',
+                    description: 'Name of the company providing the integration.',
                   },
                 },
                 {
-                  name: 'phone',
-                  type: 'text',
-                  required: false,
-                  admin: {
-                    description: 'Contact phone number for the integration.',
-                    width: '50%',
-                  },
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'email',
+                      type: 'email',
+                      required: true,
+                      admin: {
+                        description: 'Contact email for the integration.',
+                        width: '50%',
+                      },
+                    },
+                    {
+                      name: 'phone',
+                      type: 'text',
+                      required: false,
+                      admin: {
+                        description: 'Contact phone number for the integration.',
+                        width: '50%',
+                      },
+                    },
+                  ],
                 },
               ],
             },
@@ -281,12 +287,11 @@ export const Integrations: CollectionConfig<'integrations'> = {
     },
     {
       name: 'ecosystem',
-      type: 'select',
-      options: [
-        { value: 'sell', label: { en: 'Sell', ar: 'بيع' } },
-        { value: 'operate', label: { en: 'Operate', ar: 'تشغيل' } },
-        { value: 'manage', label: { en: 'Manage', ar: 'إدارة' } },
-      ],
+      type: 'relationship',
+      relationTo: 'categories',
+      filterOptions: {
+        'parent.slug': { equals: 'ecosystems' },
+      },
       hasMany: true,
       admin: {
         position: 'sidebar',
@@ -296,6 +301,9 @@ export const Integrations: CollectionConfig<'integrations'> = {
       name: 'categories',
       type: 'relationship',
       relationTo: 'categories',
+      filterOptions: {
+        'parent.slug': { equals: 'integrations' },
+      },
       hasMany: true,
       admin: {
         position: 'sidebar',
@@ -307,9 +315,9 @@ export const Integrations: CollectionConfig<'integrations'> = {
 
   versions: {
     drafts: {
-      // autosave: {
-      //   interval: 100, // We set this interval for optimal live preview
-      // },
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
       schedulePublish: true,
     },
     maxPerDoc: 50,
