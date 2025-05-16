@@ -124,10 +124,12 @@ export interface Config {
     defaultIDType: number;
   };
   globals: {
+    settings: Setting;
     header: Header;
     footer: Footer;
   };
   globalsSelect: {
+    settings: SettingsSelect<false> | SettingsSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
@@ -624,15 +626,6 @@ export interface Page {
   publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
-  parent?: (number | null) | Page;
-  breadcrumbs?:
-    | {
-        doc?: (number | null) | Page;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -687,18 +680,20 @@ export interface Integration {
     url?: string | null;
     label: string;
   };
-  /**
-   * Name of the company providing the integration.
-   */
-  companyName: string;
-  /**
-   * Contact email for the integration.
-   */
-  email: string;
-  /**
-   * Contact phone number for the integration.
-   */
-  phone?: string | null;
+  company: {
+    /**
+     * Name of the company providing the integration.
+     */
+    name: string;
+    /**
+     * Contact email for the integration.
+     */
+    email: string;
+    /**
+     * Contact phone number for the integration.
+     */
+    phone?: string | null;
+  };
   /**
    * URL to the documentation for the integration.
    */
@@ -836,7 +831,7 @@ export interface Integration {
     description?: string | null;
   };
   publishedAt?: string | null;
-  ecosystem?: ('sell' | 'operate' | 'manage')[] | null;
+  ecosystem?: (number | Category)[] | null;
   categories?: (number | Category)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
@@ -1223,15 +1218,34 @@ export interface FeaturedAppsBlock {
         }[]
       | null;
   };
-  type: 'appsGridHero' | 'featuredApps01' | 'featuredApps02' | 'featuredApps03' | 'featuredApps04';
+  type: '01' | '02' | '03' | '04' | '05' | '06';
   media?: (number | null) | Media;
   /**
    * Select the apps to link to.
    */
-  reference?:
+  apps?:
     | {
         relationTo: 'integrations';
         value: number | Integration;
+      }[]
+    | null;
+  cards?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        appReference?:
+          | (
+              | {
+                  relationTo: 'integrations';
+                  value: number | Integration;
+                }
+              | {
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                }
+            )[]
+          | null;
+        id?: string | null;
       }[]
     | null;
   id?: string | null;
@@ -2144,15 +2158,6 @@ export interface PagesSelect<T extends boolean = true> {
   publishedAt?: T;
   slug?: T;
   slugLock?: T;
-  parent?: T;
-  breadcrumbs?:
-    | T
-    | {
-        doc?: T;
-        url?: T;
-        label?: T;
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2233,9 +2238,13 @@ export interface IntegrationsSelect<T extends boolean = true> {
         url?: T;
         label?: T;
       };
-  companyName?: T;
-  email?: T;
-  phone?: T;
+  company?:
+    | T
+    | {
+        name?: T;
+        email?: T;
+        phone?: T;
+      };
   docsLink?:
     | T
     | {
@@ -2772,6 +2781,49 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: number;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  announcementBar: {
+    text?: string | null;
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: number | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: number | Post;
+          } | null)
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null);
+      url?: string | null;
+      label: string;
+    };
+  };
+  customHeadHtml?: string | null;
+  customBodyHtml?: string | null;
+  tagManagerId?: string | null;
+  analyticsScripts?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
 export interface Header {
@@ -3010,6 +3062,40 @@ export interface Footer {
     | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  announcementBar?:
+    | T
+    | {
+        text?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+      };
+  customHeadHtml?: T;
+  customBodyHtml?: T;
+  tagManagerId?: T;
+  analyticsScripts?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

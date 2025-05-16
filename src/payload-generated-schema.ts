@@ -6,6 +6,7 @@
  * and re-run `payload generate:db-schema` to regenerate this file.
  */
 
+import type {} from '@payloadcms/db-vercel-postgres'
 import {
   pgTable,
   index,
@@ -110,11 +111,12 @@ export const enum_featuredAppsBlock_block_header_badge_type = pgEnum(
   ['label', 'reference'],
 )
 export const enum_featuredAppsBlock_type = pgEnum('enum_featuredAppsBlock_type', [
-  'appsGridHero',
-  'featuredApps01',
-  'featuredApps02',
-  'featuredApps03',
-  'featuredApps04',
+  '01',
+  '02',
+  '03',
+  '04',
+  '05',
+  '06',
 ])
 export const enum_galleryBlock_block_header_type = pgEnum('enum_galleryBlock_block_header_type', [
   'center',
@@ -234,11 +236,12 @@ export const enum__featuredAppsBlock_v_block_header_badge_type = pgEnum(
   ['label', 'reference'],
 )
 export const enum__featuredAppsBlock_v_type = pgEnum('enum__featuredAppsBlock_v_type', [
-  'appsGridHero',
-  'featuredApps01',
-  'featuredApps02',
-  'featuredApps03',
-  'featuredApps04',
+  '01',
+  '02',
+  '03',
+  '04',
+  '05',
+  '06',
 ])
 export const enum__galleryBlock_v_block_header_type = pgEnum(
   'enum__galleryBlock_v_block_header_type',
@@ -308,11 +311,6 @@ export const enum_integrations_blocks_faq_block_block_header_badge_type = pgEnum
   'enum_integrations_blocks_faq_block_block_header_badge_type',
   ['label', 'reference'],
 )
-export const enum_integrations_ecosystem = pgEnum('enum_integrations_ecosystem', [
-  'sell',
-  'operate',
-  'manage',
-])
 export const enum_integrations_hero_type = pgEnum('enum_integrations_hero_type', [
   'hero01',
   'hero02',
@@ -335,10 +333,6 @@ export const enum__integrations_v_blocks_faq_block_block_header_type = pgEnum(
 export const enum__integrations_v_blocks_faq_block_block_header_badge_type = pgEnum(
   'enum__integrations_v_blocks_faq_block_block_header_badge_type',
   ['label', 'reference'],
-)
-export const enum__integrations_v_version_ecosystem = pgEnum(
-  'enum__integrations_v_version_ecosystem',
-  ['sell', 'operate', 'manage'],
 )
 export const enum__integrations_v_version_hero_type = pgEnum(
   'enum__integrations_v_version_hero_type',
@@ -968,6 +962,46 @@ export const featuredAppsBlock_block_header_links_locales = pgTable(
   }),
 )
 
+export const featuredAppsBlock_cards = pgTable(
+  'featuredAppsBlock_cards',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    id: varchar('id').primaryKey(),
+  },
+  (columns) => ({
+    _orderIdx: index('featuredAppsBlock_cards_order_idx').on(columns._order),
+    _parentIDIdx: index('featuredAppsBlock_cards_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [featuredAppsBlock.id],
+      name: 'featuredAppsBlock_cards_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const featuredAppsBlock_cards_locales = pgTable(
+  'featuredAppsBlock_cards_locales',
+  {
+    title: varchar('title'),
+    description: varchar('description'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('featuredAppsBlock_cards_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [featuredAppsBlock_cards.id],
+      name: 'featuredAppsBlock_cards_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const featuredAppsBlock = pgTable(
   'featuredAppsBlock',
   {
@@ -984,13 +1018,17 @@ export const featuredAppsBlock = pgTable(
     blockHeader_badge_icon_position: badge_icon_position(
       'block_header_badge_icon_position',
     ).default('flex-row'),
-    type: enum_featuredAppsBlock_type('type').default('featuredApps01'),
+    type: enum_featuredAppsBlock_type('type').default('04'),
+    media: integer('media_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     blockName: varchar('block_name'),
   },
   (columns) => ({
     _orderIdx: index('featuredAppsBlock_order_idx').on(columns._order),
     _parentIDIdx: index('featuredAppsBlock_parent_id_idx').on(columns._parentID),
     _pathIdx: index('featuredAppsBlock_path_idx').on(columns._path),
+    featuredAppsBlock_media_idx: index('featuredAppsBlock_media_idx').on(columns.media),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [pages.id],
@@ -1004,18 +1042,11 @@ export const featuredAppsBlock_locales = pgTable(
   {
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_headerText: jsonb('block_header_header_text'),
-    media: integer('media_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: varchar('_parent_id').notNull(),
   },
   (columns) => ({
-    featuredAppsBlock_media_idx: index('featuredAppsBlock_media_idx').on(
-      columns.media,
-      columns._locale,
-    ),
     _localeParent: uniqueIndex('featuredAppsBlock_locales_locale_parent_id_unique').on(
       columns._locale,
       columns._parentID,
@@ -1292,32 +1323,6 @@ export const testimonialsBlock_locales = pgTable(
   }),
 )
 
-export const pages_breadcrumbs = pgTable(
-  'pages_breadcrumbs',
-  {
-    _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    _locale: enum__locales('_locale').notNull(),
-    id: varchar('id').primaryKey(),
-    doc: integer('doc_id').references(() => pages.id, {
-      onDelete: 'set null',
-    }),
-    url: varchar('url'),
-    label: varchar('label'),
-  },
-  (columns) => ({
-    _orderIdx: index('pages_breadcrumbs_order_idx').on(columns._order),
-    _parentIDIdx: index('pages_breadcrumbs_parent_id_idx').on(columns._parentID),
-    _localeIdx: index('pages_breadcrumbs_locale_idx').on(columns._locale),
-    pages_breadcrumbs_doc_idx: index('pages_breadcrumbs_doc_idx').on(columns.doc),
-    _parentIDFk: foreignKey({
-      columns: [columns['_parentID']],
-      foreignColumns: [pages.id],
-      name: 'pages_breadcrumbs_parent_id_fk',
-    }).onDelete('cascade'),
-  }),
-)
-
 export const pages = pgTable(
   'pages',
   {
@@ -1332,9 +1337,6 @@ export const pages = pgTable(
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
-    parent: integer('parent_id').references((): AnyPgColumn => pages.id, {
-      onDelete: 'set null',
-    }),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -1345,7 +1347,6 @@ export const pages = pgTable(
   },
   (columns) => ({
     pages_slug_idx: index('pages_slug_idx').on(columns.slug),
-    pages_parent_idx: index('pages_parent_idx').on(columns.parent),
     pages_updated_at_idx: index('pages_updated_at_idx').on(columns.updatedAt),
     pages_created_at_idx: index('pages_created_at_idx').on(columns.createdAt),
     pages__status_idx: index('pages__status_idx').on(columns._status),
@@ -2026,6 +2027,47 @@ export const _featuredAppsBlock_v_block_header_links_locales = pgTable(
   }),
 )
 
+export const _featuredAppsBlock_v_cards = pgTable(
+  '_featuredAppsBlock_v_cards',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+    id: serial('id').primaryKey(),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_featuredAppsBlock_v_cards_order_idx').on(columns._order),
+    _parentIDIdx: index('_featuredAppsBlock_v_cards_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_featuredAppsBlock_v.id],
+      name: '_featuredAppsBlock_v_cards_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _featuredAppsBlock_v_cards_locales = pgTable(
+  '_featuredAppsBlock_v_cards_locales',
+  {
+    title: varchar('title'),
+    description: varchar('description'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('_featuredAppsBlock_v_cards_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_featuredAppsBlock_v_cards.id],
+      name: '_featuredAppsBlock_v_cards_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const _featuredAppsBlock_v = pgTable(
   '_featuredAppsBlock_v',
   {
@@ -2042,7 +2084,10 @@ export const _featuredAppsBlock_v = pgTable(
     blockHeader_badge_icon_position: badge_icon_position(
       'block_header_badge_icon_position',
     ).default('flex-row'),
-    type: enum__featuredAppsBlock_v_type('type').default('featuredApps01'),
+    type: enum__featuredAppsBlock_v_type('type').default('04'),
+    media: integer('media_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
   },
@@ -2050,6 +2095,7 @@ export const _featuredAppsBlock_v = pgTable(
     _orderIdx: index('_featuredAppsBlock_v_order_idx').on(columns._order),
     _parentIDIdx: index('_featuredAppsBlock_v_parent_id_idx').on(columns._parentID),
     _pathIdx: index('_featuredAppsBlock_v_path_idx').on(columns._path),
+    _featuredAppsBlock_v_media_idx: index('_featuredAppsBlock_v_media_idx').on(columns.media),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [_pages_v.id],
@@ -2063,18 +2109,11 @@ export const _featuredAppsBlock_v_locales = pgTable(
   {
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_headerText: jsonb('block_header_header_text'),
-    media: integer('media_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: integer('_parent_id').notNull(),
   },
   (columns) => ({
-    _featuredAppsBlock_v_media_idx: index('_featuredAppsBlock_v_media_idx').on(
-      columns.media,
-      columns._locale,
-    ),
     _localeParent: uniqueIndex('_featuredAppsBlock_v_locales_locale_parent_id_unique').on(
       columns._locale,
       columns._parentID,
@@ -2359,35 +2398,6 @@ export const _testimonialsBlock_v_locales = pgTable(
   }),
 )
 
-export const _pages_v_version_breadcrumbs = pgTable(
-  '_pages_v_version_breadcrumbs',
-  {
-    _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    _locale: enum__locales('_locale').notNull(),
-    id: serial('id').primaryKey(),
-    doc: integer('doc_id').references(() => pages.id, {
-      onDelete: 'set null',
-    }),
-    url: varchar('url'),
-    label: varchar('label'),
-    _uuid: varchar('_uuid'),
-  },
-  (columns) => ({
-    _orderIdx: index('_pages_v_version_breadcrumbs_order_idx').on(columns._order),
-    _parentIDIdx: index('_pages_v_version_breadcrumbs_parent_id_idx').on(columns._parentID),
-    _localeIdx: index('_pages_v_version_breadcrumbs_locale_idx').on(columns._locale),
-    _pages_v_version_breadcrumbs_doc_idx: index('_pages_v_version_breadcrumbs_doc_idx').on(
-      columns.doc,
-    ),
-    _parentIDFk: foreignKey({
-      columns: [columns['_parentID']],
-      foreignColumns: [_pages_v.id],
-      name: '_pages_v_version_breadcrumbs_parent_id_fk',
-    }).onDelete('cascade'),
-  }),
-)
-
 export const _pages_v = pgTable(
   '_pages_v',
   {
@@ -2411,9 +2421,6 @@ export const _pages_v = pgTable(
     }),
     version_slug: varchar('version_slug'),
     version_slugLock: boolean('version_slug_lock').default(true),
-    version_parent: integer('version_parent_id').references(() => pages.id, {
-      onDelete: 'set null',
-    }),
     version_updatedAt: timestamp('version_updated_at', {
       mode: 'string',
       withTimezone: true,
@@ -2434,14 +2441,12 @@ export const _pages_v = pgTable(
     snapshot: boolean('snapshot'),
     publishedLocale: enum__pages_v_published_locale('published_locale'),
     latest: boolean('latest'),
+    autosave: boolean('autosave'),
   },
   (columns) => ({
     _pages_v_parent_idx: index('_pages_v_parent_idx').on(columns.parent),
     _pages_v_version_version_slug_idx: index('_pages_v_version_version_slug_idx').on(
       columns.version_slug,
-    ),
-    _pages_v_version_version_parent_idx: index('_pages_v_version_version_parent_idx').on(
-      columns.version_parent,
     ),
     _pages_v_version_version_updated_at_idx: index('_pages_v_version_version_updated_at_idx').on(
       columns.version_updatedAt,
@@ -2459,6 +2464,7 @@ export const _pages_v = pgTable(
       columns.publishedLocale,
     ),
     _pages_v_latest_idx: index('_pages_v_latest_idx').on(columns.latest),
+    _pages_v_autosave_idx: index('_pages_v_autosave_idx').on(columns.autosave),
   }),
 )
 
@@ -3269,25 +3275,6 @@ export const integrations_blocks_faq_block_locales = pgTable(
   }),
 )
 
-export const integrations_ecosystem = pgTable(
-  'integrations_ecosystem',
-  {
-    order: integer('order').notNull(),
-    parent: integer('parent_id').notNull(),
-    value: enum_integrations_ecosystem('value'),
-    id: serial('id').primaryKey(),
-  },
-  (columns) => ({
-    orderIdx: index('integrations_ecosystem_order_idx').on(columns.order),
-    parentIdx: index('integrations_ecosystem_parent_idx').on(columns.parent),
-    parentFk: foreignKey({
-      columns: [columns['parent']],
-      foreignColumns: [integrations.id],
-      name: 'integrations_ecosystem_parent_fk',
-    }).onDelete('cascade'),
-  }),
-)
-
 export const integrations = pgTable(
   'integrations',
   {
@@ -3621,25 +3608,6 @@ export const _integrations_v_blocks_faq_block_locales = pgTable(
   }),
 )
 
-export const _integrations_v_version_ecosystem = pgTable(
-  '_integrations_v_version_ecosystem',
-  {
-    order: integer('order').notNull(),
-    parent: integer('parent_id').notNull(),
-    value: enum__integrations_v_version_ecosystem('value'),
-    id: serial('id').primaryKey(),
-  },
-  (columns) => ({
-    orderIdx: index('_integrations_v_version_ecosystem_order_idx').on(columns.order),
-    parentIdx: index('_integrations_v_version_ecosystem_parent_idx').on(columns.parent),
-    parentFk: foreignKey({
-      columns: [columns['parent']],
-      foreignColumns: [_integrations_v.id],
-      name: '_integrations_v_version_ecosystem_parent_fk',
-    }).onDelete('cascade'),
-  }),
-)
-
 export const _integrations_v = pgTable(
   '_integrations_v',
   {
@@ -3696,6 +3664,7 @@ export const _integrations_v = pgTable(
     snapshot: boolean('snapshot'),
     publishedLocale: enum__integrations_v_published_locale('published_locale'),
     latest: boolean('latest'),
+    autosave: boolean('autosave'),
   },
   (columns) => ({
     _integrations_v_parent_idx: index('_integrations_v_parent_idx').on(columns.parent),
@@ -3721,6 +3690,7 @@ export const _integrations_v = pgTable(
       columns.publishedLocale,
     ),
     _integrations_v_latest_idx: index('_integrations_v_latest_idx').on(columns.latest),
+    _integrations_v_autosave_idx: index('_integrations_v_autosave_idx').on(columns.autosave),
   }),
 )
 
@@ -3857,7 +3827,6 @@ export const media = pgTable(
     caption: jsonb('caption'),
     locale: enum_media_locale('locale'),
     blurhash: varchar('blurhash'),
-    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -6011,6 +5980,91 @@ export const payload_migrations = pgTable(
   }),
 )
 
+export const settings = pgTable('settings', {
+  id: serial('id').primaryKey(),
+  announcementBar_link_type: link_type('announcement_bar_link_type').default('reference'),
+  announcementBar_link_newTab: boolean('announcement_bar_link_new_tab'),
+  announcementBar_link_url: varchar('announcement_bar_link_url'),
+  customHeadHtml: varchar('custom_head_html'),
+  customBodyHtml: varchar('custom_body_html'),
+  tagManagerId: varchar('tag_manager_id'),
+  analyticsScripts: varchar('analytics_scripts'),
+  updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }),
+  createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }),
+})
+
+export const settings_locales = pgTable(
+  'settings_locales',
+  {
+    meta_title: varchar('meta_title'),
+    meta_image: integer('meta_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    meta_description: varchar('meta_description'),
+    announcementBar_text: varchar('announcement_bar_text'),
+    announcementBar_link_label: varchar('announcement_bar_link_label').notNull(),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    settings_meta_meta_image_idx: index('settings_meta_meta_image_idx').on(
+      columns.meta_image,
+      columns._locale,
+    ),
+    _localeParent: uniqueIndex('settings_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [settings.id],
+      name: 'settings_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const settings_rels = pgTable(
+  'settings_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: integer('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    pagesID: integer('pages_id'),
+    postsID: integer('posts_id'),
+    solutionsID: integer('solutions_id'),
+  },
+  (columns) => ({
+    order: index('settings_rels_order_idx').on(columns.order),
+    parentIdx: index('settings_rels_parent_idx').on(columns.parent),
+    pathIdx: index('settings_rels_path_idx').on(columns.path),
+    settings_rels_pages_id_idx: index('settings_rels_pages_id_idx').on(columns.pagesID),
+    settings_rels_posts_id_idx: index('settings_rels_posts_id_idx').on(columns.postsID),
+    settings_rels_solutions_id_idx: index('settings_rels_solutions_id_idx').on(columns.solutionsID),
+    parentFk: foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [settings.id],
+      name: 'settings_rels_parent_fk',
+    }).onDelete('cascade'),
+    pagesIdFk: foreignKey({
+      columns: [columns['pagesID']],
+      foreignColumns: [pages.id],
+      name: 'settings_rels_pages_fk',
+    }).onDelete('cascade'),
+    postsIdFk: foreignKey({
+      columns: [columns['postsID']],
+      foreignColumns: [posts.id],
+      name: 'settings_rels_posts_fk',
+    }).onDelete('cascade'),
+    solutionsIdFk: foreignKey({
+      columns: [columns['solutionsID']],
+      foreignColumns: [solutions.id],
+      name: 'settings_rels_solutions_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const header_tabs_description_links = pgTable(
   'header_tabs_description_links',
   {
@@ -6718,6 +6772,29 @@ export const relations_featuredAppsBlock_block_header_links = relations(
     }),
   }),
 )
+export const relations_featuredAppsBlock_cards_locales = relations(
+  featuredAppsBlock_cards_locales,
+  ({ one }) => ({
+    _parentID: one(featuredAppsBlock_cards, {
+      fields: [featuredAppsBlock_cards_locales._parentID],
+      references: [featuredAppsBlock_cards.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_featuredAppsBlock_cards = relations(
+  featuredAppsBlock_cards,
+  ({ one, many }) => ({
+    _parentID: one(featuredAppsBlock, {
+      fields: [featuredAppsBlock_cards._parentID],
+      references: [featuredAppsBlock.id],
+      relationName: 'cards',
+    }),
+    _locales: many(featuredAppsBlock_cards_locales, {
+      relationName: '_locales',
+    }),
+  }),
+)
 export const relations_featuredAppsBlock_locales = relations(
   featuredAppsBlock_locales,
   ({ one }) => ({
@@ -6725,11 +6802,6 @@ export const relations_featuredAppsBlock_locales = relations(
       fields: [featuredAppsBlock_locales._parentID],
       references: [featuredAppsBlock.id],
       relationName: '_locales',
-    }),
-    media: one(media, {
-      fields: [featuredAppsBlock_locales.media],
-      references: [media.id],
-      relationName: 'media',
     }),
   }),
 )
@@ -6746,10 +6818,12 @@ export const relations_featuredAppsBlock = relations(featuredAppsBlock, ({ one, 
     relationName: 'blockHeader_links',
   }),
   media: one(media, {
-    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
-    fields: [featuredAppsBlock_locales.media],
+    fields: [featuredAppsBlock.media],
     references: [media.id],
     relationName: 'media',
+  }),
+  cards: many(featuredAppsBlock_cards, {
+    relationName: 'cards',
   }),
 }))
 export const relations_galleryBlock_block_header_links_locales = relations(
@@ -6887,18 +6961,6 @@ export const relations_testimonialsBlock = relations(testimonialsBlock, ({ one, 
     relationName: 'blockHeader_links',
   }),
 }))
-export const relations_pages_breadcrumbs = relations(pages_breadcrumbs, ({ one }) => ({
-  _parentID: one(pages, {
-    fields: [pages_breadcrumbs._parentID],
-    references: [pages.id],
-    relationName: 'breadcrumbs',
-  }),
-  doc: one(pages, {
-    fields: [pages_breadcrumbs.doc],
-    references: [pages.id],
-    relationName: 'doc',
-  }),
-}))
 export const relations_pages_locales = relations(pages_locales, ({ one }) => ({
   _parentID: one(pages, {
     fields: [pages_locales._parentID],
@@ -6958,7 +7020,7 @@ export const relations_pages_rels = relations(pages_rels, ({ one }) => ({
     relationName: 'testimonials',
   }),
 }))
-export const relations_pages = relations(pages, ({ one, many }) => ({
+export const relations_pages = relations(pages, ({ many }) => ({
   hero_links: many(pages_hero_links, {
     relationName: 'hero_links',
   }),
@@ -6988,14 +7050,6 @@ export const relations_pages = relations(pages, ({ one, many }) => ({
   }),
   _blocks_testimonials: many(testimonialsBlock, {
     relationName: '_blocks_testimonials',
-  }),
-  parent: one(pages, {
-    fields: [pages.parent],
-    references: [pages.id],
-    relationName: 'parent',
-  }),
-  breadcrumbs: many(pages_breadcrumbs, {
-    relationName: 'breadcrumbs',
   }),
   _locales: many(pages_locales, {
     relationName: '_locales',
@@ -7300,6 +7354,29 @@ export const relations__featuredAppsBlock_v_block_header_links = relations(
     }),
   }),
 )
+export const relations__featuredAppsBlock_v_cards_locales = relations(
+  _featuredAppsBlock_v_cards_locales,
+  ({ one }) => ({
+    _parentID: one(_featuredAppsBlock_v_cards, {
+      fields: [_featuredAppsBlock_v_cards_locales._parentID],
+      references: [_featuredAppsBlock_v_cards.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations__featuredAppsBlock_v_cards = relations(
+  _featuredAppsBlock_v_cards,
+  ({ one, many }) => ({
+    _parentID: one(_featuredAppsBlock_v, {
+      fields: [_featuredAppsBlock_v_cards._parentID],
+      references: [_featuredAppsBlock_v.id],
+      relationName: 'cards',
+    }),
+    _locales: many(_featuredAppsBlock_v_cards_locales, {
+      relationName: '_locales',
+    }),
+  }),
+)
 export const relations__featuredAppsBlock_v_locales = relations(
   _featuredAppsBlock_v_locales,
   ({ one }) => ({
@@ -7307,11 +7384,6 @@ export const relations__featuredAppsBlock_v_locales = relations(
       fields: [_featuredAppsBlock_v_locales._parentID],
       references: [_featuredAppsBlock_v.id],
       relationName: '_locales',
-    }),
-    media: one(media, {
-      fields: [_featuredAppsBlock_v_locales.media],
-      references: [media.id],
-      relationName: 'media',
     }),
   }),
 )
@@ -7328,10 +7400,12 @@ export const relations__featuredAppsBlock_v = relations(_featuredAppsBlock_v, ({
     relationName: 'blockHeader_links',
   }),
   media: one(media, {
-    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
-    fields: [_featuredAppsBlock_v_locales.media],
+    fields: [_featuredAppsBlock_v.media],
     references: [media.id],
     relationName: 'media',
+  }),
+  cards: many(_featuredAppsBlock_v_cards, {
+    relationName: 'cards',
   }),
 }))
 export const relations__galleryBlock_v_block_header_links_locales = relations(
@@ -7472,21 +7546,6 @@ export const relations__testimonialsBlock_v = relations(_testimonialsBlock_v, ({
     relationName: 'blockHeader_links',
   }),
 }))
-export const relations__pages_v_version_breadcrumbs = relations(
-  _pages_v_version_breadcrumbs,
-  ({ one }) => ({
-    _parentID: one(_pages_v, {
-      fields: [_pages_v_version_breadcrumbs._parentID],
-      references: [_pages_v.id],
-      relationName: 'version_breadcrumbs',
-    }),
-    doc: one(pages, {
-      fields: [_pages_v_version_breadcrumbs.doc],
-      references: [pages.id],
-      relationName: 'doc',
-    }),
-  }),
-)
 export const relations__pages_v_locales = relations(_pages_v_locales, ({ one }) => ({
   _parentID: one(_pages_v, {
     fields: [_pages_v_locales._parentID],
@@ -7581,14 +7640,6 @@ export const relations__pages_v = relations(_pages_v, ({ one, many }) => ({
   }),
   _blocks_testimonials: many(_testimonialsBlock_v, {
     relationName: '_blocks_testimonials',
-  }),
-  version_parent: one(pages, {
-    fields: [_pages_v.version_parent],
-    references: [pages.id],
-    relationName: 'version_parent',
-  }),
-  version_breadcrumbs: many(_pages_v_version_breadcrumbs, {
-    relationName: 'version_breadcrumbs',
   }),
   _locales: many(_pages_v_locales, {
     relationName: '_locales',
@@ -7902,13 +7953,6 @@ export const relations_integrations_blocks_faq_block = relations(
     }),
   }),
 )
-export const relations_integrations_ecosystem = relations(integrations_ecosystem, ({ one }) => ({
-  parent: one(integrations, {
-    fields: [integrations_ecosystem.parent],
-    references: [integrations.id],
-    relationName: 'ecosystem',
-  }),
-}))
 export const relations_integrations_locales = relations(integrations_locales, ({ one }) => ({
   _parentID: one(integrations, {
     fields: [integrations_locales._parentID],
@@ -8004,9 +8048,6 @@ export const relations_integrations = relations(integrations, ({ one, many }) =>
   _blocks_testimonials: many(testimonialsBlock, {
     relationName: '_blocks_testimonials',
   }),
-  ecosystem: many(integrations_ecosystem, {
-    relationName: 'ecosystem',
-  }),
   _locales: many(integrations_locales, {
     relationName: '_locales',
   }),
@@ -8098,16 +8139,6 @@ export const relations__integrations_v_blocks_faq_block = relations(
     }),
     blockHeader_links: many(_integrations_v_blocks_faq_block_block_header_links, {
       relationName: 'blockHeader_links',
-    }),
-  }),
-)
-export const relations__integrations_v_version_ecosystem = relations(
-  _integrations_v_version_ecosystem,
-  ({ one }) => ({
-    parent: one(_integrations_v, {
-      fields: [_integrations_v_version_ecosystem.parent],
-      references: [_integrations_v.id],
-      relationName: 'version_ecosystem',
     }),
   }),
 )
@@ -8210,9 +8241,6 @@ export const relations__integrations_v = relations(_integrations_v, ({ one, many
   }),
   _blocks_testimonials: many(_testimonialsBlock_v, {
     relationName: '_blocks_testimonials',
-  }),
-  version_ecosystem: many(_integrations_v_version_ecosystem, {
-    relationName: 'version_ecosystem',
   }),
   _locales: many(_integrations_v_locales, {
     relationName: '_locales',
@@ -9194,6 +9222,48 @@ export const relations_payload_preferences = relations(payload_preferences, ({ m
   }),
 }))
 export const relations_payload_migrations = relations(payload_migrations, () => ({}))
+export const relations_settings_locales = relations(settings_locales, ({ one }) => ({
+  _parentID: one(settings, {
+    fields: [settings_locales._parentID],
+    references: [settings.id],
+    relationName: '_locales',
+  }),
+  meta_image: one(media, {
+    fields: [settings_locales.meta_image],
+    references: [media.id],
+    relationName: 'meta_image',
+  }),
+}))
+export const relations_settings_rels = relations(settings_rels, ({ one }) => ({
+  parent: one(settings, {
+    fields: [settings_rels.parent],
+    references: [settings.id],
+    relationName: '_rels',
+  }),
+  pagesID: one(pages, {
+    fields: [settings_rels.pagesID],
+    references: [pages.id],
+    relationName: 'pages',
+  }),
+  postsID: one(posts, {
+    fields: [settings_rels.postsID],
+    references: [posts.id],
+    relationName: 'posts',
+  }),
+  solutionsID: one(solutions, {
+    fields: [settings_rels.solutionsID],
+    references: [solutions.id],
+    relationName: 'solutions',
+  }),
+}))
+export const relations_settings = relations(settings, ({ many }) => ({
+  _locales: many(settings_locales, {
+    relationName: '_locales',
+  }),
+  _rels: many(settings_rels, {
+    relationName: '_rels',
+  }),
+}))
 export const relations_header_tabs_description_links_locales = relations(
   header_tabs_description_links_locales,
   ({ one }) => ({
@@ -9491,13 +9561,11 @@ type DatabaseSchema = {
   enum__solutions_v_published_locale: typeof enum__solutions_v_published_locale
   enum_integrations_blocks_faq_block_block_header_type: typeof enum_integrations_blocks_faq_block_block_header_type
   enum_integrations_blocks_faq_block_block_header_badge_type: typeof enum_integrations_blocks_faq_block_block_header_badge_type
-  enum_integrations_ecosystem: typeof enum_integrations_ecosystem
   enum_integrations_hero_type: typeof enum_integrations_hero_type
   enum_integrations_hero_badge_type: typeof enum_integrations_hero_badge_type
   enum_integrations_status: typeof enum_integrations_status
   enum__integrations_v_blocks_faq_block_block_header_type: typeof enum__integrations_v_blocks_faq_block_block_header_type
   enum__integrations_v_blocks_faq_block_block_header_badge_type: typeof enum__integrations_v_blocks_faq_block_block_header_badge_type
-  enum__integrations_v_version_ecosystem: typeof enum__integrations_v_version_ecosystem
   enum__integrations_v_version_hero_type: typeof enum__integrations_v_version_hero_type
   enum__integrations_v_version_hero_badge_type: typeof enum__integrations_v_version_hero_badge_type
   enum__integrations_v_version_status: typeof enum__integrations_v_version_status
@@ -9542,6 +9610,8 @@ type DatabaseSchema = {
   featuresBlock_locales: typeof featuresBlock_locales
   featuredAppsBlock_block_header_links: typeof featuredAppsBlock_block_header_links
   featuredAppsBlock_block_header_links_locales: typeof featuredAppsBlock_block_header_links_locales
+  featuredAppsBlock_cards: typeof featuredAppsBlock_cards
+  featuredAppsBlock_cards_locales: typeof featuredAppsBlock_cards_locales
   featuredAppsBlock: typeof featuredAppsBlock
   featuredAppsBlock_locales: typeof featuredAppsBlock_locales
   galleryBlock_block_header_links: typeof galleryBlock_block_header_links
@@ -9555,7 +9625,6 @@ type DatabaseSchema = {
   testimonialsBlock_block_header_links_locales: typeof testimonialsBlock_block_header_links_locales
   testimonialsBlock: typeof testimonialsBlock
   testimonialsBlock_locales: typeof testimonialsBlock_locales
-  pages_breadcrumbs: typeof pages_breadcrumbs
   pages: typeof pages
   pages_locales: typeof pages_locales
   pages_rels: typeof pages_rels
@@ -9581,6 +9650,8 @@ type DatabaseSchema = {
   _featuresBlock_v_locales: typeof _featuresBlock_v_locales
   _featuredAppsBlock_v_block_header_links: typeof _featuredAppsBlock_v_block_header_links
   _featuredAppsBlock_v_block_header_links_locales: typeof _featuredAppsBlock_v_block_header_links_locales
+  _featuredAppsBlock_v_cards: typeof _featuredAppsBlock_v_cards
+  _featuredAppsBlock_v_cards_locales: typeof _featuredAppsBlock_v_cards_locales
   _featuredAppsBlock_v: typeof _featuredAppsBlock_v
   _featuredAppsBlock_v_locales: typeof _featuredAppsBlock_v_locales
   _galleryBlock_v_block_header_links: typeof _galleryBlock_v_block_header_links
@@ -9594,7 +9665,6 @@ type DatabaseSchema = {
   _testimonialsBlock_v_block_header_links_locales: typeof _testimonialsBlock_v_block_header_links_locales
   _testimonialsBlock_v: typeof _testimonialsBlock_v
   _testimonialsBlock_v_locales: typeof _testimonialsBlock_v_locales
-  _pages_v_version_breadcrumbs: typeof _pages_v_version_breadcrumbs
   _pages_v: typeof _pages_v
   _pages_v_locales: typeof _pages_v_locales
   _pages_v_rels: typeof _pages_v_rels
@@ -9619,7 +9689,6 @@ type DatabaseSchema = {
   integrations_blocks_faq_block_block_header_links_locales: typeof integrations_blocks_faq_block_block_header_links_locales
   integrations_blocks_faq_block: typeof integrations_blocks_faq_block
   integrations_blocks_faq_block_locales: typeof integrations_blocks_faq_block_locales
-  integrations_ecosystem: typeof integrations_ecosystem
   integrations: typeof integrations
   integrations_locales: typeof integrations_locales
   integrations_rels: typeof integrations_rels
@@ -9630,7 +9699,6 @@ type DatabaseSchema = {
   _integrations_v_blocks_faq_block_block_header_links_locales: typeof _integrations_v_blocks_faq_block_block_header_links_locales
   _integrations_v_blocks_faq_block: typeof _integrations_v_blocks_faq_block
   _integrations_v_blocks_faq_block_locales: typeof _integrations_v_blocks_faq_block_locales
-  _integrations_v_version_ecosystem: typeof _integrations_v_version_ecosystem
   _integrations_v: typeof _integrations_v
   _integrations_v_locales: typeof _integrations_v_locales
   _integrations_v_rels: typeof _integrations_v_rels
@@ -9708,6 +9776,9 @@ type DatabaseSchema = {
   payload_preferences: typeof payload_preferences
   payload_preferences_rels: typeof payload_preferences_rels
   payload_migrations: typeof payload_migrations
+  settings: typeof settings
+  settings_locales: typeof settings_locales
+  settings_rels: typeof settings_rels
   header_tabs_description_links: typeof header_tabs_description_links
   header_tabs_description_links_locales: typeof header_tabs_description_links_locales
   header_tabs_nav_items_featured_link_links: typeof header_tabs_nav_items_featured_link_links
@@ -9749,6 +9820,8 @@ type DatabaseSchema = {
   relations_featuresBlock: typeof relations_featuresBlock
   relations_featuredAppsBlock_block_header_links_locales: typeof relations_featuredAppsBlock_block_header_links_locales
   relations_featuredAppsBlock_block_header_links: typeof relations_featuredAppsBlock_block_header_links
+  relations_featuredAppsBlock_cards_locales: typeof relations_featuredAppsBlock_cards_locales
+  relations_featuredAppsBlock_cards: typeof relations_featuredAppsBlock_cards
   relations_featuredAppsBlock_locales: typeof relations_featuredAppsBlock_locales
   relations_featuredAppsBlock: typeof relations_featuredAppsBlock
   relations_galleryBlock_block_header_links_locales: typeof relations_galleryBlock_block_header_links_locales
@@ -9762,7 +9835,6 @@ type DatabaseSchema = {
   relations_testimonialsBlock_block_header_links: typeof relations_testimonialsBlock_block_header_links
   relations_testimonialsBlock_locales: typeof relations_testimonialsBlock_locales
   relations_testimonialsBlock: typeof relations_testimonialsBlock
-  relations_pages_breadcrumbs: typeof relations_pages_breadcrumbs
   relations_pages_locales: typeof relations_pages_locales
   relations_pages_rels: typeof relations_pages_rels
   relations_pages: typeof relations_pages
@@ -9788,6 +9860,8 @@ type DatabaseSchema = {
   relations__featuresBlock_v: typeof relations__featuresBlock_v
   relations__featuredAppsBlock_v_block_header_links_locales: typeof relations__featuredAppsBlock_v_block_header_links_locales
   relations__featuredAppsBlock_v_block_header_links: typeof relations__featuredAppsBlock_v_block_header_links
+  relations__featuredAppsBlock_v_cards_locales: typeof relations__featuredAppsBlock_v_cards_locales
+  relations__featuredAppsBlock_v_cards: typeof relations__featuredAppsBlock_v_cards
   relations__featuredAppsBlock_v_locales: typeof relations__featuredAppsBlock_v_locales
   relations__featuredAppsBlock_v: typeof relations__featuredAppsBlock_v
   relations__galleryBlock_v_block_header_links_locales: typeof relations__galleryBlock_v_block_header_links_locales
@@ -9801,7 +9875,6 @@ type DatabaseSchema = {
   relations__testimonialsBlock_v_block_header_links: typeof relations__testimonialsBlock_v_block_header_links
   relations__testimonialsBlock_v_locales: typeof relations__testimonialsBlock_v_locales
   relations__testimonialsBlock_v: typeof relations__testimonialsBlock_v
-  relations__pages_v_version_breadcrumbs: typeof relations__pages_v_version_breadcrumbs
   relations__pages_v_locales: typeof relations__pages_v_locales
   relations__pages_v_rels: typeof relations__pages_v_rels
   relations__pages_v: typeof relations__pages_v
@@ -9826,7 +9899,6 @@ type DatabaseSchema = {
   relations_integrations_blocks_faq_block_block_header_links: typeof relations_integrations_blocks_faq_block_block_header_links
   relations_integrations_blocks_faq_block_locales: typeof relations_integrations_blocks_faq_block_locales
   relations_integrations_blocks_faq_block: typeof relations_integrations_blocks_faq_block
-  relations_integrations_ecosystem: typeof relations_integrations_ecosystem
   relations_integrations_locales: typeof relations_integrations_locales
   relations_integrations_rels: typeof relations_integrations_rels
   relations_integrations: typeof relations_integrations
@@ -9837,7 +9909,6 @@ type DatabaseSchema = {
   relations__integrations_v_blocks_faq_block_block_header_links: typeof relations__integrations_v_blocks_faq_block_block_header_links
   relations__integrations_v_blocks_faq_block_locales: typeof relations__integrations_v_blocks_faq_block_locales
   relations__integrations_v_blocks_faq_block: typeof relations__integrations_v_blocks_faq_block
-  relations__integrations_v_version_ecosystem: typeof relations__integrations_v_version_ecosystem
   relations__integrations_v_locales: typeof relations__integrations_v_locales
   relations__integrations_v_rels: typeof relations__integrations_v_rels
   relations__integrations_v: typeof relations__integrations_v
@@ -9915,6 +9986,9 @@ type DatabaseSchema = {
   relations_payload_preferences_rels: typeof relations_payload_preferences_rels
   relations_payload_preferences: typeof relations_payload_preferences
   relations_payload_migrations: typeof relations_payload_migrations
+  relations_settings_locales: typeof relations_settings_locales
+  relations_settings_rels: typeof relations_settings_rels
+  relations_settings: typeof relations_settings
   relations_header_tabs_description_links_locales: typeof relations_header_tabs_description_links_locales
   relations_header_tabs_description_links: typeof relations_header_tabs_description_links
   relations_header_tabs_nav_items_featured_link_links_locales: typeof relations_header_tabs_nav_items_featured_link_links_locales

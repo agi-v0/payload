@@ -8,10 +8,13 @@ import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 import { getServerSideURL } from './utilities/getURL'
 
-import { Footer } from './Footer/config'
-import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
+
+//globals
+import { Footer } from './Footer/config'
+import { Header } from './Header/config'
+import Site from './collections/Site'
 
 //collections
 import { Categories } from './collections/Categories'
@@ -187,7 +190,7 @@ export default buildConfig({
     defaultLocale: 'ar', // required
     fallback: true, // defaults to true
   },
-  globals: [Header, Footer],
+  globals: [Site, Header, Footer],
   plugins: [
     ...plugins,
     s3Storage({

@@ -9,7 +9,7 @@ import {
 import { link } from '@/fields/link'
 
 const SiteConfig: GlobalConfig = {
-  slug: 'site-config',
+  slug: 'settings',
   label: 'Site Configuration',
   fields: [
     {
