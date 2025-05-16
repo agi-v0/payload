@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import '@/styles/admin-makeup.scss';
 
 :root {
   --font-body:
@@ -26,6 +27,14 @@
 .collapsible__toggle-wrap:has(.collapsible__toggle--open) {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+.popup__content {
+  border-radius: var(--style-radius-s);
+}
+
+.popup__content .popup-button-list__button {
+  border-radius: var(--style-radius-s);
 }
 
 .fixed-toolbar {
