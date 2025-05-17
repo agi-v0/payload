@@ -2,6 +2,8 @@
 @import 'tw-animate-css';
 @import './typography.css' layer(components);
 
+@custom-variant dark (&:is(.dark *));
+
 /* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
 @variant dark {
   &:where([data-theme='dark'], [data-theme='dark'] *) {
@@ -221,6 +223,7 @@
   --color-brand-quaternary: var(--brand-quaternary);
 
   --color-inverted-primary: var(--inverted-primary);
+  --color-inverted-secondary: var(--inverted-secondary);
 
   --color-marn-50: #eef1fc;
   --color-marn-100: #d8dff8;
@@ -346,4 +349,13 @@
     0px 3px 3px -1.5px var(--color-grey-50),
     0px 1px 1px -0.5px var(--color-grey-100),
     0px 0px 0px 1px var(--color-grey-50);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

@@ -1333,11 +1333,15 @@ export interface GalleryBlock {
   /**
    * Select the layout for the gallery.
    */
-  type: 'gallery01' | 'gallery02' | 'gallery03';
-  images?:
+  type: 'gallery01' | 'gallery02' | 'gallery03' | 'gallery04';
+  /**
+   * Select or upload images for the gallery.
+   */
+  images?: (number | Media)[] | null;
+  interactiveGallery?:
     | {
         /**
-         * Select an image for the gallery.
+         * Select or upload an image for the gallery.
          */
         image: number | Media;
         /**

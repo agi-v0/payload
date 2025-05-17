@@ -129,7 +129,7 @@ importers:
         specifier: ^0.475.0
         version: 0.475.0(react@19.1.0)
       motion:
-        specifier: ^12.9.2
+        specifier: ^12.11.4
         version: 12.11.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next:
         specifier: ^15.3.1

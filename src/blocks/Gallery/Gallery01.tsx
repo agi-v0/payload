@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import type { GalleryBlock } from '@/payload-types'
+import type { GalleryBlock, Media as MediaType } from '@/payload-types'
 import { Media } from '@/components/Media'
 import {
   Carousel,
@@ -13,7 +13,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/utilities/ui'
 
 interface Gallery01Props {
-  images: GalleryBlock['images']
+  images: MediaType[]
   className?: string
 }
 
@@ -26,11 +26,11 @@ export const Gallery01: React.FC<Gallery01Props> = ({ images, className }) => {
     <div className={cn('py-xl container w-full', className)}>
       <Carousel slidesPerView={1} className="w-full">
         <CarouselContent className="-ms-xs">
-          {images.map((item, index) => (
-            <CarouselItem key={item.id || index} className="ps-xs">
-              {typeof item.image === 'object' && item.image !== null && (
+          {images.map((image, index) => (
+            <CarouselItem key={image.id || index} className="ps-xs">
+              {typeof image === 'object' && image !== null && (
                 <Media
-                  resource={item.image}
+                  resource={image}
                   className="rounded-space-sm bg-background-neutral-subtle h-full w-full overflow-clip object-cover"
                 />
               )}

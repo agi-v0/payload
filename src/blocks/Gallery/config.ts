@@ -10,7 +10,7 @@ const imageEntry: Field[] = [
     relationTo: 'media',
     required: true,
     admin: {
-      description: 'Select an image for the gallery.',
+      description: 'Select or upload an image for the gallery.',
     },
     localized: true,
   },
@@ -32,7 +32,6 @@ const imageEntry: Field[] = [
     ],
     admin: {
       description: 'Title and description for the transition panel.',
-      condition: (data, siblingData, { blockData }) => blockData?.type === 'gallery03',
     },
   },
 ]
@@ -44,7 +43,8 @@ const fields: Field[] = [
     options: [
       { value: 'gallery01', label: 'Gallery 01 (Card)' },
       { value: 'gallery02', label: 'Gallery 02 (Full-width)' },
-      { value: 'gallery03', label: 'Gallery 03 (Transition Panel)' },
+      { value: 'gallery03', label: 'Gallery 03 (Infinite Slider)' },
+      { value: 'gallery04', label: 'Gallery 04 (Interactive)' },
     ],
     required: true,
     defaultValue: 'gallery01',
@@ -54,10 +54,24 @@ const fields: Field[] = [
   },
   {
     name: 'images',
+    type: 'upload',
+    relationTo: 'media',
+    hasMany: true,
+    admin: {
+      description: 'Select or upload images for the gallery.',
+      condition: (data, siblingData, { blockData }) => blockData?.type !== 'gallery04',
+    },
+    localized: true,
+  },
+  {
+    name: 'interactiveGallery',
     label: 'Gallery Images',
     type: 'array',
     minRows: 1,
     fields: imageEntry,
+    admin: {
+      condition: (data, siblingData, { blockData }) => blockData?.type === 'gallery04',
+    },
   },
 ]
 
