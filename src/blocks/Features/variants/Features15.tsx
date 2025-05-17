@@ -12,10 +12,7 @@ export const Features15: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
     <div className="py-xl container grid grid-cols-1 gap-4 md:grid-cols-2">
       {limitedColumns.map((column, index) => {
         return (
-          <Card
-            key={index}
-            className="rounded-space-sm overflow-hidden border-0 bg-transparent p-0"
-          >
+          <Card key={index} className="rounded-space-sm overflow-hidden border-0">
             <CardContent className="grid grid-cols-2 items-start bg-transparent p-0 md:items-center">
               {column.image && (
                 <div className="h-auto w-full">
@@ -27,7 +24,7 @@ export const Features15: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
                 </div>
               )}
               {column.content && (
-                <div className="p-sm">
+                <div className="">
                   <h3 className="text-body-lg text-base-primary mb-2 font-medium">
                     {column.content?.title}
                   </h3>

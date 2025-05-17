@@ -67,13 +67,13 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
         >
           {columns.map((column, index) => {
             return (
-              <CarouselItem key={column.id || `tab-content-${index}`} className="px-md pb-4">
+              <CarouselItem key={column.id || `tab-content-${index}`} className="px-md py-px">
                 {React.createElement(
                   column.enableCta && column.link?.label ? CMSLink : 'div',
                   {
                     key: index,
                     className: cn(
-                      'gap-md group bg-background-neutral p-md rounded-space-sm grid grid-cols-1 hover:no-underline hover:shadow-lg md:grid-cols-2',
+                      'gap-md group bg-background-neutral p-md rounded-space-sm hover:shadow-border grid grid-cols-1 hover:no-underline md:grid-cols-2',
                     ),
                     ...(column.link?.label
                       ? { ...column.link, label: null, variant: 'inline' }

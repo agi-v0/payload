@@ -149,11 +149,7 @@ export const enum_testimonialsBlock_block_header_badge_type = pgEnum(
   'enum_testimonialsBlock_block_header_badge_type',
   ['label', 'reference'],
 )
-export const enum_testimonialsBlock_type = pgEnum('enum_testimonialsBlock_type', [
-  'TestimonialsBlock01',
-  'TestimonialsBlock02',
-  'testimonialsModularGrid',
-])
+export const enum_testimonialsBlock_type = pgEnum('enum_testimonialsBlock_type', ['01', '02', '03'])
 export const enum_pages_hero_type = pgEnum('enum_pages_hero_type', [
   'hero01',
   'hero02',
@@ -283,9 +279,9 @@ export const enum__testimonialsBlock_v_block_header_badge_type = pgEnum(
   ['label', 'reference'],
 )
 export const enum__testimonialsBlock_v_type = pgEnum('enum__testimonialsBlock_v_type', [
-  'TestimonialsBlock01',
-  'TestimonialsBlock02',
-  'testimonialsModularGrid',
+  '01',
+  '02',
+  '03',
 ])
 export const enum__pages_v_version_hero_type = pgEnum('enum__pages_v_version_hero_type', [
   'hero01',

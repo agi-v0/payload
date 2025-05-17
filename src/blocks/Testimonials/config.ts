@@ -13,7 +13,7 @@ const fields: Field[] = [
       // Add other layout options here later (e.g., Slider)
     ],
     required: true,
-    defaultValue: 'TestimonialsBlock01',
+    defaultValue: '01',
   },
   {
     name: 'selectedTestimonials',
