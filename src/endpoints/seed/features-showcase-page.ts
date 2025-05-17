@@ -393,7 +393,7 @@ export const seedFeaturesShowcasePage = (media: {
     hero: heroData,
     layout: featuresBlocks,
 
-    breadcrumbs: [{ label: pageTitle, url: `/${pageSlug}`, id: `bc-ar-${pageSlug}` }], // Arabic breadcrumb
+    // breadcrumbs: [{ label: pageTitle, url: `/${pageSlug}`, id: `bc-ar-${pageSlug}` }], // Arabic breadcrumb
     meta: {
       title: `ميتا: ${pageTitle}`,
       description:
