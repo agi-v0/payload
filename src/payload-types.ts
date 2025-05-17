@@ -1632,7 +1632,7 @@ export interface TestimonialsBlock {
         }[]
       | null;
   };
-  type: 'TestimonialsBlock01' | 'TestimonialsBlock02' | 'testimonialsModularGrid';
+  type: '01' | '02' | '03';
   /**
    * Select specific testimonials to display. Leave blank to show the 5 most recently updated testimonials.
    */
@@ -1667,7 +1667,7 @@ export interface Testimonial {
     };
     [k: string]: unknown;
   };
-  company: string;
+  companyName: string;
   featuredImage?: (number | null) | Media;
   /**
    * Logo of the company.
@@ -2515,7 +2515,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface TestimonialsSelect<T extends boolean = true> {
   quote?: T;
-  company?: T;
+  companyName?: T;
   featuredImage?: T;
   companyLogo?: T;
   authorInfo?:

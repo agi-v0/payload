@@ -20,8 +20,8 @@ export const Testimonials: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ['company', 'companyLogo', 'updatedAt', 'linkCaseStudy'],
-    useAsTitle: 'company',
+    defaultColumns: ['companyName', 'companyLogo', 'updatedAt', 'linkCaseStudy'],
+    useAsTitle: 'companyName',
   },
   defaultPopulate: {
     companyLogo: true,
@@ -50,7 +50,7 @@ export const Testimonials: CollectionConfig = {
       },
     },
     {
-      name: 'company',
+      name: 'companyName',
       type: 'text',
       localized: true,
       required: true,

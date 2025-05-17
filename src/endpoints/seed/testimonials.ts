@@ -49,7 +49,7 @@ export async function seedTestimonials({
         version: 1,
       },
     },
-    company: `شركة ${i + 1}`,
+    companyName: `شركة ${i + 1}`,
     featuredImage: image1.id,
     companyLogo: logo.id,
     authorInfo: {
@@ -76,7 +76,7 @@ export async function seedTestimonials({
       })
     } catch (error) {
       payload.logger.error(
-        `Failed to create testimonial for ${testimonialData.company}: ${error instanceof Error ? error.message : String(error)}`,
+        `Failed to create testimonial for ${testimonialData.companyName}: ${error instanceof Error ? error.message : String(error)}`,
       )
       return null
     }

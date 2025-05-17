@@ -7,9 +7,9 @@ const fields: Field[] = [
     name: 'type',
     type: 'select',
     options: [
-      { value: 'TestimonialsBlock01', label: 'Testimonials Block 01' },
-      { value: 'TestimonialsBlock02', label: 'Testimonials Block 02 (Slider)' },
-      { value: 'testimonialsModularGrid', label: 'Testimonials Modular Grid' },
+      { value: '01', label: 'Testimonials Modular Grid (Hero)' },
+      { value: '02', label: 'Testimonials Block 01 (Featured)' },
+      { value: '03', label: 'Testimonials Block 02 (Carousel)' },
       // Add other layout options here later (e.g., Slider)
     ],
     required: true,
@@ -24,6 +24,15 @@ const fields: Field[] = [
     admin: {
       description:
         'Select specific testimonials to display. Leave blank to show the 5 most recently updated testimonials.',
+    },
+    defaultValue: async ({ user, locale, req }) => {
+      const { docs } = await req.payload.find({
+        collection: 'testimonials',
+        limit: 10,
+        sort: 'updatedAt',
+      })
+
+      return docs.map((testimonial) => ({ relationTo: 'testimonials', value: testimonial.id }))
     },
   },
 ]
