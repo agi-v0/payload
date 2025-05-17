@@ -484,7 +484,7 @@ export interface Solution {
    */
   title: string;
   /**
-   * Upload an icon for the solution. 500x500px recommended.
+   * Upload an icon for the solution. 500x500px recommended. Only media with category "app-icons" will be shown.
    */
   icon?: (number | null) | Media;
   name?: string | null;
@@ -645,7 +645,7 @@ export interface Integration {
    */
   title: string;
   /**
-   * Upload an icon for the integration. 500x500px recommended.
+   * Upload an icon for the solution. 500x500px recommended. Only media with category "app-icons" will be shown.
    */
   icon?: (number | null) | Media;
   name?: string | null;

@@ -95,7 +95,8 @@ export const Integrations: CollectionConfig<'integrations'> = {
               type: 'upload',
               relationTo: 'media',
               admin: {
-                description: 'Upload an icon for the integration. 500x500px recommended.',
+                description:
+                  'Upload an icon for the solution. 500x500px recommended. Only media with category "app-icons" will be shown.',
               },
               filterOptions: {
                 'category.slug': { equals: 'app-icons' },
