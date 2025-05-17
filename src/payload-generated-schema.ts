@@ -1413,7 +1413,7 @@ export const testimonialsBlock = pgTable(
     blockHeader_badge_icon_position: badge_icon_position(
       'block_header_badge_icon_position',
     ).default('flex-row'),
-    type: enum_testimonialsBlock_type('type').default('TestimonialsBlock01'),
+    type: enum_testimonialsBlock_type('type').default('01'),
     blockName: varchar('block_name'),
   },
   (columns) => ({
@@ -2624,7 +2624,7 @@ export const _testimonialsBlock_v = pgTable(
     blockHeader_badge_icon_position: badge_icon_position(
       'block_header_badge_icon_position',
     ).default('flex-row'),
-    type: enum__testimonialsBlock_v_type('type').default('TestimonialsBlock01'),
+    type: enum__testimonialsBlock_v_type('type').default('01'),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
   },
