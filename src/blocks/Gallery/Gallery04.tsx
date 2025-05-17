@@ -46,22 +46,25 @@ const variants = {
 }
 
 export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, className, locale }) => {
-  if (!interactiveGallery || interactiveGallery.length === 0) {
-    return null
-  }
   const [activeIndex, setActiveIndex] = useState(0)
   const [direction, setDirection] = useState(1)
   const [ref, bounds] = useMeasure()
+
+  useEffect(() => {
+    if (activeIndex < 0) setActiveIndex(0)
+    if (interactiveGallery && activeIndex >= interactiveGallery.length) {
+      setActiveIndex(interactiveGallery.length - 1)
+    }
+  }, [activeIndex, interactiveGallery])
+
+  if (!interactiveGallery || interactiveGallery.length === 0) {
+    return null
+  }
 
   const handleSetActiveIndex = (newIndex: number) => {
     setDirection(newIndex > activeIndex ? 1 : -1)
     setActiveIndex(newIndex)
   }
-
-  useEffect(() => {
-    if (activeIndex < 0) setActiveIndex(0)
-    if (activeIndex >= interactiveGallery.length) setActiveIndex(interactiveGallery.length - 1)
-  }, [activeIndex])
 
   return (
     <div className={cn('py-xl relative container w-full', className)}>

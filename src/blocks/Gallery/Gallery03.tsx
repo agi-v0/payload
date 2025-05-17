@@ -27,7 +27,11 @@ export const Gallery03: React.FC<Gallery01Props> = ({ images, className }) => {
     <div dir="ltr" className={cn('py-xl relative w-full', className)}>
       <InfiniteSlider className="w-full">
         {images.map((image, index) => (
-          <Media resource={image} imgClassName="rounded-space-sm h-[60vh]  w-auto object-cover" />
+          <Media
+            key={index}
+            resource={image}
+            imgClassName="rounded-space-sm h-[60vh]  w-auto object-cover"
+          />
         ))}
       </InfiniteSlider>
     </div>

@@ -32,7 +32,7 @@ export const RenderTestimonialsBlock: React.FC<TestimonialsBlockType> = async (p
     depth: 1, // Adjust depth if needed
     where: {
       id: {
-        in: selectedTestimonials?.map((t) => t.value as Number),
+        in: selectedTestimonials?.map((t) => t.value as number),
       },
     },
   })
