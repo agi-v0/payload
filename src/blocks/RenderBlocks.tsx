@@ -12,10 +12,14 @@ import { RenderTestimonialsBlock } from './Testimonials/RenderTestimonialsBlock'
 import { FaqBlock } from './FAQ/Component'
 import { RenderGalleryBlock } from './Gallery/RenderGalleryBlock'
 import { RenderCallToActionBlock } from './CallToAction/RenderCallToActionBlock'
+import { RenderCustomHtmlBlock } from './CustomHtmlBlock/RenderCustomHtmlBlock'
+import { RenderDividerBlock } from './DividerBlock/RenderDividerBlock'
 
 const blockComponents = {
   archive: ArchiveBlock,
   callToAction: RenderCallToActionBlock,
+  customHtml: RenderCustomHtmlBlock,
+  divider: RenderDividerBlock,
   faqBlock: FaqBlock,
   featuredApps: RenderFeaturedAppsBlock,
   features: RenderFeaturesBlock,

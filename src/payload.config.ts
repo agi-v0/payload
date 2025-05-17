@@ -33,6 +33,7 @@ import { CaseStudies } from './collections/CaseStudies'
 import { Archive } from '@/blocks/ArchiveBlock/config'
 import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
 import { CallToAction } from '@/blocks/CallToAction/config'
+import { CustomHtmlBlock } from '@/blocks/CustomHtmlBlock/config'
 import { FeaturesBlock } from '@/blocks/Features/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
@@ -40,6 +41,7 @@ import { StyledList } from '@/blocks/StyledList/config'
 import { TestimonialsBlock } from '@/blocks/Testimonials/config'
 import { GalleryBlock } from '@/blocks/Gallery/config'
 import { FaqBlock } from '@/blocks/FAQ/config'
+import { DividerBlock } from '@/blocks/DividerBlock/config'
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
 
@@ -131,14 +133,14 @@ export default buildConfig({
   blocks: [
     Archive,
     CallToAction,
-    // Content,
+    CustomHtmlBlock,
+    DividerBlock,
     FaqBlock,
     FeaturesBlock,
     FeaturedAppsBlock,
     GalleryBlock,
     FormBlock,
     TestimonialsBlock,
-
     MediaBlock,
     StyledList,
   ],

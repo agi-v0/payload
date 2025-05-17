@@ -30,53 +30,40 @@ src/
 
 **2. Block Schema Definition (`config.ts`)**
 
-*   **Imports:** Import `Block`, `Field` from `payload`, and any reusable field definitions (e.g., `blockHeader`, `linkGroup`).
-*   **`slug`:** A unique, descriptive, camelCase identifier (e.g., `testimonials`). This is used internally and often in the `blockType` property.
-*   **`interfaceName`:** A PascalCase name used for TypeScript type generation (e.g., `TestimonialsBlock`).
-*   **`fields` Array:**
-    *   **`blockHeader` (Recommended):** Include the shared `blockHeader` field (`import { blockHeader } from '@/blocks/BlockHeader/config'`) as the first field for consistency.
-    *   **`type` (For Variants):** Add a `select` field named `type`.
-        *   Define `options` with `value` (unique identifier for the variant, e.g., `testimonialsGrid`) and `label` (user-friendly name, e.g., 'Testimonials Grid').
-        *   Set `required: true` and provide a sensible `defaultValue`.
-    *   **Content Fields:** Define fields specific to this block (e.g., `relationship` to select related data like testimonials or apps, `richText`, `upload` for media).
-    *   **Relationship Fields:**
-        *   Clearly define `relationTo`.
-        *   Use `hasMany` if multiple selections are allowed.
-        *   Provide helpful `admin.description`.
-        *   Remember relationship data structure: `{ relationTo, value }` where `value` is the ID or the populated object.
-    *   **`dbName` (Conditional):** If a field name, especially one nested within groups/arrays/blocks, could lead to generated database identifiers exceeding limits (e.g., 63 chars in Postgres), add `dbName: 'short_explicit_name'` at the top level of the field definition.
+*   **Imports:** Import `Block`, `Field` from `payload`, and any reusable field definitions.
+*   **`slug`:** A unique, descriptive, camelCase identifier (e.g., `customHtml`). This slug is critical as it will be used to reference the block.
+*   **`interfaceName` (Required):** A PascalCase name used for TypeScript type generation (e.g., `CustomHtmlBlock`). This is crucial for type safety.
+*   **`dbName` (Recommended):** A camelCase name that explicitly sets the database table/collection name for this block's data, if applicable (e.g., `customHtmlBlock`). This helps avoid issues with database identifier length limits (especially in Postgres, often 63 chars for identifiers derived from nested field paths) and provides clarity. It's good practice to set this, especially if the block `slug` is long or if it contains deeply nested fields that might lead to very long auto-generated database column names.
+*   **`labels` (Optional):** An object to define singular and plural labels for the block in the Admin UI.
+    *   `singular`: e.g., `'Featured Apps'`
+    *   `plural`: e.g., `'Featured Apps'`
+*   **`fields` Array:** Define fields specific to this block (e.g., `blockHeader`, `type` for variants, content fields).
 *   **Export:** Export the complete `Block` configuration object.
 
 ```typescript
-// src/blocks/TestimonialsBlock/config.ts
-import type { Block, Field } from 'payload'
-import { blockHeader } from '@/blocks/BlockHeader/config'
+// src/blocks/ExampleBlock/config.ts
+import type { Block } from 'payload'
+import { blockHeader } from '@/components/BlockHeader/config' // Example import
 
-const fields: Field[] = [
-  {
-    name: 'type',
-    type: 'select',
-    options: [
-      { value: 'testimonialsGrid', label: 'Testimonials Grid' },
-      { value: 'testimonialsSlider', label: 'Testimonials Slider' },
-    ],
-    required: true,
-    defaultValue: 'testimonialsGrid',
+export const ExampleBlock: Block = {
+  slug: 'exampleBlock',       // Unique identifier
+  interfaceName: 'ExampleBlock', // For TypeScript types
+  dbName: 'exampleBlock',      // Explicit DB name, matches interfaceName in camelCase by convention
+  labels: {                   // Optional: For Admin UI
+    singular: 'Example Block',
+    plural: 'Example Blocks',
   },
-  {
-    name: 'selectedTestimonials',
-    type: 'relationship',
-    relationTo: ['testimonials'],
-    hasMany: true,
-    // ... admin config
-  },
-  // ... other fields
-]
-
-export const TestimonialsBlock: Block = {
-  slug: 'testimonials',
-  interfaceName: 'TestimonialsBlock',
-  fields: [blockHeader, ...fields],
+  fields: [
+    blockHeader, // Recommended first field
+    {
+      name: 'type',
+      type: 'select',
+      options: [ /* ... variant options ... */ ],
+      required: true,
+      defaultValue: 'defaultVariant',
+    },
+    // ... other content fields for this block
+  ],
 }
 ```
 

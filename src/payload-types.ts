@@ -68,6 +68,8 @@ export interface Config {
   blocks: {
     archive: ArchiveBlock;
     callToAction: CallToActionBlock;
+    customHtml: CustomHtmlBlock;
+    divider: DividerBlock;
     faqBlock: FaqBlock;
     features: FeaturesBlock;
     featuredApps: FeaturedAppsBlock;
@@ -608,11 +610,13 @@ export interface Page {
   layout: (
     | ArchiveBlock
     | CallToActionBlock
+    | CustomHtmlBlock
+    | DividerBlock
     | FaqBlock
-    | FeaturesBlock
     | FeaturedAppsBlock
-    | GalleryBlock
+    | FeaturesBlock
     | FormBlock
+    | GalleryBlock
     | TestimonialsBlock
   )[];
   meta?: {
@@ -1754,6 +1758,97 @@ export interface CaseStudy {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CustomHtmlBlock".
+ */
+export interface CustomHtmlBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: number | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Enter the custom HTML code to be rendered on the page.
+   */
+  htmlContent: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'customHtml';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DividerBlock".
+ */
+export interface DividerBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'divider';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
