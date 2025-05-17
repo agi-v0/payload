@@ -154,17 +154,24 @@ export const seedSolutions = async (
     },
   ]
 
-  const createdSolutions = await Promise.all(
-    solutionsData.map((solution) =>
-      payload.create({
-        collection: 'solutions',
-        depth: 0,
-        data: solution,
-        locale: 'ar',
-        req,
-      }),
-    ),
-  )
+  for (const op of solutionsData) {
+    await payload.create({
+      collection: 'solutions',
+      depth: 0,
+      data: op,
+      // locale: 'ar',
+      // req,
+    })
+  }
+
+  const { docs: createdSolutions } = await payload.find({
+    collection: 'solutions',
+    where: {
+      slug: {
+        in: solutionsData.map((solution) => solution.slug),
+      },
+    },
+  })
 
   const slugToIdMap: Record<string, number> = {}
   createdSolutions.forEach((doc) => {

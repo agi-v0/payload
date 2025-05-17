@@ -72,7 +72,7 @@ export async function seedTestimonials({
         collection: 'testimonials',
         depth: 0,
         data: testimonialData,
-        req,
+        // req,
       })
     } catch (error) {
       payload.logger.error(

@@ -284,23 +284,35 @@ export const seedIntegrations = async (
   // In production, we might want to limit the number of integrations seeded
   const integrationCount = integrationsToSeed.length
 
-  const createdIntegrationsPromises = integrationsToSeed
-    .slice(0, integrationCount)
-    .map((integrationData) =>
-      payload.create({
-        collection: 'integrations',
-        depth: 0,
-        data: integrationData,
-        locale: 'ar',
-      }),
-    )
+  // Create integrations one by one
+  for (const integrationData of integrationsToSeed.slice(0, integrationCount)) {
+    await payload.create({
+      collection: 'integrations',
+      depth: 0,
+      data: integrationData,
+      // locale: 'ar', // Consider if locale is needed
+      // req, // Consider if req is needed
+    })
+  }
 
-  const createdIntegrations = await Promise.all(createdIntegrationsPromises)
+  // Fetch the created integrations to build the slugToIdMap
+  const { docs: createdIntegrations } = await payload.find({
+    collection: 'integrations',
+    // Ensure we only fetch the integrations we just tried to seed
+    where: {
+      slug: {
+        in: integrationsToSeed.slice(0, integrationCount).map((int) => int.slug),
+      },
+    },
+    limit: integrationCount, // Optimization: limit to the number we expect
+    depth: 0, // We only need slug and id
+  })
 
   const slugToIdMap: Record<string, number> = {}
   createdIntegrations.forEach((doc) => {
     const integrationDoc = doc as Integration // Cast to specific type
-    if (integrationDoc.slug) {
+    if (integrationDoc.slug && integrationDoc.id) {
+      // Ensure id is present
       slugToIdMap[integrationDoc.slug] = integrationDoc.id
     }
   })

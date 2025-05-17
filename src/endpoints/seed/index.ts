@@ -66,7 +66,7 @@ export const seed = async ({
   payload.logger.info('Seeding database...')
   payload.logger.info(`— Clearing collections and globals...`)
 
-  req.locale = 'ar'
+  // req.locale = 'ar'
   // clear the database
   await Promise.all([
     payload.updateGlobal({
@@ -126,20 +126,38 @@ export const seed = async ({
     { collection: 'categories', data: { title: 'Other', slug: 'other' } },
   ]
 
-  const [ecosystems, integrations, media, blog, other] = await Promise.all(
+  await Promise.all(
     parentCategoriesData.map(async (op) => {
       return await payload.create({
         collection: op.collection as CollectionSlug,
         data: op.data,
-        req,
         depth: 0,
         locale: 'ar',
-        context: {
-          locale: 'ar',
-        },
       })
     }),
   )
+  const parentCategories = await payload.find({
+    collection: 'categories',
+    where: {
+      slug: {
+        in: ['ecosystems', 'integrations', 'media', 'blog', 'other'],
+      },
+    },
+  })
+  const parentCategoriesMap = parentCategories.docs.reduce(
+    (acc, category) => {
+      acc[category?.slug ?? ''] = category
+      return acc
+    },
+    {} as Record<string, Category>,
+  )
+
+  const ecosystems = parentCategoriesMap['ecosystems']
+  const integrations = parentCategoriesMap['integrations']
+  const media = parentCategoriesMap['media']
+  const blog = parentCategoriesMap['blog']
+  const other = parentCategoriesMap['other']
+
   payload.logger.info('✓ Seeded parent categories...')
 
   //Child categories
@@ -434,17 +452,27 @@ export const seed = async ({
     },
   ]
 
-  await Promise.all(
-    childCategoriesData.map(async (op) => {
-      return await payload.create({
-        collection: op.collection as CollectionSlug,
-        data: op.data,
-
-        depth: 0,
-        locale: 'ar',
-      })
-    }),
-  )
+  // await Promise.all(
+  //   childCategoriesData.map(async (op) => {
+  //     return await payload.create({
+  //       collection: op.collection as CollectionSlug,
+  //       data: op.data,
+  //       depth: 0,
+  //       locale: 'ar',
+  //     })
+  //   }),
+  // )
+  for (const op of childCategoriesData) {
+    await payload.create({
+      collection: op.collection as CollectionSlug,
+      data: op.data,
+      depth: 0,
+      // locale: 'ar',
+      // context: {
+      //   locale: 'ar',
+      // },
+    })
+  }
 
   payload.logger.info('✓ Seeded child categories...')
 
@@ -555,8 +583,9 @@ export const seed = async ({
     data: {
       category: [appIconsCategory.id],
     },
-    locale: 'ar',
+    // locale: 'ar',
   })
+
   if (sellCategory?.id == null || operateCategory?.id == null || manageCategory?.id == null) {
     throw new Error('One or more required category IDs are missing')
   }
@@ -585,7 +614,7 @@ export const seed = async ({
     collection: 'forms',
     depth: 0,
     data: contactFormData,
-    locale: 'ar',
+    // locale: 'ar',
     req,
   })) as Form
 
@@ -597,7 +626,7 @@ export const seed = async ({
   })
   const pagesData = [
     {
-      locale: 'ar' as TypedLocale,
+      // locale: 'ar' as TypedLocale,
       data: home({
         heroImage: hero1Doc,
         metaImage: image169Doc,
@@ -608,12 +637,12 @@ export const seed = async ({
       key: 'home',
     },
     {
-      locale: 'ar' as TypedLocale,
+      // locale: 'ar' as TypedLocale,
       data: contactPageData({ contactForm }),
       key: 'contact',
     },
     {
-      locale: 'ar' as TypedLocale,
+      // locale: 'ar' as TypedLocale,
       data: featuresShowcasePageData,
       key: 'features',
     },
@@ -625,7 +654,7 @@ export const seed = async ({
         collection: 'pages',
         depth: 0,
         data: page.data,
-        locale: page.locale,
+        // locale: page.locale,
       })
     }),
   )
@@ -856,14 +885,16 @@ export const seed = async ({
     payload.logger.info('Updating global – header (ar)'),
     payload.updateGlobal({
       slug: 'header',
-      locale: 'ar',
       data: headerData,
+      req,
+      // locale: 'ar',
     }),
     payload.logger.info('Updating global – footer'),
     payload.updateGlobal({
       slug: 'footer',
       data: footerData,
-      locale: 'ar',
+      req,
+      // locale: 'ar',
     }),
   ])
 
