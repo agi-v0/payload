@@ -57,7 +57,7 @@ export const Media: CollectionConfig = {
       admin: {
         components: {
           afterInput: ['@/components/ImageCategoryGuide'],
-          Field: '@/components/CategoryChipSelect',
+          Field: '@/components/RelationshipChipSelect',
         },
       },
     },
