@@ -64,9 +64,13 @@ export const seed = async ({
   req: PayloadRequest
 }): Promise<void> => {
   payload.logger.info('Seeding database...')
+
+  // we need to clear the media directory before seeding
+  // as well as the collections and globals
+  // this is because while `yarn seed` drops the database
+  // the custom `/api/seed` endpoint does not
   payload.logger.info(`— Clearing collections and globals...`)
 
-  // req.locale = 'ar'
   // clear the database
   await Promise.all([
     payload.updateGlobal({
@@ -79,7 +83,6 @@ export const seed = async ({
       context: {
         disableRevalidate: true,
       },
-      req,
     }),
     payload.updateGlobal({
       slug: 'footer',
@@ -90,7 +93,6 @@ export const seed = async ({
       context: {
         disableRevalidate: true,
       },
-      req,
     }),
   ])
   await Promise.all(
@@ -132,7 +134,6 @@ export const seed = async ({
         collection: op.collection as CollectionSlug,
         data: op.data,
         depth: 0,
-        locale: 'ar',
       })
     }),
   )
@@ -647,7 +648,7 @@ export const seed = async ({
       key: 'features',
     },
   ]
-  await console.log(pagesData.map((page) => page.data.title))
+
   await Promise.all(
     pagesData.map(async (page) => {
       return await payload.create({
@@ -660,7 +661,7 @@ export const seed = async ({
   )
 
   // Seed Case Studies using the new function and get the map
-  const caseStudiesSlugToIdMap = await seedCaseStudies(payload, req, {
+  const caseStudiesSlugToIdMap = await seedCaseStudies(payload, {
     image169Doc,
     solutionsSlugToIdMap, // Pass the solutions map
     integrationsSlugToIdMap, // Pass the integrations map
@@ -669,7 +670,6 @@ export const seed = async ({
   payload.logger.info(`— Seeding testimonials...`)
   await seedTestimonials({
     payload,
-    req,
     image1: image43Doc,
     logo: logoDoc,
     imageSquare: imageSquareDoc,

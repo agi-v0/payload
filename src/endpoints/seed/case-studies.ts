@@ -3,7 +3,6 @@ import type { CaseStudy, Media, Solution } from '@/payload-types'
 
 export const seedCaseStudies = async (
   payload: Payload,
-  req: PayloadRequest,
   {
     image169Doc,
     solutionsSlugToIdMap,

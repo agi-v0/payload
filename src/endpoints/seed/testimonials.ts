@@ -7,14 +7,12 @@ export interface TestimonialsResult {
 
 export async function seedTestimonials({
   payload,
-  req,
   image1,
   logo,
   imageSquare,
   caseStudies,
 }: {
   payload: Payload
-  req: PayloadRequest
   image1: Media
   logo: Media
   imageSquare: Media
