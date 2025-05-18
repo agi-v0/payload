@@ -64,6 +64,26 @@
   border-radius: var(--style-radius-full);
 }
 
+.pill {
+  border-radius: var(--style-radius-full);
+}
+
+.column-selector,
+.where-builder {
+  border-radius: var(--style-radius-m);
+}
+
+.column-selector__column.column-selector__column--active {
+  color: var(--theme-elevation-0);
+  background-color: var(--theme-elevation-1000);
+}
+
+.paginator__page,
+.clickable-arrow,
+.clickable-arrow--disabled {
+  border-radius: var(--style-radius-full);
+}
+
 html:not([dir='RTL']) .btn--withPopup .btn {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
