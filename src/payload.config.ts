@@ -123,7 +123,13 @@ export default buildConfig({
       ],
     },
     user: Users.slug,
+    autoLogin: {
+      email: 'omar@byvalence.com',
+      password: '0000',
+      prefillOnly: true,
+    },
   },
+
   db: vercelPostgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',

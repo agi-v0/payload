@@ -295,7 +295,6 @@ export interface Media {
   locale?: ('en' | 'ar') | null;
   category?: (number | Category)[] | null;
   blurhash?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2424,7 +2423,6 @@ export interface MediaSelect<T extends boolean = true> {
   locale?: T;
   category?: T;
   blurhash?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
