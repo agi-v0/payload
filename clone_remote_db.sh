@@ -20,7 +20,7 @@ export $(grep -v '^#' "$ENV_FILE" | xargs)
 
 # Local Docker Postgres container
 LOCAL_CONTAINER="postgres15.8"
-LOCAL_DB="marn-web"
+LOCAL_DB="postgres"
 LOCAL_USER="postgres"
 
 # Postgres version to match remote DB

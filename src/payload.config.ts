@@ -128,7 +128,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
-    // push: false, // disable push mode
+    push: false, // disable push mode
   }),
   blocks: [
     Archive,

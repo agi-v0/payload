@@ -28,12 +28,12 @@ services:
   #     driver: none
 
   db:
-    image: "postgres:15.8"
-    container_name: "postgres15.8"
+    image: 'postgres:15.8'
+    container_name: 'postgres15.8'
     environment:
-      POSTGRES_PASSWORD: "0000"
-    ports:  
-      - "5432:5432"
+      POSTGRES_PASSWORD: '0000'
+    ports:
+      - '5432:5432'
     volumes:
       - data:/data/db
     logging:
