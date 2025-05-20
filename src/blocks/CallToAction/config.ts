@@ -52,7 +52,7 @@ export const CallToAction: Block = {
     {
       name: 'media',
       type: 'upload',
-      localized: true,
+      // localized: true,
       relationTo: 'media',
       required: false,
     },

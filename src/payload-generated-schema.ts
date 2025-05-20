@@ -619,6 +619,9 @@ export const callToActionBlock = pgTable(
     badge_color: badge_color('badge_color').default('blue'),
     badge_icon: varchar('badge_icon'),
     badge_icon_position: badge_icon_position('badge_icon_position').default('flex-row'),
+    media: integer('media_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     supportingText: varchar('supporting_text'),
     form: integer('form_id').references(() => forms.id, {
       onDelete: 'set null',
@@ -629,6 +632,7 @@ export const callToActionBlock = pgTable(
     _orderIdx: index('callToActionBlock_order_idx').on(columns._order),
     _parentIDIdx: index('callToActionBlock_parent_id_idx').on(columns._parentID),
     _pathIdx: index('callToActionBlock_path_idx').on(columns._path),
+    callToActionBlock_media_idx: index('callToActionBlock_media_idx').on(columns.media),
     callToActionBlock_form_idx: index('callToActionBlock_form_idx').on(columns.form),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
@@ -643,18 +647,11 @@ export const callToActionBlock_locales = pgTable(
   {
     badge_label: varchar('badge_label'),
     richText: jsonb('rich_text'),
-    media: integer('media_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: varchar('_parent_id').notNull(),
   },
   (columns) => ({
-    callToActionBlock_media_idx: index('callToActionBlock_media_idx').on(
-      columns.media,
-      columns._locale,
-    ),
     _localeParent: uniqueIndex('callToActionBlock_locales_locale_parent_id_unique').on(
       columns._locale,
       columns._parentID,
@@ -1140,6 +1137,9 @@ export const featuresBlock = pgTable(
       'block_header_badge_icon_position',
     ).default('flex-row'),
     type: enum_featuresBlock_type('type').default('01'),
+    blockImage: integer('block_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -1149,6 +1149,7 @@ export const featuresBlock = pgTable(
     _orderIdx: index('featuresBlock_order_idx').on(columns._order),
     _parentIDIdx: index('featuresBlock_parent_id_idx').on(columns._parentID),
     _pathIdx: index('featuresBlock_path_idx').on(columns._path),
+    featuresBlock_block_image_idx: index('featuresBlock_block_image_idx').on(columns.blockImage),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [pages.id],
@@ -1162,9 +1163,6 @@ export const featuresBlock_locales = pgTable(
   {
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_headerText: jsonb('block_header_header_text'),
-    blockImage: integer('block_image_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
     CTALabel: varchar('c_t_a_label'),
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
@@ -1172,10 +1170,6 @@ export const featuresBlock_locales = pgTable(
     _parentID: varchar('_parent_id').notNull(),
   },
   (columns) => ({
-    featuresBlock_block_image_idx: index('featuresBlock_block_image_idx').on(
-      columns.blockImage,
-      columns._locale,
-    ),
     _localeParent: uniqueIndex('featuresBlock_locales_locale_parent_id_unique').on(
       columns._locale,
       columns._parentID,
@@ -1803,6 +1797,9 @@ export const _callToActionBlock_v = pgTable(
     badge_color: badge_color('badge_color').default('blue'),
     badge_icon: varchar('badge_icon'),
     badge_icon_position: badge_icon_position('badge_icon_position').default('flex-row'),
+    media: integer('media_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     supportingText: varchar('supporting_text'),
     form: integer('form_id').references(() => forms.id, {
       onDelete: 'set null',
@@ -1814,6 +1811,7 @@ export const _callToActionBlock_v = pgTable(
     _orderIdx: index('_callToActionBlock_v_order_idx').on(columns._order),
     _parentIDIdx: index('_callToActionBlock_v_parent_id_idx').on(columns._parentID),
     _pathIdx: index('_callToActionBlock_v_path_idx').on(columns._path),
+    _callToActionBlock_v_media_idx: index('_callToActionBlock_v_media_idx').on(columns.media),
     _callToActionBlock_v_form_idx: index('_callToActionBlock_v_form_idx').on(columns.form),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
@@ -1828,18 +1826,11 @@ export const _callToActionBlock_v_locales = pgTable(
   {
     badge_label: varchar('badge_label'),
     richText: jsonb('rich_text'),
-    media: integer('media_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: integer('_parent_id').notNull(),
   },
   (columns) => ({
-    _callToActionBlock_v_media_idx: index('_callToActionBlock_v_media_idx').on(
-      columns.media,
-      columns._locale,
-    ),
     _localeParent: uniqueIndex('_callToActionBlock_v_locales_locale_parent_id_unique').on(
       columns._locale,
       columns._parentID,
@@ -2343,6 +2334,9 @@ export const _featuresBlock_v = pgTable(
       'block_header_badge_icon_position',
     ).default('flex-row'),
     type: enum__featuresBlock_v_type('type').default('01'),
+    blockImage: integer('block_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -2353,6 +2347,9 @@ export const _featuresBlock_v = pgTable(
     _orderIdx: index('_featuresBlock_v_order_idx').on(columns._order),
     _parentIDIdx: index('_featuresBlock_v_parent_id_idx').on(columns._parentID),
     _pathIdx: index('_featuresBlock_v_path_idx').on(columns._path),
+    _featuresBlock_v_block_image_idx: index('_featuresBlock_v_block_image_idx').on(
+      columns.blockImage,
+    ),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [_pages_v.id],
@@ -2366,9 +2363,6 @@ export const _featuresBlock_v_locales = pgTable(
   {
     blockHeader_badge_label: varchar('block_header_badge_label'),
     blockHeader_headerText: jsonb('block_header_header_text'),
-    blockImage: integer('block_image_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
     CTALabel: varchar('c_t_a_label'),
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
@@ -2376,10 +2370,6 @@ export const _featuresBlock_v_locales = pgTable(
     _parentID: integer('_parent_id').notNull(),
   },
   (columns) => ({
-    _featuresBlock_v_block_image_idx: index('_featuresBlock_v_block_image_idx').on(
-      columns.blockImage,
-      columns._locale,
-    ),
     _localeParent: uniqueIndex('_featuresBlock_v_locales_locale_parent_id_unique').on(
       columns._locale,
       columns._parentID,
@@ -6864,11 +6854,6 @@ export const relations_callToActionBlock_locales = relations(
       references: [callToActionBlock.id],
       relationName: '_locales',
     }),
-    media: one(media, {
-      fields: [callToActionBlock_locales.media],
-      references: [media.id],
-      relationName: 'media',
-    }),
   }),
 )
 export const relations_callToActionBlock = relations(callToActionBlock, ({ one, many }) => ({
@@ -6881,8 +6866,7 @@ export const relations_callToActionBlock = relations(callToActionBlock, ({ one, 
     relationName: '_locales',
   }),
   media: one(media, {
-    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
-    fields: [callToActionBlock_locales.media],
+    fields: [callToActionBlock.media],
     references: [media.id],
     relationName: 'media',
   }),
@@ -7137,11 +7121,6 @@ export const relations_featuresBlock_locales = relations(featuresBlock_locales, 
     references: [featuresBlock.id],
     relationName: '_locales',
   }),
-  blockImage: one(media, {
-    fields: [featuresBlock_locales.blockImage],
-    references: [media.id],
-    relationName: 'blockImage',
-  }),
 }))
 export const relations_featuresBlock = relations(featuresBlock, ({ one, many }) => ({
   _parentID: one(pages, {
@@ -7156,8 +7135,7 @@ export const relations_featuresBlock = relations(featuresBlock, ({ one, many }) 
     relationName: 'blockHeader_links',
   }),
   blockImage: one(media, {
-    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
-    fields: [featuresBlock_locales.blockImage],
+    fields: [featuresBlock.blockImage],
     references: [media.id],
     relationName: 'blockImage',
   }),
@@ -7507,11 +7485,6 @@ export const relations__callToActionBlock_v_locales = relations(
       references: [_callToActionBlock_v.id],
       relationName: '_locales',
     }),
-    media: one(media, {
-      fields: [_callToActionBlock_v_locales.media],
-      references: [media.id],
-      relationName: 'media',
-    }),
   }),
 )
 export const relations__callToActionBlock_v = relations(_callToActionBlock_v, ({ one, many }) => ({
@@ -7524,8 +7497,7 @@ export const relations__callToActionBlock_v = relations(_callToActionBlock_v, ({
     relationName: '_locales',
   }),
   media: one(media, {
-    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
-    fields: [_callToActionBlock_v_locales.media],
+    fields: [_callToActionBlock_v.media],
     references: [media.id],
     relationName: 'media',
   }),
@@ -7785,11 +7757,6 @@ export const relations__featuresBlock_v_locales = relations(
       references: [_featuresBlock_v.id],
       relationName: '_locales',
     }),
-    blockImage: one(media, {
-      fields: [_featuresBlock_v_locales.blockImage],
-      references: [media.id],
-      relationName: 'blockImage',
-    }),
   }),
 )
 export const relations__featuresBlock_v = relations(_featuresBlock_v, ({ one, many }) => ({
@@ -7805,8 +7772,7 @@ export const relations__featuresBlock_v = relations(_featuresBlock_v, ({ one, ma
     relationName: 'blockHeader_links',
   }),
   blockImage: one(media, {
-    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
-    fields: [_featuresBlock_v_locales.blockImage],
+    fields: [_featuresBlock_v.blockImage],
     references: [media.id],
     relationName: 'blockImage',
   }),

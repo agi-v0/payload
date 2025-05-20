@@ -79,7 +79,7 @@ export const FeaturesBlock: Block = {
       admin: {
         condition: (_, siblingData, { blockData }) => ['04', '06', '07'].includes(blockData?.type),
       },
-      localized: true,
+      // localized: true,
     },
     {
       type: 'collapsible',

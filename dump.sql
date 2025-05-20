@@ -13580,7 +13580,7 @@ COPY "public"."payload_preferences" ("id", "key", "value", "updated_at", "create
 55	media-list	{"preset": null}	2025-05-19 13:11:48.023+00	2025-05-19 13:11:48.033+00
 54	collection-pages-7	{"fields": {"layout": {"collapsed": ["682a25bb9511346d0304f50f"]}, "_index-1": {"tabIndex": 1}, "layout.1.blockHeader._index-1": {"collapsed": true}}}	2025-05-19 13:13:41.576+00	2025-05-19 13:08:55.58+00
 56	posts-list	{"preset": null}	2025-05-19 13:21:16.113+00	2025-05-19 13:21:16.121+00
-57	collection-pages-11	{"fields": {"_index-1": {"tabIndex": 0}}}	2025-05-19 20:58:48.146+00	2025-05-19 20:58:34.294+00
+57	collection-pages-11	{"fields": {"_index-1": {"tabIndex": 1}}}	2025-05-20 17:15:13.391+00	2025-05-19 20:58:34.294+00
 \.
 
 
@@ -13601,11 +13601,11 @@ COPY "public"."payload_preferences_rels" ("id", "order", "parent_id", "path", "u
 170	\N	55	user	10
 172	\N	54	user	10
 173	\N	56	user	10
-175	\N	57	user	10
 106	\N	41	user	10
 109	\N	42	user	10
 112	\N	43	user	10
 115	\N	44	user	10
+176	\N	57	user	10
 \.
 
 
@@ -14814,7 +14814,7 @@ SELECT pg_catalog.setval('"public"."pages_id_seq"', 11, true);
 -- Name: pages_locales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."pages_locales_id_seq"', 31, true);
+SELECT pg_catalog.setval('"public"."pages_locales_id_seq"', 33, true);
 
 
 --
@@ -14863,7 +14863,7 @@ SELECT pg_catalog.setval('"public"."payload_preferences_id_seq"', 57, true);
 -- Name: payload_preferences_rels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"public"."payload_preferences_rels_id_seq"', 175, true);
+SELECT pg_catalog.setval('"public"."payload_preferences_rels_id_seq"', 176, true);
 
 
 --
