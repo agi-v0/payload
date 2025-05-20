@@ -5,13 +5,15 @@ export const generateBlurHash: CollectionBeforeValidateHook = async ({ data, ope
   if (operation === 'create' || operation === 'update') {
     try {
       const buffer = req?.file?.data
+      const mimetype = req?.file?.mimetype
+      if (mimetype && mimetype.startsWith('image/')) {
+        if (buffer) {
+          const { base64 } = await getPlaiceholder(buffer, { size: 32 })
 
-      if (buffer) {
-        const { base64 } = await getPlaiceholder(buffer, { size: 32 })
-
-        return {
-          ...data,
-          blurhash: base64,
+          return {
+            ...data,
+            blurhash: base64,
+          }
         }
       }
     } catch (error) {
