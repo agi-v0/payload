@@ -8,5 +8,8 @@
   .lock-button {
     margin: 0;
     padding-bottom: 0.3125rem;
+    &:hover {
+      color: var(--theme-elevation-600);
+    }
   }
 }
