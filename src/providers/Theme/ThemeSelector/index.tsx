@@ -49,7 +49,7 @@ export const ThemeSelector: React.FC = () => {
   }, [])
 
   return (
-    <div className={cn('bg-background-neutral-subtle relative flex h-auto rounded-full')}>
+    <div className={cn('relative flex h-auto rounded-full border p-1')}>
       {themes.map(({ key, icon: Icon, label }) => {
         const isActive = value === key
 
@@ -57,7 +57,7 @@ export const ThemeSelector: React.FC = () => {
           <button
             type="button"
             key={key}
-            className="relative rounded-full p-2"
+            className="relative rounded-full p-1"
             onClick={() => onThemeChange(key as Theme & 'auto')}
             aria-label={label}
           >
@@ -70,7 +70,7 @@ export const ThemeSelector: React.FC = () => {
             )}
             <Icon
               className={cn(
-                'relative m-auto size-5',
+                'relative m-auto size-4',
                 isActive ? 'text-base-secondary' : 'text-base-tertiary',
               )}
             />

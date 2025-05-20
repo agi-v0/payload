@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/routing'
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
-import { LanguageSwitcher } from '@/providers/LanguageSelector/index'
+import { LanguageSwitcher } from '@/providers/LanguageSelector02/index'
 import { CMSLink } from '@/components/Link'
 import Logo from '@/components/ui/logo'
 
@@ -16,7 +16,12 @@ import X from '@/icons/x'
 import TikTok from '@/icons/tiktok'
 import LinkedIn from '@/icons/linkedin'
 import Youtube from '@/icons/youtube'
+import zatca from '@/components/Graphics/zatca.svg'
+import sama from '@/components/Graphics/sama.svg'
 import { useTranslations } from 'next-intl'
+import { Input } from '@/components/ui/input'
+import { AtSignIcon, Mail, MailIcon } from 'lucide-react'
+import Image from 'next/image'
 
 const socialLinks = [
   {
@@ -57,7 +62,7 @@ type Props = {
 }
 
 /* ─── knobs ──────────────────────────────────────────────────────────────── */
-const MAX_PEEK = 400 // absolute cap in px
+const MAX_PEEK = 300 // absolute cap in px
 const TOUCH_GAIN = 1.2 // multiplier per px of finger travel
 const WHEEL_GAIN = 45 // multiplier per wheel tick ≈ 1
 const WHEEL_IDLE = 65 // ms gap that ends a wheel gesture
@@ -74,6 +79,7 @@ export function FooterClient({ columns, currentYear }: Props) {
   const touchDown = useRef(false) // finger is on screen
   const springing = useRef(false) // footer is snapping back
   const footerRef = useRef<HTMLDivElement>(null)
+  const lastWheelTS = useRef(0)
 
   /* helpers */
   const setPeek = (val: number) => {
@@ -115,24 +121,38 @@ export function FooterClient({ columns, currentYear }: Props) {
 
   /* event wiring */
   useEffect(() => {
-    /* 1 - wheel / track-pad */
+    /* velocity-aware onWheel  */
     const onWheel = (e: WheelEvent) => {
-      /* normalise delta: small ±1 ticks → ≈ 45 px, big ±120 → same 120 px */
+      /* 1 — normalise delta exactly as before */
       const gain = Math.sign(e.deltaY) * Math.max(1, Math.abs(e.deltaY)) * WHEEL_GAIN
-      overscroll(gain)
-      /* suppress browser rubber-band only when we're overscrolling */
+
+      overscroll(gain) // <-- your existing helper
+
+      /* 2 — compute idle time from event spacing */
+      const now = performance.now()
+      const gap = now - lastWheelTS.current // time since previous tick
+      lastWheelTS.current = now
+
+      const idle = Math.min(65, Math.max(40, gap * 1.5))
+
+      if (idleTimer.current) {
+        clearTimeout(idleTimer.current)
+      }
+      idleTimer.current = setTimeout(springBack, idle)
+
+      /* 3 — suppress browser rubber-band while we're peeking */
       if (peekRef.current > 0) e.preventDefault()
     }
 
     /* 2 - touch */
-    let lastY = 0
+    let lastY = { current: 0 }
     const tStart = (e: TouchEvent) => {
       touchDown.current = true
-      lastY = e.touches[0].clientY
+      lastY.current = e.touches[0].clientY
     }
     const tMove = (e: TouchEvent) => {
-      const dy = lastY - e.touches[0].clientY
-      lastY = e.touches[0].clientY
+      const dy = lastY.current - e.touches[0].clientY
+      lastY.current = e.touches[0].clientY
       overscroll(dy * TOUCH_GAIN)
     }
     const tEnd = () => {
@@ -155,56 +175,89 @@ export function FooterClient({ columns, currentYear }: Props) {
     }
   }, [])
 
-  useEffect(() => {
-    const el = footerRef.current
-    if (el) {
-      const height = el.clientHeight
-      if (height) {
-        requestAnimationFrame(() => {
-          document.documentElement.style.setProperty('--footer-height', `${height}px`)
-        })
-      }
-    }
-  }, [columns])
-
   return (
-    <div className="bg-background relative">
+    <div className="bg-background-neutral-subtle pt-md">
       <div className="container">
-        <div className="relative z-1" style={{ height: 'var(--footer-height)' }}>
+        <div className="relative">
           <motion.footer
             ref={footerRef}
-            data-theme="dark"
+            // data-theme="dark"
             style={{ y }}
-            className="bg-background-neutral-subtle pt-xl rounded-space-sm absolute bottom-0 w-full will-change-transform"
+            className="bg-background-neutral py-md rounded-space-sm relative z-2 w-full will-change-transform"
           >
-            <div className="container grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-12">
-              <div className="flex w-full flex-col items-start justify-start gap-6 lg:col-span-5">
-                <div className="flex flex-col items-start justify-between gap-1">
-                  <p className="text-base-tertiary text-body-sm font-medium">{t('followUs')}</p>
-                  <div className="flex flex-row items-start justify-center">
+            <div className="container grid grid-cols-1 gap-4 max-lg:gap-y-8 lg:grid-cols-12">
+              <div className="flex flex-wrap items-start gap-4 lg:col-span-4">
+                <div id="newsletter" className="md:pe-md flex w-full flex-col gap-3">
+                  <p className="text-base-tertiary text-sm font-medium">{t('newsletterTitle')}</p>
+                  <p className="text-base-secondary -mt-1 text-sm">{t('newsletterDescription')}</p>
+                  <div className="flex w-full max-w-96 items-center space-x-2">
+                    <div className="relative w-full">
+                      <Input
+                        className="peer h-11 rounded-full ps-9 text-sm"
+                        placeholder={t('newsletterPlaceholder')}
+                        type="email"
+                      />
+                      <div className="text-base-quaternary peer-focus:text-base-secondary pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
+                        <MailIcon size={16} aria-hidden="true" />
+                      </div>
+                    </div>
+                    <Button variant="primary" size="md" type="submit">
+                      {t('newsletterButton')}
+                    </Button>
+                  </div>
+                </div>
+                <div id="social" className="flex w-full flex-col gap-1">
+                  <p className="text-base-tertiary text-sm font-medium">{t('followUs')}</p>
+                  <div className="flex w-full flex-row items-start justify-between lg:-ms-2.5 lg:justify-start">
                     {socialLinks.map(({ label, url, icon: Icon }, i) => (
-                      <Button key={i} variant="ghost" color="neutral" size="icon" asChild>
-                        <Link href={url}>
-                          <Icon className="text-base-tertiary size-5" />
+                      <Button
+                        key={i}
+                        variant="ghost"
+                        color="neutral"
+                        size="icon"
+                        className="bg-transparent hover:bg-transparent"
+                        asChild
+                      >
+                        <Link href={url} className="group">
+                          <Icon className="group-hover:text-base-primary size-5" />
                         </Link>
                       </Button>
                     ))}
                   </div>
                 </div>
-                <ThemeSelector />
-                <LanguageSwitcher />
+                <div id="compliance" className="flex w-full flex-col gap-3">
+                  <p className="text-base-tertiary text-sm font-medium">{t('compliance')}</p>
+                  <div className="flex w-full flex-row items-center justify-start gap-8 lg:justify-start">
+                    <Image
+                      src={sama}
+                      className="h-12 w-auto opacity-50 invert dark:invert-0"
+                      alt="SAMA"
+                      unoptimized
+                    />
+                    <Image
+                      src={zatca}
+                      className="h-12 w-auto opacity-50 invert dark:invert-0"
+                      alt="ZATCA"
+                      unoptimized
+                    />
+                  </div>
+                </div>
+                <div id="theme" className="flex flex-row items-start gap-2">
+                  <ThemeSelector />
+                  <LanguageSwitcher />
+                </div>
               </div>
-              <nav className="pb-site grid grid-cols-2 md:col-span-2 lg:col-span-7 lg:grid-cols-4">
+              <nav className="pb-site grid grid-cols-2 gap-4 md:col-span-2 lg:col-span-6 lg:col-start-7 lg:grid-cols-3">
                 {columns?.map(({ label, navItems }, i) => {
                   return (
                     <nav key={i} className="grid grid-cols-1">
-                      <p className="text-base-tertiary text-body-sm font-medium">{label}</p>
+                      <p className="text-base-tertiary mb-1 text-sm font-medium">{label}</p>
                       {navItems?.map(({ link }, j) => {
                         return (
                           <CMSLink
                             key={j}
                             variant="inline"
-                            className="h-auto justify-start rounded-none px-0 py-2 text-sm font-medium hover:no-underline"
+                            className="hover:text-base-primary h-auto justify-start rounded-none px-0 py-2 text-sm font-medium hover:no-underline"
                             {...link}
                           />
                         )
@@ -216,7 +269,7 @@ export function FooterClient({ columns, currentYear }: Props) {
             </div>
           </motion.footer>
 
-          <div className="px-site absolute bottom-0 container mx-auto w-full">
+          <div className="px-site pointer-events-none absolute bottom-0 z-0 container mx-auto w-full">
             <Link href="/" className="flex h-auto w-full justify-center">
               <Logo className="text-base-primary/10 h-auto w-full" />
             </Link>

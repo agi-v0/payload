@@ -10,7 +10,7 @@ export const RenderCustomHtmlBlock: React.FC<CustomHtmlBlockType> = ({
   }
 
   return (
-    <section className="custom-html-block">
+    <section className="custom-html-block container">
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
     </section>
   )

@@ -250,7 +250,7 @@ export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader 
             <div
               key={idx}
               className={cn(
-                'bg-neutral/2 hover:bg-background rounded-space-sm relative z-0 transition-colors',
+                'bg-neutral/2 hover:bg-background rounded-space-sm relative -z-1 transition-colors',
                 cell.isReserved && 'pointer-events-none opacity-0',
               )}
             >

@@ -9,10 +9,23 @@
   "TestimonialsBlock": {
     "readMore": "إقرأ القصة"
   },
-  "readMore": "إقرأ القصة",
+  "Header": {
+    "home": "الرئيسية",
+    "pages": "الصفحات",
+    "contact": "اتصل بنا"
+  },
   "Footer": {
-    "allRightsReserved": "© {year} مرن. جميع الحقوق محفوظة.",
+    "followUs": "تابعنا",
+    "compliance": "خاضع لتنظيم ورقابة",
+    "allRightsReserved": "© {year} مارن. جميع الحقوق محفوظة.",
     "termsAndConditions": "الشروط والأحكام",
-    "privacyPolicy": "سياسة الخصوصية"
+    "privacyPolicy": "سياسة الخصوصية",
+    "newsletterTitle": "ابق على اطلاع دائم بنشرتنا الإخبارية",
+    "newsletterDescription": "احصل على آخر الأخبار والتحديثات والعروض الخاصة مباشرة في بريدك الوارد.",
+    "newsletterPlaceholder": "أدخل بريدك الإلكتروني",
+    "newsletterButton": "إشترك"
+  },
+  "Theme": {
+    "toggleTheme": "Toggle theme"
   }
 }

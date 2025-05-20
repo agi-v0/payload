@@ -359,3 +359,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+:root {
+  overscroll-behavior: none;
+  overflow-x: hidden; /* or you could use overflow-x: clip */
+}
