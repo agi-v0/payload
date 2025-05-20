@@ -145,14 +145,14 @@ export function FooterClient({ columns, currentYear }: Props) {
     }
 
     /* 2 - touch */
-    let lastY = { current: 0 }
+    let lastY = 0
     const tStart = (e: TouchEvent) => {
       touchDown.current = true
-      lastY.current = e.touches[0].clientY
+      lastY = e.touches[0].clientY
     }
     const tMove = (e: TouchEvent) => {
-      const dy = lastY.current - e.touches[0].clientY
-      lastY.current = e.touches[0].clientY
+      const dy = lastY - e.touches[0].clientY
+      lastY = e.touches[0].clientY
       overscroll(dy * TOUCH_GAIN)
     }
     const tEnd = () => {
