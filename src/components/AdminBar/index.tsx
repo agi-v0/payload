@@ -5,7 +5,7 @@ import type { PayloadAdminBarProps } from 'payload-admin-bar'
 import { cn } from '@/utilities/ui'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { PayloadAdminBar } from 'payload-admin-bar'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 
 import './index.scss'
@@ -13,7 +13,6 @@ import './index.scss'
 import { getClientSideURL } from '@/utilities/getURL'
 
 const baseClass = 'admin-bar'
-const adminBarHeight = '2.5rem'
 
 const collectionLabels = {
   pages: {
@@ -36,6 +35,7 @@ export const AdminBar: React.FC<{
   const [show, setShow] = useState(false)
   const collection = collectionLabels?.[segments?.[1]] ? segments?.[1] : 'pages'
   const router = useRouter()
+  const ref = useRef<HTMLDivElement>(null)
 
   const onAuthChange = React.useCallback((user) => {
     setShow(!!user?.id)
@@ -43,22 +43,28 @@ export const AdminBar: React.FC<{
 
   useEffect(() => {
     if (show) {
-      document.documentElement.style.setProperty('--admin-bar-height', adminBarHeight)
+      const height = ref.current?.clientHeight
+      document.documentElement.style.setProperty('--admin-bar-height', `${height}px`)
     } else {
-      document.documentElement.style.removeProperty('--admin-bar-height')
+      document.documentElement.style.setProperty('--admin-bar-height', '0rem')
     }
-
     return () => {
-      document.documentElement.style.removeProperty('--admin-bar-height')
+      document.documentElement.style.setProperty('--admin-bar-height', '0rem')
     }
   }, [show])
 
   return (
     <div
-      className={cn(baseClass, 'fixed top-0 left-0 z-[10] w-full bg-black text-white', 'h-10', {
-        block: show,
-        hidden: !show,
-      })}
+      ref={ref}
+      className={cn(
+        baseClass,
+        'fixed top-0 left-0 z-[10] w-full bg-black text-white',
+        'h-0 md:h-10',
+        {
+          block: show,
+          hidden: !show,
+        },
+      )}
     >
       <div className="container h-full">
         <PayloadAdminBar

@@ -53,6 +53,10 @@
     --header-height: 56px;
   }
 
+  --admin-bar-height: 2.5rem;
+
+  --header-plus-admin-bar-height: calc(var(--header-height) + var(--admin-bar-height));
+
   /* --background: hsl(0 0% 100%);
   --foreground: hsl(0 0% 3.9%); */
   --card: theme(--color-background-neutral);
@@ -184,6 +188,8 @@
   --spacing-md: clamp(1.5rem, 1.1rem + 1vw, 2rem); /* 24px - 32px main card padding */
   --spacing-lg: clamp(2rem, 1.6rem + 1vw, 2.5rem); /* 32px - 40px larger element spacing */
   --spacing-xl: clamp(2.5rem, 2.1rem + 1vw, 3rem); /* 40px - 48px extra large element spacing*/
+  --spacing-2xl: clamp(3rem, 2.6rem + 1vw, 3.5rem); /* 48px - 56px extra large element spacing*/
+  --spacing-3xl: clamp(3.5rem, 3.1rem + 1vw, 4rem); /* 56px - 64px extra large element spacing*/
 
   --radius-space-md: clamp(1rem, 0.6rem + 1vw, 1.5rem);
 
