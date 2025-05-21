@@ -54,6 +54,9 @@ html[data-theme='dark'] {
   box-shadow: 0 0 0 2px var(--theme-text) !important;
   border: 1px solid var(--theme-elevation-150);
 }
+.checkbox-input:not(.checkbox-input--read-only):focus-within input[type='checkbox'] {
+  box-shadow: 0 0 0 2px var(--theme-text) !important;
+}
 // }
 
 .btn--style-primary.btn--disabled {
@@ -340,14 +343,25 @@ html[data-theme='dark'] {
   border-radius: var(--style-radius-s);
 }
 
-.payload-toast-item.toast-success {
+html[data-theme='dark'] .payload-toast-item.toast-success {
   border-color: var(--theme-success-100);
   background-color: var(--theme-success-50);
   color: var(--theme-success-500);
   .payload-toast-close-button {
     color: var(--theme-success-600);
     &:hover {
-      color: var(--theme-success-200);
+      color: var(--theme-success-500);
+    }
+  }
+}
+html[data-theme='light'] .payload-toast-item.toast-success {
+  border-color: var(--theme-success-200);
+  background-color: var(--theme-success-100);
+  color: var(--theme-success-600);
+  .payload-toast-close-button {
+    color: var(--theme-success-600);
+    &:hover {
+      color: var(--theme-success-500);
     }
   }
 }
@@ -611,15 +625,28 @@ html[data-theme='dark'] .nav__link:hover {
   --color-warning-900: oklch(0.421 0.095 57.708);
   --color-warning-950: oklch(0.286 0.066 53.813);
 
-  --color-error-50: oklch(0.971 0.013 17.38);
-  --color-error-100: oklch(0.936 0.032 17.717);
-  --color-error-200: oklch(0.885 0.062 18.334);
-  --color-error-300: oklch(0.808 0.114 19.571);
-  --color-error-400: oklch(0.704 0.191 22.216);
-  --color-error-500: oklch(0.637 0.237 25.331);
-  --color-error-600: oklch(0.577 0.245 27.325);
-  --color-error-700: oklch(0.505 0.213 27.518);
-  --color-error-800: oklch(0.444 0.177 26.899);
-  --color-error-900: oklch(0.396 0.141 25.723);
-  --color-error-950: oklch(0.258 0.092 26.042);
+  // --color-error-50: oklch(0.971 0.013 17.38);
+  // --color-error-100: oklch(0.936 0.032 17.717);
+  // --color-error-200: oklch(0.885 0.062 18.334);
+  // --color-error-300: oklch(0.808 0.114 19.571);
+  // --color-error-400: oklch(0.704 0.191 22.216);
+  // --color-error-500: oklch(0.637 0.237 25.331);
+  // --color-error-600: oklch(0.577 0.245 27.325);
+  // --color-error-700: oklch(0.505 0.213 27.518);
+  // --color-error-800: oklch(0.444 0.177 26.899);
+  // --color-error-900: oklch(0.396 0.141 25.723);
+  // --color-error-950: oklch(0.258 0.092 26.042);
+
+  // tomato
+  --color-error-50: #fdf0ed;
+  --color-error-100: #fae0db;
+  --color-error-200: #f7c5bb;
+  --color-error-300: #f2a697;
+  --color-error-400: #ee8772;
+  --color-error-500: #ea6c53;
+  --color-error-600: #e54d2e;
+  --color-error-700: #c33518;
+  --color-error-800: #912712;
+  --color-error-900: #5f1a0c;
+  --color-error-950: #441208;
 }

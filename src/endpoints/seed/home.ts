@@ -89,7 +89,10 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
       ],
       supportingText: null,
       headline: null,
-      logos: [],
+      logos: {
+        headline: null,
+        logos: [],
+      },
       media: {
         light: image169?.id,
         dark: image169?.id,

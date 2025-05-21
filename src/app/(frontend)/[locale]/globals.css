@@ -231,7 +231,8 @@
   --color-inverted-primary: var(--inverted-primary);
   --color-inverted-secondary: var(--inverted-secondary);
 
-  --color-marn-50: #eef1fc;
+  /* indigo */
+  /* --color-marn-50: #eef1fc;
   --color-marn-100: #d8dff8;
   --color-marn-200: #b1c0f1;
   --color-marn-300: #8aa0ea;
@@ -241,7 +242,20 @@
   --color-marn-700: #1f42b2;
   --color-marn-800: #1a3693;
   --color-marn-900: #152b75;
-  --color-marn-950: #122668;
+  --color-marn-950: #122668; */
+
+  /* sky blue */
+  --color-marn-50: #f2f7fc;
+  --color-marn-100: #e1edf8;
+  --color-marn-200: #c9e0f4;
+  --color-marn-300: #98c5e9;
+  --color-marn-400: #79b1e1;
+  --color-marn-500: #5a93d7;
+  --color-marn-600: #457acb;
+  --color-marn-700: #3c67b9;
+  --color-marn-800: #365597;
+  --color-marn-900: #304978;
+  --color-marn-950: #212d4a;
 
   --color-tomato-50: #fdf0ed;
   --color-tomato-100: #fae0db;

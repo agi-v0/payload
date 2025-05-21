@@ -12,11 +12,12 @@ const badgeVariants = cva(
   {
     variants: {
       color: {
-        blue: 'text-brand bg-blue-100 disabled:bg-blue-50 disabled:text-blue-500/70 dark:bg-blue-500/20',
+        blue: 'text-brand bg-blue-100 disabled:bg-blue-50 disabled:text-blue-500/70 dark:bg-blue-950',
         red: 'bg-red-100 text-red-600 disabled:bg-red-50 disabled:text-red-500/70 dark:bg-red-900',
         green: 'bg-lime-200 text-lime-600 disabled:bg-lime-50 disabled:text-lime-500/70',
         yellow: 'bg-yellow-100 text-yellow-600 disabled:bg-yellow-50 disabled:text-yellow-500/70',
         gray: 'bg-gray-100 text-gray-600 disabled:bg-gray-50 disabled:text-gray-500/70',
+        inverted: 'bg-background-neutral text-base-quaternary',
       },
       size: {
         sm: 'text-sm',
@@ -34,7 +35,7 @@ const badgeVariants = cva(
 export interface BadgeProps {
   type?: ('label' | 'reference') | null
   label?: string | null
-  color?: ('blue' | 'red' | 'green' | 'yellow') | null
+  color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null
   reference?:
     | ({
         relationTo: 'solutions'

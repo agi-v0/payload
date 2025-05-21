@@ -9,6 +9,7 @@ import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
+import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 
 export const Hero05: React.FC<Page['hero']> = ({
   richText,
@@ -16,9 +17,10 @@ export const Hero05: React.FC<Page['hero']> = ({
   links,
   supportingText,
   logos,
-  headline,
   badge,
 }) => {
+  const { logos: logosGroup, headline } = logos || {}
+
   // const { setHeaderTheme } = useHeaderTheme()
 
   // useEffect(() => {
@@ -71,27 +73,33 @@ export const Hero05: React.FC<Page['hero']> = ({
             imgClassName="object-cover"
             priority
             light={media.light ?? undefined}
+            dark={media.dark ?? undefined}
             // fill
           />
         )}
       </div>
-      {Array.isArray(logos?.['logos-images']) && logos['logos-images'].length > 0 && (
-        <div className="gap-space-md md:gap-space-lg flex w-full flex-col items-center">
-          {headline && <p className="text-body-md text-base-secondary">{headline}</p>}
-          <ul className="gap-x-space-lg gap-y-space-md flex w-full flex-wrap items-center justify-center md:justify-between">
-            {logos['logos-images'].map(({ logo }, i) => {
-              return (
-                <li key={i} className="flex items-center justify-center">
-                  {logo && typeof logo === 'object' && (
-                    <Media
-                      imgClassName="h-size-sm max-w-[144px] object-contain"
-                      priority
-                      resource={logo}
-                    />
-                  )}
-                </li>
-              )
-            })}
+      {logos && logosGroup && logosGroup.length > 0 && (
+        <div className="gap-space-md p-md pb-lg bg-background-neutral rounded-space-sm flex w-full flex-col items-start">
+          {headline && <p className="text-body-sm text-base-quaternary font-medium">{headline}</p>}
+          <ul
+            dir="ltr"
+            className="-mask-x-to-10% flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
+          >
+            <InfiniteSlider gap={48} className="dark:invert">
+              {logosGroup.map((logo, i) => {
+                return (
+                  <li key={i} className="flex items-center justify-center">
+                    {logo && typeof logo === 'object' && (
+                      <Media
+                        imgClassName="h-space-md w-auto object-contain"
+                        priority
+                        resource={logo}
+                      />
+                    )}
+                  </li>
+                )
+              })}
+            </InfiniteSlider>
           </ul>
         </div>
       )}

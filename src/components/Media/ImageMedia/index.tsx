@@ -55,6 +55,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     alt = altFromResource || ''
     blurhash = blurhashFromResource || placeholderBlur
     src = `${getClientSideURL()}${url}`
+    darkSrc = `${getClientSideURL()}${url}`
   }
 
   if (!src && light && typeof light === 'object') {
@@ -72,6 +73,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     alt = altFromLight || ''
     blurhash = blurhashFromLight || placeholderBlur
     src = `${getClientSideURL()}${url}`
+    darkSrc = `${getClientSideURL()}${url}`
   }
 
   if (dark && typeof dark === 'object') {
@@ -117,22 +119,21 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         src={src}
         width={!fill ? width : undefined}
       />
-      {darkSrc && (
-        <NextImage
-          alt={alt || altFromProps || ''}
-          className={cn(imgClassName, styles.imageDark)}
-          fill={fill}
-          height={!fill ? height : undefined}
-          placeholder={blurhash || placeholderBlur ? 'blur' : 'empty'}
-          blurDataURL={blurhash || placeholderBlur}
-          priority={priority}
-          quality={100}
-          loading={loading}
-          sizes={sizes}
-          src={darkSrc}
-          width={!fill ? width : undefined}
-        />
-      )}
+
+      <NextImage
+        alt={alt || altFromProps || ''}
+        className={cn(imgClassName, styles.imageDark)}
+        fill={fill}
+        height={!fill ? height : undefined}
+        placeholder={blurhash || placeholderBlur ? 'blur' : 'empty'}
+        blurDataURL={blurhash || placeholderBlur}
+        priority={priority}
+        quality={100}
+        loading={loading}
+        sizes={sizes}
+        src={darkSrc}
+        width={!fill ? width : undefined}
+      />
     </picture>
   )
 }

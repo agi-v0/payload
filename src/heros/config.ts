@@ -52,7 +52,6 @@ export const hero: Field = {
       required: true,
     },
     badge({}),
-
     {
       name: 'richText',
       type: 'richText',
@@ -105,16 +104,26 @@ export const hero: Field = {
       },
       fields: [
         {
-          name: 'headline',
-          type: 'text',
-          label: 'Headline',
-          required: false,
-          localized: true,
+          name: 'logos',
+          label: false,
+          type: 'group',
           admin: {
-            placeholder: 'e.g., As Featured In, Our Partners',
+            hideGutter: true,
           },
+          fields: [
+            {
+              name: 'headline',
+              type: 'text',
+              label: 'Headline',
+              required: false,
+              localized: true,
+              admin: {
+                placeholder: 'e.g., As Featured In, Our Partners',
+              },
+            },
+            logos({}),
+          ],
         },
-        logos({}),
       ],
     },
   ],

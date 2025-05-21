@@ -392,7 +392,7 @@ export interface CallToActionBlock {
   badge?: {
     type?: ('label' | 'reference') | null;
     label?: string | null;
-    color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+    color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
     reference?:
       | ({
           relationTo: 'solutions';
@@ -534,7 +534,7 @@ export interface Page {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -602,8 +602,10 @@ export interface Page {
       light?: (number | null) | Media;
       dark?: (number | null) | Media;
     };
-    headline?: string | null;
-    logos?: (number | Media)[] | null;
+    logos?: {
+      headline?: string | null;
+      logos?: (number | Media)[] | null;
+    };
   };
   layout: (
     | ArchiveBlock
@@ -723,7 +725,7 @@ export interface Integration {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -791,8 +793,10 @@ export interface Integration {
       light?: (number | null) | Media;
       dark?: (number | null) | Media;
     };
-    headline?: string | null;
-    logos?: (number | Media)[] | null;
+    logos?: {
+      headline?: string | null;
+      logos?: (number | Media)[] | null;
+    };
   };
   gallery?: (number | Media)[] | null;
   content?: {
@@ -849,7 +853,7 @@ export interface FaqBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -956,7 +960,7 @@ export interface FeaturesBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1102,7 +1106,7 @@ export interface FeaturesBlock {
         badge?: {
           type?: ('label' | 'reference') | null;
           label?: string | null;
-          color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+          color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
           reference?:
             | ({
                 relationTo: 'solutions';
@@ -1154,7 +1158,7 @@ export interface FeaturedAppsBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1262,7 +1266,7 @@ export interface GalleryBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1564,7 +1568,7 @@ export interface TestimonialsBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -1769,7 +1773,7 @@ export interface CustomHtmlBlock {
     badge?: {
       type?: ('label' | 'reference') | null;
       label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
       reference?:
         | ({
             relationTo: 'solutions';
@@ -2239,8 +2243,12 @@ export interface PagesSelect<T extends boolean = true> {
               light?: T;
               dark?: T;
             };
-        headline?: T;
-        logos?: T;
+        logos?:
+          | T
+          | {
+              headline?: T;
+              logos?: T;
+            };
       };
   layout?: T | {};
   meta?:
@@ -2387,8 +2395,12 @@ export interface IntegrationsSelect<T extends boolean = true> {
               light?: T;
               dark?: T;
             };
-        headline?: T;
-        logos?: T;
+        logos?:
+          | T
+          | {
+              headline?: T;
+              logos?: T;
+            };
       };
   gallery?: T;
   content?: T;
