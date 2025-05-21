@@ -15,9 +15,15 @@ const initialContext: ThemeContextType = {
 
 const ThemeContext = createContext(initialContext)
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+export const ThemeProvider = ({
+  children,
+  initialTheme,
+}: {
+  children: React.ReactNode
+  initialTheme?: Theme
+}) => {
   const [theme, setThemeState] = useState<Theme | undefined>(
-    canUseDOM ? (document.documentElement.getAttribute('data-theme') as Theme) : undefined,
+    canUseDOM ? (document.documentElement.getAttribute('data-theme') as Theme) : initialTheme,
   )
 
   const setTheme = useCallback((themeToSet: Theme | null) => {
@@ -27,9 +33,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       const newAppliedTheme = implicitPreference || defaultTheme
       document.documentElement.setAttribute('data-theme', newAppliedTheme)
       setThemeState(newAppliedTheme)
+      document.cookie = `theme=${newAppliedTheme}; path=/; max-age=31536000`
     } else {
       setThemeState(themeToSet)
       window.localStorage.setItem(themeLocalStorageKey, themeToSet)
+      document.cookie = `theme=${themeToSet}; path=/; max-age=31536000`
       document.documentElement.setAttribute('data-theme', themeToSet)
     }
   }, [])
@@ -42,9 +50,16 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     let themeToSet: Theme = defaultTheme
     const preference = window.localStorage.getItem(themeLocalStorageKey)
+    const cookieTheme = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('theme='))
+      ?.split('=')[1]
 
     if (themeIsValid(preference)) {
       themeToSet = preference
+    } else if (cookieTheme && themeIsValid(cookieTheme)) {
+      themeToSet = cookieTheme as Theme
+      window.localStorage.setItem(themeLocalStorageKey, themeToSet)
     } else {
       const implicitPreference = getImplicitPreference()
 
@@ -54,7 +69,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     document.documentElement.setAttribute('data-theme', themeToSet)
+    document.cookie = `theme=${themeToSet}; path=/; max-age=31536000`
     setThemeState(themeToSet)
+
     /* watch system theme change */
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
@@ -63,6 +80,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         const newImplicitPreference = getImplicitPreference()
         const themeToSet = newImplicitPreference || defaultTheme
         document.documentElement.setAttribute('data-theme', themeToSet)
+        document.cookie = `theme=; path=/; max-age=0`
         setThemeState(themeToSet)
       }
     }

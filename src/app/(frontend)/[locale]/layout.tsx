@@ -5,9 +5,8 @@ import React from 'react'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
-import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { draftMode } from 'next/headers'
+import { cookies, draftMode } from 'next/headers'
 import { DynamicAdminBarLoader } from '@/components/AdminBar/DynamicLoader.client'
 
 import { NextIntlClientProvider } from 'next-intl'
@@ -36,9 +35,11 @@ export default async function RootLayout({
   if (!routing.locales.includes(locale as any)) {
     notFound()
   }
-
   const messages = await getMessages()
   const { isEnabled } = await draftMode()
+
+  const cookieStore = await cookies()
+  const initialTheme = (cookieStore.get('theme')?.value as 'light' | 'dark' | undefined) ?? 'light'
 
   return (
     <html
@@ -48,12 +49,11 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
-        <Providers>
+        <Providers initialTheme={initialTheme}>
           <NextIntlClientProvider messages={messages}>
             <DynamicAdminBarLoader
               adminBarProps={{
