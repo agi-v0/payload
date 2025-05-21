@@ -4,13 +4,12 @@ import type { StaticImageData } from 'next/image'
 
 import { cn } from '@/utilities/ui'
 import NextImage from 'next/image'
-import Image from 'next/image'
+import { useTheme } from '@/providers/Theme'
 import React from 'react'
 
 import type { Props as MediaProps } from '../types'
 
 import { cssVariables } from '@/cssVariables'
-import styles from './index.module.css'
 import { getClientSideURL } from '@/utilities/getURL'
 
 const { breakpoints } = cssVariables
@@ -32,6 +31,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     src: srcFromProps,
     loading: loadingFromProps,
   } = props
+  const { theme } = useTheme()
 
   let width: number | undefined
   let height: number | undefined
@@ -101,13 +101,15 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     : Object.entries(breakpoints)
         .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
         .join(', ')
-
   if (!src && !darkSrc) return null
+
+  const isDark = theme === 'dark'
+  const srcToUse = isDark && darkSrc ? darkSrc : src
   return (
     <picture>
       <NextImage
         alt={alt || altFromProps || ''}
-        className={cn(imgClassName, styles.imageLight)}
+        className={cn(imgClassName)}
         fill={fill}
         height={!fill ? height : undefined}
         placeholder={blurhash || placeholderBlur ? 'blur' : 'empty'}
@@ -116,22 +118,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         quality={100}
         loading={loading}
         sizes={sizes}
-        src={src}
-        width={!fill ? width : undefined}
-      />
-
-      <NextImage
-        alt={alt || altFromProps || ''}
-        className={cn(imgClassName, styles.imageDark)}
-        fill={fill}
-        height={!fill ? height : undefined}
-        placeholder={blurhash || placeholderBlur ? 'blur' : 'empty'}
-        blurDataURL={blurhash || placeholderBlur}
-        priority={priority}
-        quality={100}
-        loading={loading}
-        sizes={sizes}
-        src={darkSrc}
+        src={srcToUse}
         width={!fill ? width : undefined}
       />
     </picture>
