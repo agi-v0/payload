@@ -100,6 +100,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
         .join(', ')
 
+  if (!src && !darkSrc) return null
   return (
     <picture>
       <NextImage
