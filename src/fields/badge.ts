@@ -68,6 +68,7 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
             type: 'text',
             admin: {
               width: '50%',
+              condition: (_, siblingData) => siblingData?.type === 'label',
             },
             localized: true,
           },
@@ -76,6 +77,7 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
             type: 'select',
             admin: {
               width: '50%',
+              condition: (_, siblingData) => siblingData?.type === 'label',
             },
             defaultValue: 'blue',
             options: colorOptionsToUse,
@@ -91,7 +93,6 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
         },
         label: 'Document to link to',
         relationTo: ['solutions', 'integrations'],
-        required: true,
       },
     ],
   }
@@ -103,6 +104,7 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
         label: 'Icon',
         icons: lucideIcons,
         admin: {
+          condition: (_, siblingData) => siblingData?.type === 'label',
           description:
             'Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/',
         },
@@ -115,6 +117,7 @@ export const badge: BadgeType = ({ colors, icon = true, overrides = {} } = {}) =
       type: 'select',
       admin: {
         width: '50%',
+        condition: (_, siblingData) => siblingData?.type === 'label',
       },
       options: [
         { label: 'Start', value: 'flex-row' },
