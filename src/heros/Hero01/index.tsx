@@ -30,7 +30,7 @@ export const Hero01: React.FC<Page['hero']> = ({
       <div className="relative z-0 h-full w-full">
         <div
           data-theme="dark"
-          className="p-xl absolute bottom-0 z-1 flex w-full flex-row items-center justify-between"
+          className="p-xl absolute bottom-0 z-1 flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-center"
         >
           <div className="gap-md flex h-full max-w-[36rem] flex-col items-start justify-center">
             {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
@@ -46,7 +46,7 @@ export const Hero01: React.FC<Page['hero']> = ({
               />
             )}
           </div>
-          <div className="flex flex-col items-start gap-4">
+          <div className="flex w-full flex-col items-start gap-4 lg:w-fit">
             {Array.isArray(links) && links.length > 0 && (
               <ul className="flex flex-row items-center justify-start gap-1">
                 {links.map(({ link }, i) => {

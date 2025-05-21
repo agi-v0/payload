@@ -88,9 +88,12 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
         },
       ],
       supportingText: null,
-      logosHeadline: null,
+      headline: null,
       logos: [],
-      media: image169?.id,
+      media: {
+        light: image169?.id,
+        dark: image169?.id,
+      },
       badge: {
         label: null,
         color: 'blue',

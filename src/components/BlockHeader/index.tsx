@@ -28,7 +28,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
   return (
     <div
       className={cn(
-        'gap-md container grid grid-cols-2',
+        'gap-sm container grid grid-cols-2',
         type === 'center' ? 'justify-items-center' : '',
         className,
       )}
@@ -54,15 +54,15 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
         <ul
           className={cn(
             'col-span-2 row-start-3 justify-self-stretch md:col-span-1 md:justify-self-auto',
-            'flex flex-col gap-1 md:flex-row md:gap-4',
+            'flex flex-row gap-1',
             type === 'split' ? 'md:col-start-2' : '',
-            type === 'center' ? 'md:col-span-2' : '',
+            type === 'center' ? 'justify-center md:col-span-2' : '',
             linksClassName,
           )}
         >
           {links.map(({ link }, i) => {
             return (
-              <li key={i}>
+              <li key={i} className="">
                 <CMSLink className="w-full" size={'lg'} {...link} />
               </li>
             )

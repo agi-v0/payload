@@ -370,7 +370,10 @@ export const seedFeaturesShowcasePage = (media: {
         direction: 'rtl',
       },
     ]),
-    media: media.image169?.id,
+    media: {
+      light: media.image169?.id,
+      dark: media.image169?.id,
+    },
     links: [
       {
         link: {

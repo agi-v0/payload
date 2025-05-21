@@ -51,9 +51,7 @@ export const RenderBlocks: React.FC<{
         if (!Block) {
           return null
         }
-        if (block.blockType === 'gallery') {
-          console.log(block)
-        }
+
         return (
           <div id={block.blockName || undefined} className="*:first:pt-xl *:last:pb-xl" key={index}>
             {blockHeader &&
