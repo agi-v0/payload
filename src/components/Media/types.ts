@@ -15,9 +15,10 @@ export interface Props {
   loading?: 'lazy' | 'eager' // for NextImage only
   priority?: boolean // for NextImage only
   ref?: Ref<HTMLImageElement | HTMLVideoElement | null>
-  resource?: MediaType | string | number // for Payload media
   size?: string // for NextImage only
-  src?: StaticImageData // for static media
+  src?: StaticImageData | string // for static media
   videoClassName?: string
-  blurhash?: string
+  resource?: MediaType | string | number // for Payload media
+  light?: MediaType | string | number // for Payload media
+  dark?: MediaType | string | number // for Payload media
 }

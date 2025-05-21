@@ -4,11 +4,13 @@ import type { StaticImageData } from 'next/image'
 
 import { cn } from '@/utilities/ui'
 import NextImage from 'next/image'
+import Image from 'next/image'
 import React from 'react'
 
 import type { Props as MediaProps } from '../types'
 
 import { cssVariables } from '@/cssVariables'
+import styles from './index.module.css'
 import { getClientSideURL } from '@/utilities/getURL'
 
 const { breakpoints } = cssVariables
@@ -19,21 +21,24 @@ const placeholderBlur =
 
 export const ImageMedia: React.FC<MediaProps> = (props) => {
   const {
-    alt: altFromProps,
     fill,
     imgClassName,
     priority,
     resource,
+    light,
+    dark,
+    alt: altFromProps,
     size: sizeFromProps,
     src: srcFromProps,
     loading: loadingFromProps,
-    blurhash: blurhashFromProps,
   } = props
+
   let width: number | undefined
   let height: number | undefined
   let alt = altFromProps
   let src: StaticImageData | string = srcFromProps || ''
-  let blurhash = blurhashFromProps || undefined
+  let darkSrc: string = ''
+  let blurhash: string = placeholderBlur
 
   if (!src && resource && typeof resource === 'object') {
     const {
@@ -48,8 +53,42 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     width = fullWidth!
     height = fullHeight!
     alt = altFromResource || ''
-    blurhash = blurhashFromResource || undefined
+    blurhash = blurhashFromResource || placeholderBlur
     src = `${getClientSideURL()}${url}`
+  }
+
+  if (!src && light && typeof light === 'object') {
+    const {
+      alt: altFromLight,
+      filename: fullFilename,
+      height: fullHeight,
+      url,
+      width: fullWidth,
+      blurhash: blurhashFromLight,
+    } = light
+
+    width = fullWidth!
+    height = fullHeight!
+    alt = altFromLight || ''
+    blurhash = blurhashFromLight || placeholderBlur
+    src = `${getClientSideURL()}${url}`
+  }
+
+  if (dark && typeof dark === 'object') {
+    const {
+      alt: altFromDark,
+      filename: fullFilename,
+      height: fullHeight,
+      url,
+      width: fullWidth,
+      blurhash: blurhashFromDark,
+    } = dark
+
+    width = fullWidth!
+    height = fullHeight!
+    alt = altFromDark || ''
+    blurhash = blurhashFromDark || placeholderBlur
+    darkSrc = `${getClientSideURL()}${url}`
   }
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
@@ -64,12 +103,12 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   return (
     <picture>
       <NextImage
-        alt={alt || ''}
-        className={cn(imgClassName)}
+        alt={alt || altFromProps || ''}
+        className={cn(imgClassName, styles.imageLight)}
         fill={fill}
         height={!fill ? height : undefined}
-        placeholder="blur"
-        blurDataURL={blurhash ? blurhash : placeholderBlur}
+        placeholder={blurhash || placeholderBlur ? 'blur' : 'empty'}
+        blurDataURL={blurhash || placeholderBlur}
         priority={priority}
         quality={100}
         loading={loading}
@@ -77,6 +116,22 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         src={src}
         width={!fill ? width : undefined}
       />
+      {darkSrc && (
+        <NextImage
+          alt={alt || altFromProps || ''}
+          className={cn(imgClassName, styles.imageDark)}
+          fill={fill}
+          height={!fill ? height : undefined}
+          placeholder={blurhash || placeholderBlur ? 'blur' : 'empty'}
+          blurDataURL={blurhash || placeholderBlur}
+          priority={priority}
+          quality={100}
+          loading={loading}
+          sizes={sizes}
+          src={darkSrc}
+          width={!fill ? width : undefined}
+        />
+      )}
     </picture>
   )
 }
