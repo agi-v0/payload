@@ -530,7 +530,26 @@ export interface Page {
    */
   title: string;
   hero: {
-    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07' | 'none';
+    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'none';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: number | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
     richText?: {
       root: {
         type: string;
@@ -579,33 +598,12 @@ export interface Page {
         }[]
       | null;
     supportingText?: string | null;
-    logosHeadline?: string | null;
-    logos?:
-      | {
-          logo?: (number | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-    media?: (number | null) | Media;
-    badge?: {
-      type?: ('label' | 'reference') | null;
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      reference?:
-        | ({
-            relationTo: 'solutions';
-            value: number | Solution;
-          } | null)
-        | ({
-            relationTo: 'integrations';
-            value: number | Integration;
-          } | null);
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    media?: {
+      light?: (number | null) | Media;
+      dark?: (number | null) | Media;
     };
+    headline?: string | null;
+    logos?: (number | Media)[] | null;
   };
   layout: (
     | ArchiveBlock
@@ -721,7 +719,26 @@ export interface Integration {
     label: string;
   };
   hero: {
-    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'hero06' | 'hero07' | 'none';
+    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'none';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: number | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
     richText?: {
       root: {
         type: string;
@@ -770,33 +787,12 @@ export interface Integration {
         }[]
       | null;
     supportingText?: string | null;
-    logosHeadline?: string | null;
-    logos?:
-      | {
-          logo?: (number | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-    media?: (number | null) | Media;
-    badge?: {
-      type?: ('label' | 'reference') | null;
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow') | null;
-      reference?:
-        | ({
-            relationTo: 'solutions';
-            value: number | Solution;
-          } | null)
-        | ({
-            relationTo: 'integrations';
-            value: number | Integration;
-          } | null);
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    media?: {
+      light?: (number | null) | Media;
+      dark?: (number | null) | Media;
     };
+    headline?: string | null;
+    logos?: (number | Media)[] | null;
   };
   gallery?: (number | Media)[] | null;
   content?: {
@@ -2209,6 +2205,16 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        badge?:
+          | T
+          | {
+              type?: T;
+              label?: T;
+              color?: T;
+              reference?: T;
+              icon?: T;
+              icon_position?: T;
+            };
         richText?: T;
         links?:
           | T
@@ -2227,24 +2233,14 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         supportingText?: T;
-        logosHeadline?: T;
-        logos?:
+        media?:
           | T
           | {
-              logo?: T;
-              id?: T;
+              light?: T;
+              dark?: T;
             };
-        media?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
+        headline?: T;
+        logos?: T;
       };
   layout?: T | {};
   meta?:
@@ -2357,6 +2353,16 @@ export interface IntegrationsSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        badge?:
+          | T
+          | {
+              type?: T;
+              label?: T;
+              color?: T;
+              reference?: T;
+              icon?: T;
+              icon_position?: T;
+            };
         richText?: T;
         links?:
           | T
@@ -2375,24 +2381,14 @@ export interface IntegrationsSelect<T extends boolean = true> {
               id?: T;
             };
         supportingText?: T;
-        logosHeadline?: T;
-        logos?:
+        media?:
           | T
           | {
-              logo?: T;
-              id?: T;
+              light?: T;
+              dark?: T;
             };
-        media?: T;
-        badge?:
-          | T
-          | {
-              type?: T;
-              label?: T;
-              color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
-            };
+        headline?: T;
+        logos?: T;
       };
   gallery?: T;
   content?: T;

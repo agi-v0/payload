@@ -18,12 +18,11 @@ const media: MediaType = ({ mediaOverrides = {} } = {}) => {
 
 export const mediaGroup: MediaGroupType = ({ mediaOverrides, overrides = {} } = {}) => {
   const generatedMediaGroupField: Field = {
-    // name: 'media',
-
-    label: 'Media',
-    type: 'collapsible',
+    name: 'media',
+    label: false,
+    type: 'group',
     admin: {
-      initCollapsed: true,
+      hideGutter: true,
     },
     fields: [
       media({ mediaOverrides: { name: 'light', ...(mediaOverrides || {}) } }),

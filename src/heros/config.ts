@@ -9,6 +9,8 @@ import {
 
 import { linkGroup } from '@/fields/linkGroup'
 import { badge } from '@/fields/badge'
+import { mediaGroup } from '@/fields/media'
+import { logos } from '@/fields/logos'
 
 export const hero: Field = {
   name: 'hero',
@@ -41,14 +43,7 @@ export const hero: Field = {
           label: 'Hero 05',
           value: 'hero05',
         },
-        {
-          label: 'Hero 06',
-          value: 'hero06',
-        },
-        {
-          label: 'Hero 07',
-          value: 'hero07',
-        },
+
         {
           label: 'None',
           value: 'none',
@@ -56,6 +51,8 @@ export const hero: Field = {
       ],
       required: true,
     },
+    badge({}),
+
     {
       name: 'richText',
       type: 'richText',
@@ -80,49 +77,45 @@ export const hero: Field = {
     }),
     {
       type: 'collapsible',
+      label: 'Media',
+      admin: {
+        initCollapsed: true,
+      },
+      fields: [
+        mediaGroup({
+          mediaOverrides: {
+            localized: true,
+            relationTo: 'media',
+            required: false,
+          },
+          overrides: {
+            admin: {
+              hideGutter: true,
+            },
+          },
+        }),
+      ],
+    },
+
+    {
+      type: 'collapsible',
       label: 'Logos',
       admin: {
         initCollapsed: true,
       },
       fields: [
         {
-          name: 'logosHeadline',
+          name: 'headline',
           type: 'text',
-          label: 'Logos headline',
+          label: 'Headline',
           required: false,
           localized: true,
           admin: {
             placeholder: 'e.g., As Featured In, Our Partners',
           },
         },
-        {
-          name: 'logos',
-          type: 'array',
-          label: 'Logos',
-          maxRows: 6,
-          fields: [
-            {
-              name: 'logo',
-              type: 'relationship',
-              label: 'Logo',
-              relationTo: 'media',
-              filterOptions: () => {
-                return {
-                  'Category.slug': { equals: 'logo' },
-                }
-              },
-            },
-          ],
-        },
+        logos({}),
       ],
     },
-    {
-      name: 'media',
-      type: 'upload',
-      localized: true,
-      relationTo: 'media',
-      required: false,
-    },
-    badge({}),
   ],
 }

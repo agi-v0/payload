@@ -12,7 +12,7 @@
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && NODE_ENV=production && pnpm build && pnpm start",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-    "generate:db-schema": "payload generate:db-schema",
+    "generate:db-schema": "cross-env NODE_OPTIONS=--no-deprecation && NODE_ENV=production payload generate:db-schema",
     "migrate:create": "NODE_ENV=production payload migrate:create",
     "ii": "cross-env NODE_OPTIONS=--no-deprecation pnpm --ignore-workspace install",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",

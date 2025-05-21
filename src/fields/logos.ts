@@ -15,11 +15,11 @@ export const logos: LogosType = ({ overrides } = {}) => {
         sort: 'updatedAt',
         where: {
           'category.slug': {
-            equals: 'company-logo',
+            equals: 'customer-logos',
           },
         },
       })
-      return docs.map((med) => ({ relationTo: 'media', value: med.id }))
+      return docs.map((med) => med.id)
     },
     hasMany: true,
   }

@@ -63,9 +63,12 @@ const createIntegrationObject = (
       richText: null,
       links: [],
       supportingText: null,
-      logosHeadline: null,
+      headline: null,
       logos: [],
-      media: null,
+      media: {
+        light: null,
+        dark: null,
+      },
       badge: {
         label: null,
         color: 'blue',
