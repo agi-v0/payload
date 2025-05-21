@@ -1,34 +1,61 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import Link from 'next/link'
-import React from 'react'
 
 import type { Footer } from '@/payload-types'
 
+import { Button } from '@/components/ui/button'
+import { Link } from '@/i18n/routing'
+import { getTranslations } from 'next-intl/server'
+
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
+import { LanguageSwitcher } from '@/providers/LanguageSelector/index'
 import { CMSLink } from '@/components/Link'
-import { Logo } from '@/components/Logo/Logo'
+import Logo from '@/components/ui/logo'
+
+import Facebook from '@/icons/facebook'
+import Instagram from '@/icons/instagram'
+import X from '@/icons/x'
+import TikTok from '@/icons/tiktok'
+import LinkedIn from '@/icons/linkedin'
+import Youtube from '@/icons/youtube'
+import { FooterClient } from './FooterClient'
+
+const socialLinks = [
+  {
+    label: 'Facebook',
+    url: 'https://www.facebook.com/marnpos',
+    icon: Facebook,
+  },
+  {
+    label: 'Instagram',
+    url: 'https://www.instagram.com/marnpos',
+    icon: Instagram,
+  },
+  {
+    label: 'X',
+    url: 'https://www.x.com/marnpos',
+    icon: X,
+  },
+  {
+    label: 'TikTok',
+    url: 'https://www.tiktok.com/@marnpos',
+    icon: TikTok,
+  },
+  {
+    label: 'LinkedIn',
+    url: 'https://www.linkedin.com/company/marnpos',
+    icon: LinkedIn,
+  },
+  {
+    label: 'Youtube',
+    url: 'https://www.youtube.com/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ',
+    icon: Youtube,
+  },
+]
 
 export async function Footer() {
-  const footerData: Footer = await getCachedGlobal('footer', 1)()
+  const { columns }: Footer = await getCachedGlobal('footer', 1)()
+  const t = await getTranslations('Footer')
+  const currentYear = new Date().getFullYear()
 
-  const navItems = footerData?.navItems || []
-
-  return (
-    <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white">
-      <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
-        <Link className="flex items-center" href="/">
-          <Logo />
-        </Link>
-
-        <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
-          <ThemeSelector />
-          <nav className="flex flex-col md:flex-row gap-4">
-            {navItems.map(({ link }, i) => {
-              return <CMSLink className="text-white" key={i} {...link} />
-            })}
-          </nav>
-        </div>
-      </div>
-    </footer>
-  )
+  return <FooterClient columns={columns} currentYear={currentYear} />
 }

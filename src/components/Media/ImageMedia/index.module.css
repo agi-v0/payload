@@ -1,0 +1,11 @@
+.imageDark {
+  display: none;
+}
+
+[data-theme='dark'] .imageLight {
+  display: none;
+}
+
+[data-theme='dark'] .imageDark {
+  display: unset;
+}

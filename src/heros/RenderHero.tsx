@@ -1,25 +1,31 @@
 import React from 'react'
 
-import type { Page } from '@/payload-types'
+import { HeroProps } from '@/types/hero'
+import { Page } from '@/payload-types'
 
-import { HighImpactHero } from '@/heros/HighImpact'
-import { LowImpactHero } from '@/heros/LowImpact'
-import { MediumImpactHero } from '@/heros/MediumImpact'
+import { Hero01 } from '@/heros/Hero01'
+import { Hero02 } from '@/heros/Hero02'
+import { Hero03 } from '@/heros/Hero03'
+import { Hero04 } from '@/heros/Hero04'
+import { Hero05 } from '@/heros/Hero05'
 
 const heroes = {
-  highImpact: HighImpactHero,
-  lowImpact: LowImpactHero,
-  mediumImpact: MediumImpactHero,
+  hero01: Hero01,
+  hero02: Hero02,
+  hero03: Hero03,
+  hero04: Hero04,
+  hero05: Hero05,
 }
 
-export const RenderHero: React.FC<Page['hero']> = (props) => {
+export const RenderHero: React.FC<HeroProps> = (props) => {
   const { type } = props || {}
 
   if (!type || type === 'none') return null
 
-  const HeroToRender = heroes[type]
+  const HeroToRender = heroes[type as keyof typeof heroes]
 
   if (!HeroToRender) return null
 
-  return <HeroToRender {...props} />
+  // Type assertion to ensure props match the expected type
+  return <HeroToRender {...(props as Page['hero'])} />
 }

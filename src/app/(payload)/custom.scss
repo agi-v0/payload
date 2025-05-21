@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import '@/styles/admin-makeup.scss';
+
+:root {
+  --font-body:
+    'Rubik', apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --style-radius-s: 8px;
+  --style-radius-m: 12px;
+  --style-radius-l: 16px;
+  --style-radius-full: 999px;
+}
+
+.collapsible {
+  border-radius: var(--style-radius-s);
+}
+
+.collapsible__content {
+  border-bottom-left-radius: var(--style-radius-s);
+  border-bottom-right-radius: var(--style-radius-s);
+}
+
+.collapsible__toggle-wrap {
+  border-radius: var(--style-radius-s);
+}
+
+.collapsible__toggle-wrap:has(.collapsible__toggle--open) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.popup__content {
+  border-radius: var(--style-radius-s);
+}
+
+.popup__content .popup-button-list__button {
+  border-radius: var(--style-radius-s);
+}
+
+.fixed-toolbar {
+  border-radius: var(--style-radius-s);
+  overflow: hidden;
+}
+
+.rich-text-lexical .editor-container {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+}
+
+.rich-text-lexical .editor-container h1 {
+  margin-block: 0.5rem 1.5rem;
+}
+
+.monaco-editor {
+  border-radius: var(--style-radius-s);
+  overflow: hidden;
+}
+.monaco-editor .overflow-guard {
+  border-radius: var(--style-radius-s);
+  overflow: hidden;
+}
+
+.btn {
+  border-radius: var(--style-radius-full);
+}
+
+.pill {
+  border-radius: var(--style-radius-full);
+}
+
+.column-selector,
+.where-builder {
+  border-radius: var(--style-radius-m);
+}
+
+.column-selector__column.column-selector__column--active {
+  color: var(--theme-elevation-0);
+  background-color: var(--theme-elevation-1000);
+}
+
+.paginator__page,
+.clickable-arrow,
+.clickable-arrow--disabled {
+  border-radius: var(--style-radius-full);
+}
+
+html:not([dir='RTL']) .btn--withPopup .btn {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+html:not([dir='RTL']) .btn--withPopup .popup-button {
+  border-top-right-radius: var(--style-radius-full);
+  border-bottom-right-radius: var(--style-radius-full);
+}
+
+.relationship-add-new__add-button {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: var(--style-radius-s);
+  border-bottom-right-radius: var(--style-radius-s);
+}
+
+.doc-controls__dots {
+  border-radius: var(--style-radius-full);
+}
+
+.nav__link {
+  padding-block: 8px;
+  padding-inline: 16px;
+  border-radius: 999px;
+  &:hover {
+    background-color: var(--theme-elevation-50);
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+.nav__link:has(.nav__link-indicator) {
+  background-color: var(--theme-elevation-100);
+}
+
+.table {
+  display: block;
+}
+
+.nav-group__label {
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  // font-size: 0.75rem;
+  // color: var(--theme-elevation-700);
+}
+
+.hamburger {
+  border-radius: var(--style-radius-full);
+}
+
+.field-type.email input {
+  border-radius: var(--style-radius-s);
+}
+
+[data-theme='light'] {
+  .login__brand,
+  .step-nav__home {
+    filter: invert(1);
+    height: 32px;
+    width: auto;
+  }
+}
+.login__brand {
+  height: 32px;
+  width: auto;
+}

@@ -36,7 +36,8 @@
     "next.config.js",
     "next-sitemap.config.cjs",
     "**/*.js",
-    "**/*.jsx"
+    "**/*.jsx",
+    "src/**/*"
   ],
   "exclude": ["node_modules"]
 }

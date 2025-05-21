@@ -1,0 +1,31 @@
+{
+  "HomePage": {
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  },
+  "General": {
+    "readMore": "المزيد"
+  },
+  "TestimonialsBlock": {
+    "readMore": "إقرأ القصة"
+  },
+  "Header": {
+    "home": "الرئيسية",
+    "pages": "الصفحات",
+    "contact": "اتصل بنا"
+  },
+  "Footer": {
+    "followUs": "تابعنا",
+    "compliance": "خاضع لتنظيم ورقابة",
+    "allRightsReserved": "© {year} مارن. جميع الحقوق محفوظة.",
+    "termsAndConditions": "الشروط والأحكام",
+    "privacyPolicy": "سياسة الخصوصية",
+    "newsletterTitle": "ابق على اطلاع دائم بنشرتنا الإخبارية",
+    "newsletterDescription": "احصل على آخر الأخبار والتحديثات والعروض الخاصة مباشرة في بريدك الوارد.",
+    "newsletterPlaceholder": "أدخل بريدك الإلكتروني",
+    "newsletterButton": "إشترك"
+  },
+  "Theme": {
+    "toggleTheme": "Toggle theme"
+  }
+}

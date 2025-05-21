@@ -8,36 +8,50 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '@/fields/linkGroup'
+import { badge } from '@/fields/badge'
+import { mediaGroup } from '@/fields/media'
+import { logos } from '@/fields/logos'
 
 export const hero: Field = {
   name: 'hero',
   type: 'group',
+  label: false,
   fields: [
     {
       name: 'type',
       type: 'select',
-      defaultValue: 'lowImpact',
+      defaultValue: 'hero01',
       label: 'Type',
       options: [
+        {
+          label: 'Hero 01',
+          value: 'hero01',
+        },
+        {
+          label: 'Hero 02',
+          value: 'hero02',
+        },
+        {
+          label: 'Hero 03',
+          value: 'hero03',
+        },
+        {
+          label: 'Hero 04',
+          value: 'hero04',
+        },
+        {
+          label: 'Hero 05',
+          value: 'hero05',
+        },
+
         {
           label: 'None',
           value: 'none',
         },
-        {
-          label: 'High Impact',
-          value: 'highImpact',
-        },
-        {
-          label: 'Medium Impact',
-          value: 'mediumImpact',
-        },
-        {
-          label: 'Low Impact',
-          value: 'lowImpact',
-        },
       ],
       required: true,
     },
+    badge({}),
     {
       name: 'richText',
       type: 'richText',
@@ -52,21 +66,65 @@ export const hero: Field = {
         },
       }),
       label: false,
+      localized: true,
     },
     linkGroup({
       overrides: {
         maxRows: 2,
       },
+      supportingText: true,
     }),
     {
-      name: 'media',
-      type: 'upload',
+      type: 'collapsible',
+      label: 'Media',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        initCollapsed: true,
       },
-      relationTo: 'media',
-      required: true,
+      fields: [
+        mediaGroup({
+          mediaOverrides: {
+            localized: true,
+            relationTo: 'media',
+            required: false,
+          },
+          overrides: {
+            admin: {
+              hideGutter: true,
+            },
+          },
+        }),
+      ],
+    },
+
+    {
+      type: 'collapsible',
+      label: 'Logos',
+      admin: {
+        initCollapsed: true,
+      },
+      fields: [
+        {
+          name: 'logos',
+          label: false,
+          type: 'group',
+          admin: {
+            hideGutter: true,
+          },
+          fields: [
+            {
+              name: 'headline',
+              type: 'text',
+              label: 'Headline',
+              required: false,
+              localized: true,
+              admin: {
+                placeholder: 'e.g., As Featured In, Our Partners',
+              },
+            },
+            logos({}),
+          ],
+        },
+      ],
     },
   ],
-  label: false,
 }

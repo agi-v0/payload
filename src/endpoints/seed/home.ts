@@ -1,667 +1,353 @@
 import type { RequiredDataFromCollectionSlug } from 'payload'
+import type { Media } from '@/payload-types'
 
-export const home: RequiredDataFromCollectionSlug<'pages'> = {
-  slug: 'home',
-  _status: 'published',
-  hero: {
-    type: 'highImpact',
-    links: [
-      {
-        link: {
-          type: 'custom',
-          appearance: 'default',
-          label: 'All posts',
-          url: '/posts',
-        },
-      },
-      {
-        link: {
-          type: 'custom',
-          appearance: 'outline',
-          label: 'Contact',
-          url: '/contact',
-        },
-      },
-    ],
-    // @ts-ignore
-    media: '{{IMAGE_1}}',
-    richText: {
-      root: {
-        type: 'root',
-        children: [
-          {
-            type: 'heading',
-            children: [
-              {
-                type: 'text',
-                detail: 0,
-                format: 0,
-                mode: 'normal',
-                style: '',
-                text: 'Payload Website Template',
-                version: 1,
-              },
-            ],
-            direction: 'ltr',
-            format: '',
-            indent: 0,
-            tag: 'h1',
-            version: 1,
-          },
-          {
-            type: 'paragraph',
-            children: [
-              {
-                type: 'link',
-                children: [
-                  {
-                    type: 'text',
-                    detail: 0,
-                    format: 0,
-                    mode: 'normal',
-                    style: '',
-                    text: 'Visit the admin dashboard',
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                fields: {
-                  linkType: 'custom',
-                  newTab: false,
-                  url: '/admin',
-                },
-                format: '',
-                indent: 0,
-                version: 3,
-              },
-              {
-                type: 'text',
-                detail: 0,
-                format: 0,
-                mode: 'normal',
-                style: '',
-                text: " to begin managing this site's content. The code for this template is completely open-source and can be found ",
-                version: 1,
-              },
-              {
-                type: 'link',
-                children: [
-                  {
-                    type: 'text',
-                    detail: 0,
-                    format: 0,
-                    mode: 'normal',
-                    style: '',
-                    text: 'on our Github',
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                fields: {
-                  linkType: 'custom',
-                  newTab: true,
-                  url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
-                },
-                format: '',
-                indent: 0,
-                version: 3,
-              },
-              {
-                type: 'text',
-                detail: 0,
-                format: 0,
-                mode: 'normal',
-                style: '',
-                text: '. ',
-                version: 1,
-              },
-            ],
-            direction: 'ltr',
-            format: '',
-            indent: 0,
-            textFormat: 0,
-            version: 1,
-          },
-        ],
-        direction: 'ltr',
-        format: '',
-        indent: 0,
-        version: 1,
-      },
-    },
-  },
-  layout: [
-    {
-      blockName: 'Content Block',
-      blockType: 'content',
-      columns: [
-        {
-          richText: {
-            root: {
-              type: 'root',
-              children: [
-                {
-                  type: 'heading',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'Core features',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  tag: 'h2',
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              version: 1,
-            },
-          },
-          size: 'full',
-        },
-        {
-          enableLink: false,
-          richText: {
-            root: {
-              type: 'root',
-              children: [
-                {
-                  type: 'heading',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'Admin Dashboard',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  tag: 'h3',
-                  version: 1,
-                },
-                {
-                  type: 'paragraph',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: "Manage this site's pages and posts from the ",
-                      version: 1,
-                    },
-                    {
-                      type: 'link',
-                      children: [
-                        {
-                          type: 'text',
-                          detail: 0,
-                          format: 0,
-                          mode: 'normal',
-                          style: '',
-                          text: 'admin dashboard',
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      fields: {
-                        linkType: 'custom',
-                        newTab: false,
-                        url: '/admin',
-                      },
-                      format: '',
-                      indent: 0,
-                      version: 2,
-                    },
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: '.',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  textFormat: 0,
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              version: 1,
-            },
-          },
-          size: 'oneThird',
-        },
-        {
-          enableLink: false,
-          richText: {
-            root: {
-              type: 'root',
-              children: [
-                {
-                  type: 'heading',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'Preview',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  tag: 'h3',
-                  version: 1,
-                },
-                {
-                  type: 'paragraph',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'Using versions, drafts, and preview, editors can review and share their changes before publishing them.',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  textFormat: 0,
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              version: 1,
-            },
-          },
-          size: 'oneThird',
-        },
-        {
-          enableLink: false,
-          richText: {
-            root: {
-              type: 'root',
-              children: [
-                {
-                  type: 'heading',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'Page Builder',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  tag: 'h3',
-                  version: 1,
-                },
-                {
-                  type: 'paragraph',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'Custom page builder allows you to create unique page, post, and project layouts for any type of content.',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  textFormat: 0,
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              version: 1,
-            },
-          },
-          size: 'oneThird',
-        },
-        {
-          enableLink: false,
-          richText: {
-            root: {
-              type: 'root',
-              children: [
-                {
-                  type: 'heading',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'SEO',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  tag: 'h3',
-                  version: 1,
-                },
-                {
-                  type: 'paragraph',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'Editors have complete control over SEO data and site content directly from the ',
-                      version: 1,
-                    },
-                    {
-                      type: 'link',
-                      children: [
-                        {
-                          type: 'text',
-                          detail: 0,
-                          format: 0,
-                          mode: 'normal',
-                          style: '',
-                          text: 'admin dashboard',
-                          version: 1,
-                        },
-                      ],
-                      direction: 'ltr',
-                      fields: {
-                        linkType: 'custom',
-                        newTab: false,
-                        url: '/admin',
-                      },
-                      format: '',
-                      indent: 0,
-                      version: 2,
-                    },
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: '.',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  textFormat: 0,
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              version: 1,
-            },
-          },
-          size: 'oneThird',
-        },
-        {
-          enableLink: false,
-          richText: {
-            root: {
-              type: 'root',
-              children: [
-                {
-                  type: 'heading',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'Dark Mode',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  tag: 'h3',
-                  version: 1,
-                },
-                {
-                  type: 'paragraph',
-                  children: [
-                    {
-                      type: 'text',
-                      detail: 0,
-                      format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'Users will experience this site in their preferred color scheme and each block can be inverted.',
-                      version: 1,
-                    },
-                  ],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  textFormat: 0,
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              version: 1,
-            },
-          },
-          size: 'oneThird',
-        },
-      ],
-    },
-    {
-      blockName: 'Media Block',
-      blockType: 'mediaBlock',
-      // @ts-ignore
-      media: '{{IMAGE_2}}',
-    },
-    {
-      blockName: 'Archive Block',
-      blockType: 'archive',
-      categories: [],
-      introContent: {
+type HomeArgs = {
+  heroImage: Media | null
+  metaImage: Media | null
+  image169: Media | null
+  image43: Media | null
+  imageSquare: Media | null
+}
+
+export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
+  heroImage,
+  metaImage,
+  image169,
+  image43,
+  imageSquare,
+}) => {
+  return {
+    title: 'Home',
+    hero: {
+      type: 'hero01',
+      richText: {
         root: {
           type: 'root',
-          children: [
-            {
-              type: 'heading',
-              children: [
-                {
-                  type: 'text',
-                  detail: 0,
-                  format: 0,
-                  mode: 'normal',
-                  style: '',
-                  text: 'Recent posts',
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              tag: 'h3',
-              version: 1,
-            },
-            {
-              type: 'paragraph',
-              children: [
-                {
-                  type: 'text',
-                  detail: 0,
-                  format: 0,
-                  mode: 'normal',
-                  style: '',
-                  text: 'The posts below are displayed in an "Archive" layout building block which is an extremely powerful way to display documents on a page. It can be auto-populated by collection or by category, or posts can be individually selected. Pagination controls will automatically appear if the number of results exceeds the number of items per page.',
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              textFormat: 0,
-              version: 1,
-            },
-          ],
-          direction: 'ltr',
           format: '',
           indent: 0,
           version: 1,
+
+          children: [
+            {
+              tag: 'h1',
+              type: 'heading',
+              format: '',
+              indent: 0,
+              version: 1,
+
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'زهقت من فوضى الطلبات؟',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: 'rtl',
+            },
+
+            {
+              type: 'paragraph',
+              format: '',
+              indent: 0,
+              version: 1,
+
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'نظام كاشير حديث يرتب عملك بسهولة وبسعر يناسبك—مصمم للمطاعم ومحلات التجزئة في السعودية',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: 'rtl',
+              textStyle: '',
+              textFormat: 0,
+            },
+          ],
+          direction: 'rtl',
         },
       },
-      populateBy: 'collection',
-      relationTo: 'posts',
-    },
-    {
-      blockName: 'CTA',
-      blockType: 'cta',
       links: [
         {
           link: {
             type: 'custom',
-            appearance: 'default',
-            label: 'All posts',
-            url: '/posts',
+            newTab: null,
+            url: 'google.com',
+            label: 'تواصل معنا',
+            color: 'brand',
+            variant: 'primary',
           },
+          id: '6800e854462e705cdaf2a9ce',
         },
       ],
-      richText: {
-        root: {
-          type: 'root',
-          children: [
-            {
-              type: 'heading',
-              children: [
-                {
-                  type: 'text',
-                  detail: 0,
-                  format: 0,
-                  mode: 'normal',
-                  style: '',
-                  text: 'This is a call to action',
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
+      supportingText: null,
+      headline: null,
+      logos: {
+        headline: null,
+        logos: [],
+      },
+      media: {
+        light: image169?.id,
+        dark: image169?.id,
+      },
+      badge: {
+        label: null,
+        color: 'blue',
+        icon: null,
+        icon_position: null,
+      },
+    },
+
+    layout: [
+      {
+        blockType: 'features',
+        type: '02',
+        blockImage: image169?.id,
+        blockName: null,
+
+        columns: [
+          {
+            size: 'full',
+            appReference: null,
+            icon: null,
+            tabLabel: null,
+            enableBadge: false,
+            enableCta: false,
+            image: image43?.id,
+            content: {
+              title: 'استخدمه عند الكاونتر، أو كمحطة متنقلة في المحل—الكاشير يتكيف مع مشروعك',
+              copy: 'توافق الأجهزة المتعددة يتيح لك أخذ الطلبات سواء أثناء التنقل أو من على الطاولة.',
+            },
+            badge: {
+              label: null,
+              color: 'blue',
+              icon: null,
+              icon_position: 'flex-row',
+            },
+            link: {
+              type: 'custom',
+              newTab: null,
+              url: '/',
+              label: 'معرفة المزيد',
+            },
+          },
+
+          {
+            size: 'half',
+            appReference: null,
+            image: image43?.id,
+            icon: null,
+            tabLabel: null,
+            enableBadge: false,
+            enableCta: false,
+            content: {
+              title: 'الربط مع 20+ تطبيق يعزز عملياتك',
+              copy: 'ادمج نظامنا مع تطبيقات التوصيل والأنظمة الأخرى لسهولة إدارة أعمالك وشحنها بإمكانيات إضافية.',
+            },
+            badge: {
+              label: null,
+              color: 'blue',
+              icon: null,
+              icon_position: 'flex-row',
+            },
+            link: {
+              type: 'custom',
+              newTab: null,
+              url: '/',
+              label: 'معرفة المزيد',
+            },
+          },
+
+          {
+            size: 'half',
+            appReference: null,
+            image: image43?.id,
+            icon: null,
+            tabLabel: null,
+            enableBadge: null,
+            enableCta: null,
+            content: {
+              title: 'استقبال المدفوعات بطرق متعددة بسلاسة',
+              copy: 'يقبل النقد أو البطاقات، ويحافظ على سرعة المعاملات بدون توقف.',
+            },
+            badge: {
+              label: null,
+              color: 'blue',
+              icon: null,
+              icon_position: 'flex-row',
+            },
+            link: {
+              type: 'custom',
+              newTab: null,
+              url: '/',
+              label: 'معرفة المزيد',
+            },
+          },
+
+          {
+            size: 'twoThirds',
+            appReference: null,
+            image: image43?.id,
+            icon: null,
+            tabLabel: null,
+            enableBadge: null,
+            enableCta: null,
+            content: {
+              title: 'تابع مبيعاتك بدقة مع تقارير مفصلة وتحليلات',
+              copy: 'كل بيعة أو استرداد أو خصم يُسجل لحظة حدوثه، لتعرف الحصيلة اليومية بدقة—لا تخمين، فقط أرقام واضحة.',
+            },
+            badge: {
+              label: null,
+              color: 'blue',
+              icon: null,
+              icon_position: 'flex-row',
+            },
+            link: {
+              type: 'custom',
+              newTab: null,
+              url: '/',
+              label: 'معرفة المزيد',
+            },
+          },
+
+          {
+            size: 'oneThird',
+            appReference: null,
+            image: image43?.id,
+            icon: null,
+            tabLabel: null,
+            enableBadge: null,
+            enableCta: null,
+            content: {
+              title: 'تواصل ذكي مع العملاء',
+              copy: 'اجمع معلومات قيمة عن عملائك لتعزيز استراتيجيات التسويق والعروض المخصصة.',
+            },
+            badge: {
+              label: null,
+              color: 'blue',
+              icon: null,
+              icon_position: 'flex-row',
+            },
+            link: {
+              type: 'custom',
+              newTab: null,
+              url: '/',
+              label: 'معرفة المزيد',
+            },
+          },
+        ],
+
+        blockHeader: {
+          type: 'center',
+
+          badge: {
+            label: null,
+            color: 'blue',
+            icon: null,
+            icon_position: 'flex-row',
+          },
+
+          headerText: {
+            root: {
+              type: 'root',
               format: '',
               indent: 0,
-              tag: 'h3',
               version: 1,
-            },
-            {
-              type: 'paragraph',
+
               children: [
                 {
-                  type: 'text',
-                  detail: 0,
-                  format: 0,
-                  mode: 'normal',
-                  style: '',
-                  text: 'This is a custom layout building block ',
+                  tag: 'h2',
+                  type: 'heading',
+                  format: '',
+                  indent: 0,
                   version: 1,
-                },
-                {
-                  type: 'link',
+
                   children: [
                     {
+                      mode: 'normal',
+                      text: 'منظومة مصممة لتلبية احتياجاتك',
                       type: 'text',
+                      style: '',
                       detail: 0,
                       format: 0,
-                      mode: 'normal',
-                      style: '',
-                      text: 'configured in the admin dashboard',
                       version: 1,
                     },
                   ],
-                  direction: 'ltr',
-                  fields: {
-                    linkType: 'custom',
-                    newTab: false,
-                    url: '/admin',
-                  },
+                  direction: 'rtl',
+                },
+
+                {
+                  type: 'paragraph',
                   format: '',
                   indent: 0,
-                  version: 2,
-                },
-                {
-                  type: 'text',
-                  detail: 0,
-                  format: 0,
-                  mode: 'normal',
-                  style: '',
-                  text: '.',
                   version: 1,
+
+                  children: [
+                    {
+                      mode: 'normal',
+                      text: 'نظام نقاط بيع وإدارة عمليات تشغيلية مصمم ليناسب احتياجات النوعية للمطاعم والأنشطة التجارية المختلفة.',
+                      type: 'text',
+                      style: '',
+                      detail: 0,
+                      format: 0,
+                      version: 1,
+                    },
+                  ],
+                  direction: 'rtl',
+                  textStyle: '',
+                  textFormat: 0,
                 },
               ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              textFormat: 0,
-              version: 1,
+              direction: 'rtl',
+            },
+          },
+
+          links: [
+            {
+              link: {
+                type: 'custom',
+                newTab: null,
+                url: '/',
+                label: 'تواصل معنا',
+                color: 'neutral',
+                variant: 'primary',
+              },
+            },
+
+            {
+              link: {
+                type: 'custom',
+                newTab: null,
+                url: '/',
+                label: 'تعرف المزيد',
+                color: 'neutral',
+                variant: 'ghost',
+              },
             },
           ],
-          direction: 'ltr',
-          format: '',
-          indent: 0,
-          version: 1,
+        },
+        link: {
+          type: 'custom',
+          newTab: null,
+          url: '/',
+          label: '',
         },
       },
+    ],
+
+    meta: {
+      title: null,
+      image: image169?.id,
+      description: null,
     },
-  ],
-  meta: {
-    description: 'An open-source website built with Payload and Next.js.',
-    // @ts-ignore
-    image: '{{IMAGE_1}}',
-    title: 'Payload Website Template',
-  },
-  title: 'Home',
+    slug: 'home',
+    _status: 'published',
+  }
 }

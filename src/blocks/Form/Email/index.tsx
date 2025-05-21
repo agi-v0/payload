@@ -20,8 +20,9 @@ export const Email: React.FC<
 > = ({ name, defaultValue, errors, label, register, required: requiredFromProps, width }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name}>{label}</Label>
+      {/* <Label htmlFor={name}>{label}</Label> */}
       <Input
+        placeholder={label}
         defaultValue={defaultValue}
         id={name}
         type="text"

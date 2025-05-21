@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import React, { createContext, use, useCallback, useContext, useEffect, useState } from 'react'
 
 import type { Theme, ThemeContextType } from './types'
 
@@ -24,8 +24,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     if (themeToSet === null) {
       window.localStorage.removeItem(themeLocalStorageKey)
       const implicitPreference = getImplicitPreference()
-      document.documentElement.setAttribute('data-theme', implicitPreference || '')
-      if (implicitPreference) setThemeState(implicitPreference)
+      const newAppliedTheme = implicitPreference || defaultTheme
+      document.documentElement.setAttribute('data-theme', newAppliedTheme)
+      setThemeState(newAppliedTheme)
     } else {
       setThemeState(themeToSet)
       window.localStorage.setItem(themeLocalStorageKey, themeToSet)
@@ -34,6 +35,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   useEffect(() => {
+    /* set theme on client */
+    if (!canUseDOM) {
+      return
+    }
+
     let themeToSet: Theme = defaultTheme
     const preference = window.localStorage.getItem(themeLocalStorageKey)
 
@@ -49,6 +55,23 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     document.documentElement.setAttribute('data-theme', themeToSet)
     setThemeState(themeToSet)
+    /* watch system theme change */
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+
+    const handleSystemThemeChange = () => {
+      if (!window.localStorage.getItem(themeLocalStorageKey)) {
+        const newImplicitPreference = getImplicitPreference()
+        const themeToSet = newImplicitPreference || defaultTheme
+        document.documentElement.setAttribute('data-theme', themeToSet)
+        setThemeState(themeToSet)
+      }
+    }
+
+    mediaQuery.addEventListener('change', handleSystemThemeChange)
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleSystemThemeChange)
+    }
   }, [])
 
   return <ThemeContext.Provider value={{ setTheme, theme }}>{children}</ThemeContext.Provider>

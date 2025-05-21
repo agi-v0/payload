@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Disallow: /admin/*
+
+# Host
+Host: https://marn-web.vercel.app/
+
+# Sitemaps
+Sitemap: https://marn-web.vercel.app/sitemap.xml
+Sitemap: https://marn-web.vercel.app//pages-sitemap.xml
+Sitemap: https://marn-web.vercel.app//posts-sitemap.xml

@@ -1,0 +1,90 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Payload CMS Seeding Guidelines
+
+This document outlines best practices for creating and maintaining seed functions for Payload CMS, particularly within this project.
+
+Refer to the main seed implementation: [src/endpoints/seed/index.ts](mdc:src/endpoints/seed/index.ts)
+
+## Key Principles
+
+1.  **Sequential Creation for Dependencies:** When creating documents that depend on each other (e.g., posts depending on media and authors, pages depending on forms), create them sequentially using `for...of` loops or individual `await` calls rather than `Promise.all`. This ensures dependencies exist before they are referenced.
+2.  **Parallelization for Independent Operations:** Operations that are independent can be parallelized using `Promise.all` for efficiency. This is suitable for:
+    *   Initial clearing of collections and globals.
+    *   Fetching external resources (like images) if they don't depend on each other.
+3.  **Clear Logging:** Add informative logs (`payload.logger.info`, `payload.logger.error`) before and after major steps (clearing, seeding specific collections, fetching data) and within loops to track progress and diagnose issues.
+4.  **Data Structuring:**
+    *   Define seed data structures or functions in separate files (e.g., `./home.ts`, `./post-1.ts`) and import them into the main seed file.
+    *   For sequential creation within loops, structure the data needed for each creation into an array of objects.
+5.  **Dependency Management:**
+    *   When creating items sequentially, store the results (e.g., created document IDs or the full documents) in variables or maps.
+    *   Use these stored results to link related documents (e.g., assigning an author to a post, linking related posts, assigning categories to media).
+6.  **Error Handling:** While the example focuses on logging, consider adding `try...catch` blocks for critical operations, especially external fetches (`fetchFileByURL`).
+7.  **Type Safety:**
+    *   Use Payload's generated types (from `src/payload-types.ts`) for data structures and function arguments. **Regularly consult `payload-types.ts` and the original field configuration files (e.g., in `src/blocks/YourBlock/config.ts` or `src/components/YourComponent/config.ts`) to understand the exact expected data structure, especially for complex or polymorphic fields.**
+    *   Use type casting (`as Type`) for the results of `payload.create`, `payload.update`, etc., where TypeScript might not automatically infer the correct specific type (e.g., `await payload.create(...) as Post`).
+    *   For complex data structures like Globals (Header, Footer), defining the data object directly might lead to type errors. Consider using `data: yourData as any` during the `payload.updateGlobal` call as a pragmatic workaround if precisely matching the complex generated type proves difficult, but ensure the structure is fundamentally correct. **Strive to match types accurately to avoid runtime errors and leverage TypeScript's benefits.**
+8.  **Handling Complex Field Types:**
+    *   **Rich Text (Lexical):** Programmatically creating Lexical content requires a specific JSON structure. Simple strings are insufficient for formatted text (headings, paragraphs, lists). Develop helper functions to generate this JSON structure reliably (e.g., accepting an array of text elements with types and content). Remember to include `direction: 'rtl'` in the root of the Lexical JSON for right-to-left languages.
+    *   **Polymorphic/Conditional Fields:** Blocks (like `Features`) or fields (like a `hero` field on a Page) can have multiple variants or types, each with a different data structure. Ensure your seed data precisely matches the structure expected for the *specific variant/type* being created, often identified by a `blockType` or `type` discriminator field.
+    *   **Link Objects:** Link fields can often support internal references (to other documents within Payload) or custom URLs. The data structure for each will differ (e.g., an internal link might require `type: 'reference'`, `doc`, `relationTo`, while a custom URL might need `type: 'custom'`, `url`).
+    *   **Icon Fields:** Fields that use an icon picker (e.g., selecting from Lucide icons) typically store the icon's string identifier (e.g., `'Smile'`, `'Users'`). Ensure you provide valid identifiers from the configured icon set.
+9.  **Localization:**
+    *   When seeding content for specific locales, ensure you set the `locale` property on the document being created (if the collection is localized).
+    *   Update slugs, URLs, and any locale-specific text content accordingly.
+    *   For Rich Text in right-to-left languages (e.g., Arabic), set `direction: 'rtl'` in the root of the Lexical JSON.
+10. **Revalidation:** Be mindful of Next.js revalidation (`context: { disableRevalidate: true }`) when seeding, especially if running the seed script outside a running Next.js application context.
+11. **Iterative Development & Linter Feedback:**
+    *   Seed script development is often iterative. Use linter feedback actively to catch type errors and structural issues early.
+    *   Test your seed scripts thoroughly to ensure they produce the expected data in the CMS.
+
+## Example Pattern (Simplified)
+
+```typescript
+export const seed = async ({ payload, req }: { payload: Payload; req: PayloadRequest }) => {
+  payload.logger.info('Seeding database...')
+
+  // 1. Clear data (can be parallel)
+  payload.logger.info('— Clearing collections and globals...')
+  // ... clear operations using Promise.all
+
+  // 2. Seed independent data or prerequisites (can be parallel or sequential)
+  payload.logger.info('— Seeding users...')
+  const user = await payload.create({ /* ... */ }) as User
+  payload.logger.info('— Seeding media categories...')
+  const category = await payload.create({ /* ... */ }) as MediaCategory
+
+  // 3. Fetch external resources (can be parallel)
+  payload.logger.info('— Fetching media files...')
+  const files = await Promise.all([fetchFileByURL(payload, url1), /* ... */])
+
+  // 4. Seed media sequentially (depends on fetched files)
+  payload.logger.info('— Seeding media...')
+  const mediaDocs = {}
+  for (const file of files) {
+    const doc = await payload.create({ collection: 'media', /* ... */ file }) as Media
+    // Store doc if needed
+  }
+
+  // 5. Seed dependent data sequentially
+  payload.logger.info('— Seeding posts...')
+  const postsData = [{ /* ... */ }, { /* ... */ }]
+  for (const postData of postsData) {
+     // Use previously created user, media etc.
+    const post = await payload.create({ collection: 'posts', data: { ...postData, author: user.id } }) as Post
+    // Store post if needed for relations
+  }
+
+  // ... Seed other collections sequentially ...
+
+  // 6. Seed Globals
+  payload.logger.info('— Seeding globals...')
+  const headerData = { /* ... */ }
+  await payload.updateGlobal({ slug: 'header', data: headerData /* consider `as any` */ })
+
+  payload.logger.info('Seeded database successfully!')
+}
+```
