@@ -16,35 +16,39 @@ export const Hero01: React.FC<Page['hero']> = ({
   links,
   supportingText,
   logos,
-  logosHeadline,
+  headline,
   badge,
 }) => {
-  const { setHeaderTheme } = useHeaderTheme()
+  // const { setHeaderTheme } = useHeaderTheme()
 
-  useEffect(() => {
-    setHeaderTheme('light')
-  }, [setHeaderTheme])
+  // useEffect(() => {
+  //   setHeaderTheme('light')
+  // }, [setHeaderTheme])
 
   return (
-    <section className="pb-xl gap-lg container flex flex-col pt-[20vh]">
-      <div className="gap-md flex flex-col items-center justify-center text-center">
-        <div className="gap-sm flex max-w-3xl flex-col items-center">
-          {badge?.label && <Badge {...badge} />}
+    <section className="pb-site container h-screen pt-(--header-plus-admin-bar-height)">
+      <div className="relative z-0 h-full w-full">
+        <div
+          data-theme="dark"
+          className="p-xl absolute bottom-0 z-1 flex w-full flex-row items-center justify-between"
+        >
+          <div className="gap-md flex h-full max-w-[36rem] flex-col items-start justify-center">
+            {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
-          {richText && (
-            <RichText
-              className={cn(
-                'prose flex w-full flex-col items-center text-center',
-                '[&>p]:text-body-lg',
-              )}
-              data={richText}
-              enableGutter={false}
-            />
-          )}
-
-          <div className="flex flex-col items-center gap-4">
+            {richText && (
+              <RichText
+                className={cn(
+                  'flex w-full flex-col items-start text-start font-medium',
+                  '[&>h3,h4,p]:text-base-tertiary [&>h3,h4,p]:mt-space-xs [&>h3,h4,p]:leading-normal [&>p]:text-(length:--text-body-lg) [&>p]:font-medium',
+                )}
+                data={richText}
+                enableGutter={false}
+              />
+            )}
+          </div>
+          <div className="flex flex-col items-start gap-4">
             {Array.isArray(links) && links.length > 0 && (
-              <ul className="flex flex-col gap-1 md:flex-row md:items-center md:justify-center">
+              <ul className="flex flex-row items-center justify-start gap-1">
                 {links.map(({ link }, i) => {
                   return (
                     <li key={i}>
@@ -54,40 +58,20 @@ export const Hero01: React.FC<Page['hero']> = ({
                 })}
               </ul>
             )}
-            {supportingText && <p className="text-body-sm text-base-tertiary">{supportingText}</p>}
+            {supportingText && <p className="text-base-tertiary text-sm">{supportingText}</p>}
           </div>
         </div>
-      </div>
-      {Array.isArray(logos?.['logos-images']) && logos['logos-images'].length > 0 && (
-        <div className="gap-space-md md:gap-space-lg flex w-full flex-col items-center">
-          {logosHeadline && <p className="text-body-md text-base-secondary">{logosHeadline}</p>}
-          <ul className="gap-x-space-lg gap-y-space-md flex w-full flex-wrap items-center justify-center md:justify-between">
-            {logos['logos-images'].map(({ logo }, i) => {
-              return (
-                <li key={i} className="flex items-center justify-center">
-                  {logo && typeof logo === 'object' && (
-                    <Media
-                      imgClassName="h-size-sm max-w-[144px] object-contain"
-                      priority
-                      resource={logo}
-                    />
-                  )}
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-      )}
 
-      {media && typeof media === 'object' && (
-        <Media
-          className="relative aspect-[16/9] h-auto w-full overflow-hidden rounded-3xl select-none"
-          imgClassName="object-cover"
-          priority
-          resource={media}
-          fill
-        />
-      )}
+        {media && typeof media === 'object' && (
+          <Media
+            fill
+            imgClassName="rounded-space-sm object-cover"
+            className="relative h-full w-full select-none"
+            priority
+            light={media.light ?? undefined}
+          />
+        )}
+      </div>
     </section>
   )
 }

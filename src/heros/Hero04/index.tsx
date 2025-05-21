@@ -16,69 +16,84 @@ export const Hero04: React.FC<Page['hero']> = ({
   links,
   supportingText,
   logos,
-  logosHeadline,
+  headline,
   badge,
 }) => {
-  const { setHeaderTheme } = useHeaderTheme()
+  // const { setHeaderTheme } = useHeaderTheme()
 
-  useEffect(() => {
-    setHeaderTheme('light')
-  }, [setHeaderTheme])
+  // useEffect(() => {
+  //   setHeaderTheme('light')
+  // }, [setHeaderTheme])
 
   return (
-    <section className="py-xl gap-xs container flex h-fit min-h-screen flex-col md:flex-row md:items-center">
-      <div className="gap-md md:pe-lg flex basis-1/2 flex-col items-start justify-start text-start">
-        <div className="gap-sm flex max-w-3xl flex-col items-start">
-          {badge?.label && <Badge {...badge} />}
+    <section
+      className={cn(
+        'pb-xl gap-xs container flex flex-col items-center pt-(--header-plus-admin-bar-height)',
+        media?.light && 'min-h-screen',
+      )}
+    >
+      <div className="gap flex w-full flex-col items-center lg:flex-row">
+        <div className="lg:pe-xl w-full">
+          <div className="gap-md flex max-w-[36rem] flex-col items-start">
+            {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
-          {richText && (
-            <RichText className={cn('[&>p]:text-body-lg')} data={richText} enableGutter={false} />
-          )}
-
-          <div className="flex flex-col items-start gap-4">
-            {Array.isArray(links) && links.length > 0 && (
-              <ul className="flex flex-col gap-1 md:flex-row md:items-start md:justify-start">
-                {links.map(({ link }, i) => {
-                  return (
-                    <li key={i}>
-                      <CMSLink className="w-full md:w-auto" size={'lg'} {...link} />
-                    </li>
-                  )
-                })}
-              </ul>
+            {richText && (
+              <RichText
+                className={cn(
+                  'flex w-full flex-col items-start text-start font-medium',
+                  '[&>h3,h4,p]:text-base-tertiary [&>h3,h4,p]:mt-space-xs [&>h3,h4,p]:leading-normal [&>p]:text-(length:--text-body-lg) [&>p]:font-medium',
+                )}
+                data={richText}
+                enableGutter={false}
+              />
             )}
-            {supportingText && <p className="text-body-sm text-base-tertiary">{supportingText}</p>}
+
+            <div className="flex flex-col items-start gap-4">
+              {Array.isArray(links) && links.length > 0 && (
+                <ul className="flex flex-row items-center justify-start gap-1">
+                  {links.map(({ link }, i) => {
+                    return (
+                      <li key={i}>
+                        <CMSLink className="w-full md:w-auto" size={'lg'} {...link} />
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
+              {supportingText && <p className="text-base-tertiary text-sm">{supportingText}</p>}
+            </div>
           </div>
         </div>
-        {Array.isArray(logos?.['logos-images']) && logos['logos-images'].length > 0 && (
-          <div className="gap-space-md md:gap-space-lg flex w-full flex-col items-center">
-            {logosHeadline && <p className="text-body-md text-base-secondary">{logosHeadline}</p>}
-            <ul className="gap-x-space-lg gap-y-space-md flex w-full flex-wrap items-center justify-center md:justify-between">
-              {logos['logos-images'].map(({ logo }, i) => {
-                return (
-                  <li key={i} className="flex items-center justify-center">
-                    {logo && typeof logo === 'object' && (
-                      <Media
-                        imgClassName="h-size-sm max-w-[144px] object-contain"
-                        priority
-                        resource={logo}
-                      />
-                    )}
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
+
+        {media && typeof media?.light === 'object' && (
+          <Media
+            className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
+            imgClassName="object-cover"
+            priority
+            light={media.light ?? undefined}
+            // fill
+          />
         )}
       </div>
-      {media && typeof media === 'object' && (
-        <Media
-          className="relative aspect-square h-auto w-full basis-1/2 overflow-hidden rounded-3xl select-none"
-          imgClassName="object-cover"
-          priority
-          resource={media}
-          fill
-        />
+      {Array.isArray(logos?.['logos-images']) && logos['logos-images'].length > 0 && (
+        <div className="gap-space-md md:gap-space-lg flex w-full flex-col items-center">
+          {headline && <p className="text-body-md text-base-secondary">{headline}</p>}
+          <ul className="gap-x-space-lg gap-y-space-md flex w-full flex-wrap items-center justify-center md:justify-between">
+            {logos['logos-images'].map(({ logo }, i) => {
+              return (
+                <li key={i} className="flex items-center justify-center">
+                  {logo && typeof logo === 'object' && (
+                    <Media
+                      imgClassName="h-size-sm max-w-[144px] object-contain"
+                      priority
+                      resource={logo}
+                    />
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
       )}
     </section>
   )
