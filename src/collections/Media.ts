@@ -28,6 +28,14 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
+      name: 'prefix',
+      type: 'text',
+      admin: {
+        readOnly: true,
+        hidden: true,
+      },
+    },
+    {
       name: 'alt',
       type: 'text',
       required: true,
