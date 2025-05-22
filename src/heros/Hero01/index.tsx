@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
@@ -20,6 +20,7 @@ export const Hero01: React.FC<Page['hero']> = ({
   badge,
 }) => {
   const { logos: logosGroup, headline } = logos || {}
+  const { desktop, mobile } = media || {}
 
   // const { setHeaderTheme } = useHeaderTheme()
 
@@ -99,8 +100,8 @@ export const Hero01: React.FC<Page['hero']> = ({
             imgClassName="rounded-space-sm object-cover"
             className="relative h-full w-full select-none"
             priority
-            light={media.light ?? undefined}
-            dark={media.dark ?? undefined}
+            desktop={{ light: desktop?.light ?? undefined, dark: desktop?.dark ?? undefined }}
+            mobile={{ light: mobile?.light ?? undefined, dark: mobile?.dark ?? undefined }}
           />
         )}
       </div>

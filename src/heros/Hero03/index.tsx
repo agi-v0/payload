@@ -88,8 +88,8 @@ export const Hero03: React.FC<Page['hero']> = ({
           className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
           imgClassName="object-cover"
           priority
-          light={media.light ?? undefined}
-          dark={media.dark ?? undefined}
+          light={media?.desktop?.light ?? undefined}
+          dark={media?.desktop?.dark ?? undefined}
           // fill
         />
       )}

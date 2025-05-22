@@ -371,8 +371,14 @@ export const seedFeaturesShowcasePage = (media: {
       },
     ]),
     media: {
-      light: media.image169?.id,
-      dark: media.image169?.id,
+      desktop: {
+        light: media.image169?.id,
+        dark: media.image169?.id,
+      },
+      mobile: {
+        light: null,
+        dark: null,
+      },
     },
     links: [
       {

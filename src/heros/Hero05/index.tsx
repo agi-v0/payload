@@ -31,7 +31,7 @@ export const Hero05: React.FC<Page['hero']> = ({
     <section
       className={cn(
         'pb-xl gap-xs container flex flex-col items-center pt-(--header-plus-admin-bar-height)',
-        media?.light && 'min-h-screen',
+        media?.desktop?.light && 'min-h-screen',
       )}
     >
       <div className="gap-xs flex w-full flex-col items-center lg:flex-row lg:items-stretch">
@@ -67,13 +67,13 @@ export const Hero05: React.FC<Page['hero']> = ({
           </div>
         </div>
 
-        {media && typeof media?.light === 'object' && (
+        {media && typeof media?.desktop?.light === 'object' && (
           <Media
             className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
             imgClassName="object-cover"
             priority
-            light={media.light ?? undefined}
-            dark={media.dark ?? undefined}
+            light={media?.desktop?.light ?? undefined}
+            dark={media?.desktop?.dark ?? undefined}
             // fill
           />
         )}

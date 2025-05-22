@@ -599,8 +599,17 @@ export interface Page {
       | null;
     supportingText?: string | null;
     media?: {
-      light?: (number | null) | Media;
-      dark?: (number | null) | Media;
+      desktop?: {
+        light?: (number | null) | Media;
+        dark?: (number | null) | Media;
+      };
+      /**
+       * Optional
+       */
+      mobile?: {
+        light?: (number | null) | Media;
+        dark?: (number | null) | Media;
+      };
     };
     logos?: {
       headline?: string | null;
@@ -790,8 +799,17 @@ export interface Integration {
       | null;
     supportingText?: string | null;
     media?: {
-      light?: (number | null) | Media;
-      dark?: (number | null) | Media;
+      desktop?: {
+        light?: (number | null) | Media;
+        dark?: (number | null) | Media;
+      };
+      /**
+       * Optional
+       */
+      mobile?: {
+        light?: (number | null) | Media;
+        dark?: (number | null) | Media;
+      };
     };
     logos?: {
       headline?: string | null;
@@ -2240,8 +2258,18 @@ export interface PagesSelect<T extends boolean = true> {
         media?:
           | T
           | {
-              light?: T;
-              dark?: T;
+              desktop?:
+                | T
+                | {
+                    light?: T;
+                    dark?: T;
+                  };
+              mobile?:
+                | T
+                | {
+                    light?: T;
+                    dark?: T;
+                  };
             };
         logos?:
           | T
@@ -2392,8 +2420,18 @@ export interface IntegrationsSelect<T extends boolean = true> {
         media?:
           | T
           | {
-              light?: T;
-              dark?: T;
+              desktop?:
+                | T
+                | {
+                    light?: T;
+                    dark?: T;
+                  };
+              mobile?:
+                | T
+                | {
+                    light?: T;
+                    dark?: T;
+                  };
             };
         logos?:
           | T

@@ -81,18 +81,45 @@ export const hero: Field = {
         initCollapsed: true,
       },
       fields: [
-        mediaGroup({
-          mediaOverrides: {
-            localized: true,
-            relationTo: 'media',
-            required: false,
+        {
+          name: 'media',
+          type: 'group',
+          label: false,
+          admin: {
+            hideGutter: true,
           },
-          overrides: {
-            admin: {
-              hideGutter: true,
-            },
-          },
-        }),
+          fields: [
+            mediaGroup({
+              mediaOverrides: {
+                localized: true,
+                relationTo: 'media',
+                required: false,
+              },
+              overrides: {
+                admin: {
+                  hideGutter: true,
+                },
+                name: 'desktop',
+                label: 'Default (Desktop)',
+              },
+            }),
+            mediaGroup({
+              mediaOverrides: {
+                localized: true,
+                relationTo: 'media',
+                required: false,
+              },
+              overrides: {
+                admin: {
+                  hideGutter: true,
+                  description: 'Optional',
+                },
+                name: 'mobile',
+                label: 'Mobile (Optional)',
+              },
+            }),
+          ],
+        },
       ],
     },
 

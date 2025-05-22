@@ -52,7 +52,14 @@ export const enum_callToActionBlock_badge_type = pgEnum('enum_callToActionBlock_
   'label',
   'reference',
 ])
-export const badge_color = pgEnum('badge_color', ['blue', 'red', 'green', 'yellow'])
+export const badge_color = pgEnum('badge_color', [
+  'blue',
+  'red',
+  'green',
+  'yellow',
+  'gray',
+  'inverted',
+])
 export const badge_icon_position = pgEnum('badge_icon_position', ['flex-row', 'flex-row-reverse'])
 export const enum_customHtmlBlock_block_header_type = pgEnum(
   'enum_customHtmlBlock_block_header_type',
@@ -1451,13 +1458,19 @@ export const pages_locales = pgTable(
   {
     hero_badge_label: varchar('hero_badge_label'),
     hero_richText: jsonb('hero_rich_text'),
-    hero_media_light: integer('hero_media_light_id').references(() => media.id, {
+    hero_media_desktop_light: integer('hero_media_desktop_light_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    hero_media_dark: integer('hero_media_dark_id').references(() => media.id, {
+    hero_media_desktop_dark: integer('hero_media_desktop_dark_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    hero_headline: varchar('hero_headline'),
+    hero_media_mobile_light: integer('hero_media_mobile_light_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    hero_media_mobile_dark: integer('hero_media_mobile_dark_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    hero_logos_headline: varchar('hero_logos_headline'),
     meta_title: varchar('meta_title'),
     meta_image: integer('meta_image_id').references(() => media.id, {
       onDelete: 'set null',
@@ -1468,14 +1481,18 @@ export const pages_locales = pgTable(
     _parentID: integer('_parent_id').notNull(),
   },
   (columns) => ({
-    pages_hero_media_hero_media_light_idx: index('pages_hero_media_hero_media_light_idx').on(
-      columns.hero_media_light,
-      columns._locale,
-    ),
-    pages_hero_media_hero_media_dark_idx: index('pages_hero_media_hero_media_dark_idx').on(
-      columns.hero_media_dark,
-      columns._locale,
-    ),
+    pages_hero_media_desktop_hero_media_desktop_light_idx: index(
+      'pages_hero_media_desktop_hero_media_desktop_light_idx',
+    ).on(columns.hero_media_desktop_light, columns._locale),
+    pages_hero_media_desktop_hero_media_desktop_dark_idx: index(
+      'pages_hero_media_desktop_hero_media_desktop_dark_idx',
+    ).on(columns.hero_media_desktop_dark, columns._locale),
+    pages_hero_media_mobile_hero_media_mobile_light_idx: index(
+      'pages_hero_media_mobile_hero_media_mobile_light_idx',
+    ).on(columns.hero_media_mobile_light, columns._locale),
+    pages_hero_media_mobile_hero_media_mobile_dark_idx: index(
+      'pages_hero_media_mobile_hero_media_mobile_dark_idx',
+    ).on(columns.hero_media_mobile_dark, columns._locale),
     pages_meta_meta_image_idx: index('pages_meta_meta_image_idx').on(columns.meta_image),
     _localeParent: uniqueIndex('pages_locales_locale_parent_id_unique').on(
       columns._locale,
@@ -2681,13 +2698,31 @@ export const _pages_v_locales = pgTable(
   {
     version_hero_badge_label: varchar('version_hero_badge_label'),
     version_hero_richText: jsonb('version_hero_rich_text'),
-    version_hero_media_light: integer('version_hero_media_light_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    version_hero_media_dark: integer('version_hero_media_dark_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    version_hero_headline: varchar('version_hero_headline'),
+    version_hero_media_desktop_light: integer('version_hero_media_desktop_light_id').references(
+      () => media.id,
+      {
+        onDelete: 'set null',
+      },
+    ),
+    version_hero_media_desktop_dark: integer('version_hero_media_desktop_dark_id').references(
+      () => media.id,
+      {
+        onDelete: 'set null',
+      },
+    ),
+    version_hero_media_mobile_light: integer('version_hero_media_mobile_light_id').references(
+      () => media.id,
+      {
+        onDelete: 'set null',
+      },
+    ),
+    version_hero_media_mobile_dark: integer('version_hero_media_mobile_dark_id').references(
+      () => media.id,
+      {
+        onDelete: 'set null',
+      },
+    ),
+    version_hero_logos_headline: varchar('version_hero_logos_headline'),
     version_meta_title: varchar('version_meta_title'),
     version_meta_image: integer('version_meta_image_id').references(() => media.id, {
       onDelete: 'set null',
@@ -2698,12 +2733,18 @@ export const _pages_v_locales = pgTable(
     _parentID: integer('_parent_id').notNull(),
   },
   (columns) => ({
-    _pages_v_version_hero_media_version_hero_media_light_idx: index(
-      '_pages_v_version_hero_media_version_hero_media_light_idx',
-    ).on(columns.version_hero_media_light, columns._locale),
-    _pages_v_version_hero_media_version_hero_media_dark_idx: index(
-      '_pages_v_version_hero_media_version_hero_media_dark_idx',
-    ).on(columns.version_hero_media_dark, columns._locale),
+    _pages_v_version_hero_media_desktop_version_hero_media_desktop_light_idx: index(
+      '_pages_v_version_hero_media_desktop_version_hero_media_desktop_light_idx',
+    ).on(columns.version_hero_media_desktop_light, columns._locale),
+    _pages_v_version_hero_media_desktop_version_hero_media_desktop_dark_idx: index(
+      '_pages_v_version_hero_media_desktop_version_hero_media_desktop_dark_idx',
+    ).on(columns.version_hero_media_desktop_dark, columns._locale),
+    _pages_v_version_hero_media_mobile_version_hero_media_mobile_light_idx: index(
+      '_pages_v_version_hero_media_mobile_version_hero_media_mobile_light_idx',
+    ).on(columns.version_hero_media_mobile_light, columns._locale),
+    _pages_v_version_hero_media_mobile_version_hero_media_mobile_dark_idx: index(
+      '_pages_v_version_hero_media_mobile_version_hero_media_mobile_dark_idx',
+    ).on(columns.version_hero_media_mobile_dark, columns._locale),
     _pages_v_version_meta_version_meta_image_idx: index(
       '_pages_v_version_meta_version_meta_image_idx',
     ).on(columns.version_meta_image),
@@ -3544,13 +3585,19 @@ export const integrations_locales = pgTable(
     docsLink_label: varchar('docs_link_label'),
     hero_badge_label: varchar('hero_badge_label'),
     hero_richText: jsonb('hero_rich_text'),
-    hero_media_light: integer('hero_media_light_id').references(() => media.id, {
+    hero_media_desktop_light: integer('hero_media_desktop_light_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    hero_media_dark: integer('hero_media_dark_id').references(() => media.id, {
+    hero_media_desktop_dark: integer('hero_media_desktop_dark_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    hero_headline: varchar('hero_headline'),
+    hero_media_mobile_light: integer('hero_media_mobile_light_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    hero_media_mobile_dark: integer('hero_media_mobile_dark_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    hero_logos_headline: varchar('hero_logos_headline'),
     content: jsonb('content'),
     meta_title: varchar('meta_title'),
     meta_image: integer('meta_image_id').references(() => media.id, {
@@ -3562,12 +3609,18 @@ export const integrations_locales = pgTable(
     _parentID: integer('_parent_id').notNull(),
   },
   (columns) => ({
-    integrations_hero_media_hero_media_light_idx: index(
-      'integrations_hero_media_hero_media_light_idx',
-    ).on(columns.hero_media_light, columns._locale),
-    integrations_hero_media_hero_media_dark_idx: index(
-      'integrations_hero_media_hero_media_dark_idx',
-    ).on(columns.hero_media_dark, columns._locale),
+    integrations_hero_media_desktop_hero_media_desktop_light_idx: index(
+      'integrations_hero_media_desktop_hero_media_desktop_light_idx',
+    ).on(columns.hero_media_desktop_light, columns._locale),
+    integrations_hero_media_desktop_hero_media_desktop_dark_idx: index(
+      'integrations_hero_media_desktop_hero_media_desktop_dark_idx',
+    ).on(columns.hero_media_desktop_dark, columns._locale),
+    integrations_hero_media_mobile_hero_media_mobile_light_idx: index(
+      'integrations_hero_media_mobile_hero_media_mobile_light_idx',
+    ).on(columns.hero_media_mobile_light, columns._locale),
+    integrations_hero_media_mobile_hero_media_mobile_dark_idx: index(
+      'integrations_hero_media_mobile_hero_media_mobile_dark_idx',
+    ).on(columns.hero_media_mobile_dark, columns._locale),
     integrations_meta_meta_image_idx: index('integrations_meta_meta_image_idx').on(
       columns.meta_image,
     ),
@@ -3901,13 +3954,31 @@ export const _integrations_v_locales = pgTable(
     version_docsLink_label: varchar('version_docs_link_label'),
     version_hero_badge_label: varchar('version_hero_badge_label'),
     version_hero_richText: jsonb('version_hero_rich_text'),
-    version_hero_media_light: integer('version_hero_media_light_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    version_hero_media_dark: integer('version_hero_media_dark_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
-    version_hero_headline: varchar('version_hero_headline'),
+    version_hero_media_desktop_light: integer('version_hero_media_desktop_light_id').references(
+      () => media.id,
+      {
+        onDelete: 'set null',
+      },
+    ),
+    version_hero_media_desktop_dark: integer('version_hero_media_desktop_dark_id').references(
+      () => media.id,
+      {
+        onDelete: 'set null',
+      },
+    ),
+    version_hero_media_mobile_light: integer('version_hero_media_mobile_light_id').references(
+      () => media.id,
+      {
+        onDelete: 'set null',
+      },
+    ),
+    version_hero_media_mobile_dark: integer('version_hero_media_mobile_dark_id').references(
+      () => media.id,
+      {
+        onDelete: 'set null',
+      },
+    ),
+    version_hero_logos_headline: varchar('version_hero_logos_headline'),
     version_content: jsonb('version_content'),
     version_meta_title: varchar('version_meta_title'),
     version_meta_image: integer('version_meta_image_id').references(() => media.id, {
@@ -3919,12 +3990,18 @@ export const _integrations_v_locales = pgTable(
     _parentID: integer('_parent_id').notNull(),
   },
   (columns) => ({
-    _integrations_v_version_hero_media_version_hero_media_light_idx: index(
-      '_integrations_v_version_hero_media_version_hero_media_light_idx',
-    ).on(columns.version_hero_media_light, columns._locale),
-    _integrations_v_version_hero_media_version_hero_media_dark_idx: index(
-      '_integrations_v_version_hero_media_version_hero_media_dark_idx',
-    ).on(columns.version_hero_media_dark, columns._locale),
+    _integrations_v_version_hero_media_desktop_version_hero_media_desktop_light_idx: index(
+      '_integrations_v_version_hero_media_desktop_version_hero_media_desktop_light_idx',
+    ).on(columns.version_hero_media_desktop_light, columns._locale),
+    _integrations_v_version_hero_media_desktop_version_hero_media_desktop_dark_idx: index(
+      '_integrations_v_version_hero_media_desktop_version_hero_media_desktop_dark_idx',
+    ).on(columns.version_hero_media_desktop_dark, columns._locale),
+    _integrations_v_version_hero_media_mobile_version_hero_media_mobile_light_idx: index(
+      '_integrations_v_version_hero_media_mobile_version_hero_media_mobile_light_idx',
+    ).on(columns.version_hero_media_mobile_light, columns._locale),
+    _integrations_v_version_hero_media_mobile_version_hero_media_mobile_dark_idx: index(
+      '_integrations_v_version_hero_media_mobile_version_hero_media_mobile_dark_idx',
+    ).on(columns.version_hero_media_mobile_dark, columns._locale),
     _integrations_v_version_meta_version_meta_image_idx: index(
       '_integrations_v_version_meta_version_meta_image_idx',
     ).on(columns.version_meta_image),
@@ -4029,6 +4106,7 @@ export const media = pgTable(
     caption: jsonb('caption'),
     locale: enum_media_locale('locale'),
     blurhash: varchar('blurhash'),
+    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -7198,15 +7276,25 @@ export const relations_pages_locales = relations(pages_locales, ({ one }) => ({
     references: [pages.id],
     relationName: '_locales',
   }),
-  hero_media_light: one(media, {
-    fields: [pages_locales.hero_media_light],
+  hero_media_desktop_light: one(media, {
+    fields: [pages_locales.hero_media_desktop_light],
     references: [media.id],
-    relationName: 'hero_media_light',
+    relationName: 'hero_media_desktop_light',
   }),
-  hero_media_dark: one(media, {
-    fields: [pages_locales.hero_media_dark],
+  hero_media_desktop_dark: one(media, {
+    fields: [pages_locales.hero_media_desktop_dark],
     references: [media.id],
-    relationName: 'hero_media_dark',
+    relationName: 'hero_media_desktop_dark',
+  }),
+  hero_media_mobile_light: one(media, {
+    fields: [pages_locales.hero_media_mobile_light],
+    references: [media.id],
+    relationName: 'hero_media_mobile_light',
+  }),
+  hero_media_mobile_dark: one(media, {
+    fields: [pages_locales.hero_media_mobile_dark],
+    references: [media.id],
+    relationName: 'hero_media_mobile_dark',
   }),
   meta_image: one(media, {
     fields: [pages_locales.meta_image],
@@ -7822,15 +7910,25 @@ export const relations__pages_v_locales = relations(_pages_v_locales, ({ one }) 
     references: [_pages_v.id],
     relationName: '_locales',
   }),
-  version_hero_media_light: one(media, {
-    fields: [_pages_v_locales.version_hero_media_light],
+  version_hero_media_desktop_light: one(media, {
+    fields: [_pages_v_locales.version_hero_media_desktop_light],
     references: [media.id],
-    relationName: 'version_hero_media_light',
+    relationName: 'version_hero_media_desktop_light',
   }),
-  version_hero_media_dark: one(media, {
-    fields: [_pages_v_locales.version_hero_media_dark],
+  version_hero_media_desktop_dark: one(media, {
+    fields: [_pages_v_locales.version_hero_media_desktop_dark],
     references: [media.id],
-    relationName: 'version_hero_media_dark',
+    relationName: 'version_hero_media_desktop_dark',
+  }),
+  version_hero_media_mobile_light: one(media, {
+    fields: [_pages_v_locales.version_hero_media_mobile_light],
+    references: [media.id],
+    relationName: 'version_hero_media_mobile_light',
+  }),
+  version_hero_media_mobile_dark: one(media, {
+    fields: [_pages_v_locales.version_hero_media_mobile_dark],
+    references: [media.id],
+    relationName: 'version_hero_media_mobile_dark',
   }),
   version_meta_image: one(media, {
     fields: [_pages_v_locales.version_meta_image],
@@ -8230,15 +8328,25 @@ export const relations_integrations_locales = relations(integrations_locales, ({
     references: [integrations.id],
     relationName: '_locales',
   }),
-  hero_media_light: one(media, {
-    fields: [integrations_locales.hero_media_light],
+  hero_media_desktop_light: one(media, {
+    fields: [integrations_locales.hero_media_desktop_light],
     references: [media.id],
-    relationName: 'hero_media_light',
+    relationName: 'hero_media_desktop_light',
   }),
-  hero_media_dark: one(media, {
-    fields: [integrations_locales.hero_media_dark],
+  hero_media_desktop_dark: one(media, {
+    fields: [integrations_locales.hero_media_desktop_dark],
     references: [media.id],
-    relationName: 'hero_media_dark',
+    relationName: 'hero_media_desktop_dark',
+  }),
+  hero_media_mobile_light: one(media, {
+    fields: [integrations_locales.hero_media_mobile_light],
+    references: [media.id],
+    relationName: 'hero_media_mobile_light',
+  }),
+  hero_media_mobile_dark: one(media, {
+    fields: [integrations_locales.hero_media_mobile_dark],
+    references: [media.id],
+    relationName: 'hero_media_mobile_dark',
   }),
   meta_image: one(media, {
     fields: [integrations_locales.meta_image],
@@ -8406,15 +8514,25 @@ export const relations__integrations_v_locales = relations(_integrations_v_local
     references: [_integrations_v.id],
     relationName: '_locales',
   }),
-  version_hero_media_light: one(media, {
-    fields: [_integrations_v_locales.version_hero_media_light],
+  version_hero_media_desktop_light: one(media, {
+    fields: [_integrations_v_locales.version_hero_media_desktop_light],
     references: [media.id],
-    relationName: 'version_hero_media_light',
+    relationName: 'version_hero_media_desktop_light',
   }),
-  version_hero_media_dark: one(media, {
-    fields: [_integrations_v_locales.version_hero_media_dark],
+  version_hero_media_desktop_dark: one(media, {
+    fields: [_integrations_v_locales.version_hero_media_desktop_dark],
     references: [media.id],
-    relationName: 'version_hero_media_dark',
+    relationName: 'version_hero_media_desktop_dark',
+  }),
+  version_hero_media_mobile_light: one(media, {
+    fields: [_integrations_v_locales.version_hero_media_mobile_light],
+    references: [media.id],
+    relationName: 'version_hero_media_mobile_light',
+  }),
+  version_hero_media_mobile_dark: one(media, {
+    fields: [_integrations_v_locales.version_hero_media_mobile_dark],
+    references: [media.id],
+    relationName: 'version_hero_media_mobile_dark',
   }),
   version_meta_image: one(media, {
     fields: [_integrations_v_locales.version_meta_image],
