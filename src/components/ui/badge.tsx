@@ -12,6 +12,7 @@ const badgeVariants = cva(
   {
     variants: {
       color: {
+        default: 'text-base-tertiary bg-transparent',
         blue: 'text-marn-500 dark:text-marn-400 bg-blue-100 disabled:bg-blue-50 disabled:text-blue-500/70 dark:bg-blue-950',
         red: 'bg-tomato-100 text-tomato-600 disabled:bg-tomato-50 disabled:text-tomato-500/70 dark:bg-tomato-950',
         green:
@@ -74,30 +75,32 @@ function Badge({
         <p>{label}</p>
       </div>
     )
-  }
-
-  return (
-    <div
-      className={cn(
-        badgeVariants({ size }),
-        'gap-2 rounded-none bg-transparent p-0 text-(color:--color-base-tertiary)',
-        className,
-      )}
-      {...props}
-    >
-      <Media
+  } else if (type === 'reference') {
+    return (
+      <div
         className={cn(
-          'overflow-hidden rounded-lg',
-          size === 'sm' && 'size-6',
-          size === 'md' && 'size-8',
-          size === 'lg' && 'size-10',
+          badgeVariants({ size, color: 'default' }),
+          'gap-2 rounded-none bg-transparent p-0',
+          className,
         )}
-        resource={referenceValue?.icon as MediaType}
-        priority
-      />
-      <p className="">{referenceValue?.name}</p>
-    </div>
-  )
+        {...props}
+      >
+        {referenceValue?.icon && (
+          <Media
+            className={cn(
+              'overflow-hidden rounded-lg',
+              size === 'sm' && 'size-6',
+              size === 'md' && 'size-8',
+              size === 'lg' && 'size-10',
+            )}
+            resource={referenceValue?.icon as MediaType}
+            priority
+          />
+        )}
+        <p className="">{referenceValue?.name}</p>
+      </div>
+    )
+  }
 }
 
 export { Badge, badgeVariants }

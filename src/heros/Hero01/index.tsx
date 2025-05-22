@@ -1,6 +1,6 @@
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import type { Page } from '@/payload-types'
 
@@ -10,6 +10,7 @@ import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
 import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
+import { motion, useScroll, useTransform } from 'motion/react'
 
 export const Hero01: React.FC<Page['hero']> = ({
   richText,
@@ -21,6 +22,14 @@ export const Hero01: React.FC<Page['hero']> = ({
 }) => {
   const { logos: logosGroup, headline } = logos || {}
   const { desktop, mobile } = media || {}
+  const containerRef = useRef<HTMLDivElement>(null)
+  // Parallax: as the container scrolls into view, move the image up slightly
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  })
+  // Parallax: image moves up to -200px as you scroll through the block
+  const y = useTransform(scrollYProgress, [0, 1], [-200, 200])
 
   // const { setHeaderTheme } = useHeaderTheme()
 
@@ -29,8 +38,11 @@ export const Hero01: React.FC<Page['hero']> = ({
   // }, [setHeaderTheme])
 
   return (
-    <section className="pb-site container h-screen pt-(--header-plus-admin-bar-height)">
-      <div className="relative z-0 h-full w-full">
+    <section
+      ref={containerRef}
+      className="pb-site container h-screen pt-(--header-plus-admin-bar-height)"
+    >
+      <div className="rounded-space-sm relative z-0 h-full w-full overflow-hidden">
         <div
           data-theme="dark"
           className="p-xl absolute bottom-0 z-1 flex w-full flex-col justify-between gap-4"
@@ -95,14 +107,18 @@ export const Hero01: React.FC<Page['hero']> = ({
         </div>
 
         {media && typeof media === 'object' && (
-          <Media
-            fill
-            imgClassName="rounded-space-sm object-cover"
-            className="relative h-full w-full select-none"
-            priority
-            desktop={{ light: desktop?.light ?? undefined, dark: desktop?.dark ?? undefined }}
-            mobile={{ light: mobile?.light ?? undefined, dark: mobile?.dark ?? undefined }}
-          />
+          <motion.div
+            style={{ y }}
+            className={cn('absolute inset-0 z-0 h-full w-full overflow-hidden')}
+          >
+            <Media
+              fill
+              imgClassName="object-cover"
+              className="relative h-full w-full select-none"
+              desktop={{ light: desktop?.light ?? undefined, dark: desktop?.dark ?? undefined }}
+              mobile={{ light: mobile?.light ?? undefined, dark: mobile?.dark ?? undefined }}
+            />
+          </motion.div>
         )}
       </div>
     </section>
