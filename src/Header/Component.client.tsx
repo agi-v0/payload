@@ -67,7 +67,7 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
       >
         <div className="z-50 w-full max-w-54">
           <Link href="/" className="flex-shrink-0">
-            <Logo className="text-base-primary h-5 w-auto" />
+            <Logo className="text-base-primary h-6 w-auto" />
           </Link>
         </div>
 

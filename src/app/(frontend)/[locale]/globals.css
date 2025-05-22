@@ -48,9 +48,9 @@
 }
 
 :root {
-  --header-height: 52px;
+  --header-height: 56px;
   @media (min-width: 1024px) {
-    --header-height: 56px;
+    --header-height: 60px;
   }
 
   --admin-bar-height: 2.5rem;
@@ -83,7 +83,7 @@
   --chart-5: hsl(27 87% 67%);
   /* --radius: 0.5rem; */
 
-  --brand: var(--color-marn-500);
+  --brand: var(--color-marn-600);
   --neutral: var(--color-neutral-950);
   /* use for background */
   --background: var(--color-neutral-50);
@@ -92,20 +92,20 @@
   --background-inverted: var(--color-neutral-950);
 
   /*for foreground (text & icons) */
-  --neutral-primary: --alpha(var(--color-neutral-950) / 100%);
-  --neutral-secondary: --alpha(var(--color-neutral-950) / 70%);
-  --neutral-tertiary: --alpha(var(--color-neutral-950) / 50%);
-  --neutral-quaternary: --alpha(var(--color-neutral-950) / 30%);
+  --neutral-primary: var(--color-neutral-950);
+  --neutral-secondary: var(--color-neutral-700);
+  --neutral-tertiary: var(--color-neutral-500);
+  --neutral-quaternary: var(--color-neutral-300);
 
   --brand-primary: --alpha(var(--color-brand) / 100%);
   --brand-secondary: --alpha(var(--color-brand) / 70%);
   --brand-tertiary: --alpha(var(--color-brand) / 50%);
   --brand-quaternary: --alpha(var(--color-brand) / 30%);
 
-  --inverted-primary: --alpha(var(--color-white) / 100%);
-  --inverted-secondary: --alpha(var(--color-white) / 70%);
-  --inverted-tertiary: --alpha(var(--color-white) / 50%);
-  --inverted-quaternary: --alpha(var(--color-white) / 30%);
+  --inverted-primary: var(--color-white);
+  --inverted-secondary: var(--color-neutral-200);
+  --inverted-tertiary: var(--color-neutral-400);
+  --inverted-quaternary: var(--color-neutral-600);
 }
 
 [data-theme='dark'] {
@@ -136,26 +136,26 @@
 
   --neutral: var(--color-white);
   /* use for background */
-  --background: var(--color-neutral-950);
-  --background-light: var(--color-neutral-800);
-  --background-medium: var(--color-neutral-900);
+  --background: var(--color-black);
+  --background-light: var(--color-neutral-900);
+  --background-medium: --alpha(var(--color-neutral-900) / 70%);
   --background-inverted: var(--color-white);
 
   /*for foreground (text & icons) */
-  --neutral-primary: --alpha(var(--color-white) / 100%);
-  --neutral-secondary: --alpha(var(--color-white) / 70%);
-  --neutral-tertiary: --alpha(var(--color-white) / 50%);
-  --neutral-quaternary: --alpha(var(--color-white) / 30%);
+  --neutral-primary: var(--color-white);
+  --neutral-secondary: var(--color-neutral-200);
+  --neutral-tertiary: var(--color-neutral-400);
+  --neutral-quaternary: var(--color-neutral-600);
 
   --brand-primary: --alpha(var(--color-brand) / 100%);
   --brand-secondary: --alpha(var(--color-brand) / 70%);
   --brand-tertiary: --alpha(var(--color-brand) / 50%);
   --brand-quaternary: --alpha(var(--color-brand) / 30%);
 
-  --inverted-primary: --alpha(var(--color-neutral-950) / 100%);
-  --inverted-secondary: --alpha(var(--color-neutral-950) / 70%);
-  --inverted-tertiary: --alpha(var(--color-neutral-950) / 50%);
-  --inverted-quaternary: --alpha(var(--color-neutral-950) / 30%);
+  --inverted-primary: var(--color-neutral-950);
+  --inverted-secondary: var(--color-neutral-700);
+  --inverted-tertiary: var(--color-neutral-500);
+  --inverted-quaternary: var(--color-neutral-300);
 }
 
 @theme inline {
@@ -232,7 +232,7 @@
   --color-inverted-secondary: var(--inverted-secondary);
 
   /* indigo */
-  /* --color-marn-50: #eef1fc;
+  --color-marn-50: #eef1fc;
   --color-marn-100: #d8dff8;
   --color-marn-200: #b1c0f1;
   --color-marn-300: #8aa0ea;
@@ -242,20 +242,20 @@
   --color-marn-700: #1f42b2;
   --color-marn-800: #1a3693;
   --color-marn-900: #152b75;
-  --color-marn-950: #122668; */
+  --color-marn-950: #122668;
 
   /* sky blue */
-  --color-marn-50: #f2f7fc;
-  --color-marn-100: #e1edf8;
-  --color-marn-200: #c9e0f4;
-  --color-marn-300: #98c5e9;
-  --color-marn-400: #79b1e1;
-  --color-marn-500: #5a93d7;
-  --color-marn-600: #457acb;
-  --color-marn-700: #3c67b9;
-  --color-marn-800: #365597;
-  --color-marn-900: #304978;
-  --color-marn-950: #212d4a;
+  --color-sky-50: #f2f7fc;
+  --color-sky-100: #e1edf8;
+  --color-sky-200: #c9e0f4;
+  --color-sky-300: #98c5e9;
+  --color-sky-400: #79b1e1;
+  --color-sky-500: #5a93d7;
+  --color-sky-600: #457acb;
+  --color-sky-700: #3c67b9;
+  --color-sky-800: #365597;
+  --color-sky-900: #304978;
+  --color-sky-950: #212d4a;
 
   --color-tomato-50: #fdf0ed;
   --color-tomato-100: #fae0db;
