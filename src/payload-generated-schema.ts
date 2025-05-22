@@ -598,9 +598,6 @@ export const callToActionBlock = pgTable(
     badge_color: badge_color('badge_color').default('blue'),
     badge_icon: varchar('badge_icon'),
     badge_icon_position: badge_icon_position('badge_icon_position').default('flex-row'),
-    media: integer('media_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
     supportingText: varchar('supporting_text'),
     form: integer('form_id').references(() => forms.id, {
       onDelete: 'set null',
@@ -611,7 +608,6 @@ export const callToActionBlock = pgTable(
     _orderIdx: index('callToActionBlock_order_idx').on(columns._order),
     _parentIDIdx: index('callToActionBlock_parent_id_idx').on(columns._parentID),
     _pathIdx: index('callToActionBlock_path_idx').on(columns._path),
-    callToActionBlock_media_idx: index('callToActionBlock_media_idx').on(columns.media),
     callToActionBlock_form_idx: index('callToActionBlock_form_idx').on(columns.form),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
@@ -626,11 +622,35 @@ export const callToActionBlock_locales = pgTable(
   {
     badge_label: varchar('badge_label'),
     richText: jsonb('rich_text'),
+    media_desktop_light: integer('media_desktop_light_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    media_desktop_dark: integer('media_desktop_dark_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    media_mobile_light: integer('media_mobile_light_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    media_mobile_dark: integer('media_mobile_dark_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: varchar('_parent_id').notNull(),
   },
   (columns) => ({
+    callToActionBlock_media_desktop_media_desktop_light_idx: index(
+      'callToActionBlock_media_desktop_media_desktop_light_idx',
+    ).on(columns.media_desktop_light, columns._locale),
+    callToActionBlock_media_desktop_media_desktop_dark_idx: index(
+      'callToActionBlock_media_desktop_media_desktop_dark_idx',
+    ).on(columns.media_desktop_dark, columns._locale),
+    callToActionBlock_media_mobile_media_mobile_light_idx: index(
+      'callToActionBlock_media_mobile_media_mobile_light_idx',
+    ).on(columns.media_mobile_light, columns._locale),
+    callToActionBlock_media_mobile_media_mobile_dark_idx: index(
+      'callToActionBlock_media_mobile_media_mobile_dark_idx',
+    ).on(columns.media_mobile_dark, columns._locale),
     _localeParent: uniqueIndex('callToActionBlock_locales_locale_parent_id_unique').on(
       columns._locale,
       columns._parentID,
@@ -1768,9 +1788,6 @@ export const _callToActionBlock_v = pgTable(
     badge_color: badge_color('badge_color').default('blue'),
     badge_icon: varchar('badge_icon'),
     badge_icon_position: badge_icon_position('badge_icon_position').default('flex-row'),
-    media: integer('media_id').references(() => media.id, {
-      onDelete: 'set null',
-    }),
     supportingText: varchar('supporting_text'),
     form: integer('form_id').references(() => forms.id, {
       onDelete: 'set null',
@@ -1782,7 +1799,6 @@ export const _callToActionBlock_v = pgTable(
     _orderIdx: index('_callToActionBlock_v_order_idx').on(columns._order),
     _parentIDIdx: index('_callToActionBlock_v_parent_id_idx').on(columns._parentID),
     _pathIdx: index('_callToActionBlock_v_path_idx').on(columns._path),
-    _callToActionBlock_v_media_idx: index('_callToActionBlock_v_media_idx').on(columns.media),
     _callToActionBlock_v_form_idx: index('_callToActionBlock_v_form_idx').on(columns.form),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
@@ -1797,11 +1813,35 @@ export const _callToActionBlock_v_locales = pgTable(
   {
     badge_label: varchar('badge_label'),
     richText: jsonb('rich_text'),
+    media_desktop_light: integer('media_desktop_light_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    media_desktop_dark: integer('media_desktop_dark_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    media_mobile_light: integer('media_mobile_light_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    media_mobile_dark: integer('media_mobile_dark_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: integer('_parent_id').notNull(),
   },
   (columns) => ({
+    _callToActionBlock_v_media_desktop_media_desktop_light_idx: index(
+      '_callToActionBlock_v_media_desktop_media_desktop_light_idx',
+    ).on(columns.media_desktop_light, columns._locale),
+    _callToActionBlock_v_media_desktop_media_desktop_dark_idx: index(
+      '_callToActionBlock_v_media_desktop_media_desktop_dark_idx',
+    ).on(columns.media_desktop_dark, columns._locale),
+    _callToActionBlock_v_media_mobile_media_mobile_light_idx: index(
+      '_callToActionBlock_v_media_mobile_media_mobile_light_idx',
+    ).on(columns.media_mobile_light, columns._locale),
+    _callToActionBlock_v_media_mobile_media_mobile_dark_idx: index(
+      '_callToActionBlock_v_media_mobile_media_mobile_dark_idx',
+    ).on(columns.media_mobile_dark, columns._locale),
     _localeParent: uniqueIndex('_callToActionBlock_v_locales_locale_parent_id_unique').on(
       columns._locale,
       columns._parentID,
@@ -6843,6 +6883,26 @@ export const relations_callToActionBlock_locales = relations(
       references: [callToActionBlock.id],
       relationName: '_locales',
     }),
+    media_desktop_light: one(media, {
+      fields: [callToActionBlock_locales.media_desktop_light],
+      references: [media.id],
+      relationName: 'media_desktop_light',
+    }),
+    media_desktop_dark: one(media, {
+      fields: [callToActionBlock_locales.media_desktop_dark],
+      references: [media.id],
+      relationName: 'media_desktop_dark',
+    }),
+    media_mobile_light: one(media, {
+      fields: [callToActionBlock_locales.media_mobile_light],
+      references: [media.id],
+      relationName: 'media_mobile_light',
+    }),
+    media_mobile_dark: one(media, {
+      fields: [callToActionBlock_locales.media_mobile_dark],
+      references: [media.id],
+      relationName: 'media_mobile_dark',
+    }),
   }),
 )
 export const relations_callToActionBlock = relations(callToActionBlock, ({ one, many }) => ({
@@ -6854,10 +6914,29 @@ export const relations_callToActionBlock = relations(callToActionBlock, ({ one, 
   _locales: many(callToActionBlock_locales, {
     relationName: '_locales',
   }),
-  media: one(media, {
-    fields: [callToActionBlock.media],
+  media_desktop_light: one(media, {
+    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
+    fields: [callToActionBlock_locales.media_desktop_light],
     references: [media.id],
-    relationName: 'media',
+    relationName: 'media_desktop_light',
+  }),
+  media_desktop_dark: one(media, {
+    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
+    fields: [callToActionBlock_locales.media_desktop_dark],
+    references: [media.id],
+    relationName: 'media_desktop_dark',
+  }),
+  media_mobile_light: one(media, {
+    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
+    fields: [callToActionBlock_locales.media_mobile_light],
+    references: [media.id],
+    relationName: 'media_mobile_light',
+  }),
+  media_mobile_dark: one(media, {
+    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
+    fields: [callToActionBlock_locales.media_mobile_dark],
+    references: [media.id],
+    relationName: 'media_mobile_dark',
   }),
   links: many(callToActionBlock_links, {
     relationName: 'links',
@@ -7471,6 +7550,26 @@ export const relations__callToActionBlock_v_locales = relations(
       references: [_callToActionBlock_v.id],
       relationName: '_locales',
     }),
+    media_desktop_light: one(media, {
+      fields: [_callToActionBlock_v_locales.media_desktop_light],
+      references: [media.id],
+      relationName: 'media_desktop_light',
+    }),
+    media_desktop_dark: one(media, {
+      fields: [_callToActionBlock_v_locales.media_desktop_dark],
+      references: [media.id],
+      relationName: 'media_desktop_dark',
+    }),
+    media_mobile_light: one(media, {
+      fields: [_callToActionBlock_v_locales.media_mobile_light],
+      references: [media.id],
+      relationName: 'media_mobile_light',
+    }),
+    media_mobile_dark: one(media, {
+      fields: [_callToActionBlock_v_locales.media_mobile_dark],
+      references: [media.id],
+      relationName: 'media_mobile_dark',
+    }),
   }),
 )
 export const relations__callToActionBlock_v = relations(_callToActionBlock_v, ({ one, many }) => ({
@@ -7482,10 +7581,29 @@ export const relations__callToActionBlock_v = relations(_callToActionBlock_v, ({
   _locales: many(_callToActionBlock_v_locales, {
     relationName: '_locales',
   }),
-  media: one(media, {
-    fields: [_callToActionBlock_v.media],
+  media_desktop_light: one(media, {
+    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
+    fields: [_callToActionBlock_v_locales.media_desktop_light],
     references: [media.id],
-    relationName: 'media',
+    relationName: 'media_desktop_light',
+  }),
+  media_desktop_dark: one(media, {
+    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
+    fields: [_callToActionBlock_v_locales.media_desktop_dark],
+    references: [media.id],
+    relationName: 'media_desktop_dark',
+  }),
+  media_mobile_light: one(media, {
+    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
+    fields: [_callToActionBlock_v_locales.media_mobile_light],
+    references: [media.id],
+    relationName: 'media_mobile_light',
+  }),
+  media_mobile_dark: one(media, {
+    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
+    fields: [_callToActionBlock_v_locales.media_mobile_dark],
+    references: [media.id],
+    relationName: 'media_mobile_dark',
   }),
   links: many(_callToActionBlock_v_links, {
     relationName: 'links',

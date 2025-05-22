@@ -7,7 +7,7 @@ import type { CMSLinkType } from '@/components/Link'
 
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { cn } from '@/utilities/ui'
 
 export const CallToAction01: React.FC<CTABlockProps> = ({
@@ -25,11 +25,12 @@ export const CallToAction01: React.FC<CTABlockProps> = ({
     offset: ['start end', 'end start'],
   })
   // Parallax: image moves up to -40px as you scroll through the block
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200])
+  const y = useTransform(scrollYProgress, [0, 1], [-200, 200])
+  const { desktop, mobile } = media || {}
 
   return (
     <div className="py-xl container" ref={containerRef}>
-      <div className="rounded-space-md relative overflow-hidden border border-red-500">
+      <div className="rounded-space-md relative overflow-hidden">
         <div
           data-theme="dark"
           className="rounded-space-md p-md gap-sm relative z-1 flex aspect-[9/16] h-auto w-full flex-col items-start justify-end bg-transparent md:aspect-video md:flex-row md:items-end md:justify-between"
@@ -46,13 +47,14 @@ export const CallToAction01: React.FC<CTABlockProps> = ({
         {media && (
           <motion.div
             style={{ y }}
-            className={cn('absolute -top-24 right-0 z-0 h-full w-full scale-105 overflow-hidden')}
+            className={cn('absolute inset-0 z-0 h-full w-full overflow-hidden')}
           >
             <Media
-              resource={media}
               fill
               className="relative h-full w-full object-cover"
               imgClassName="object-cover rounded-space-md overflow-hidden"
+              desktop={{ light: desktop?.light ?? undefined, dark: desktop?.dark ?? undefined }}
+              mobile={{ light: mobile?.light ?? undefined, dark: mobile?.dark ?? undefined }}
             />
           </motion.div>
         )}

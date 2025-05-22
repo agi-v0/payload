@@ -276,6 +276,7 @@ export interface Post {
  */
 export interface Media {
   id: number;
+  prefix?: string | null;
   alt: string;
   caption?: {
     root: {
@@ -423,7 +424,19 @@ export interface CallToActionBlock {
     };
     [k: string]: unknown;
   } | null;
-  media?: (number | null) | Media;
+  media?: {
+    desktop?: {
+      light?: (number | null) | Media;
+      dark?: (number | null) | Media;
+    };
+    /**
+     * Optional
+     */
+    mobile?: {
+      light?: (number | null) | Media;
+      dark?: (number | null) | Media;
+    };
+  };
   links?:
     | {
         link: {
@@ -2464,6 +2477,7 @@ export interface IntegrationsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  prefix?: T;
   alt?: T;
   caption?: T;
   locale?: T;
