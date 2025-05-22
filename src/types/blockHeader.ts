@@ -8,7 +8,7 @@ export interface BlockHeaderType {
   type: 'center' | 'split' | 'start'
   badge?: {
     label?: string | null
-    color?: ('blue' | 'red' | 'green' | 'yellow') | null
+    color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null
     icon?: string | null
     icon_position?: ('flex-row' | 'flex-row-reverse') | null
   }
