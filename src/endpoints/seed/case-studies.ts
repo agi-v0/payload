@@ -54,7 +54,7 @@ export const seedCaseStudies = async (
         },
       ],
       featuredSolutions: [solutionsSlugToIdMap['cashier'], solutionsSlugToIdMap['paysync']],
-      featuredIntegrations: [integrationsSlugToIdMap['odoo'], integrationsSlugToIdMap['bonat']],
+      featuredIntegrations: [integrationsSlugToIdMap['bonat'], integrationsSlugToIdMap['nugttah']],
       layout: [],
       slug: `case-study-${i + 1}`,
     }
