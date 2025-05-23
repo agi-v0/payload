@@ -1,3 +1,4 @@
+'use client'
 import { Button, type ButtonProps } from '@/components/ui/button'
 
 import { cn } from '@/utilities/ui'
@@ -75,7 +76,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         {label && label}
         {children && children}
         {variant === 'link' && (
-          <CaretLeft className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180" />
+          <CaretLeft className="size-3 translate-x-1 transition-all duration-150 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180" />
         )}
       </Link>
     </Button>
