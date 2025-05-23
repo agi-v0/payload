@@ -1,0 +1,22 @@
+.headerObserver {
+  position: relative;
+}
+
+.debug {
+  outline: 2px solid var(--color-blue-500);
+  background-color: rgba(59, 130, 246, 0.1);
+
+  &::before {
+    content: 'Header Theme Observer';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--color-blue-500);
+    color: white;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 10000;
+    pointer-events: none;
+  }
+}

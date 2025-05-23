@@ -1,10 +1,8 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import type { Header as HeaderType } from '@/payload-types'
-import type { Theme } from '@/providers/Theme/types' // Import Theme type if needed
 import { Link } from '@/i18n/routing'
 import { usePathname } from 'next/navigation'
-import { useScrollInfo } from '@faceless-ui/scroll-info'
 import { useHeaderObserver } from '@/providers/HeaderIntersectionObserver'
 import { cn } from '@/utilities/ui'
 import { Button } from '@/components/ui/button'
@@ -14,16 +12,27 @@ import Logo from '@/components/ui/logo'
 // Assuming DesktopNav and MobileNav will be refactored similarly
 import { DesktopNav } from './DesktopNav'
 import { MobileNav } from './MobileNav'
-import { motion } from 'motion/react'
+import { motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { AnimatePresence } from 'motion/react'
 
 export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [hideBackground, setHideBackground] = React.useState(true)
+  const lastScrollY = useRef(0)
 
   const pathname = usePathname()
-  const { y } = useScrollInfo()
+
   const { headerTheme } = useHeaderObserver()
+
+  const { scrollY } = useScroll()
+  const [scrollDirection, setScrollDirection] = useState('down')
+  const [y, setY] = useState(0)
+
+  useMotionValueEvent(scrollY, 'change', (current) => {
+    const diff = current - (scrollY.getPrevious() ?? 0)
+    setScrollDirection(diff > 0 ? 'down' : 'up')
+    setY(current)
+  })
 
   useEffect(() => {
     setIsMobileNavOpen(false)
@@ -39,24 +48,29 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
 
   useEffect(() => {
     if (isMobileNavOpen) {
+      lastScrollY.current = window.scrollY
       document.body.style.overflow = 'hidden'
+      document.body.style.height = '100vh'
     } else {
       document.body.style.overflow = ''
+      document.body.style.height = 'auto'
+      window.scrollTo(0, lastScrollY.current)
     }
     return () => {
       document.body.style.overflow = ''
+      document.body.style.height = 'auto'
     }
   }, [isMobileNavOpen])
 
   return (
     <header
-      data-theme={headerTheme}
+      data-theme={headerTheme || 'light'}
       className={cn(
-        'bg-background fixed left-0 z-10 w-full max-w-screen transition-colors duration-300',
+        'border-border fixed left-0 z-10 w-full max-w-screen border-0 bg-transparent transition-colors duration-300',
         'top-0 md:top-[var(--admin-bar-height,0px)]',
         hideBackground && 'before:opacity-0 after:opacity-0',
-        isMobileNavOpen && 'bg-background-neutral',
-        headerTheme && '',
+        isMobileNavOpen && 'bg-background',
+        y > 20 && 'bg-background border-b',
       )}
     >
       {/* Main container with flex layout */}
@@ -91,18 +105,16 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
       {/* Conditionally rendered Mobile Nav Dropdown */}
       {/* Animate presence will be added later with framer-motion */}
       {isMobileNavOpen && (
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
           <motion.div
             key="mobile-nav-content"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{
-              ease: [0.455, 0.03, 0.515, 0.955],
-            }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 40 }}
+            transition={{ ease: 'easeInOut', duration: 0.2 }}
             className={cn(
               // Remove island styles: absolute inset-x-4 top-full my-4 rounded-2xl border
-              'bg-background-neutral fixed inset-x-0 top-[var(--header-height)] bottom-0 z-40 overflow-y-auto lg:hidden',
+              'bg-background fixed inset-x-0 top-[var(--header-height)] bottom-0 z-50 overflow-y-auto lg:hidden',
               // Remove animation for now, can be added back later
               // 'animate-in slide-in-from-top-4 duration-300 ease-out',
             )}

@@ -9,8 +9,6 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { cookies, draftMode } from 'next/headers'
 import { DynamicAdminBarLoader } from '@/components/AdminBar/DynamicLoader.client'
 
-import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 
@@ -35,7 +33,7 @@ export default async function RootLayout({
   if (!routing.locales.includes(locale as any)) {
     notFound()
   }
-  const messages = await getMessages()
+
   const { isEnabled } = await draftMode()
 
   const cookieStore = await cookies()
@@ -54,16 +52,14 @@ export default async function RootLayout({
       </head>
       <body>
         <Providers initialTheme={initialTheme}>
-          <NextIntlClientProvider messages={messages}>
-            <DynamicAdminBarLoader
-              adminBarProps={{
-                preview: isEnabled,
-              }}
-            />
-            <Header />
-            {children}
-            <Footer />
-          </NextIntlClientProvider>
+          <DynamicAdminBarLoader
+            adminBarProps={{
+              preview: isEnabled,
+            }}
+          />
+          <Header />
+          {children}
+          <Footer />
         </Providers>
       </body>
     </html>

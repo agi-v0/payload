@@ -34,13 +34,14 @@ export const HeaderIntersectionObserver: React.FC<HeaderIntersectionObserverProp
   const { height: windowHeight, width: windowWidth } = useWindowInfo()
   const { theme } = useTheme()
   const [headerTheme, setHeaderTheme] = React.useState<null | Theme | undefined>(theme)
+  const [previousTheme, setPreviousTheme] = React.useState<null | Theme | undefined>(theme)
   const [observer, setObserver] = React.useState<IntersectionObserver | undefined>(undefined)
   const [tick, setTick] = React.useState<number | undefined>(undefined)
   const pathname = usePathname()
 
   const addObservable = React.useCallback(
-    (el: HTMLElement) => {
-      if (observer) {
+    (el: HTMLElement, isAttached: boolean) => {
+      if (observer && isAttached) {
         observer.observe(el)
       }
     },
@@ -54,7 +55,6 @@ export const HeaderIntersectionObserver: React.FC<HeaderIntersectionObserverProp
       getComputedStyle(document.documentElement).getPropertyValue('--header-height'),
       10,
     )
-
     let tickTimeout: NodeJS.Timeout | undefined
     if (!cssHeaderHeight) {
       // workaround for styles not always being loaded in time (oddity with NextJS App folder)
@@ -71,11 +71,22 @@ export const HeaderIntersectionObserver: React.FC<HeaderIntersectionObserverProp
 
       observerRef = new IntersectionObserver(
         (entries) => {
-          const intersectingElement = entries.find((entry) => entry.isIntersecting)
+          entries.forEach((entry) => {
+            const target = entry.target as HTMLElement
+            const elementTheme = target.getAttribute('data-theme') as Theme
+            const shouldRestoreOnExit = target.getAttribute('data-restore-theme') === 'true'
 
-          if (intersectingElement) {
-            setHeaderTheme(intersectingElement.target.getAttribute('data-theme') as Theme)
-          }
+            if (entry.isIntersecting) {
+              // Element is entering the intersection area
+              if (elementTheme && elementTheme !== headerTheme) {
+                setPreviousTheme(headerTheme)
+                setHeaderTheme(elementTheme)
+              }
+            } else if (shouldRestoreOnExit) {
+              // Element is exiting and should restore theme
+              setHeaderTheme(previousTheme)
+            }
+          })
         },
         {
           // intersection area is top of the screen from 0px to 50% of the header height
@@ -85,7 +96,6 @@ export const HeaderIntersectionObserver: React.FC<HeaderIntersectionObserverProp
           threshold: 0,
         },
       )
-
       setObserver(observerRef)
     }
 
@@ -97,10 +107,11 @@ export const HeaderIntersectionObserver: React.FC<HeaderIntersectionObserverProp
         observerRef.disconnect()
       }
     }
-  }, [windowWidth, windowHeight, theme, tick])
+  }, [windowWidth, windowHeight, theme, tick, headerTheme, previousTheme])
 
   React.useEffect(() => {
     setHeaderTheme(theme)
+    setPreviousTheme(theme)
   }, [pathname])
 
   return (
