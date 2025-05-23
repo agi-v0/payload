@@ -37,10 +37,12 @@ export const AppReference: React.FC<AppReferenceProps> = ({ appReference, classN
         )}
         <div>
           {appReference.value.name && (
-            <p className="text-body-md text-base-primary font-medium">{appReference.value.name}</p>
+            <p className="text-body-md text-base-primary mb-1 font-medium">
+              {appReference.value.name}
+            </p>
           )}
           {appReference.value.tagline && (
-            <p className="text-base-secondary text-sm">{appReference.value.tagline}</p>
+            <p className="text-base-tertiary text-body-sm">{appReference.value.tagline}</p>
           )}
         </div>
       </div>
