@@ -126,6 +126,7 @@ const createIntegrationObject = (
     },
     categories: details.categories || [],
     layout: [],
+    _status: 'published',
     ...details,
   }
 }
@@ -135,6 +136,7 @@ export const seedIntegrations = async (
   req: PayloadRequest,
   imageSquareId: number,
   ecosystems: Category[],
+  integrationCategories: Record<string, Category>,
 ): Promise<Record<string, number>> => {
   const integrationsToSeed = [
     // Loyalty & Rewards Platforms
@@ -181,6 +183,9 @@ export const seedIntegrations = async (
           phone: '+966 11 234 5678',
         },
         ecosystem: ecosystems?.slice(0, 1).map((cat) => cat.id) || [],
+        categories: integrationCategories['loyalty-programs']
+          ? [integrationCategories['loyalty-programs'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -228,6 +233,9 @@ export const seedIntegrations = async (
           phone: '+966 11 456 7890',
         },
         ecosystem: ecosystems?.slice(0, 1).map((cat) => cat.id) || [],
+        categories: integrationCategories['loyalty-programs']
+          ? [integrationCategories['loyalty-programs'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -275,6 +283,9 @@ export const seedIntegrations = async (
           phone: '+966 920 000 849',
         },
         ecosystem: ecosystems?.slice(0, 1).map((cat) => cat.id) || [],
+        categories: integrationCategories['loyalty-programs']
+          ? [integrationCategories['loyalty-programs'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -323,6 +334,9 @@ export const seedIntegrations = async (
           phone: '+966 500 937 188',
         },
         ecosystem: ecosystems?.slice(1, 2).map((cat) => cat.id) || [],
+        categories: integrationCategories['staff-management']
+          ? [integrationCategories['staff-management'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -371,6 +385,9 @@ export const seedIntegrations = async (
           phone: '+966 800 124 1220',
         },
         ecosystem: ecosystems?.slice(2, 3).map((cat) => cat.id) || [],
+        categories: integrationCategories['delivery-platforms']
+          ? [integrationCategories['delivery-platforms'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -419,6 +436,9 @@ export const seedIntegrations = async (
           phone: '+966 800 118 0008',
         },
         ecosystem: ecosystems?.slice(3, 4).map((cat) => cat.id) || [],
+        categories: integrationCategories['payment-gateways']
+          ? [integrationCategories['payment-gateways'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -466,6 +486,9 @@ export const seedIntegrations = async (
           phone: '+966 800 111 1848',
         },
         ecosystem: ecosystems?.slice(3, 4).map((cat) => cat.id) || [],
+        categories: integrationCategories['payment-gateways']
+          ? [integrationCategories['payment-gateways'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -483,6 +506,9 @@ export const seedIntegrations = async (
           phone: '+966 11 234 5678',
         },
         ecosystem: ecosystems?.slice(1, 2).map((cat) => cat.id) || [],
+        categories: integrationCategories['staff-management']
+          ? [integrationCategories['staff-management'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -499,6 +525,9 @@ export const seedIntegrations = async (
           phone: '+966 11 345 6789',
         },
         ecosystem: ecosystems?.slice(1, 2).map((cat) => cat.id) || [],
+        categories: integrationCategories['staff-management']
+          ? [integrationCategories['staff-management'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -515,6 +544,9 @@ export const seedIntegrations = async (
           phone: '+966 11 456 7890',
         },
         ecosystem: ecosystems?.slice(1, 2).map((cat) => cat.id) || [],
+        categories: integrationCategories['staff-management']
+          ? [integrationCategories['staff-management'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -531,6 +563,9 @@ export const seedIntegrations = async (
           phone: '+966 11 567 8901',
         },
         ecosystem: ecosystems?.slice(1, 2).map((cat) => cat.id) || [],
+        categories: integrationCategories['staff-management']
+          ? [integrationCategories['staff-management'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -547,6 +582,9 @@ export const seedIntegrations = async (
           phone: '+966 11 678 9012',
         },
         ecosystem: ecosystems?.slice(4, 5).map((cat) => cat.id) || [],
+        categories: integrationCategories['accounting-software']
+          ? [integrationCategories['accounting-software'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -563,6 +601,9 @@ export const seedIntegrations = async (
           phone: '+966 11 789 0123',
         },
         ecosystem: ecosystems?.slice(1, 2).map((cat) => cat.id) || [],
+        categories: integrationCategories['staff-management']
+          ? [integrationCategories['staff-management'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -579,6 +620,9 @@ export const seedIntegrations = async (
           phone: '+966 11 890 1234',
         },
         ecosystem: ecosystems?.slice(1, 2).map((cat) => cat.id) || [],
+        categories: integrationCategories['staff-management']
+          ? [integrationCategories['staff-management'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -595,6 +639,9 @@ export const seedIntegrations = async (
           phone: '+966 11 901 2345',
         },
         ecosystem: ecosystems?.slice(5, 6).map((cat) => cat.id) || [],
+        categories: integrationCategories['marketing-tools']
+          ? [integrationCategories['marketing-tools'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -611,6 +658,9 @@ export const seedIntegrations = async (
           phone: '+966 11 012 3456',
         },
         ecosystem: ecosystems?.slice(2, 3).map((cat) => cat.id) || [],
+        categories: integrationCategories['delivery-platforms']
+          ? [integrationCategories['delivery-platforms'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -627,6 +677,9 @@ export const seedIntegrations = async (
           phone: '+966 11 123 4567',
         },
         ecosystem: ecosystems?.slice(2, 3).map((cat) => cat.id) || [],
+        categories: integrationCategories['delivery-platforms']
+          ? [integrationCategories['delivery-platforms'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),
@@ -643,6 +696,9 @@ export const seedIntegrations = async (
           phone: '+966 11 234 5678',
         },
         ecosystem: ecosystems?.slice(2, 3).map((cat) => cat.id) || [],
+        categories: integrationCategories['delivery-platforms']
+          ? [integrationCategories['delivery-platforms'].id]
+          : [],
       },
       { imageSquare: imageSquareId },
     ),

@@ -5,6 +5,7 @@ import type {
   PayloadRequest,
   File,
   TypedLocale,
+  RequiredDataFromCollectionSlug,
 } from 'payload'
 import type { Header, Form, Footer, Category } from '@/payload-types'
 
@@ -594,6 +595,32 @@ export const seed = async ({
   const operateCategory = categoriesMap['operate']
   const manageCategory = categoriesMap['manage']
 
+  // Fetch integration categories
+  const integrationCategories = await payload.find({
+    collection: 'categories',
+    where: {
+      slug: {
+        in: [
+          'payment-gateways',
+          'delivery-platforms',
+          'accounting-software',
+          'inventory-management',
+          'loyalty-programs',
+          'ecommerce-platforms',
+          'marketing-tools',
+          'staff-management',
+        ],
+      },
+    },
+  })
+  const integrationCategoriesMap = integrationCategories.docs.reduce(
+    (acc, category) => {
+      acc[category?.slug ?? ''] = category
+      return acc
+    },
+    {} as Record<string, Category>,
+  )
+
   payload.logger.info('— Seeding media...')
 
   const [
@@ -700,11 +727,13 @@ export const seed = async ({
   )
 
   payload.logger.info(`— Seeding integrations...`)
-  const integrationsSlugToIdMap = await seedIntegrations(payload, req, imageSquareDoc?.id, [
-    sellCategory,
-    operateCategory,
-    manageCategory,
-  ])
+  const integrationsSlugToIdMap = await seedIntegrations(
+    payload,
+    req,
+    imageSquareDoc?.id,
+    [sellCategory, operateCategory, manageCategory],
+    integrationCategoriesMap,
+  )
 
   payload.logger.info(`— Seeding contact form...`)
   const contactForm = (await payload.create({
@@ -864,7 +893,7 @@ export const seed = async ({
                 { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['analytics'] as any }, label: 'التحليلات', description: 'تقارير فورية عن المبيعات والأرباح تساعدك تتخذ قرارات', icon: null } }, // prettier-ignore
                 { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['branches'] as any }, label: 'الفروع', description: 'راقب كل فروعك وتقاريرها من نفس اللوحة', icon: null } }, // prettier-ignore
                 { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['customers'] as any }, label: 'العملاء', description: 'احفظ بيانات عملاءك وفعّل برامج الولاء', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['accouting'] as any }, label: 'المالية', description: 'تتبّع المصاريف، الضرائب، والتدفق المالي بسهولة', icon: null } }, // prettier-ignore
+                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['accounting'] as any }, label: 'المالية', description: 'تتبّع المصاريف، الضرائب، والتدفق المالي بسهولة', icon: null } }, // prettier-ignore
               ],
             },
           },
@@ -978,7 +1007,7 @@ export const seed = async ({
           { link: { type: 'custom', newTab: false, url: '/solutions/analytics', label: 'التحليلات' } }, // prettier-ignore
           { link: { type: 'custom', newTab: false, url: '/solutions/branches', label: 'الفروع' } }, // prettier-ignore
           { link: { type: 'custom', newTab: false, url: '/solutions/customers', label: 'العملاء' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/accouting', label: 'المالية' } }, // prettier-ignore
+          { link: { type: 'custom', newTab: false, url: '/solutions/accounting', label: 'المالية' } }, // prettier-ignore
         ],
       },
       // ... Add other footer columns if needed, based on original Footer global structure
@@ -991,14 +1020,12 @@ export const seed = async ({
       slug: 'header',
       data: headerData,
       req,
-      // locale: 'ar',
     }),
     payload.logger.info('Updating global – footer'),
     payload.updateGlobal({
       slug: 'footer',
       data: footerData,
       req,
-      // locale: 'ar',
     }),
   ])
 
