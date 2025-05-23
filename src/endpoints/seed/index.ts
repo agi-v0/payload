@@ -364,55 +364,150 @@ export const seed = async ({
       },
     },
     // Integrations Categories
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'إدارة المطاعم',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'إدارة المخزون',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'تقارير المبيعات',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'إدارة الموظفين',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'برامج نقاط البيع',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
-
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'خدمة العملاء',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
+    {
+      collection: 'categories',
+      data: {
+        title: 'بوابات الدفع',
+        slug: 'payment-gateways',
+        breadcrumbs: [
+          {
+            label: 'Payment Gateways',
+            url: '/integrations/payment-gateways',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'تطبيقات التوصيل',
+        slug: 'delivery-platforms',
+        breadcrumbs: [
+          {
+            label: 'Delivery Platforms',
+            url: '/integrations/delivery-platforms',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'برامج المحاسبة',
+        slug: 'accounting-software',
+        breadcrumbs: [
+          {
+            label: 'Accounting Software',
+            url: '/integrations/accounting-software',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'إدارة المخزون',
+        slug: 'inventory-management',
+        breadcrumbs: [
+          {
+            label: 'Inventory Management',
+            url: '/integrations/inventory-management',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'برامج الولاء',
+        slug: 'loyalty-programs',
+        breadcrumbs: [
+          {
+            label: 'Loyalty Programs',
+            url: '/integrations/loyalty-programs',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'التجارة الإلكترونية',
+        slug: 'ecommerce-platforms',
+        breadcrumbs: [
+          {
+            label: 'E-commerce Platforms',
+            url: '/integrations/ecommerce-platforms',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'أدوات التسويق',
+        slug: 'marketing-tools',
+        breadcrumbs: [
+          {
+            label: 'Marketing Tools',
+            url: '/integrations/marketing-tools',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'إدارة الموظفين',
+        slug: 'staff-management',
+        breadcrumbs: [
+          {
+            label: 'Staff Management',
+            url: '/integrations/staff-management',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
     // Ecosystems Categories
     {
       collection: 'categories',
