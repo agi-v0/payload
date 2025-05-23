@@ -28,6 +28,7 @@ import { seedFeaturesShowcasePage } from './features-showcase-page'
 import { image3 } from './image-3'
 import { seedChangelog } from './changelog'
 import { seedCaseStudies } from './case-studies'
+import { seedFAQs } from './faq'
 
 const collections: CollectionSlug[] = [
   'pages',
@@ -678,6 +679,14 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding changelog...`)
   await seedChangelog(payload, req)
+
+  payload.logger.info(`— Seeding FAQs...`)
+  await seedFAQs(payload, req, {
+    sellCategory,
+    operateCategory,
+    manageCategory,
+    otherCategory: other,
+  })
 
   payload.logger.info(`— Seeding globals...`)
 

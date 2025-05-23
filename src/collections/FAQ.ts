@@ -30,7 +30,7 @@ export const FAQ: CollectionConfig = {
     answer: true,
   },
   admin: {
-    defaultColumns: ['question', 'updatedAt'],
+    defaultColumns: ['question', 'category', 'updatedAt'],
     useAsTitle: 'question',
   },
   fields: [
@@ -44,6 +44,11 @@ export const FAQ: CollectionConfig = {
           return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
         },
       }),
+    },
+    {
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'categories',
     },
   ],
 }
