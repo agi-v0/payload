@@ -1,13 +1,10 @@
 'use client'
 
-import { cn } from '@/utilities/ui'
 import React, { useEffect, useRef } from 'react'
-
-import type { Props as MediaProps } from '../types'
-
 import { getClientSideURL } from '@/utilities/getURL'
-import { Media } from '@/payload-types'
+import { cn } from '@/utilities/ui'
 import { useTheme } from '@/providers/Theme'
+import type { Props as MediaProps } from '../types'
 
 export const VideoMedia: React.FC<MediaProps> = (props) => {
   const { onClick, resource, media, videoClassName } = props
@@ -72,12 +69,12 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
 
   const { theme } = useTheme()
 
-  if (!src && !darkSrc) return null
-
   const isDark = theme === 'dark'
 
   const srcToUse = isDark && darkSrc ? darkSrc : src
   const mobileSrcToUse = isDark && mobileDarkSrc ? mobileDarkSrc : mobileSrc
+
+  if (!srcToUse && !mobileSrcToUse) return null
 
   return (
     <video
@@ -90,8 +87,8 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
       playsInline
       ref={videoRef}
     >
-      <source src={mobileSrcToUse} media="(max-width: 768px)" />
       <source src={srcToUse} />
+      <source src={mobileSrcToUse} media="(max-width: 768px)" />
     </video>
   )
 }
