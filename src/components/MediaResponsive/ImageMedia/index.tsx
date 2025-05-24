@@ -11,6 +11,7 @@ import type { Props as MediaProps } from '../types'
 
 import { cssVariables } from '@/cssVariables'
 import { getClientSideURL } from '@/utilities/getURL'
+import { getMediaUrl } from '@/utilities/getMediaURL'
 
 const { breakpoints } = cssVariables
 
@@ -53,14 +54,15 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       url,
       width: fullWidth,
       blurhash: blurhashFromResource,
+      updatedAt: cacheTag,
     } = resource
 
     width = fullWidth!
     height = fullHeight!
     alt = altFromResource || ''
     blurhash = blurhashFromResource || placeholderBlur
-    src = `${getClientSideURL()}${url}`
-    darkSrc = `${getClientSideURL()}${url}`
+    src = getMediaUrl(url, cacheTag)
+    darkSrc = getMediaUrl(url, cacheTag)
   }
 
   if (!src && lightFromDesktop && typeof lightFromDesktop === 'object') {
@@ -71,16 +73,17 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       url,
       width: fullWidth,
       blurhash: blurhashFromLight,
+      updatedAt: cacheTag,
     } = lightFromDesktop
 
     width = fullWidth!
     height = fullHeight!
     alt = altFromLight || ''
     blurhash = blurhashFromLight || placeholderBlur
-    src = `${getClientSideURL()}${url}`
-    darkSrc = `${getClientSideURL()}${url}`
-    mobileSrc = `${getClientSideURL()}${url}`
-    mobileDarkSrc = `${getClientSideURL()}${url}`
+    src = getMediaUrl(url, cacheTag)
+    darkSrc = getMediaUrl(url, cacheTag)
+    mobileSrc = getMediaUrl(url, cacheTag)
+    mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
 
   if (darkFromDesktop && typeof darkFromDesktop === 'object') {
@@ -91,16 +94,17 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       url,
       width: fullWidth,
       blurhash: blurhashFromDark,
+      updatedAt: cacheTag,
     } = darkFromDesktop
 
     width = fullWidth!
     height = fullHeight!
     alt = altFromDark || ''
     blurhash = blurhashFromDark || placeholderBlur
-    if (!src) src = `${getClientSideURL()}${url}`
-    darkSrc = `${getClientSideURL()}${url}`
-    mobileSrc = `${getClientSideURL()}${url}`
-    mobileDarkSrc = `${getClientSideURL()}${url}`
+    if (!src) src = getMediaUrl(url, cacheTag)
+    darkSrc = getMediaUrl(url, cacheTag)
+    mobileSrc = getMediaUrl(url, cacheTag)
+    mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
 
   if (lightFromMobile && typeof lightFromMobile === 'object') {
@@ -111,14 +115,15 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       url,
       width: fullWidth,
       blurhash: blurhashFromLight,
+      updatedAt: cacheTag,
     } = lightFromMobile
 
     width = fullWidth!
     height = fullHeight!
     alt = altFromLight || ''
     blurhash = blurhashFromLight || placeholderBlur
-    mobileSrc = `${getClientSideURL()}${url}`
-    mobileDarkSrc = `${getClientSideURL()}${url}`
+    mobileSrc = getMediaUrl(url, cacheTag)
+    mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
 
   if (darkFromMobile && typeof darkFromMobile === 'object') {
@@ -129,13 +134,14 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       url,
       width: fullWidth,
       blurhash: blurhashFromLight,
+      updatedAt: cacheTag,
     } = darkFromMobile
 
     width = fullWidth!
     height = fullHeight!
     alt = altFromLight || ''
     blurhash = blurhashFromLight || placeholderBlur
-    mobileDarkSrc = `${getClientSideURL()}${url}`
+    mobileDarkSrc = getMediaUrl(url, cacheTag)
   }
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)

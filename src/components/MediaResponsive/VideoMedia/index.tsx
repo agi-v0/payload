@@ -5,6 +5,7 @@ import { getClientSideURL } from '@/utilities/getURL'
 import { cn } from '@/utilities/ui'
 import { useTheme } from '@/providers/Theme'
 import type { Props as MediaProps } from '../types'
+import { getMediaUrl } from '@/utilities/getMediaURL'
 
 export const VideoMedia: React.FC<MediaProps> = (props) => {
   const { onClick, resource, media, videoClassName } = props
@@ -30,41 +31,50 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
   let mobileDarkSrc = ''
 
   if (!src && resource && typeof resource === 'object') {
-    const { filename } = resource
+    const { filename, url, updatedAt } = resource
 
-    src = `${getClientSideURL()}/media/${filename}`
-    darkSrc = `${getClientSideURL()}/media/${filename}`
+    const cacheTag = updatedAt
+
+    src = getMediaUrl(url, cacheTag)
+
+    src = getMediaUrl(`/media/${filename}`, cacheTag)
+    darkSrc = getMediaUrl(`/media/${filename}`, cacheTag)
   }
 
   if (!src && lightFromDesktop && typeof lightFromDesktop === 'object') {
-    const { filename } = lightFromDesktop
+    const { filename, url, updatedAt } = lightFromDesktop
 
-    src = `${getClientSideURL()}/media/${filename}`
-    darkSrc = `${getClientSideURL()}/media/${filename}`
-    mobileSrc = `${getClientSideURL()}/media/${filename}`
-    mobileDarkSrc = `${getClientSideURL()}/media/${filename}`
+    const cacheTag = updatedAt
+
+    src = getMediaUrl(`/media/${filename}`, cacheTag)
+    darkSrc = getMediaUrl(`/media/${filename}`, cacheTag)
+    src = getMediaUrl(`/media/${filename}`, cacheTag)
+    darkSrc = getMediaUrl(`/media/${filename}`, cacheTag)
   }
 
   if (darkFromDesktop && typeof darkFromDesktop === 'object') {
-    const { filename } = darkFromDesktop
+    const { filename, url, updatedAt } = darkFromDesktop
+    const cacheTag = updatedAt
 
-    if (!src) src = `${getClientSideURL()}/media/${filename}`
-    darkSrc = `${getClientSideURL()}/media/${filename}`
-    mobileSrc = `${getClientSideURL()}/media/${filename}`
-    mobileDarkSrc = `${getClientSideURL()}/media/${filename}`
+    if (!src) src = getMediaUrl(`/media/${filename}`, cacheTag)
+    darkSrc = getMediaUrl(`/media/${filename}`, cacheTag)
+    mobileSrc = getMediaUrl(`/media/${filename}`, cacheTag)
+    mobileDarkSrc = getMediaUrl(`/media/${filename}`, cacheTag)
   }
 
   if (lightFromMobile && typeof lightFromMobile === 'object') {
-    const { filename } = lightFromMobile
+    const { filename, url, updatedAt } = lightFromMobile
+    const cacheTag = updatedAt
 
-    mobileSrc = `${getClientSideURL()}/media/${filename}`
-    mobileDarkSrc = `${getClientSideURL()}/media/${filename}`
+    mobileSrc = getMediaUrl(`/media/${filename}`, cacheTag)
+    mobileDarkSrc = getMediaUrl(`/media/${filename}`, cacheTag)
   }
 
   if (darkFromMobile && typeof darkFromMobile === 'object') {
-    const { filename } = darkFromMobile
+    const { filename, url, updatedAt } = darkFromMobile
+    const cacheTag = updatedAt
 
-    mobileDarkSrc = `${getClientSideURL()}/media/${filename}`
+    mobileDarkSrc = getMediaUrl(`/media/${filename}`, cacheTag)
   }
 
   const { theme } = useTheme()
