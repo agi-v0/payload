@@ -53,8 +53,7 @@ export const CallToAction01: React.FC<CTABlockProps> = ({
               fill
               className="relative h-full w-full object-cover"
               imgClassName="object-cover rounded-space-md overflow-hidden"
-              desktop={{ light: desktop?.light ?? undefined, dark: desktop?.dark ?? undefined }}
-              mobile={{ light: mobile?.light ?? undefined, dark: mobile?.dark ?? undefined }}
+              media={media}
             />
           </motion.div>
         )}

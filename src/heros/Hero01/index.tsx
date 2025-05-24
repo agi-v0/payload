@@ -113,8 +113,7 @@ export const Hero01: React.FC<Page['hero']> = ({
                 fill
                 imgClassName="object-cover"
                 className="relative h-full w-full select-none"
-                desktop={{ light: desktop?.light ?? undefined, dark: desktop?.dark ?? undefined }}
-                mobile={{ light: mobile?.light ?? undefined, dark: mobile?.dark ?? undefined }}
+                media={media}
               />
             </motion.div>
           )}

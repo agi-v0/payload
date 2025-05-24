@@ -39,13 +39,7 @@ export const CallToAction03: React.FC<CTABlockProps> = ({
             })}
           </div>
         </div>
-        {media && (
-          <Media
-            desktop={{ light: desktop?.light ?? undefined, dark: desktop?.dark ?? undefined }}
-            mobile={{ light: mobile?.light ?? undefined, dark: mobile?.dark ?? undefined }}
-            className="m-sm rounded-space-md overflow-hidden"
-          />
-        )}
+        {media && <Media media={media} className="m-sm rounded-space-md overflow-hidden" />}
       </motion.div>
     </div>
   )

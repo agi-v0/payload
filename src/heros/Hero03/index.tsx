@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
@@ -88,8 +88,7 @@ export const Hero03: React.FC<Page['hero']> = ({
           className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
           imgClassName="object-cover"
           priority
-          light={media?.desktop?.light ?? undefined}
-          dark={media?.desktop?.dark ?? undefined}
+          media={media}
           // fill
         />
       )}

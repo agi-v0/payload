@@ -50,8 +50,7 @@ export const CallToAction05: React.FC<CTABlockProps> = ({
         </motion.div>
         {media && (
           <Media
-            desktop={{ light: desktop?.light ?? undefined, dark: desktop?.dark ?? undefined }}
-            mobile={{ light: mobile?.light ?? undefined, dark: mobile?.dark ?? undefined }}
+            media={media}
             className="rounded-space-md overflow-hidden md:max-w-[32rem] md:basis-1/2"
           />
         )}

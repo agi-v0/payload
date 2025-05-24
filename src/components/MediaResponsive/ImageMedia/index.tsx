@@ -24,8 +24,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     imgClassName,
     priority,
     resource,
-    desktop,
-    mobile,
+    media,
     alt: altFromProps,
     size: sizeFromProps,
     src: srcFromProps,
@@ -42,9 +41,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let mobileDarkSrc: string = ''
   let blurhash: string = placeholderBlur
 
-  const { light: lightFromDesktop, dark: darkFromDesktop } = desktop || {}
-  const { light: lightFromMobile, dark: darkFromMobile } = mobile || {}
+  const { light: lightFromDesktop, dark: darkFromDesktop } = media?.desktop || {}
+  const { light: lightFromMobile, dark: darkFromMobile } = media?.mobile || {}
 
+  //temporarily switch off compatibility with old resource type
   if (!src && resource && typeof resource === 'object') {
     const {
       alt: altFromResource,
