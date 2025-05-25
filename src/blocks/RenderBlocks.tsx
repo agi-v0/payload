@@ -9,7 +9,7 @@ import { BlockHeader } from '@/components/BlockHeader'
 import { BlockHeaderType } from '@/types/blockHeader'
 import { RenderFeaturedAppsBlock } from './FeaturedApps/RenderFeaturedAppsBlock'
 import { RenderTestimonialsBlock } from './Testimonials/RenderTestimonialsBlock'
-import { FaqBlock } from './FAQ/Component'
+import { RenderFAQBlock } from './FAQ/RenderFAQBlock'
 import { RenderGalleryBlock } from './Gallery/RenderGalleryBlock'
 import { RenderCallToActionBlock } from './CallToAction/RenderCallToActionBlock'
 import { RenderCustomHtmlBlock } from './CustomHtmlBlock/RenderCustomHtmlBlock'
@@ -20,7 +20,7 @@ const blockComponents = {
   callToAction: RenderCallToActionBlock,
   customHtml: RenderCustomHtmlBlock,
   divider: RenderDividerBlock,
-  faqBlock: FaqBlock,
+  faqBlock: RenderFAQBlock,
   featuredApps: RenderFeaturedAppsBlock,
   features: RenderFeaturesBlock,
   formBlock: FormBlock,
@@ -56,7 +56,8 @@ export const RenderBlocks: React.FC<{
           <div id={block.blockName || undefined} className="*:first:pt-xl *:last:pb-xl" key={index}>
             {blockHeader &&
               !(block?.blockType === 'features' && ['06', '07', '17'].includes(block.type)) &&
-              !(block.blockType === 'featuredApps' && block.type === '01') && (
+              !(block.blockType === 'featuredApps' && block.type === '01') &&
+              !(block.blockType === 'faqBlock' && block.type === '02') && (
                 <BlockHeader {...blockHeader} className="" />
               )}
             <Block {...(block as any)} locale={locale} />
