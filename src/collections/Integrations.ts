@@ -32,6 +32,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { linkGroup } from '@/fields/linkGroup'
 
 export const Integrations: CollectionConfig<'integrations'> = {
   slug: 'integrations',
@@ -48,7 +49,7 @@ export const Integrations: CollectionConfig<'integrations'> = {
     link: true,
     name: true,
     title: true,
-    overview: true,
+    summary: true,
   },
   admin: {
     defaultColumns: ['icon', 'name', 'tagline', 'updatedAt'],
@@ -115,8 +116,8 @@ export const Integrations: CollectionConfig<'integrations'> = {
               localized: true,
             },
             {
-              name: 'overview',
-              label: 'Overview',
+              name: 'summary',
+              label: 'Summary',
               type: 'richText',
               localized: true,
             },
@@ -192,29 +193,53 @@ export const Integrations: CollectionConfig<'integrations'> = {
         {
           label: 'Content',
           fields: [
-            hero,
+            // hero,
             {
-              name: 'gallery',
-              type: 'upload',
-              relationTo: 'media',
-              hasMany: true,
-            },
-            {
-              name: 'content',
+              name: 'hero',
               type: 'richText',
-              localized: true,
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
                   return [
                     ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                   ]
                 },
               }),
-              label: 'About',
+              label: 'Hero',
+              localized: true,
             },
+
+            linkGroup({
+              overrides: {
+                maxRows: 2,
+                label: 'CTA',
+              },
+              supportingText: true,
+            }),
+            // {
+            //   name: 'gallery',
+            //   type: 'upload',
+            //   relationTo: 'media',
+            //   hasMany: true,
+            // },
+            // {
+            //   name: 'content',
+            //   type: 'richText',
+            //   localized: true,
+            //   editor: lexicalEditor({
+            //     features: ({ rootFeatures }) => {
+            //       return [
+            //         ...rootFeatures,
+            //         HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+            //         FixedToolbarFeature(),
+            //         InlineToolbarFeature(),
+            //       ]
+            //     },
+            //   }),
+            //   label: 'Content',
+            // },
             {
               name: 'layout',
               type: 'blocks',

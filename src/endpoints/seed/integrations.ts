@@ -19,7 +19,7 @@ const createIntegrationObject = (
   return {
     icon: imageSquare,
     tagline: details.tagline || `Tagline for ${details.title}`,
-    overview: details.overview || {
+    summary: details.summary || {
       root: {
         type: 'root',
         format: '',
@@ -34,7 +34,7 @@ const createIntegrationObject = (
             children: [
               {
                 mode: 'normal',
-                text: `Overview text for ${details.title}.`,
+                text: `Summary text for ${details.title}.`,
                 type: 'text',
                 style: '',
                 detail: 0,
@@ -146,7 +146,7 @@ export const seedIntegrations = async (
         name: 'بونات',
         slug: 'bonat',
         tagline: 'منصة ولاء شاملة لزيادة المبيعات واستهداف العملاء',
-        overview: {
+        summary: {
           root: {
             type: 'root',
             format: '',
@@ -196,7 +196,7 @@ export const seedIntegrations = async (
         name: 'نقطة',
         slug: 'nugttah',
         tagline: 'حلول ولاء العملاء وحلول التجار المرنة',
-        overview: {
+        summary: {
           root: {
             type: 'root',
             format: '',
@@ -246,7 +246,7 @@ export const seedIntegrations = async (
         name: 'مكافآت',
         slug: 'mukafaat',
         tagline: 'برامج ولاء العملاء الرائدة في المملكة العربية السعودية',
-        overview: {
+        summary: {
           root: {
             type: 'root',
             format: '',
@@ -297,7 +297,7 @@ export const seedIntegrations = async (
         name: 'آي ويتر',
         slug: 'iwaiter',
         tagline: 'الحل الرقمي الرائد للطلب والدفع في قطاع الضيافة',
-        overview: {
+        summary: {
           root: {
             type: 'root',
             format: '',
@@ -348,7 +348,7 @@ export const seedIntegrations = async (
         name: 'جاهز',
         slug: 'jahez',
         tagline: 'منصة توصيل الطعام الرائدة في المملكة العربية السعودية',
-        overview: {
+        summary: {
           root: {
             type: 'root',
             format: '',
@@ -399,7 +399,7 @@ export const seedIntegrations = async (
         name: 'إس تي سي باي',
         slug: 'stc-pay',
         tagline: 'أول شركة تقنية مالية مرخصة في المملكة والمحفظة الرقمية الأكبر',
-        overview: {
+        summary: {
           root: {
             type: 'root',
             format: '',
@@ -449,7 +449,7 @@ export const seedIntegrations = async (
         name: 'ميسار',
         slug: 'moyasar',
         tagline: 'بوابة الدفع الإلكتروني الأسهل في المملكة العربية السعودية',
-        overview: {
+        summary: {
           root: {
             type: 'root',
             format: '',

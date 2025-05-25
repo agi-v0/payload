@@ -222,7 +222,7 @@ async function getFilteredIntegrations({
       link: true,
       name: true,
       title: true,
-      overview: true,
+      summary: true,
       categories: true,
       ecosystem: true,
       slug: true,

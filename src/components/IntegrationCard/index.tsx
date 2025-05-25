@@ -8,14 +8,14 @@ import { getEcosystemBadgeColorFromObject } from '@/utilities/getEcosystemBadgeC
 
 export type IntegrationsCardData = Pick<
   Integration,
-  'slug' | 'icon' | 'tagline' | 'link' | 'name' | 'overview' | 'categories' | 'ecosystem'
+  'slug' | 'icon' | 'tagline' | 'link' | 'name' | 'summary' | 'categories' | 'ecosystem'
 >
 
 export const IntegrationCard: React.FC<{
   integration: IntegrationsCardData
   locale?: TypedLocale
 }> = ({ integration, locale }) => {
-  const { icon, tagline, link, name, overview, categories, ecosystem } = integration
+  const { icon, tagline, link, name, summary, categories, ecosystem } = integration
 
   return (
     // Use background variable and explicit rounding from Figma
@@ -66,10 +66,10 @@ export const IntegrationCard: React.FC<{
           {/* Title and Description */}
           <div className="gap-xs flex flex-col">
             {/* {tagline && <h3 className="text-h3 text-base-primary font-medium">{tagline}</h3>} */}
-            {/* Render overview using RichText component with `data` prop */}
-            {overview && (
+            {/* Render summary using RichText component with `data` prop */}
+            {summary && (
               <RichText
-                data={overview}
+                data={summary}
                 enableGutter={false}
                 className="text-body-sm text-base-secondary font-normal"
               />

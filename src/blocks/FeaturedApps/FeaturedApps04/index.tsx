@@ -25,7 +25,7 @@ interface AppsCarouselClientProps {
 // AppCard component, similar to before but ensure fields exist
 // Adapt this based on your actual App type fields
 const AppCard: React.FC<{ app: Integration; locale?: TypedLocale }> = ({ app, locale }) => {
-  const { name, icon, tagline, overview, link, gallery } = app
+  const { name, icon, tagline, summary, link, gallery } = app
 
   return (
     <div className="bg-background-neutral rounded-space-sm flex h-full w-full flex-col overflow-hidden lg:flex-row">
@@ -39,9 +39,9 @@ const AppCard: React.FC<{ app: Integration; locale?: TypedLocale }> = ({ app, lo
           {/* Title and Description */}
           <div className="gap-xs flex flex-col">
             {tagline && <h3 className="text-h4 text-base-primary font-medium">{tagline}</h3>}
-            {overview && (
+            {summary && (
               <RichText
-                data={overview}
+                data={summary}
                 enableGutter={true}
                 className="text-body-sm text-base-secondary font-normal"
               />
