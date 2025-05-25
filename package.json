@@ -8,7 +8,7 @@
     "analyze": "cross-env ANALYZE=true next build",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs",
-    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && NODE_ENV=production && pnpm build && pnpm start",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
@@ -23,9 +23,7 @@
     "ci": "payload migrate:status && payload migrate && pnpm build"
   },
   "dependencies": {
-    "@faceless-ui/scroll-info": "^2.0.0",
     "@faceless-ui/window-info": "^3.0.1",
-    "@iconify/json": "^2.2.340",
     "@iconify/tools": "^4.1.2",
     "@iconify/utils": "^2.3.0",
     "@next/bundle-analyzer": "^15.3.2",
@@ -78,7 +76,8 @@
     "sharp": "0.33.5",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "tw-animate-css": "^1.3.0"
+    "tw-animate-css": "^1.3.0",
+    "use-debounce": "^10.0.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
