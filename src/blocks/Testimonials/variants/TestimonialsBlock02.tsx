@@ -1,12 +1,10 @@
 'use client'
 
 import React from 'react'
-import { Link } from '@/i18n/routing'
 // import { getTranslations } from 'next-intl/server' // Cannot use in client components without passing down props
-import { ArrowDown, ArrowUp, ArrowRight } from 'lucide-react'
-import { motion, useAnimation, useInView, Variants } from 'motion/react'
+import { motion } from 'motion/react'
 
-import { CaseStudy, Testimonial } from '@/payload-types'
+import { Customer } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
@@ -15,7 +13,7 @@ import { containerVariants, itemVariants, itemsFling } from '@/utilities/motion'
 import { Stat } from '../stat'
 
 interface Props {
-  testimonials: Testimonial[]
+  testimonials: Customer[]
   linkLabel: string
 }
 
@@ -25,8 +23,11 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
     return null
   }
 
-  const { authorInfo, quote, featuredImage, companyLogo, caseStudy } = testimonial
-  const { stats, slug } = caseStudy?.linkCaseStudy ? (caseStudy.linkedCaseStudy as CaseStudy) : {}
+  // Extract data from the Customer structure
+  const { testimonial: testimonialData, slug, enableCaseStudy } = testimonial
+  const { quote, featuredImage, stats, company, authorInfo } = testimonialData
+
+  const { companyLogo } = company
 
   return (
     <section className="bg-background-neutral-subtle py-lg">
@@ -71,10 +72,10 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
               </div>
             )}
           </div>
-          {featuredImage && ( // Updated to featuredImage
+          {featuredImage && (
             <motion.div variants={itemVariants} className="p-xs flex items-center justify-center">
               <Media
-                resource={featuredImage} // Updated to featuredImage
+                resource={featuredImage}
                 fill
                 className="rounded-space-sm relative aspect-[4/3] h-auto w-full overflow-hidden"
                 imgClassName="object-cover"
@@ -89,27 +90,26 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
                 {<Stat stat={stat} index={index} />}
               </motion.div>
             ))}
-            {linkLabel && (
-              <motion.div
-                variants={itemsFling}
-                className={cn('h-full w-full overflow-hidden', {
-                  'col-span-2': stats.length < 3,
-                })}
-              >
-                <LinkBlock
-                  link={{
-                    type: 'custom',
-                    newTab: null,
-                    url: 'google.com',
-                    label: linkLabel,
-                    color: 'neutral',
-                    variant: 'primary',
-                  }}
-                  label={linkLabel}
-                  className="h-full w-full"
-                />
-              </motion.div>
-            )}
+
+            <motion.div
+              variants={itemsFling}
+              className={cn('h-full w-full overflow-hidden', {
+                'col-span-2': stats.length < 3,
+              })}
+            >
+              <LinkBlock
+                link={{
+                  type: 'custom',
+                  newTab: null,
+                  url: enableCaseStudy ? `/customers/${slug}` : '/customers',
+                  label: linkLabel,
+                  color: 'neutral',
+                  variant: 'primary',
+                }}
+                label={linkLabel}
+                className="h-full w-full"
+              />
+            </motion.div>
           </div>
         )}
       </motion.div>

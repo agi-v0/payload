@@ -1,11 +1,27 @@
-import { ArrowDown } from 'lucide-react'
+import { ArrowDown, ChevronDown, ChevronUp } from 'lucide-react'
 
-import { CaseStudy } from '@/payload-types'
+import { Customer } from '@/payload-types'
 import { ArrowUp } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 
+type Stat = {
+  /**
+   * Label for the stat
+   */
+  label?: string | null
+  /**
+   * Value for the stat. Example: 85% or 250 SAR
+   */
+  value?: string | null
+  /**
+   * Whether the value is an increase or decrease
+   */
+  indicator?: ('increase' | 'decrease' | 'noChange') | null
+  id?: string | null
+}
+
 export const Stat: React.FC<{
-  stat: NonNullable<CaseStudy['stats']>[number]
+  stat: Stat
   index: number
   className?: string
 }> = ({ stat, index, className }) => (
@@ -16,15 +32,13 @@ export const Stat: React.FC<{
       className,
     )}
   >
-    <span className="text-h3 text-base-primary font-medium">
-      {stat.value}
-      {stat.isPercentage ? '%' : ''}
-    </span>
+    <span className="text-h3 text-base-primary font-medium">{stat.value}</span>
     <div className="flex items-center gap-1">
-      {stat.isIncrease ? (
-        <ArrowUp className="text-base-tertiary size-4 flex-none" />
-      ) : (
-        <ArrowDown className="text-base-tertiary size-4 flex-none" />
+      {stat.indicator === 'increase' && (
+        <ChevronUp className="text-base-tertiary size-4 flex-none" />
+      )}
+      {stat.indicator === 'decrease' && (
+        <ChevronDown className="text-base-tertiary size-4 flex-none" />
       )}
       <span className="text-base-tertiary text-body-sm font-normal">{stat.label}</span>
     </div>

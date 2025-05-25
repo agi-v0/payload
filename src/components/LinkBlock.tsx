@@ -9,12 +9,17 @@ import { CaretLeft } from '@/icons/caret-left-filled'
 
 const linkBlockVariants = {
   initial: {
-    borderRadius: 'var(--radius-space-sm)',
-  },
-  hover: {
-    borderRadius: '999px',
+    borderRadius: '1.5rem',
     transition: {
       ease: [0.645, 0.045, 0.355, 1],
+      duration: 0.2,
+    },
+  },
+  hover: {
+    borderRadius: '40rem',
+    transition: {
+      ease: [0.645, 0.045, 0.355, 1],
+      duration: 0.2,
     },
   },
 }
@@ -33,10 +38,7 @@ export const LinkBlock: React.FC<LinkBlockProps> = ({ link, label, CTALabel, cla
       initial="initial"
       whileHover="hover"
       layout
-      style={{
-        borderRadius: 'var(--radius-space-sm)',
-      }}
-      className={cn('h-auto w-full overflow-hidden', className)}
+      className={cn('-rounded-2xl -lg:rounded-3xl h-auto w-full overflow-hidden', className)}
     >
       <CMSLink
         {...link}
@@ -46,11 +48,11 @@ export const LinkBlock: React.FC<LinkBlockProps> = ({ link, label, CTALabel, cla
           'text-h4 group p-sm bg-neutral hover:bg-neutral/90 text-inverted-primary ease-in-out-quad relative flex h-full items-center justify-center rounded-none text-center font-medium transition-all duration-300 hover:no-underline',
         )}
       >
-        <span className="text-h4 ease-in-out-cubic transition-all duration-300 group-hover:-translate-x-full group-hover:opacity-0">
+        <span className="text-h4 ease-in-out-cubic transition-all duration-200 group-hover:-translate-x-full group-hover:opacity-0">
           {label}
         </span>
 
-        <span className="ease-in-out-cubic absolute inset-0 flex translate-x-1/2 items-center justify-center opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+        <span className="ease-in-out-cubic absolute inset-0 flex translate-x-1/2 items-center justify-center opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100">
           {/* <ArrowRight className="size-xl text-inverted-primary rtl:rotate-180" /> */}
           <CaretLeft className="size-xl text-inverted-primary ltr:rotate-180" />
         </span>

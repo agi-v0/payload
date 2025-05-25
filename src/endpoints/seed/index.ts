@@ -19,7 +19,7 @@ import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
-import { seedTestimonials } from './testimonials'
+import { seedCustomers } from './customers'
 import { image169 } from './image-16-9'
 import { image43 } from './image-4-3'
 import { imageSquare } from './image-square'
@@ -28,14 +28,14 @@ import { seedSolutions } from './solutions'
 import { seedFeaturesShowcasePage } from './features-showcase-page'
 import { image3 } from './image-3'
 import { seedChangelog } from './changelog'
-import { seedCaseStudies } from './case-studies'
+
 import { seedFAQs } from './faq'
 
 const collections: CollectionSlug[] = [
   'pages',
   'posts',
   'users',
-  'case-studies',
+  'customers',
   'categories',
   'changelog',
   'faq',
@@ -43,7 +43,6 @@ const collections: CollectionSlug[] = [
   // 'logos',
   'media',
   'solutions',
-  'testimonials',
 ]
 const globals: GlobalSlug[] = ['header', 'footer']
 
@@ -785,20 +784,16 @@ export const seed = async ({
     }),
   )
 
-  // Seed Case Studies using the new function and get the map
-  const caseStudiesSlugToIdMap = await seedCaseStudies(payload, {
-    image169Doc,
-    solutionsSlugToIdMap, // Pass the solutions map
-    integrationsSlugToIdMap, // Pass the integrations map
-  })
-
-  payload.logger.info(`— Seeding testimonials...`)
-  await seedTestimonials({
+  // Seed Customers (replaces both testimonials and case studies)
+  const { customers, slugToIdMap: customersSlugToIdMap } = await seedCustomers({
     payload,
+    req,
     image1: image43Doc,
     logo: logoDoc,
     imageSquare: imageSquareDoc,
-    caseStudies: caseStudiesSlugToIdMap, // Pass the fetched case studies
+    image169: image169Doc,
+    solutionsSlugToIdMap,
+    integrationsSlugToIdMap,
   })
 
   payload.logger.info(`— Seeding changelog...`)

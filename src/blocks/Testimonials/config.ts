@@ -19,20 +19,20 @@ const fields: Field[] = [
     name: 'selectedTestimonials',
     type: 'relationship',
     label: 'Select Testimonials',
-    relationTo: ['testimonials'], // Assuming 'testimonials' is the slug of your Testimonials collection
+    relationTo: 'customers',
     hasMany: true,
     admin: {
       description:
         'Select specific testimonials to display. Leave blank to show the 5 most recently updated testimonials.',
     },
-    defaultValue: async ({ user, locale, req }) => {
+    defaultValue: async ({ req }) => {
       const { docs } = await req.payload.find({
-        collection: 'testimonials',
+        collection: 'customers',
         limit: 10,
         sort: 'updatedAt',
       })
 
-      return docs.map((testimonial) => ({ relationTo: 'testimonials', value: testimonial.id }))
+      return docs.map((customer) => customer.id)
     },
   },
 ]
@@ -40,6 +40,10 @@ const fields: Field[] = [
 export const TestimonialsBlock: Block = {
   slug: 'testimonials',
   interfaceName: 'TestimonialsBlock',
+  labels: {
+    singular: 'Testimonials',
+    plural: 'Testimonials',
+  },
   fields: [blockHeader, ...fields],
   dbName: 'testimonialsBlock',
 }

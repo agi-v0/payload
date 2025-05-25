@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { Link } from '@/i18n/routing'
 import {
   Carousel,
   CarouselContent,
@@ -10,24 +9,27 @@ import {
   CarouselIndicator,
 } from '@/components/ui/carousel'
 
-import { CaseStudy, Testimonial, TestimonialsBlock } from '@/payload-types'
+import { Customer } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
 import { Stat } from '../stat'
 import { CMSLink } from '@/components/Link'
 
 interface Props {
-  testimonials: Testimonial[]
+  testimonials: Customer[]
   linkLabel: string
 }
 interface TestimonialCardProps {
-  testimonial: Testimonial
+  testimonial: Customer
   linkLabel: string
 }
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabel }) => {
-  const { authorInfo, quote, featuredImage, companyLogo, caseStudy } = testimonial
-  const { stats, slug } = caseStudy?.linkCaseStudy ? (caseStudy.linkedCaseStudy as CaseStudy) : {}
+  // Extract data from the Customer structure
+  const { testimonial: testimonialData, slug, enableCaseStudy } = testimonial
+  const { quote, featuredImage, stats, company, authorInfo } = testimonialData
+
+  const { companyLogo } = company
 
   return (
     <div className="bg-background-neutral rounded-space-sm grid w-full max-w-[90rem] grid-cols-1 lg:grid-cols-2 lg:items-stretch">
@@ -79,11 +81,11 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
               </div>
             </div>
           )}
-          {caseStudy?.linkedCaseStudy && (
+          {enableCaseStudy && slug && (
             <CMSLink
               className="text-body-md text-base-secondary relative font-medium"
               variant="link"
-              url={`/case-studies/${slug}`}
+              url={`/customers/${slug}`}
             >
               {linkLabel}
             </CMSLink>
