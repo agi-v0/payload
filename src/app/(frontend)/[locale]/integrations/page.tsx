@@ -11,9 +11,8 @@ import { RenderHero } from '@/heros/RenderHero'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { draftMode } from 'next/headers'
 import { generateMeta } from '@/utilities/generateMeta'
-import { IntegrationCard } from '@/components/IntegrationCard'
+import { SearchableIntegrationsGrid } from '@/components/IntegrationsGrid/SearchableGrid'
 
-export const dynamic = 'force-static'
 export const revalidate = 600
 
 type Args = {
@@ -21,11 +20,21 @@ type Args = {
     slug?: string[]
     locale?: 'ar' | 'en' | undefined
   }>
+  searchParams: Promise<{
+    q?: string
+    category?: string
+    ecosystem?: string
+    sort?: string
+  }>
 }
 
-export default async function Page({ params: paramsPromise }: Args) {
+export default async function Page({
+  params: paramsPromise,
+  searchParams: searchParamsPromise,
+}: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
+  const searchParams = await searchParamsPromise
   const slugPath = slugSegments.join('/') || 'integrations'
   const url = `/${locale}/${slugPath === 'integrations' ? '' : slugPath}`
 
@@ -48,25 +57,51 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const { hero, layout } = page
 
-  const integrations = await payload.find({
-    collection: 'integrations',
-    depth: 1,
-    // limit: 12,
-    overrideAccess: false,
-    locale: locale,
-    draft,
-    pagination: false,
-    select: {
-      icon: true,
-      tagline: true,
-      link: true,
-      name: true,
-      title: true,
-      overview: true,
-      categories: true,
-      ecosystem: true,
-    },
-  })
+  // Get all integrations and categories/ecosystems for filtering
+  const [integrations, categories, ecosystems] = await Promise.all([
+    getFilteredIntegrations({
+      search: searchParams.q,
+      category: searchParams.category,
+      ecosystem: searchParams.ecosystem,
+      sort: searchParams.sort,
+      locale,
+      draft,
+    }),
+    payload.find({
+      collection: 'categories',
+      limit: 100,
+      locale,
+      draft,
+      pagination: false,
+      where: {
+        'parent.slug': {
+          equals: 'integrations',
+        },
+      },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+      },
+    }),
+    payload.find({
+      collection: 'categories',
+      limit: 100,
+      locale,
+      draft,
+      pagination: false,
+      where: {
+        'parent.slug': {
+          equals: 'ecosystems',
+        },
+      },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+      },
+    }),
+  ])
 
   return (
     <article className="bg-background overflow-x-clip">
@@ -76,30 +111,123 @@ export default async function Page({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
 
       <RenderHero {...hero} />
-      <div className="container">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {integrations.docs?.map((integration) => (
-            <IntegrationCard key={integration.id} integration={integration} locale={locale} />
-          ))}
-        </div>
-      </div>
+      <SearchableIntegrationsGrid
+        integrations={integrations.docs || []}
+        categories={categories.docs || []}
+        ecosystems={ecosystems.docs || []}
+        locale={locale}
+        initialFilters={{
+          search: searchParams.q || '',
+          category: searchParams.category || '',
+          ecosystem: searchParams.ecosystem || '',
+          sort: searchParams.sort || 'name',
+        }}
+      />
       <RenderBlocks blocks={layout as any} locale={locale} />
     </article>
   )
 }
 
-export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { isEnabled: draft } = await draftMode()
-  const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
-  const slugPath = slugSegments.join('/') || 'home'
+// ... existing generateMetadata and queryPageBySlug functions ...
 
-  const page = await queryPageBySlug({
-    slug: slugPath,
+// ✅ Improved filtering function
+async function getFilteredIntegrations({
+  search,
+  category,
+  ecosystem,
+  sort,
+  locale,
+  draft,
+}: {
+  search?: string
+  category?: string
+  ecosystem?: string
+  sort?: string
+  locale: 'ar' | 'en'
+  draft: boolean
+}) {
+  const payload = await getPayload({ config: configPromise })
+
+  // Build where clause for filtering
+  const where: any = {}
+
+  if (search) {
+    where.or = [
+      {
+        name: {
+          contains: search,
+        },
+      },
+      {
+        tagline: {
+          contains: search,
+        },
+      },
+      {
+        title: {
+          contains: search,
+        },
+      },
+    ]
+  }
+
+  // ✅ Fixed category filtering
+  if (category) {
+    where['categories.slug'] = {
+      equals: category, // Remove array wrapper
+    }
+  }
+
+  // ✅ Ecosystem filtering (adjust based on your schema)
+  if (ecosystem) {
+    // If ecosystem is a relationship field
+    where['ecosystem.slug'] = {
+      equals: ecosystem,
+    }
+    // OR if ecosystem is a select field with multiple values
+    // where.ecosystem = {
+    //   in: [ecosystem],
+    // }
+  }
+
+  // Build sort clause
+  let sortClause: any = 'name'
+  switch (sort) {
+    case 'name':
+      sortClause = 'name'
+      break
+    case 'newest':
+      sortClause = '-createdAt'
+      break
+    case 'oldest':
+      sortClause = 'createdAt'
+      break
+    default:
+      sortClause = 'name'
+  }
+
+  return payload.find({
+    collection: 'integrations',
+    depth: 1,
     locale,
     draft,
+    limit: 50, // ✅ Add pagination for better performance
+    pagination: true, // ✅ Enable pagination
+    where: Object.keys(where).length > 0 ? where : undefined,
+    sort: sortClause,
+    select: {
+      id: true,
+      icon: true,
+      tagline: true,
+      link: true,
+      name: true,
+      title: true,
+      overview: true,
+      categories: true,
+      ecosystem: true,
+      slug: true,
+    },
   })
-
-  return generateMeta({ doc: page })
 }
 
 const queryPageBySlug = cache(

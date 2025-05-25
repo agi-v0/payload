@@ -4,6 +4,7 @@ import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { TypedLocale } from 'payload'
+import { getEcosystemBadgeColorFromObject } from '@/utilities/getEcosystemBadgeColor'
 
 export type IntegrationsCardData = Pick<
   Integration,
@@ -16,17 +17,15 @@ export const IntegrationCard: React.FC<{
 }> = ({ integration, locale }) => {
   const { icon, tagline, link, name, overview, categories, ecosystem } = integration
 
-  console.log('integration card', link)
-
   return (
     // Use background variable and explicit rounding from Figma
-    <div className="bg-background-neutral rounded-space-sm flex w-full flex-col overflow-hidden lg:flex-row">
+    <div className="bg-background-neutral rounded-space-sm flex h-full w-full flex-col overflow-hidden lg:flex-row">
       {/* Content Section */}
       <div className="p-md flex w-full flex-col justify-between text-start">
         <div className="gap-sm flex flex-col items-start justify-start">
           {/* Integration Badge (Icon + Name) */}
-          <div className="gap-xs flex items-center justify-end">
-            {icon && <Media resource={icon} className="size-16 overflow-hidden rounded-xl" />}
+          <div className="flex items-center justify-end gap-4">
+            {icon && <Media resource={icon} className="size-3xl overflow-hidden rounded-xl" />}
             <div className="flex flex-col gap-2">
               {name && <span className="text-body-lg text-base-secondary font-medium">{name}</span>}
               {categories && (
@@ -41,7 +40,7 @@ export const IntegrationCard: React.FC<{
                             type="label"
                             size="md"
                             label={ecosystem.title}
-                            color="yellow"
+                            color={getEcosystemBadgeColorFromObject(ecosystem)}
                           />
                         ),
                     )}
@@ -49,7 +48,13 @@ export const IntegrationCard: React.FC<{
                     (category) =>
                       category &&
                       typeof category === 'object' && (
-                        <Badge key={category.id} type="label" size="md" label={category.title} />
+                        <Badge
+                          key={category.id}
+                          type="label"
+                          size="md"
+                          label={category.title}
+                          color="gray"
+                        />
                       ),
                   )}
                 </span>

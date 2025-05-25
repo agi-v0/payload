@@ -24,8 +24,8 @@ const badgeVariants = cva(
       },
       size: {
         sm: 'text-sm',
-        md: 'text-(length:--text-body-md)',
-        lg: 'text-(length:--text-body-lg)',
+        md: 'h-6 px-3 text-(length:--text-xs)',
+        lg: 'h-8 text-sm',
       },
     },
     defaultVariants: {
@@ -70,7 +70,7 @@ function Badge({
 
   if (type === 'label') {
     return (
-      <div className={cn(badgeVariants({ color }), icon_position, className)} {...props}>
+      <div className={cn(badgeVariants({ color, size }), icon_position, className)} {...props}>
         {iconName && <DynamicIcon name={iconName} color="currentColor" size={16} />}
         <p>{label}</p>
       </div>
