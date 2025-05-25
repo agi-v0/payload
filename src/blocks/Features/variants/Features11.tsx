@@ -94,7 +94,7 @@ export const Features11: React.FC<Features11Props> = ({ columns, locale }) => {
                     style={{
                       borderRadius: 'var(--radius-space-sm)',
                     }}
-                    className="border-border bg-background-neutral relative h-auto w-[calc(100vw-(var(--spacing-site)*2))] max-w-3xl"
+                    className="border-border bg-background-neutral relative h-auto w-[calc(100vw-(var(--spacing-space-site)*2))] max-w-3xl"
                   >
                     <ScrollArea
                       dir={locale === 'ar' ? 'rtl' : 'ltr'}

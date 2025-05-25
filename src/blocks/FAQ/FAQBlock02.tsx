@@ -21,7 +21,7 @@ export const FAQBlock02: React.FC<FaqBlock> = async (props) => {
 
   return (
     <div className="bg-background">
-      <div className="py-xl container flex flex-col gap-4 lg:flex-row lg:items-start">
+      <div className="container flex flex-col gap-4 lg:flex-row lg:items-start">
         <BlockHeader {...blockHeader} type="start" className="lg:pe-md w-full px-0" />
         {faqs && (
           <div className="mx-auto grid w-full grid-cols-1">

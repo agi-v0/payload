@@ -1,4 +1,4 @@
-import { Page, Post, Solution } from '@/payload-types'
+import { Integration, Page, Post, Solution } from '@/payload-types'
 
 export interface BlockHeaderType {
   className?: string | null
@@ -7,8 +7,21 @@ export interface BlockHeaderType {
   linksClassName?: string | null
   type: 'center' | 'split' | 'start'
   badge?: {
+    type?: ('label' | 'reference') | null
     label?: string | null
     color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null
+    reference?:
+      | ({
+          relationTo: 'solutions'
+          value: number | Solution
+        } | null)
+      | ({
+          relationTo: 'integrations'
+          value: number | Integration
+        } | null)
+    /**
+     * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+     */
     icon?: string | null
     icon_position?: ('flex-row' | 'flex-row-reverse') | null
   }

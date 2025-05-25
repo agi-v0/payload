@@ -40,7 +40,7 @@ export const TestimonialsModularGrid: React.FC<TestimonialsModularGridProps> = (
     }
   })
   return (
-    <section className="py-xl md:py-2xl lg:py-3xl container">
+    <section className="py-xl md:py-2xl lg:py-space-3xl container">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {gridItems.map(
           ({ id, authorInfo, companyLogo, /* company, stats, */ quote, cellType, sizeClasses }) => {

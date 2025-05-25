@@ -136,7 +136,7 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
             defaultValue={initialFilters.category || 'all'}
             onValueChange={handleCategoryChange}
           >
-            <SelectTrigger className="w-[180px] w-full">
+            <SelectTrigger className="w-full">
               <SelectValue placeholder={t.allCategories} />
             </SelectTrigger>
             <SelectContent>
@@ -158,7 +158,7 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
             defaultValue={initialFilters.ecosystem || 'all'}
             onValueChange={handleEcosystemChange}
           >
-            <SelectTrigger className="w-[180px] w-full">
+            <SelectTrigger className="w-full">
               <SelectValue placeholder={t.allEcosystems} />
             </SelectTrigger>
             <SelectContent>
@@ -180,7 +180,7 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
             defaultValue={initialFilters.sort || 'name'}
             onValueChange={handleSortChange}
           >
-            <SelectTrigger className="w-[140px] w-full">
+            <SelectTrigger className="w-full">
               <SelectValue placeholder={t.sortBy} />
             </SelectTrigger>
             <SelectContent>

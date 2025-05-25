@@ -8,5 +8,23 @@ export const DividerBlock: Block = {
   },
   interfaceName: 'DividerBlock',
   dbName: 'dividerBlock',
-  fields: [], // No fields, it's just a visual <hr />
+  fields: [
+    {
+      name: 'size',
+      type: 'select',
+      options: [
+        { value: 'small', label: 'Small' },
+        { value: 'medium', label: 'Medium' },
+        { value: 'large', label: 'Large' },
+      ],
+      defaultValue: 'small',
+      required: true,
+    },
+    {
+      name: 'enableDivider',
+      type: 'checkbox',
+      defaultValue: true,
+      required: true,
+    },
+  ],
 }

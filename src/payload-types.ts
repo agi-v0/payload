@@ -948,9 +948,7 @@ export interface FaqBlock {
         }[]
       | null;
   };
-  /**
-   * Select the FAQs to display. Leave blank to display latest 6 FAQs.
-   */
+  type: '01' | '02';
   faqs: (number | Faq)[];
   id?: string | null;
   blockName?: string | null;
@@ -978,6 +976,7 @@ export interface Faq {
     };
     [k: string]: unknown;
   } | null;
+  category?: (number | null) | Category;
   updatedAt: string;
   createdAt: string;
 }
@@ -1881,6 +1880,8 @@ export interface CustomHtmlBlock {
  * via the `definition` "DividerBlock".
  */
 export interface DividerBlock {
+  size: 'small' | 'medium' | 'large';
+  enableDivider: boolean;
   id?: string | null;
   blockName?: string | null;
   blockType: 'divider';
@@ -2652,6 +2653,7 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface FaqSelect<T extends boolean = true> {
   question?: T;
   answer?: T;
+  category?: T;
   updatedAt?: T;
   createdAt?: T;
 }

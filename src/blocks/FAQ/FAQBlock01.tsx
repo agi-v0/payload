@@ -20,7 +20,7 @@ export const FAQBlock01: React.FC<FaqBlock> = async (props) => {
 
   return (
     <div className="bg-background">
-      <div className="py-xl container">
+      <div className="container">
         {faqs && (
           <div className="mx-auto grid w-full grid-cols-1">
             <Accordion type="single" collapsible className="space-y-2">

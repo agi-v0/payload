@@ -4142,11 +4142,11 @@ export const media = pgTable(
   'media',
   {
     id: serial('id').primaryKey(),
+    prefix: varchar('prefix').default('media'),
     alt: varchar('alt').notNull(),
     caption: jsonb('caption'),
     locale: enum_media_locale('locale'),
     blurhash: varchar('blurhash'),
-    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -5116,6 +5116,9 @@ export const faq = pgTable(
   'faq',
   {
     id: serial('id').primaryKey(),
+    category: integer('category_id').references(() => categories.id, {
+      onDelete: 'set null',
+    }),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -5124,6 +5127,7 @@ export const faq = pgTable(
       .notNull(),
   },
   (columns) => ({
+    faq_category_idx: index('faq_category_idx').on(columns.category),
     faq_updated_at_idx: index('faq_updated_at_idx').on(columns.updatedAt),
     faq_created_at_idx: index('faq_created_at_idx').on(columns.createdAt),
   }),
@@ -9204,7 +9208,12 @@ export const relations_faq_locales = relations(faq_locales, ({ one }) => ({
     relationName: '_locales',
   }),
 }))
-export const relations_faq = relations(faq, ({ many }) => ({
+export const relations_faq = relations(faq, ({ one, many }) => ({
+  category: one(categories, {
+    fields: [faq.category],
+    references: [categories.id],
+    relationName: 'category',
+  }),
   _locales: many(faq_locales, {
     relationName: '_locales',
   }),

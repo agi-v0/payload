@@ -97,7 +97,9 @@ function Badge({
             priority
           />
         )}
-        <p className="">{referenceValue?.name}</p>
+        <p className={cn(size === 'md' && 'text-base', size === 'lg' && 'text-body-md')}>
+          {referenceValue?.name}
+        </p>
       </div>
     )
   }

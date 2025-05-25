@@ -30,6 +30,7 @@ export const Media: CollectionConfig = {
     {
       name: 'prefix',
       type: 'text',
+      defaultValue: 'media',
       admin: {
         readOnly: true,
         hidden: true,
