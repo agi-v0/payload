@@ -13,8 +13,9 @@ export const LogoBlock: Block = {
       type: 'select',
       required: true,
       options: [
-        { value: '01', label: '01' },
-        { value: '02', label: '01' },
+        { value: '01', label: '01 - Infinite Slider' },
+        { value: '02', label: '02 - Grid (12 Logos)' },
+        { value: '03', label: '03 - Grid (24 Logos)' },
       ],
     },
     logos(),

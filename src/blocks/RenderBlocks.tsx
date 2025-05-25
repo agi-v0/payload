@@ -14,6 +14,8 @@ import { RenderGalleryBlock } from './Gallery/RenderGalleryBlock'
 import { RenderCallToActionBlock } from './CallToAction/RenderCallToActionBlock'
 import { RenderCustomHtmlBlock } from './CustomHtmlBlock/RenderCustomHtmlBlock'
 import { RenderDividerBlock } from './DividerBlock/RenderDividerBlock'
+import { RenderLogoBlock } from './Logos/RenderLogoBlock'
+import { RenderRichTextBlock } from './RichText/RenderRichTextBlock'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -25,7 +27,9 @@ const blockComponents = {
   features: RenderFeaturesBlock,
   formBlock: FormBlock,
   gallery: RenderGalleryBlock,
+  logoBlock: RenderLogoBlock,
   mediaBlock: MediaBlock,
+  richText: RenderRichTextBlock,
   testimonials: RenderTestimonialsBlock,
 }
 
