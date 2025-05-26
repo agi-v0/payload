@@ -3,7 +3,7 @@ import { logos } from '@/fields/logos'
 import { Block } from 'payload'
 
 export const MetricsBlock: Block = {
-  slug: 'metrics',
+  slug: 'metricsBlock',
   labels: {
     singular: 'Metrics',
     plural: 'Metrics',

@@ -2,19 +2,11 @@ import type { CollectionConfig, Field } from 'payload'
 
 import { authenticated } from '../access/authenticated'
 import { authenticatedOrPublished } from '../access/authenticatedOrPublished'
-import { MediaBlock } from '../blocks/MediaBlock/config'
-import { StyledList } from '../blocks/StyledList/config'
-import { hero } from '@/heros/config'
-import { Banner } from '../blocks/Banner/config'
-import { Code } from '../blocks/Code/config'
-
-import { FormBlock } from '../blocks/Form/config'
-import { Archive } from '../blocks/ArchiveBlock/config'
-import { CallToAction } from '../blocks/CallToAction/config'
 
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../utilities/generatePreviewPath'
+
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -245,14 +237,18 @@ export const Integrations: CollectionConfig<'integrations'> = {
               type: 'blocks',
               blocks: [],
               blockReferences: [
-                'archive',
-                'callToAction',
+                'archiveBlock',
+                'callToActionBlock',
+                'customHtmlBlock',
+                'dividerBlock',
                 'faqBlock',
-                'features',
-                'featuredApps',
-                'gallery',
+                'featuredAppsBlock',
+                'featuresBlock',
                 'formBlock',
-                'testimonials',
+                'galleryBlock',
+                'logosBlock',
+                'richTextBlock',
+                'testimonialsBlock',
               ],
 
               admin: {

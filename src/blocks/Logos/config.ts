@@ -3,9 +3,14 @@ import { logos } from '@/fields/logos'
 
 import type { Block } from 'payload'
 
-export const LogoBlock: Block = {
-  slug: 'logoBlock',
+export const LogosBlock: Block = {
+  slug: 'logosBlock',
+  labels: {
+    singular: 'Logos',
+    plural: 'Logos',
+  },
   interfaceName: 'LogoBlock',
+  dbName: 'logosBlock',
   fields: [
     blockHeader,
     {

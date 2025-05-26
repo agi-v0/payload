@@ -16,6 +16,7 @@ import { link } from '@/fields/link'
 import { iconPickerField } from '@/fields/iconPickerField'
 import lucideIcons from '@/fields/iconPickerField/lucide-icons.json'
 import { formatSlug } from '@/fields/slug/formatSlug'
+import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 
 export const Customers: CollectionConfig = {
   slug: 'customers',
@@ -29,31 +30,31 @@ export const Customers: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'publishedAt', 'updatedAt'],
-    //   livePreview: {
-    //     url: ({ data, req, locale }) => {
-    //       const path = generatePreviewPath({
-    //         slug: typeof data?.slug === 'string' ? data.slug : '',
-    //         locale: locale as any,
-    //         collection: 'customers' as any,
-    //         req,
-    //       })
-    //       return path
-    //     },
-    //   },
-    //   preview: (data, { req, locale }) =>
-    //     generatePreviewPath({
-    //       slug: typeof data?.slug === 'string' ? data.slug : '',
-    //       locale,
-    //       collection: 'customers' as any,
-    //       req,
-    //     }),
-    // },
-    // defaultPopulate: {
-    //   slug: true,
-    //   featuredImage: true,
-    //   title: true,
-    //   type: true,
+    livePreview: {
+      url: ({ data, req, locale }) => {
+        const path = generatePreviewPath({
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          locale: locale as any,
+          collection: 'customers' as any,
+          req,
+        })
+        return path
+      },
+    },
+    preview: (data, { req, locale }) =>
+      generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        locale,
+        collection: 'customers' as any,
+        req,
+      }),
   },
+  // defaultPopulate: {
+  //   slug: true,
+  //   featuredImage: true,
+  //   title: true,
+  //   type: true,
+  //},
   fields: [
     {
       name: 'title',
@@ -282,6 +283,7 @@ export const Customers: CollectionConfig = {
         },
         {
           label: 'Case study',
+          name: 'caseStudy',
           admin: {
             condition: (data) => data?.enableCaseStudy,
           },
@@ -320,14 +322,18 @@ export const Customers: CollectionConfig = {
               type: 'blocks',
               blocks: [],
               blockReferences: [
-                'archive',
-                'callToAction',
+                'archiveBlock',
+                'callToActionBlock',
+                'customHtmlBlock',
+                'dividerBlock',
                 'faqBlock',
-                'features',
-                'featuredApps',
-                'gallery',
+                'featuredAppsBlock',
+                'featuresBlock',
                 'formBlock',
-                'testimonials',
+                'galleryBlock',
+                'logosBlock',
+                'richTextBlock',
+                'testimonialsBlock',
               ],
               admin: {
                 initCollapsed: true,
@@ -367,6 +373,15 @@ export const Customers: CollectionConfig = {
       },
     },
   ],
+  hooks: {
+    // afterChange: [
+    //   ({ doc }) => {
+    //     revalidatePath(`/customers/${doc.slug}`)
+    //     revalidatePath(`/customers`, 'page')
+    //     console.log(`Revalidated: /customers/${doc.slug}`)
+    //   },
+    // ],
+  },
 
   versions: {
     drafts: {

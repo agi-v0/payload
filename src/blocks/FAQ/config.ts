@@ -4,6 +4,10 @@ import { blockHeader } from '../../components/BlockHeader/config'
 
 export const FaqBlock: Block = {
   slug: 'faqBlock',
+  labels: {
+    singular: 'FAQ',
+    plural: 'FAQs',
+  },
   interfaceName: 'FaqBlock',
   dbName: 'faqBlock',
   fields: [

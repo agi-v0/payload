@@ -56,34 +56,8 @@ const createIntegrationObject = (
       url: `/integrations/${details.slug}`,
       label: details.name,
     },
+
     hero: details.hero || {
-      type: 'hero01',
-      richText: null,
-      links: [],
-      supportingText: null,
-      logos: {
-        headline: null,
-        logos: [],
-      },
-      media: {
-        desktop: {
-          light: null,
-          dark: null,
-        },
-        mobile: {
-          light: null,
-          dark: null,
-        },
-      },
-      badge: {
-        label: null,
-        color: 'blue',
-        icon: null,
-        icon_position: 'flex-row',
-      },
-    },
-    gallery: details.gallery || [],
-    content: details.content || {
       root: {
         type: 'root',
         format: '',

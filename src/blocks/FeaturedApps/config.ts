@@ -86,7 +86,7 @@ const fields: Field[] = [
 ]
 
 export const FeaturedAppsBlock: Block = {
-  slug: 'featuredApps',
+  slug: 'featuredAppsBlock',
   labels: {
     singular: 'Featured Apps',
     plural: 'Featured Apps',

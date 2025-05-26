@@ -113,50 +113,52 @@ export async function seedCustomers({
         },
       },
 
-      // Case study tab data
-      caseStudytitle: `كيف حققت ${companyNameAr} نموًا بنسبة ${25 + i * 5}% مع مرن`,
-      summary: `قصة نجاح ${companyNameAr} في تحسين عملياتها وزيادة أرباحها باستخدام حلول مرن المتكاملة.`,
-      content: {
-        root: {
-          type: 'root',
-          children: [
-            {
-              type: 'heading',
-              version: 1,
-              children: [
-                {
-                  type: 'text',
-                  text: 'التحدي',
-                  format: 'bold',
-                },
-              ],
-              tag: 'h2',
-            },
-            {
-              type: 'paragraph',
-              version: 1,
-              children: [
-                {
-                  type: 'text',
-                  text: `كانت ${companyNameAr} تواجه تحديات في إدارة المبيعات والمخزون.`,
-                },
-              ],
-              direction: 'rtl',
-            },
-          ],
-          direction: 'rtl',
-          format: '',
-          indent: 0,
-          version: 1,
+      caseStudy: {
+        // Case study tab data
+        caseStudytitle: `كيف حققت ${companyNameAr} نموًا بنسبة ${25 + i * 5}% مع مرن`,
+        summary: `قصة نجاح ${companyNameAr} في تحسين عملياتها وزيادة أرباحها باستخدام حلول مرن المتكاملة.`,
+        content: {
+          root: {
+            type: 'root',
+            children: [
+              {
+                type: 'heading',
+                version: 1,
+                children: [
+                  {
+                    type: 'text',
+                    text: 'التحدي',
+                    format: 'bold',
+                  },
+                ],
+                tag: 'h2',
+              },
+              {
+                type: 'paragraph',
+                version: 1,
+                children: [
+                  {
+                    type: 'text',
+                    text: `كانت ${companyNameAr} تواجه تحديات في إدارة المبيعات والمخزون.`,
+                  },
+                ],
+                direction: 'rtl',
+              },
+            ],
+            direction: 'rtl',
+            format: '',
+            indent: 0,
+            version: 1,
+          },
         },
+        layout: [],
       },
-      layout: [],
 
       // Common fields
       categories: [],
       publishedAt: new Date().toISOString(),
       enableCaseStudy: true,
-      status: 'published',
+      _status: 'published',
     }
   })
 

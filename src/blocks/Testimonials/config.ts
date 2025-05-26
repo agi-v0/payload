@@ -38,7 +38,7 @@ const fields: Field[] = [
 ]
 
 export const TestimonialsBlock: Block = {
-  slug: 'testimonials',
+  slug: 'testimonialsBlock',
   interfaceName: 'TestimonialsBlock',
   labels: {
     singular: 'Testimonials',

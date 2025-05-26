@@ -205,7 +205,7 @@ export const seedFeaturesShowcasePage = (media: {
     }
 
     const block: Partial<FeaturesBlock> = {
-      blockType: 'features',
+      blockType: 'featuresBlock',
       type: type,
       blockHeader: blockHeaderData,
       blockImage: ['04', '06', '07'].includes(type) ? media.image169?.id : undefined,

@@ -2,7 +2,7 @@ import type { Block } from 'payload'
 import { blockHeader } from '@/components/BlockHeader/config'
 
 export const CustomHtmlBlock: Block = {
-  slug: 'customHtml',
+  slug: 'customHtmlBlock',
   labels: {
     singular: 'Custom HTML',
     plural: 'Custom HTML',

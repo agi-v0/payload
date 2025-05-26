@@ -29,10 +29,10 @@ import { Changelog } from './collections/Changelog'
 import { FAQ } from './collections/FAQ'
 
 //blocks
-import { Archive } from '@/blocks/ArchiveBlock/config'
+import { ArchiveBlock } from '@/blocks/ArchiveBlock/config'
 import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
-import { CallToAction } from '@/blocks/CallToAction/config'
-import { CustomHtmlBlock } from '@/blocks/CustomHtmlBlock/config'
+import { CallToActionBlock } from '@/blocks/CallToAction/config'
+import { CustomHtmlBlock } from '@/blocks/CustomHTML/config'
 import { FeaturesBlock } from '@/blocks/Features/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
@@ -40,8 +40,8 @@ import { StyledList } from '@/blocks/StyledList/config'
 import { TestimonialsBlock } from '@/blocks/Testimonials/config'
 import { GalleryBlock } from '@/blocks/Gallery/config'
 import { FaqBlock } from '@/blocks/FAQ/config'
-import { DividerBlock } from '@/blocks/DividerBlock/config'
-import { LogoBlock } from '@/blocks/Logos/config'
+import { DividerBlock } from '@/blocks/Divider/config'
+import { LogosBlock } from '@/blocks/Logos/config'
 import { RichTextBlock } from '@/blocks/RichText/config'
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
@@ -132,8 +132,8 @@ export default buildConfig({
     // push: false, // disable push mode
   }),
   blocks: [
-    Archive,
-    CallToAction,
+    ArchiveBlock,
+    CallToActionBlock,
     CustomHtmlBlock,
     DividerBlock,
     FaqBlock,
@@ -141,7 +141,7 @@ export default buildConfig({
     FeaturedAppsBlock,
     GalleryBlock,
     FormBlock,
-    LogoBlock,
+    LogosBlock,
     MediaBlock,
     RichTextBlock,
     StyledList,

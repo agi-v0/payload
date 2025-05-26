@@ -12,8 +12,8 @@ import { RenderTestimonialsBlock } from './Testimonials/RenderTestimonialsBlock'
 import { RenderFAQBlock } from './FAQ/RenderFAQBlock'
 import { RenderGalleryBlock } from './Gallery/RenderGalleryBlock'
 import { RenderCallToActionBlock } from './CallToAction/RenderCallToActionBlock'
-import { RenderCustomHtmlBlock } from './CustomHtmlBlock/RenderCustomHtmlBlock'
-import { RenderDividerBlock } from './DividerBlock/RenderDividerBlock'
+import { RenderCustomHtmlBlock } from './CustomHTML/RenderCustomHtmlBlock'
+import { RenderDividerBlock } from './Divider/RenderDividerBlock'
 import { RenderLogoBlock } from './Logos/RenderLogoBlock'
 import { RenderRichTextBlock } from './RichText/RenderRichTextBlock'
 
@@ -59,8 +59,8 @@ export const RenderBlocks: React.FC<{
         return (
           <div id={block.blockName || undefined} className="*:first:pt-xl *:last:pb-xl" key={index}>
             {blockHeader &&
-              !(block?.blockType === 'features' && ['06', '07', '17'].includes(block.type)) &&
-              !(block.blockType === 'featuredApps' && block.type === '01') &&
+              !(block?.blockType === 'featuresBlock' && ['06', '07', '17'].includes(block.type)) &&
+              !(block.blockType === 'featuredAppsBlock' && block.type === '01') &&
               !(block.blockType === 'faqBlock' && block.type === '02') && (
                 <BlockHeader {...blockHeader} className="" />
               )}

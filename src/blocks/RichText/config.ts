@@ -22,7 +22,7 @@ const richTextEditor = lexicalEditor({
 })
 
 export const RichTextBlock: Block = {
-  slug: 'richText',
+  slug: 'richTextBlock',
   labels: {
     singular: 'Rich Text',
     plural: 'Rich Text',

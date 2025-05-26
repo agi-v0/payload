@@ -76,7 +76,7 @@ const fields: Field[] = [
 ]
 
 export const GalleryBlock: Block = {
-  slug: 'gallery',
+  slug: 'galleryBlock',
   interfaceName: 'GalleryBlock',
   dbName: 'galleryBlock',
   fields: [blockHeader, ...fields],

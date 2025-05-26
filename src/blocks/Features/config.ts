@@ -37,7 +37,7 @@ const sizeOptions = [
 ]
 
 export const FeaturesBlock: Block = {
-  slug: 'features',
+  slug: 'featuresBlock',
   labels: {
     singular: 'Features',
     plural: 'Features',

@@ -14,10 +14,14 @@ import { badge } from '@/fields/badge'
 import { linkGroup } from '@/fields/linkGroup'
 import { mediaGroup } from '@/fields/media'
 
-export const CallToAction: Block = {
-  slug: 'callToAction',
+export const CallToActionBlock: Block = {
+  slug: 'callToActionBlock',
   interfaceName: 'CallToActionBlock',
   dbName: 'callToActionBlock',
+  labels: {
+    singular: 'Call to Action',
+    plural: 'Calls to Action',
+  },
   fields: [
     {
       name: 'type',
@@ -151,8 +155,4 @@ export const CallToAction: Block = {
       },
     },
   ],
-  labels: {
-    plural: 'Calls to Action',
-    singular: 'Call to Action',
-  },
 }

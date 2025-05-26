@@ -1,7 +1,7 @@
 import type { Block } from 'payload'
 
 export const DividerBlock: Block = {
-  slug: 'divider',
+  slug: 'dividerBlock',
   labels: {
     singular: 'Divider',
     plural: 'Dividers',

@@ -1,8 +1,13 @@
 import type { Block } from 'payload'
 
 export const StyledList: Block = {
-  slug: 'styledList',
+  slug: 'styledListBlock',
   interfaceName: 'StyledListBlock',
+  dbName: 'styledListBlock',
+  labels: {
+    singular: 'Styled List',
+    plural: 'Styled Lists',
+  },
   fields: [
     {
       name: 'listStyle',
