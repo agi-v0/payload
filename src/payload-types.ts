@@ -75,9 +75,11 @@ export interface Config {
     featuredApps: FeaturedAppsBlock;
     gallery: GalleryBlock;
     formBlock: FormBlock;
-    testimonials: TestimonialsBlock;
+    logoBlock: LogoBlock;
     mediaBlock: MediaBlock;
+    richText: RichTextBlock;
     styledList: StyledListBlock;
+    testimonials: TestimonialsBlock;
   };
   collections: {
     pages: Page;
@@ -85,8 +87,7 @@ export interface Config {
     solutions: Solution;
     integrations: Integration;
     media: Media;
-    testimonials: Testimonial;
-    'case-studies': CaseStudy;
+    customers: Customer;
     categories: Category;
     faq: Faq;
     changelog: Changelog;
@@ -107,8 +108,7 @@ export interface Config {
     solutions: SolutionsSelect<false> | SolutionsSelect<true>;
     integrations: IntegrationsSelect<false> | IntegrationsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
-    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
+    customers: CustomersSelect<false> | CustomersSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
     changelog: ChangelogSelect<false> | ChangelogSelect<true>;
@@ -639,6 +639,8 @@ export interface Page {
     | FeaturesBlock
     | FormBlock
     | GalleryBlock
+    | LogoBlock
+    | RichTextBlock
     | TestimonialsBlock
   )[];
   meta?: {
@@ -672,7 +674,7 @@ export interface Integration {
   icon?: (number | null) | Media;
   name?: string | null;
   tagline?: string | null;
-  overview?: {
+  summary?: {
     root: {
       type: string;
       children: {
@@ -742,95 +744,7 @@ export interface Integration {
     url?: string | null;
     label: string;
   };
-  hero: {
-    type: 'hero01' | 'hero02' | 'hero03' | 'hero04' | 'hero05' | 'none';
-    badge?: {
-      type?: ('label' | 'reference') | null;
-      label?: string | null;
-      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
-      reference?:
-        | ({
-            relationTo: 'solutions';
-            value: number | Solution;
-          } | null)
-        | ({
-            relationTo: 'integrations';
-            value: number | Integration;
-          } | null);
-      /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
-       */
-      icon?: string | null;
-      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
-    };
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null)
-              | ({
-                  relationTo: 'solutions';
-                  value: number | Solution;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose the button style.
-             */
-            color?: ('brand' | 'neutral') | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    supportingText?: string | null;
-    media?: {
-      desktop?: {
-        light?: (number | null) | Media;
-        dark?: (number | null) | Media;
-      };
-      /**
-       * Optional
-       */
-      mobile?: {
-        light?: (number | null) | Media;
-        dark?: (number | null) | Media;
-      };
-    };
-    logos?: {
-      headline?: string | null;
-      logos?: (number | Media)[] | null;
-    };
-  };
-  gallery?: (number | Media)[] | null;
-  content?: {
+  hero?: {
     root: {
       type: string;
       children: {
@@ -845,6 +759,39 @@ export interface Integration {
     };
     [k: string]: unknown;
   } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: number | Solution;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose the button style.
+           */
+          color?: ('brand' | 'neutral') | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  supportingText?: string | null;
   layout?:
     | (
         | ArchiveBlock
@@ -1666,75 +1613,102 @@ export interface TestimonialsBlock {
   /**
    * Select specific testimonials to display. Leave blank to show the 5 most recently updated testimonials.
    */
-  selectedTestimonials?:
-    | {
-        relationTo: 'testimonials';
-        value: number | Testimonial;
-      }[]
-    | null;
+  selectedTestimonials?: (number | Customer)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'testimonials';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials".
+ * via the `definition` "customers".
  */
-export interface Testimonial {
-  id: number;
-  quote: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  companyName: string;
-  featuredImage?: (number | null) | Media;
-  /**
-   * Logo of the company.
-   */
-  companyLogo?: (number | null) | Media;
-  authorInfo: {
-    name: string;
-    title?: string | null;
-    /**
-     * Avatar image for the testimonial author. Minimum 300x300px recommended.
-     */
-    avatar?: (number | null) | Media;
-  };
-  caseStudy?: {
-    linkCaseStudy?: boolean | null;
-    linkedCaseStudy?: (number | null) | CaseStudy;
-  };
-  /**
-   * Categories to help organize testimonials
-   */
-  categories?: (number | Category)[] | null;
-  publishedAt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "case-studies".
- */
-export interface CaseStudy {
+export interface Customer {
   id: number;
   /**
    * Internal page title used to identify this entry in the CMS and generate the URL slug. English only.
    */
   title: string;
-  content: {
+  testimonial: {
+    quote: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    featuredImage?: (number | null) | Media;
+    featuredSolutions?: (number | Solution)[] | null;
+    featuredIntegrations?: (number | Integration)[] | null;
+    stats?:
+      | {
+          /**
+           * Label for the stat
+           */
+          label?: string | null;
+          /**
+           * Value for the stat. Example: 85% or 250 SAR
+           */
+          value?: string | null;
+          /**
+           * Whether the value is an increase or decrease
+           */
+          indicator?: ('increase' | 'decrease' | 'noChange') | null;
+          id?: string | null;
+        }[]
+      | null;
+    company: {
+      /**
+       * Auto-generated from title
+       */
+      companyName: string;
+      companyLogo?: (number | null) | Media;
+      link: {
+        type?: ('reference' | 'custom') | null;
+        newTab?: boolean | null;
+        reference?:
+          | ({
+              relationTo: 'pages';
+              value: number | Page;
+            } | null)
+          | ({
+              relationTo: 'posts';
+              value: number | Post;
+            } | null)
+          | ({
+              relationTo: 'solutions';
+              value: number | Solution;
+            } | null);
+        url?: string | null;
+        label: string;
+      };
+      industry?: ('restaurants' | 'retail' | 'services') | null;
+      foundingYear?: number | null;
+      location?: string | null;
+      /**
+       * Number of branches or locations. Example: 5+
+       */
+      branches?: string | null;
+    };
+    authorInfo: {
+      name: string;
+      title?: string | null;
+      /**
+       * Avatar image for the testimonial author. Minimum 300x300px recommended.
+       */
+      avatar?: (number | null) | Media;
+    };
+  };
+  caseStudytitle: string;
+  summary: string;
+  content?: {
     root: {
       type: string;
       children: {
@@ -1748,33 +1722,7 @@ export interface CaseStudy {
       version: number;
     };
     [k: string]: unknown;
-  };
-  industry?: string | null;
-  useCase?: string | null;
-  featuredImage: number | Media;
-  stats?:
-    | {
-        /**
-         * Label for the stat
-         */
-        label: string;
-        /**
-         * Value for the stat
-         */
-        value: number;
-        /**
-         * Whether the value is a percentage
-         */
-        isPercentage?: boolean | null;
-        /**
-         * Whether the value is an increase or decrease
-         */
-        isIncrease?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  featuredSolutions?: (number | Solution)[] | null;
-  featuredIntegrations?: (number | Integration)[] | null;
+  } | null;
   layout?:
     | (
         | ArchiveBlock
@@ -1787,8 +1735,14 @@ export interface CaseStudy {
         | TestimonialsBlock
       )[]
     | null;
+  enableCaseStudy?: boolean | null;
   slug?: string | null;
   slugLock?: boolean | null;
+  /**
+   * Categories to help organize testimonials
+   */
+  categories?: (number | Category)[] | null;
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1885,6 +1839,188 @@ export interface DividerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'divider';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LogoBlock".
+ */
+export interface LogoBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: number | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  type: '01' | '02' | '03';
+  logos?: (number | Media)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'logoBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock".
+ */
+export interface RichTextBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: number | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: number | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: number | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  type: '01' | '02';
+  /**
+   * Controls the maximum width of the content container
+   */
+  maxWidth?: ('default' | 'small' | 'large' | 'full') | null;
+  /**
+   * Controls the number of columns in the content
+   */
+  columns: number;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richText';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2146,12 +2282,8 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'testimonials';
-        value: number | Testimonial;
-      } | null)
-    | ({
-        relationTo: 'case-studies';
-        value: number | CaseStudy;
+        relationTo: 'customers';
+        value: number | Customer;
       } | null)
     | ({
         relationTo: 'categories';
@@ -2373,7 +2505,7 @@ export interface IntegrationsSelect<T extends boolean = true> {
   icon?: T;
   name?: T;
   tagline?: T;
-  overview?: T;
+  summary?: T;
   link?:
     | T
     | {
@@ -2399,63 +2531,24 @@ export interface IntegrationsSelect<T extends boolean = true> {
         url?: T;
         label?: T;
       };
-  hero?:
+  hero?: T;
+  links?:
     | T
     | {
-        type?: T;
-        badge?:
+        link?:
           | T
           | {
               type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
               label?: T;
               color?: T;
-              reference?: T;
-              icon?: T;
-              icon_position?: T;
+              variant?: T;
             };
-        richText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    color?: T;
-                    variant?: T;
-                  };
-              id?: T;
-            };
-        supportingText?: T;
-        media?:
-          | T
-          | {
-              desktop?:
-                | T
-                | {
-                    light?: T;
-                    dark?: T;
-                  };
-              mobile?:
-                | T
-                | {
-                    light?: T;
-                    dark?: T;
-                  };
-            };
-        logos?:
-          | T
-          | {
-              headline?: T;
-              logos?: T;
-            };
+        id?: T;
       };
-  gallery?: T;
-  content?: T;
+  supportingText?: T;
   layout?: T | {};
   meta?:
     | T
@@ -2572,56 +2665,61 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials_select".
+ * via the `definition` "customers_select".
  */
-export interface TestimonialsSelect<T extends boolean = true> {
-  quote?: T;
-  companyName?: T;
-  featuredImage?: T;
-  companyLogo?: T;
-  authorInfo?:
-    | T
-    | {
-        name?: T;
-        title?: T;
-        avatar?: T;
-      };
-  caseStudy?:
-    | T
-    | {
-        linkCaseStudy?: T;
-        linkedCaseStudy?: T;
-      };
-  categories?: T;
-  publishedAt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "case-studies_select".
- */
-export interface CaseStudiesSelect<T extends boolean = true> {
+export interface CustomersSelect<T extends boolean = true> {
   title?: T;
-  content?: T;
-  industry?: T;
-  useCase?: T;
-  featuredImage?: T;
-  stats?:
+  testimonial?:
     | T
     | {
-        label?: T;
-        value?: T;
-        isPercentage?: T;
-        isIncrease?: T;
-        id?: T;
+        quote?: T;
+        featuredImage?: T;
+        featuredSolutions?: T;
+        featuredIntegrations?: T;
+        stats?:
+          | T
+          | {
+              label?: T;
+              value?: T;
+              indicator?: T;
+              id?: T;
+            };
+        company?:
+          | T
+          | {
+              companyName?: T;
+              companyLogo?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              industry?: T;
+              foundingYear?: T;
+              location?: T;
+              branches?: T;
+            };
+        authorInfo?:
+          | T
+          | {
+              name?: T;
+              title?: T;
+              avatar?: T;
+            };
       };
-  featuredSolutions?: T;
-  featuredIntegrations?: T;
+  caseStudytitle?: T;
+  summary?: T;
+  content?: T;
   layout?: T | {};
+  enableCaseStudy?: T;
   slug?: T;
   slugLock?: T;
+  categories?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

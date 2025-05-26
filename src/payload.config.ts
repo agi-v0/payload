@@ -22,12 +22,11 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Solutions } from './collections/Solutions'
 import { Integrations } from './collections/Integrations'
+import { Customers } from './collections/Customers'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
-import { Testimonials } from './collections/Testimonials'
 import { Changelog } from './collections/Changelog'
 import { FAQ } from './collections/FAQ'
-import { CaseStudies } from './collections/CaseStudies'
 
 //blocks
 import { Archive } from '@/blocks/ArchiveBlock/config'
@@ -42,6 +41,8 @@ import { TestimonialsBlock } from '@/blocks/Testimonials/config'
 import { GalleryBlock } from '@/blocks/Gallery/config'
 import { FaqBlock } from '@/blocks/FAQ/config'
 import { DividerBlock } from '@/blocks/DividerBlock/config'
+import { LogoBlock } from '@/blocks/Logos/config'
+import { RichTextBlock } from '@/blocks/RichText/config'
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
 
@@ -140,9 +141,11 @@ export default buildConfig({
     FeaturedAppsBlock,
     GalleryBlock,
     FormBlock,
-    TestimonialsBlock,
+    LogoBlock,
     MediaBlock,
+    RichTextBlock,
     StyledList,
+    TestimonialsBlock,
   ],
   collections: [
     Pages,
@@ -150,8 +153,7 @@ export default buildConfig({
     Solutions,
     Integrations,
     Media,
-    Testimonials,
-    CaseStudies,
+    Customers,
     Categories,
     FAQ,
     Changelog,
