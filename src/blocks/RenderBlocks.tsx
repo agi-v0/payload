@@ -18,19 +18,19 @@ import { RenderLogoBlock } from './Logos/RenderLogoBlock'
 import { RenderRichTextBlock } from './RichText/RenderRichTextBlock'
 
 const blockComponents = {
-  archive: ArchiveBlock,
-  callToAction: RenderCallToActionBlock,
-  customHtml: RenderCustomHtmlBlock,
-  divider: RenderDividerBlock,
+  archiveBlock: ArchiveBlock,
+  callToActionBlock: RenderCallToActionBlock,
+  customHtmlBlock: RenderCustomHtmlBlock,
+  dividerBlock: RenderDividerBlock,
   faqBlock: RenderFAQBlock,
-  featuredApps: RenderFeaturedAppsBlock,
-  features: RenderFeaturesBlock,
+  featuredAppsBlock: RenderFeaturedAppsBlock,
+  featuresBlock: RenderFeaturesBlock,
   formBlock: FormBlock,
-  gallery: RenderGalleryBlock,
+  galleryBlock: RenderGalleryBlock,
   logoBlock: RenderLogoBlock,
   mediaBlock: MediaBlock,
-  richText: RenderRichTextBlock,
-  testimonials: RenderTestimonialsBlock,
+  richTextBlock: RenderRichTextBlock,
+  testimonialsBlock: RenderTestimonialsBlock,
 }
 
 type BlockWithHeader = {
