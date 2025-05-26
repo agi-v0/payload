@@ -36,7 +36,7 @@ export const TestimonialsBlock01: React.FC<TestimonialsBlock01> = ({ testimonial
     }
   })
   return (
-    <section className="py-xl md:py-2xl lg:py-space-3xl container">
+    <section className="py-space-xl md:py-space-2xl lg:py-space-3xl container">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {gridItems.map((customer) => {
           const { id, testimonial: testimonialData, cellType, sizeClasses } = customer
