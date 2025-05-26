@@ -54,12 +54,12 @@ export const Logo03: React.FC<Logo03Props> = ({ logos, className }) => {
         <AnimatedGroup
           preset="flip"
           key={`${currentIndex}-row1`}
-          className="gap-lg grid grid-cols-2 items-center md:grid-cols-3 lg:grid-cols-6"
+          className="gap-lg grid grid-cols-2 items-center perspective-midrange md:grid-cols-3 lg:grid-cols-6"
         >
           {firstRow.map((logo, index) => (
             <div
               key={`${currentIndex}-row1-${logo.id || index}`}
-              className="flex items-center justify-center"
+              className="flex items-center justify-center dark:invert"
             >
               {typeof logo === 'object' && logo !== null && (
                 <Media resource={logo} imgClassName="h-space-md w-auto object-contain" />
@@ -73,12 +73,12 @@ export const Logo03: React.FC<Logo03Props> = ({ logos, className }) => {
           <AnimatedGroup
             preset="flip"
             key={`${currentIndex}-row2`}
-            className="gap-lg grid grid-cols-2 items-center md:grid-cols-3 lg:grid-cols-6"
+            className="gap-lg grid grid-cols-2 items-center perspective-midrange md:grid-cols-3 lg:grid-cols-6"
           >
             {secondRow.map((logo, index) => (
               <div
                 key={`${currentIndex}-row2-${logo.id || index}`}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center dark:invert"
               >
                 {typeof logo === 'object' && logo !== null && (
                   <Media resource={logo} imgClassName="h-space-md w-auto object-contain" />
