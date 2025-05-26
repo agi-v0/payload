@@ -19,6 +19,7 @@ import RichText from '@/components/RichText'
 import { DynamicIcon } from 'lucide-react/dynamic'
 import MarnIcon from '@/components/ui/marn-icon'
 import { CaretLeft } from '@/icons/caret-left-filled'
+import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
 interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
   className?: string
@@ -42,6 +43,9 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
   const validTabs = tabs || []
   return (
     <div id="parent" className={cn('', className)}>
+      {/* Preload all navigation images */}
+      <NavigationImagePreloader tabs={tabs} />
+
       <div className="px-site absolute start-0 end-0 w-full">
         <NavigationMenu className="" dir="rtl">
           <NavigationMenuList className="space-x-0">
@@ -199,19 +203,21 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                         )}
                       </div>
                     )}
-                    {subLink.link.type === 'reference' &&
-                      subLink.link.reference?.value?.icon.url && (
-                        <Image
-                          src={subLink.link.reference.value.icon.url}
-                          alt={subLink.link.reference.value.icon.alt}
-                          width={300}
-                          height={300}
-                          className="aspect-square size-10 flex-none rounded-md"
-                          priority
-                          loading="eager"
-                          unoptimized
-                        />
-                      )}
+                    {subLink.link.type === 'reference' && subLink.link.reference?.value?.icon && (
+                      <Image
+                        src={
+                          subLink.link.reference.value.icon.url ||
+                          subLink.link.reference.value.icon.sizes?.thumbnail?.url ||
+                          ''
+                        }
+                        alt={subLink.link.reference.value.icon.alt}
+                        width={40}
+                        height={40}
+                        className="aspect-square size-10 flex-none rounded-md"
+                        priority
+                        sizes="40px"
+                      />
+                    )}
                     <div className="me-10 flex w-full flex-col justify-start gap-1">
                       {subLink.link.label}
                       {(subLink.link.description || subLink.link.reference?.value?.tagline) && (

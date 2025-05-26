@@ -19,6 +19,7 @@ import {
   AccordionTrigger,
 } from '@/components/motion-ui/accordion'
 import { CaretLeft } from '@/icons/caret-left-filled'
+import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
 // Define the type for a single nav item from HeaderType
 type NavItem = NonNullable<NonNullable<HeaderType['tabs']>[number]['navItems']>[number]
@@ -60,6 +61,9 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
 
   return (
     <div className="flex h-full w-full flex-col">
+      {/* Preload all navigation images */}
+      <NavigationImagePreloader tabs={tabs} />
+
       {/* NEW: Scrollable wrapper for menu content */}
       <div className="p-site flex-grow overflow-y-auto pb-20">
         {/* Added pb-20 for CTA spacing */}
@@ -216,13 +220,19 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                       isReferenceObject &&
                         'icon' in referenceValue &&
                         typeof referenceValue.icon === 'object' && // Ensure icon itself is an object
-                        referenceValue.icon?.url ? (
+                        referenceValue.icon ? (
                         <Image
-                          src={referenceValue.icon.url} // Safe to access now
+                          src={
+                            referenceValue.icon.sizes?.thumbnail?.url ||
+                            referenceValue.icon.url ||
+                            ''
+                          }
                           alt={referenceValue.icon.alt ?? ''} // Safe to access now
-                          width={300} // Keep original desktop size for now
-                          height={300}
+                          width={40}
+                          height={40}
                           className="aspect-square size-10 flex-none rounded-md"
+                          priority
+                          sizes="40px"
                         />
                       ) : null}
                     </div>
