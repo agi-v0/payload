@@ -213,7 +213,16 @@ html[data-theme='dark'] {
     min-width: 100vw;
   }
 }
+.drawer__content {
+  --theme-bg: var(--theme-elevation-0);
+}
 
+.confirmation-modal__content {
+  text-align: center;
+}
+.confirmation-modal__controls {
+  justify-content: center;
+}
 /* 4. Popups & Toasts */
 .popup__content {
   transform-origin: top right;
@@ -451,7 +460,7 @@ html[data-theme='dark'] .nav__link:hover {
   content: '';
 }
 
-.nav-group .nav__link[id*='testimonials']::before {
+.nav-group .nav__link[id*='customers']::before {
   mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/message-square-quote.svg');
   content: '';
 }
