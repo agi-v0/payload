@@ -31,4 +31,6 @@ const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })
 
-export default withBundleAnalyzer(withPayload(withNextIntl(nextConfig)))
+export default withBundleAnalyzer(
+  withPayload(withNextIntl(nextConfig), { devBundleServerPackages: false }),
+)
