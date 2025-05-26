@@ -65,6 +65,10 @@
     margin-right: 0 !important;
   }
 
+  body {
+    background-color: var(--color-background);
+  }
+
   :root {
     overscroll-behavior: none;
     overflow-x: hidden; /* or you could use overflow-x: clip */

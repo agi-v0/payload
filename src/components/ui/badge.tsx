@@ -19,6 +19,8 @@ const badgeVariants = cva(
           'bg-lime-200 text-lime-600 disabled:bg-lime-50 disabled:text-lime-500/70 dark:bg-lime-950',
         yellow:
           'bg-yellow-100 text-yellow-600 disabled:bg-yellow-50 disabled:text-yellow-500/70 dark:bg-yellow-950',
+        violet:
+          'bg-violet-100 text-violet-600 disabled:bg-violet-50 disabled:text-violet-500/70 dark:bg-violet-950 dark:text-violet-400',
         gray: 'bg-neutral-100 text-neutral-600 disabled:bg-neutral-50 disabled:text-neutral-500/70 dark:bg-neutral-700 dark:text-neutral-400',
         inverted: 'bg-background-inverted text-inverted-secondary',
       },
@@ -38,7 +40,7 @@ const badgeVariants = cva(
 export interface BadgeProps {
   type?: ('label' | 'reference') | null
   label?: string | null
-  color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null
+  color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'violet' | 'inverted') | null
   reference?:
     | ({
         relationTo: 'solutions'
@@ -81,13 +83,15 @@ function Badge({
         className={cn(
           badgeVariants({ size, color: 'default' }),
           'gap-2 rounded-none bg-transparent p-0',
+          size === 'md' && 'gap-3',
+          size === 'lg' && 'gap-3',
           className,
         )}
         {...props}
       >
         {referenceValue?.icon && (
           <Media
-            className={cn(
+            imgClassName={cn(
               'overflow-hidden rounded-lg',
               size === 'sm' && 'size-6',
               size === 'md' && 'size-8',

@@ -1,10 +1,10 @@
-import type { BadgeColors } from '@/fields/badge'
+type BadgeColors = 'blue' | 'red' | 'green' | 'yellow' | 'gray' | 'violet' | 'inverted'
 
 // Map ecosystem slugs to badge colors
 const ecosystemColorMap: Record<string, BadgeColors> = {
-  sell: 'blue', // البيع - Sell ecosystem
-  operate: 'green', // التشغيل - Operate ecosystem
-  manage: 'yellow', // الإدارة - Manage ecosystem
+  sell: 'green', // البيع - Sell ecosystem
+  operate: 'yellow', // التشغيل - Operate ecosystem
+  manage: 'violet', // الإدارة - Manage ecosystem
 }
 
 /**
