@@ -14,21 +14,19 @@ interface Logo02Props {
 export const Logo02: React.FC<Logo02Props> = ({ logos, className }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  if (!logos || logos.length === 0) {
-    return null
-  }
-
   // Split logos into groups of 6
   const logosPerGroup = 6
   const logoGroups: MediaType[][] = []
 
-  for (let i = 0; i < logos.length; i += logosPerGroup) {
-    logoGroups.push(logos.slice(i, i + logosPerGroup))
-  }
+  if (logos && logos.length > 0) {
+    for (let i = 0; i < logos.length; i += logosPerGroup) {
+      logoGroups.push(logos.slice(i, i + logosPerGroup))
+    }
 
-  // If we don't have enough logos to fill groups, repeat them
-  if (logoGroups.length === 0) {
-    logoGroups.push(logos)
+    // If we don't have enough logos to fill groups, repeat them
+    if (logoGroups.length === 0) {
+      logoGroups.push(logos)
+    }
   }
 
   // Auto-rotate every 3 seconds
@@ -41,6 +39,10 @@ export const Logo02: React.FC<Logo02Props> = ({ logos, className }) => {
 
     return () => clearInterval(interval)
   }, [logoGroups.length])
+
+  if (!logos || logos.length === 0) {
+    return null
+  }
 
   const currentLogos = logoGroups[currentIndex] || []
 

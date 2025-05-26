@@ -124,7 +124,7 @@ export const Testimonials: CollectionConfig = {
         {
           name: 'linkedCaseStudy',
           type: 'relationship',
-          relationTo: 'case-studies',
+          relationTo: 'customers',
           admin: {
             position: 'sidebar',
             condition: (data, siblingData) => siblingData?.linkCaseStudy,

@@ -24,7 +24,7 @@ interface AppsCarouselClientProps {
 }
 
 const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
-  const { name, icon, tagline, summary, link, gallery } = app
+  const { name, icon, tagline, summary, link } = app
 
   return (
     // Use background variable and explicit rounding from Figma
@@ -63,14 +63,6 @@ const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
       </div>
 
       {/* Image Section - Placeholder */}
-
-      {gallery && gallery.length > 0 && (
-        <Media
-          resource={gallery[0]}
-          className="bg-background-neutral p-xs aspect-[4/3] h-auto w-full flex-shrink-0 lg:w-1/2"
-          imgClassName="rounded-space-sm"
-        />
-      )}
     </div>
   )
 }
