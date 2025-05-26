@@ -306,6 +306,18 @@
   --color-tomato-900: #5f1a0c;
   --color-tomato-950: #441208;
 
+  --color-yellow-50: #fefce8;
+  --color-yellow-100: #fef9c2;
+  --color-yellow-200: #fff085;
+  --color-yellow-300: #ffdf20;
+  --color-yellow-400: #fcc800;
+  --color-yellow-500: #efb100;
+  --color-yellow-600: #d08700;
+  --color-yellow-700: #a65f00;
+  --color-yellow-800: #894b00;
+  --color-yellow-900: #733e0a;
+  --color-yellow-950: #432004;
+
   --color-foreground: var(--foreground);
   --color-card: var(--color-background-neutral);
   --color-card-foreground: var(--color-base-secondary);

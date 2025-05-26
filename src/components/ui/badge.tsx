@@ -16,11 +16,11 @@ const badgeVariants = cva(
         blue: 'text-marn-500 dark:text-marn-400 bg-blue-100 disabled:bg-blue-50 disabled:text-blue-500/70 dark:bg-blue-950',
         red: 'bg-tomato-100 text-tomato-600 disabled:bg-tomato-50 disabled:text-tomato-500/70 dark:bg-tomato-950',
         green:
-          'bg-lime-200 text-lime-600 disabled:bg-lime-50 disabled:text-lime-500/70 dark:bg-lime-950',
+          'bg-lime-400 text-lime-900 disabled:bg-lime-50 disabled:text-lime-500/70 dark:bg-lime-950 dark:text-lime-500',
         yellow:
-          'bg-yellow-100 text-yellow-600 disabled:bg-yellow-50 disabled:text-yellow-500/70 dark:bg-yellow-950',
+          'bg-yellow-300 text-yellow-800 disabled:bg-yellow-50 disabled:text-yellow-500/70 dark:bg-yellow-950 dark:text-yellow-400',
         violet:
-          'bg-violet-100 text-violet-600 disabled:bg-violet-50 disabled:text-violet-500/70 dark:bg-violet-950 dark:text-violet-400',
+          'bg-violet-300 text-violet-800 disabled:bg-violet-50 disabled:text-violet-500/70 dark:bg-violet-950 dark:text-violet-400',
         gray: 'bg-neutral-100 text-neutral-600 disabled:bg-neutral-50 disabled:text-neutral-500/70 dark:bg-neutral-700 dark:text-neutral-400',
         inverted: 'bg-background-inverted text-inverted-secondary',
       },

@@ -189,6 +189,9 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                     className={cn(
                       navigationMenuTriggerStyle(),
                       'ease-in-out-quad relative h-fit w-full gap-4 rounded-2xl px-3 text-base transition-all duration-300 hover:px-4 [&_svg]:size-5',
+                      subLink.link.type === 'reference' &&
+                        subLink.link.reference?.value?.icon &&
+                        'items-start',
                     )}
                   >
                     {subLink.link.icon && (
@@ -218,7 +221,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                         sizes="40px"
                       />
                     )}
-                    <div className="me-10 flex w-full flex-col justify-start gap-1">
+                    <div className="flex w-[calc(100%-1.5rem)] w-full flex-col justify-start gap-1">
                       {subLink.link.label}
                       {(subLink.link.description || subLink.link.reference?.value?.tagline) && (
                         <p className="text-base-tertiary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
@@ -226,7 +229,7 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                         </p>
                       )}
                     </div>
-                    <CaretLeft className="text-base-tertiary group-hover:text-base-tertiary absolute end-4 -translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                    <CaretLeft className="text-base-tertiary group-hover:text-base-tertiary translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
                   </CMSLink>
                 )
               })}

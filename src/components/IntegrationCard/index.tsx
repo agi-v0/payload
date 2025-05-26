@@ -24,9 +24,13 @@ export const IntegrationCard: React.FC<{
       <div className="p-md flex w-full flex-col justify-between text-start">
         <div className="gap-sm flex flex-col items-start justify-start">
           {/* Integration Badge (Icon + Name) */}
-          <div className="flex items-center justify-end gap-4">
+          <div className="flex items-start justify-end gap-4">
             {icon && (
-              <Media resource={icon} className="size-space-3xl overflow-hidden rounded-xl" />
+              <Media
+                resource={icon}
+                className="shrink-0"
+                imgClassName="size-space-3xl overflow-hidden rounded-xl"
+              />
             )}
             <div className="flex flex-col gap-2">
               {name && <span className="text-body-lg text-base-secondary font-medium">{name}</span>}
