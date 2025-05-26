@@ -10,12 +10,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_archiveBlock_relation_to" AS ENUM('posts');
   CREATE TYPE "public"."enum_callToActionBlock_type" AS ENUM('01', '02', '03', '04', '05', '06', '07');
   CREATE TYPE "public"."enum_callToActionBlock_badge_type" AS ENUM('label', 'reference');
-  CREATE TYPE "public"."badge_color" AS ENUM('blue', 'red', 'green', 'yellow');
+  CREATE TYPE "public"."badge_color" AS ENUM('blue', 'red', 'green', 'yellow', 'gray', 'inverted');
   CREATE TYPE "public"."badge_icon_position" AS ENUM('flex-row', 'flex-row-reverse');
   CREATE TYPE "public"."enum_customHtmlBlock_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum_customHtmlBlock_block_header_badge_type" AS ENUM('label', 'reference');
-  CREATE TYPE "public"."enum_pages_blocks_faq_block_block_header_type" AS ENUM('center', 'split', 'start');
-  CREATE TYPE "public"."enum_pages_blocks_faq_block_block_header_badge_type" AS ENUM('label', 'reference');
+  CREATE TYPE "public"."enum_dividerBlock_size" AS ENUM('small', 'medium', 'large');
+  CREATE TYPE "public"."enum_faqBlock_block_header_type" AS ENUM('center', 'split', 'start');
+  CREATE TYPE "public"."enum_faqBlock_block_header_badge_type" AS ENUM('label', 'reference');
+  CREATE TYPE "public"."enum_faqBlock_type" AS ENUM('01', '02');
   CREATE TYPE "public"."enum_featuredAppsBlock_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum_featuredAppsBlock_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum_featuredAppsBlock_type" AS ENUM('01', '02', '03', '04', '05', '06');
@@ -27,10 +29,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_galleryBlock_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum_galleryBlock_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum_galleryBlock_type" AS ENUM('gallery01', 'gallery02', 'gallery03', 'gallery04');
+  CREATE TYPE "public"."enum_logosBlock_block_header_type" AS ENUM('center', 'split', 'start');
+  CREATE TYPE "public"."enum_logosBlock_block_header_badge_type" AS ENUM('label', 'reference');
+  CREATE TYPE "public"."enum_logosBlock_type" AS ENUM('01', '02', '03');
+  CREATE TYPE "public"."enum_richTextBlock_block_header_type" AS ENUM('center', 'split', 'start');
+  CREATE TYPE "public"."enum_richTextBlock_block_header_badge_type" AS ENUM('label', 'reference');
+  CREATE TYPE "public"."enum_richTextBlock_type" AS ENUM('01', '02');
+  CREATE TYPE "public"."enum_richTextBlock_max_width" AS ENUM('default', 'small', 'large', 'full');
   CREATE TYPE "public"."enum_testimonialsBlock_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum_testimonialsBlock_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum_testimonialsBlock_type" AS ENUM('01', '02', '03');
-  CREATE TYPE "public"."enum_pages_hero_type" AS ENUM('hero01', 'hero02', 'hero03', 'hero04', 'hero05', 'hero06', 'hero07', 'none');
+  CREATE TYPE "public"."enum_pages_hero_type" AS ENUM('hero01', 'hero02', 'hero03', 'hero04', 'hero05', 'none');
   CREATE TYPE "public"."enum_pages_hero_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum_pages_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__archiveBlock_v_populate_by" AS ENUM('collection', 'selection');
@@ -39,8 +48,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__callToActionBlock_v_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum__customHtmlBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum__customHtmlBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
-  CREATE TYPE "public"."enum__pages_v_blocks_faq_block_block_header_type" AS ENUM('center', 'split', 'start');
-  CREATE TYPE "public"."enum__pages_v_blocks_faq_block_block_header_badge_type" AS ENUM('label', 'reference');
+  CREATE TYPE "public"."enum__dividerBlock_v_size" AS ENUM('small', 'medium', 'large');
+  CREATE TYPE "public"."enum__faqBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
+  CREATE TYPE "public"."enum__faqBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
+  CREATE TYPE "public"."enum__faqBlock_v_type" AS ENUM('01', '02');
   CREATE TYPE "public"."enum__featuredAppsBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum__featuredAppsBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum__featuredAppsBlock_v_type" AS ENUM('01', '02', '03', '04', '05', '06');
@@ -52,10 +63,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__galleryBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum__galleryBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum__galleryBlock_v_type" AS ENUM('gallery01', 'gallery02', 'gallery03', 'gallery04');
+  CREATE TYPE "public"."enum__logosBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
+  CREATE TYPE "public"."enum__logosBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
+  CREATE TYPE "public"."enum__logosBlock_v_type" AS ENUM('01', '02', '03');
+  CREATE TYPE "public"."enum__richTextBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
+  CREATE TYPE "public"."enum__richTextBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
+  CREATE TYPE "public"."enum__richTextBlock_v_type" AS ENUM('01', '02');
+  CREATE TYPE "public"."enum__richTextBlock_v_max_width" AS ENUM('default', 'small', 'large', 'full');
   CREATE TYPE "public"."enum__testimonialsBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum__testimonialsBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum__testimonialsBlock_v_type" AS ENUM('01', '02', '03');
-  CREATE TYPE "public"."enum__pages_v_version_hero_type" AS ENUM('hero01', 'hero02', 'hero03', 'hero04', 'hero05', 'hero06', 'hero07', 'none');
+  CREATE TYPE "public"."enum__pages_v_version_hero_type" AS ENUM('hero01', 'hero02', 'hero03', 'hero04', 'hero05', 'none');
   CREATE TYPE "public"."enum__pages_v_version_hero_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum__pages_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__pages_v_published_locale" AS ENUM('en', 'ar');
@@ -65,28 +83,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_solutions_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__solutions_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__solutions_v_published_locale" AS ENUM('en', 'ar');
-  CREATE TYPE "public"."enum_integrations_blocks_faq_block_block_header_type" AS ENUM('center', 'split', 'start');
-  CREATE TYPE "public"."enum_integrations_blocks_faq_block_block_header_badge_type" AS ENUM('label', 'reference');
-  CREATE TYPE "public"."enum_integrations_hero_type" AS ENUM('hero01', 'hero02', 'hero03', 'hero04', 'hero05', 'hero06', 'hero07', 'none');
-  CREATE TYPE "public"."enum_integrations_hero_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum_integrations_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__integrations_v_blocks_faq_block_block_header_type" AS ENUM('center', 'split', 'start');
-  CREATE TYPE "public"."enum__integrations_v_blocks_faq_block_block_header_badge_type" AS ENUM('label', 'reference');
-  CREATE TYPE "public"."enum__integrations_v_version_hero_type" AS ENUM('hero01', 'hero02', 'hero03', 'hero04', 'hero05', 'hero06', 'hero07', 'none');
-  CREATE TYPE "public"."enum__integrations_v_version_hero_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum__integrations_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__integrations_v_published_locale" AS ENUM('en', 'ar');
   CREATE TYPE "public"."enum_media_locale" AS ENUM('en', 'ar');
-  CREATE TYPE "public"."enum_testimonials_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__testimonials_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__testimonials_v_published_locale" AS ENUM('en', 'ar');
-  CREATE TYPE "public"."enum_case_studies_blocks_faq_block_block_header_type" AS ENUM('center', 'split', 'start');
-  CREATE TYPE "public"."enum_case_studies_blocks_faq_block_block_header_badge_type" AS ENUM('label', 'reference');
-  CREATE TYPE "public"."enum_case_studies_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__case_studies_v_blocks_faq_block_block_header_type" AS ENUM('center', 'split', 'start');
-  CREATE TYPE "public"."enum__case_studies_v_blocks_faq_block_block_header_badge_type" AS ENUM('label', 'reference');
-  CREATE TYPE "public"."enum__case_studies_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__case_studies_v_published_locale" AS ENUM('en', 'ar');
+  CREATE TYPE "public"."enum_customers_testimonial_stats_indicator" AS ENUM('increase', 'decrease', 'noChange');
+  CREATE TYPE "public"."enum_customers_testimonial_company_industry" AS ENUM('restaurants', 'retail', 'services');
+  CREATE TYPE "public"."enum_customers_status" AS ENUM('draft', 'published');
+  CREATE TYPE "public"."enum__customers_v_version_testimonial_stats_indicator" AS ENUM('increase', 'decrease', 'noChange');
+  CREATE TYPE "public"."enum__customers_v_version_testimonial_company_industry" AS ENUM('restaurants', 'retail', 'services');
+  CREATE TYPE "public"."enum__customers_v_version_status" AS ENUM('draft', 'published');
+  CREATE TYPE "public"."enum__customers_v_published_locale" AS ENUM('en', 'ar');
   CREATE TYPE "public"."enum_changelog_categories" AS ENUM('bug-fix', 'feature', 'improvement', 'security', 'other');
   CREATE TYPE "public"."enum_redirects_to_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_forms_confirmation_type" AS ENUM('message', 'redirect');
@@ -110,13 +117,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" varchar NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "pages_hero_logos" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" varchar PRIMARY KEY NOT NULL,
-  	"logo_id" integer
   );
   
   CREATE TABLE IF NOT EXISTS "archiveBlock" (
@@ -183,7 +183,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "callToActionBlock_locales" (
   	"badge_label" varchar,
   	"rich_text" jsonb,
-  	"media_id" integer,
+  	"media_desktop_light_id" integer,
+  	"media_desktop_dark_id" integer,
+  	"media_mobile_light_id" integer,
+  	"media_mobile_dark_id" integer,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" varchar NOT NULL
@@ -234,10 +237,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
+  	"size" "enum_dividerBlock_size" DEFAULT 'small',
+  	"enable_divider" boolean DEFAULT true,
   	"block_name" varchar
   );
   
-  CREATE TABLE IF NOT EXISTS "pages_blocks_faq_block_block_header_links" (
+  CREATE TABLE IF NOT EXISTS "faqBlock_block_header_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -248,27 +253,28 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_variant" "link_variant" DEFAULT 'primary'
   );
   
-  CREATE TABLE IF NOT EXISTS "pages_blocks_faq_block_block_header_links_locales" (
+  CREATE TABLE IF NOT EXISTS "faqBlock_block_header_links_locales" (
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" varchar NOT NULL
   );
   
-  CREATE TABLE IF NOT EXISTS "pages_blocks_faq_block" (
+  CREATE TABLE IF NOT EXISTS "faqBlock" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
-  	"block_header_type" "enum_pages_blocks_faq_block_block_header_type" DEFAULT 'center',
-  	"block_header_badge_type" "enum_pages_blocks_faq_block_block_header_badge_type",
+  	"block_header_type" "enum_faqBlock_block_header_type" DEFAULT 'center',
+  	"block_header_badge_type" "enum_faqBlock_block_header_badge_type",
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
   	"block_header_badge_icon" varchar,
   	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"type" "enum_faqBlock_type" DEFAULT '01',
   	"block_name" varchar
   );
   
-  CREATE TABLE IF NOT EXISTS "pages_blocks_faq_block_locales" (
+  CREATE TABLE IF NOT EXISTS "faqBlock_locales" (
   	"block_header_badge_label" varchar,
   	"block_header_header_text" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
@@ -391,6 +397,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_badge_icon" varchar,
   	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
   	"type" "enum_featuresBlock_type" DEFAULT '01',
+  	"block_image_id" integer,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -400,7 +407,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "featuresBlock_locales" (
   	"block_header_badge_label" varchar,
   	"block_header_header_text" jsonb,
-  	"block_image_id" integer,
   	"c_t_a_label" varchar,
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
@@ -474,6 +480,89 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_parent_id" varchar NOT NULL
   );
   
+  CREATE TABLE IF NOT EXISTS "logosBlock_block_header_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"link_type" "link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_color" "link_color" DEFAULT 'neutral',
+  	"link_variant" "link_variant" DEFAULT 'primary'
+  );
+  
+  CREATE TABLE IF NOT EXISTS "logosBlock_block_header_links_locales" (
+  	"link_label" varchar,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" varchar NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "logosBlock" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"block_header_type" "enum_logosBlock_block_header_type" DEFAULT 'center',
+  	"block_header_badge_type" "enum_logosBlock_block_header_badge_type",
+  	"block_header_badge_color" "badge_color" DEFAULT 'blue',
+  	"block_header_badge_icon" varchar,
+  	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"type" "enum_logosBlock_type",
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "logosBlock_locales" (
+  	"block_header_badge_label" varchar,
+  	"block_header_header_text" jsonb,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" varchar NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "richTextBlock_block_header_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"link_type" "link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_color" "link_color" DEFAULT 'neutral',
+  	"link_variant" "link_variant" DEFAULT 'primary'
+  );
+  
+  CREATE TABLE IF NOT EXISTS "richTextBlock_block_header_links_locales" (
+  	"link_label" varchar,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" varchar NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "richTextBlock" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"block_header_type" "enum_richTextBlock_block_header_type" DEFAULT 'center',
+  	"block_header_badge_type" "enum_richTextBlock_block_header_badge_type",
+  	"block_header_badge_color" "badge_color" DEFAULT 'blue',
+  	"block_header_badge_icon" varchar,
+  	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"type" "enum_richTextBlock_type" DEFAULT '01',
+  	"max_width" "enum_richTextBlock_max_width" DEFAULT 'default',
+  	"columns" numeric DEFAULT 1,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "richTextBlock_locales" (
+  	"block_header_badge_label" varchar,
+  	"block_header_header_text" jsonb,
+  	"content" jsonb,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" varchar NOT NULL
+  );
+  
   CREATE TABLE IF NOT EXISTS "testimonialsBlock_block_header_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
@@ -518,11 +607,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar,
   	"hero_type" "enum_pages_hero_type" DEFAULT 'hero01',
-  	"hero_supporting_text" varchar,
   	"hero_badge_type" "enum_pages_hero_badge_type",
   	"hero_badge_color" "badge_color" DEFAULT 'blue',
   	"hero_badge_icon" varchar,
   	"hero_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"hero_supporting_text" varchar,
   	"published_at" timestamp(3) with time zone,
   	"slug" varchar,
   	"slug_lock" boolean DEFAULT true,
@@ -532,10 +621,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "pages_locales" (
-  	"hero_rich_text" jsonb,
-  	"hero_logos_headline" varchar,
-  	"hero_media_id" integer,
   	"hero_badge_label" varchar,
+  	"hero_rich_text" jsonb,
+  	"hero_media_desktop_light_id" integer,
+  	"hero_media_desktop_dark_id" integer,
+  	"hero_media_mobile_light_id" integer,
+  	"hero_media_mobile_dark_id" integer,
+  	"hero_logos_headline" varchar,
   	"meta_title" varchar,
   	"meta_image_id" integer,
   	"meta_description" varchar,
@@ -550,14 +642,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
   	"locale" "_locales",
-  	"pages_id" integer,
-  	"posts_id" integer,
   	"solutions_id" integer,
   	"integrations_id" integer,
+  	"pages_id" integer,
+  	"posts_id" integer,
+  	"media_id" integer,
   	"categories_id" integer,
   	"faq_id" integer,
-  	"media_id" integer,
-  	"testimonials_id" integer
+  	"customers_id" integer
   );
   
   CREATE TABLE IF NOT EXISTS "_pages_v_version_hero_links" (
@@ -577,14 +669,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" integer NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_pages_v_version_hero_logos" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"logo_id" integer,
-  	"_uuid" varchar
   );
   
   CREATE TABLE IF NOT EXISTS "_archiveBlock_v" (
@@ -655,7 +739,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "_callToActionBlock_v_locales" (
   	"badge_label" varchar,
   	"rich_text" jsonb,
-  	"media_id" integer,
+  	"media_desktop_light_id" integer,
+  	"media_desktop_dark_id" integer,
+  	"media_mobile_light_id" integer,
+  	"media_mobile_dark_id" integer,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" integer NOT NULL
@@ -708,11 +795,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" serial PRIMARY KEY NOT NULL,
+  	"size" "enum__dividerBlock_v_size" DEFAULT 'small',
+  	"enable_divider" boolean DEFAULT true,
   	"_uuid" varchar,
   	"block_name" varchar
   );
   
-  CREATE TABLE IF NOT EXISTS "_pages_v_blocks_faq_block_block_header_links" (
+  CREATE TABLE IF NOT EXISTS "_faqBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" serial PRIMARY KEY NOT NULL,
@@ -724,28 +813,29 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_uuid" varchar
   );
   
-  CREATE TABLE IF NOT EXISTS "_pages_v_blocks_faq_block_block_header_links_locales" (
+  CREATE TABLE IF NOT EXISTS "_faqBlock_v_block_header_links_locales" (
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" integer NOT NULL
   );
   
-  CREATE TABLE IF NOT EXISTS "_pages_v_blocks_faq_block" (
+  CREATE TABLE IF NOT EXISTS "_faqBlock_v" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" serial PRIMARY KEY NOT NULL,
-  	"block_header_type" "enum__pages_v_blocks_faq_block_block_header_type" DEFAULT 'center',
-  	"block_header_badge_type" "enum__pages_v_blocks_faq_block_block_header_badge_type",
+  	"block_header_type" "enum__faqBlock_v_block_header_type" DEFAULT 'center',
+  	"block_header_badge_type" "enum__faqBlock_v_block_header_badge_type",
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
   	"block_header_badge_icon" varchar,
   	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"type" "enum__faqBlock_v_type" DEFAULT '01',
   	"_uuid" varchar,
   	"block_name" varchar
   );
   
-  CREATE TABLE IF NOT EXISTS "_pages_v_blocks_faq_block_locales" (
+  CREATE TABLE IF NOT EXISTS "_faqBlock_v_locales" (
   	"block_header_badge_label" varchar,
   	"block_header_header_text" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
@@ -873,6 +963,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_badge_icon" varchar,
   	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
   	"type" "enum__featuresBlock_v_type" DEFAULT '01',
+  	"block_image_id" integer,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -883,7 +974,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "_featuresBlock_v_locales" (
   	"block_header_badge_label" varchar,
   	"block_header_header_text" jsonb,
-  	"block_image_id" integer,
   	"c_t_a_label" varchar,
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
@@ -961,6 +1051,93 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_parent_id" integer NOT NULL
   );
   
+  CREATE TABLE IF NOT EXISTS "_logosBlock_v_block_header_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"link_type" "link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_color" "link_color" DEFAULT 'neutral',
+  	"link_variant" "link_variant" DEFAULT 'primary',
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_logosBlock_v_block_header_links_locales" (
+  	"link_label" varchar,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" integer NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_logosBlock_v" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"block_header_type" "enum__logosBlock_v_block_header_type" DEFAULT 'center',
+  	"block_header_badge_type" "enum__logosBlock_v_block_header_badge_type",
+  	"block_header_badge_color" "badge_color" DEFAULT 'blue',
+  	"block_header_badge_icon" varchar,
+  	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"type" "enum__logosBlock_v_type",
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_logosBlock_v_locales" (
+  	"block_header_badge_label" varchar,
+  	"block_header_header_text" jsonb,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" integer NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_richTextBlock_v_block_header_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"link_type" "link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_color" "link_color" DEFAULT 'neutral',
+  	"link_variant" "link_variant" DEFAULT 'primary',
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_richTextBlock_v_block_header_links_locales" (
+  	"link_label" varchar,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" integer NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_richTextBlock_v" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"block_header_type" "enum__richTextBlock_v_block_header_type" DEFAULT 'center',
+  	"block_header_badge_type" "enum__richTextBlock_v_block_header_badge_type",
+  	"block_header_badge_color" "badge_color" DEFAULT 'blue',
+  	"block_header_badge_icon" varchar,
+  	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"type" "enum__richTextBlock_v_type" DEFAULT '01',
+  	"max_width" "enum__richTextBlock_v_max_width" DEFAULT 'default',
+  	"columns" numeric DEFAULT 1,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_richTextBlock_v_locales" (
+  	"block_header_badge_label" varchar,
+  	"block_header_header_text" jsonb,
+  	"content" jsonb,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" integer NOT NULL
+  );
+  
   CREATE TABLE IF NOT EXISTS "_testimonialsBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -1008,11 +1185,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"parent_id" integer,
   	"version_title" varchar,
   	"version_hero_type" "enum__pages_v_version_hero_type" DEFAULT 'hero01',
-  	"version_hero_supporting_text" varchar,
   	"version_hero_badge_type" "enum__pages_v_version_hero_badge_type",
   	"version_hero_badge_color" "badge_color" DEFAULT 'blue',
   	"version_hero_badge_icon" varchar,
   	"version_hero_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"version_hero_supporting_text" varchar,
   	"version_published_at" timestamp(3) with time zone,
   	"version_slug" varchar,
   	"version_slug_lock" boolean DEFAULT true,
@@ -1028,10 +1205,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "_pages_v_locales" (
-  	"version_hero_rich_text" jsonb,
-  	"version_hero_logos_headline" varchar,
-  	"version_hero_media_id" integer,
   	"version_hero_badge_label" varchar,
+  	"version_hero_rich_text" jsonb,
+  	"version_hero_media_desktop_light_id" integer,
+  	"version_hero_media_desktop_dark_id" integer,
+  	"version_hero_media_mobile_light_id" integer,
+  	"version_hero_media_mobile_dark_id" integer,
+  	"version_hero_logos_headline" varchar,
   	"version_meta_title" varchar,
   	"version_meta_image_id" integer,
   	"version_meta_description" varchar,
@@ -1046,14 +1226,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
   	"locale" "_locales",
-  	"pages_id" integer,
-  	"posts_id" integer,
   	"solutions_id" integer,
   	"integrations_id" integer,
+  	"pages_id" integer,
+  	"posts_id" integer,
+  	"media_id" integer,
   	"categories_id" integer,
   	"faq_id" integer,
-  	"media_id" integer,
-  	"testimonials_id" integer
+  	"customers_id" integer
   );
   
   CREATE TABLE IF NOT EXISTS "posts_populated_authors" (
@@ -1219,7 +1399,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"solutions_id" integer
   );
   
-  CREATE TABLE IF NOT EXISTS "integrations_hero_links" (
+  CREATE TABLE IF NOT EXISTS "integrations_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -1230,54 +1410,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_variant" "link_variant" DEFAULT 'primary'
   );
   
-  CREATE TABLE IF NOT EXISTS "integrations_hero_links_locales" (
+  CREATE TABLE IF NOT EXISTS "integrations_links_locales" (
   	"link_label" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" varchar NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "integrations_hero_logos" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" varchar PRIMARY KEY NOT NULL,
-  	"logo_id" integer
-  );
-  
-  CREATE TABLE IF NOT EXISTS "integrations_blocks_faq_block_block_header_links" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" varchar NOT NULL,
-  	"id" varchar PRIMARY KEY NOT NULL,
-  	"link_type" "link_type" DEFAULT 'reference',
-  	"link_new_tab" boolean,
-  	"link_url" varchar,
-  	"link_color" "link_color" DEFAULT 'neutral',
-  	"link_variant" "link_variant" DEFAULT 'primary'
-  );
-  
-  CREATE TABLE IF NOT EXISTS "integrations_blocks_faq_block_block_header_links_locales" (
-  	"link_label" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" varchar NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "integrations_blocks_faq_block" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"_path" text NOT NULL,
-  	"id" varchar PRIMARY KEY NOT NULL,
-  	"block_header_type" "enum_integrations_blocks_faq_block_block_header_type" DEFAULT 'center',
-  	"block_header_badge_type" "enum_integrations_blocks_faq_block_block_header_badge_type",
-  	"block_header_badge_color" "badge_color" DEFAULT 'blue',
-  	"block_header_badge_icon" varchar,
-  	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
-  	"block_name" varchar
-  );
-  
-  CREATE TABLE IF NOT EXISTS "integrations_blocks_faq_block_locales" (
-  	"block_header_badge_label" varchar,
-  	"block_header_header_text" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" varchar NOT NULL
@@ -1295,12 +1429,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"docs_link_type" "link_type" DEFAULT 'reference',
   	"docs_link_new_tab" boolean,
   	"docs_link_url" varchar,
-  	"hero_type" "enum_integrations_hero_type" DEFAULT 'hero01',
-  	"hero_supporting_text" varchar,
-  	"hero_badge_type" "enum_integrations_hero_badge_type",
-  	"hero_badge_color" "badge_color" DEFAULT 'blue',
-  	"hero_badge_icon" varchar,
-  	"hero_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"supporting_text" varchar,
   	"published_at" timestamp(3) with time zone,
   	"slug" varchar,
   	"slug_lock" boolean DEFAULT true,
@@ -1312,15 +1441,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "integrations_locales" (
   	"name" varchar,
   	"tagline" varchar,
-  	"overview" jsonb,
+  	"summary" jsonb,
   	"link_label" varchar,
   	"company_name" varchar,
   	"docs_link_label" varchar,
-  	"hero_rich_text" jsonb,
-  	"hero_logos_headline" varchar,
-  	"hero_media_id" integer,
-  	"hero_badge_label" varchar,
-  	"content" jsonb,
+  	"hero" jsonb,
   	"meta_title" varchar,
   	"meta_image_id" integer,
   	"meta_description" varchar,
@@ -1337,13 +1462,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"pages_id" integer,
   	"posts_id" integer,
   	"solutions_id" integer,
-  	"integrations_id" integer,
-  	"media_id" integer,
-  	"faq_id" integer,
   	"categories_id" integer
   );
   
-  CREATE TABLE IF NOT EXISTS "_integrations_v_version_hero_links" (
+  CREATE TABLE IF NOT EXISTS "_integrations_v_version_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" serial PRIMARY KEY NOT NULL,
@@ -1355,57 +1477,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_uuid" varchar
   );
   
-  CREATE TABLE IF NOT EXISTS "_integrations_v_version_hero_links_locales" (
+  CREATE TABLE IF NOT EXISTS "_integrations_v_version_links_locales" (
   	"link_label" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_integrations_v_version_hero_logos" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"logo_id" integer,
-  	"_uuid" varchar
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_integrations_v_blocks_faq_block_block_header_links" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"link_type" "link_type" DEFAULT 'reference',
-  	"link_new_tab" boolean,
-  	"link_url" varchar,
-  	"link_color" "link_color" DEFAULT 'neutral',
-  	"link_variant" "link_variant" DEFAULT 'primary',
-  	"_uuid" varchar
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_integrations_v_blocks_faq_block_block_header_links_locales" (
-  	"link_label" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_integrations_v_blocks_faq_block" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"block_header_type" "enum__integrations_v_blocks_faq_block_block_header_type" DEFAULT 'center',
-  	"block_header_badge_type" "enum__integrations_v_blocks_faq_block_block_header_badge_type",
-  	"block_header_badge_color" "badge_color" DEFAULT 'blue',
-  	"block_header_badge_icon" varchar,
-  	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
-  	"_uuid" varchar,
-  	"block_name" varchar
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_integrations_v_blocks_faq_block_locales" (
-  	"block_header_badge_label" varchar,
-  	"block_header_header_text" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" integer NOT NULL
@@ -1424,12 +1497,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"version_docs_link_type" "link_type" DEFAULT 'reference',
   	"version_docs_link_new_tab" boolean,
   	"version_docs_link_url" varchar,
-  	"version_hero_type" "enum__integrations_v_version_hero_type" DEFAULT 'hero01',
-  	"version_hero_supporting_text" varchar,
-  	"version_hero_badge_type" "enum__integrations_v_version_hero_badge_type",
-  	"version_hero_badge_color" "badge_color" DEFAULT 'blue',
-  	"version_hero_badge_icon" varchar,
-  	"version_hero_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"version_supporting_text" varchar,
   	"version_published_at" timestamp(3) with time zone,
   	"version_slug" varchar,
   	"version_slug_lock" boolean DEFAULT true,
@@ -1447,15 +1515,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "_integrations_v_locales" (
   	"version_name" varchar,
   	"version_tagline" varchar,
-  	"version_overview" jsonb,
+  	"version_summary" jsonb,
   	"version_link_label" varchar,
   	"version_company_name" varchar,
   	"version_docs_link_label" varchar,
-  	"version_hero_rich_text" jsonb,
-  	"version_hero_logos_headline" varchar,
-  	"version_hero_media_id" integer,
-  	"version_hero_badge_label" varchar,
-  	"version_content" jsonb,
+  	"version_hero" jsonb,
   	"version_meta_title" varchar,
   	"version_meta_image_id" integer,
   	"version_meta_description" varchar,
@@ -1472,9 +1536,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"pages_id" integer,
   	"posts_id" integer,
   	"solutions_id" integer,
-  	"integrations_id" integer,
-  	"media_id" integer,
-  	"faq_id" integer,
   	"categories_id" integer
   );
   
@@ -1548,256 +1609,138 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"categories_id" integer
   );
   
-  CREATE TABLE IF NOT EXISTS "testimonials" (
+  CREATE TABLE IF NOT EXISTS "customers_testimonial_stats" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"indicator" "enum_customers_testimonial_stats_indicator" DEFAULT 'noChange'
+  );
+  
+  CREATE TABLE IF NOT EXISTS "customers_testimonial_stats_locales" (
+  	"label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
-  	"company_logo_id" integer,
-  	"author_info_avatar_id" integer,
-  	"case_study_link_case_study" boolean DEFAULT false,
-  	"case_study_linked_case_study_id" integer,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" varchar NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "customers" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"testimonial_featured_image_id" integer,
+  	"testimonial_company_company_logo_id" integer,
+  	"testimonial_company_link_type" "link_type" DEFAULT 'reference',
+  	"testimonial_company_link_new_tab" boolean,
+  	"testimonial_company_link_url" varchar,
+  	"testimonial_company_industry" "enum_customers_testimonial_company_industry",
+  	"testimonial_company_founding_year" numeric,
+  	"testimonial_company_branches" varchar,
+  	"testimonial_author_info_avatar_id" integer,
+  	"enable_case_study" boolean DEFAULT false,
+  	"slug" varchar,
+  	"slug_lock" boolean DEFAULT true,
   	"published_at" timestamp(3) with time zone,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"_status" "enum_testimonials_status" DEFAULT 'draft'
+  	"_status" "enum_customers_status" DEFAULT 'draft'
   );
   
-  CREATE TABLE IF NOT EXISTS "testimonials_locales" (
-  	"quote" jsonb,
-  	"company_name" varchar,
-  	"featured_image_id" integer,
-  	"author_info_name" varchar,
-  	"author_info_title" varchar,
+  CREATE TABLE IF NOT EXISTS "customers_locales" (
+  	"testimonial_quote" jsonb,
+  	"testimonial_company_company_name" varchar,
+  	"testimonial_company_link_label" varchar,
+  	"testimonial_company_location" varchar,
+  	"testimonial_author_info_name" varchar,
+  	"testimonial_author_info_title" varchar,
+  	"case_study_case_studytitle" varchar,
+  	"case_study_summary" varchar,
+  	"case_study_content" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" integer NOT NULL
   );
   
-  CREATE TABLE IF NOT EXISTS "testimonials_rels" (
+  CREATE TABLE IF NOT EXISTS "customers_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
+  	"solutions_id" integer,
+  	"integrations_id" integer,
+  	"pages_id" integer,
+  	"posts_id" integer,
   	"categories_id" integer
   );
   
-  CREATE TABLE IF NOT EXISTS "_testimonials_v" (
+  CREATE TABLE IF NOT EXISTS "_customers_v_version_testimonial_stats" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"indicator" "enum__customers_v_version_testimonial_stats_indicator" DEFAULT 'noChange',
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_customers_v_version_testimonial_stats_locales" (
+  	"label" varchar,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" integer NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_customers_v" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"parent_id" integer,
-  	"version_company_logo_id" integer,
-  	"version_author_info_avatar_id" integer,
-  	"version_case_study_link_case_study" boolean DEFAULT false,
-  	"version_case_study_linked_case_study_id" integer,
+  	"version_title" varchar,
+  	"version_testimonial_featured_image_id" integer,
+  	"version_testimonial_company_company_logo_id" integer,
+  	"version_testimonial_company_link_type" "link_type" DEFAULT 'reference',
+  	"version_testimonial_company_link_new_tab" boolean,
+  	"version_testimonial_company_link_url" varchar,
+  	"version_testimonial_company_industry" "enum__customers_v_version_testimonial_company_industry",
+  	"version_testimonial_company_founding_year" numeric,
+  	"version_testimonial_company_branches" varchar,
+  	"version_testimonial_author_info_avatar_id" integer,
+  	"version_enable_case_study" boolean DEFAULT false,
+  	"version_slug" varchar,
+  	"version_slug_lock" boolean DEFAULT true,
   	"version_published_at" timestamp(3) with time zone,
   	"version_updated_at" timestamp(3) with time zone,
   	"version_created_at" timestamp(3) with time zone,
-  	"version__status" "enum__testimonials_v_version_status" DEFAULT 'draft',
+  	"version__status" "enum__customers_v_version_status" DEFAULT 'draft',
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"snapshot" boolean,
-  	"published_locale" "enum__testimonials_v_published_locale",
+  	"published_locale" "enum__customers_v_published_locale",
   	"latest" boolean,
   	"autosave" boolean
   );
   
-  CREATE TABLE IF NOT EXISTS "_testimonials_v_locales" (
-  	"version_quote" jsonb,
-  	"version_company_name" varchar,
-  	"version_featured_image_id" integer,
-  	"version_author_info_name" varchar,
-  	"version_author_info_title" varchar,
+  CREATE TABLE IF NOT EXISTS "_customers_v_locales" (
+  	"version_testimonial_quote" jsonb,
+  	"version_testimonial_company_company_name" varchar,
+  	"version_testimonial_company_link_label" varchar,
+  	"version_testimonial_company_location" varchar,
+  	"version_testimonial_author_info_name" varchar,
+  	"version_testimonial_author_info_title" varchar,
+  	"version_case_study_case_studytitle" varchar,
+  	"version_case_study_summary" varchar,
+  	"version_case_study_content" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" integer NOT NULL
   );
   
-  CREATE TABLE IF NOT EXISTS "_testimonials_v_rels" (
+  CREATE TABLE IF NOT EXISTS "_customers_v_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
+  	"solutions_id" integer,
+  	"integrations_id" integer,
+  	"pages_id" integer,
+  	"posts_id" integer,
   	"categories_id" integer
-  );
-  
-  CREATE TABLE IF NOT EXISTS "case_studies_stats" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" varchar PRIMARY KEY NOT NULL,
-  	"value" numeric,
-  	"is_percentage" boolean DEFAULT false,
-  	"is_increase" boolean DEFAULT true
-  );
-  
-  CREATE TABLE IF NOT EXISTS "case_studies_stats_locales" (
-  	"label" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" varchar NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "case_studies_blocks_faq_block_block_header_links" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" varchar NOT NULL,
-  	"id" varchar PRIMARY KEY NOT NULL,
-  	"link_type" "link_type" DEFAULT 'reference',
-  	"link_new_tab" boolean,
-  	"link_url" varchar,
-  	"link_color" "link_color" DEFAULT 'neutral',
-  	"link_variant" "link_variant" DEFAULT 'primary'
-  );
-  
-  CREATE TABLE IF NOT EXISTS "case_studies_blocks_faq_block_block_header_links_locales" (
-  	"link_label" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" varchar NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "case_studies_blocks_faq_block" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"_path" text NOT NULL,
-  	"id" varchar PRIMARY KEY NOT NULL,
-  	"block_header_type" "enum_case_studies_blocks_faq_block_block_header_type" DEFAULT 'center',
-  	"block_header_badge_type" "enum_case_studies_blocks_faq_block_block_header_badge_type",
-  	"block_header_badge_color" "badge_color" DEFAULT 'blue',
-  	"block_header_badge_icon" varchar,
-  	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
-  	"block_name" varchar
-  );
-  
-  CREATE TABLE IF NOT EXISTS "case_studies_blocks_faq_block_locales" (
-  	"block_header_badge_label" varchar,
-  	"block_header_header_text" jsonb,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" varchar NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "case_studies" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"title" varchar,
-  	"slug" varchar,
-  	"slug_lock" boolean DEFAULT true,
-  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"_status" "enum_case_studies_status" DEFAULT 'draft'
-  );
-  
-  CREATE TABLE IF NOT EXISTS "case_studies_locales" (
-  	"content" jsonb,
-  	"industry" varchar,
-  	"use_case" varchar,
-  	"featured_image_id" integer,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "case_studies_rels" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"order" integer,
-  	"parent_id" integer NOT NULL,
-  	"path" varchar NOT NULL,
-  	"solutions_id" integer,
-  	"integrations_id" integer,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"faq_id" integer
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_case_studies_v_version_stats" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"value" numeric,
-  	"is_percentage" boolean DEFAULT false,
-  	"is_increase" boolean DEFAULT true,
-  	"_uuid" varchar
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_case_studies_v_version_stats_locales" (
-  	"label" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_case_studies_v_blocks_faq_block_block_header_links" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"link_type" "link_type" DEFAULT 'reference',
-  	"link_new_tab" boolean,
-  	"link_url" varchar,
-  	"link_color" "link_color" DEFAULT 'neutral',
-  	"link_variant" "link_variant" DEFAULT 'primary',
-  	"_uuid" varchar
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_case_studies_v_blocks_faq_block_block_header_links_locales" (
-  	"link_label" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_case_studies_v_blocks_faq_block" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"block_header_type" "enum__case_studies_v_blocks_faq_block_block_header_type" DEFAULT 'center',
-  	"block_header_badge_type" "enum__case_studies_v_blocks_faq_block_block_header_badge_type",
-  	"block_header_badge_color" "badge_color" DEFAULT 'blue',
-  	"block_header_badge_icon" varchar,
-  	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
-  	"_uuid" varchar,
-  	"block_name" varchar
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_case_studies_v_blocks_faq_block_locales" (
-  	"block_header_badge_label" varchar,
-  	"block_header_header_text" jsonb,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_case_studies_v" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"parent_id" integer,
-  	"version_title" varchar,
-  	"version_slug" varchar,
-  	"version_slug_lock" boolean DEFAULT true,
-  	"version_updated_at" timestamp(3) with time zone,
-  	"version_created_at" timestamp(3) with time zone,
-  	"version__status" "enum__case_studies_v_version_status" DEFAULT 'draft',
-  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"snapshot" boolean,
-  	"published_locale" "enum__case_studies_v_published_locale",
-  	"latest" boolean
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_case_studies_v_locales" (
-  	"version_content" jsonb,
-  	"version_industry" varchar,
-  	"version_use_case" varchar,
-  	"version_featured_image_id" integer,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "_case_studies_v_rels" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"order" integer,
-  	"parent_id" integer NOT NULL,
-  	"path" varchar NOT NULL,
-  	"solutions_id" integer,
-  	"integrations_id" integer,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"faq_id" integer
   );
   
   CREATE TABLE IF NOT EXISTS "categories_breadcrumbs" (
@@ -1828,6 +1771,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "faq" (
   	"id" serial PRIMARY KEY NOT NULL,
+  	"category_id" integer,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -2205,8 +2149,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"solutions_id" integer,
   	"integrations_id" integer,
   	"media_id" integer,
-  	"testimonials_id" integer,
-  	"case_studies_id" integer,
+  	"customers_id" integer,
   	"categories_id" integer,
   	"faq_id" integer,
   	"changelog_id" integer,
@@ -2454,18 +2397,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "pages_hero_logos" ADD CONSTRAINT "pages_hero_logos_logo_id_media_id_fk" FOREIGN KEY ("logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "pages_hero_logos" ADD CONSTRAINT "pages_hero_logos_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
    ALTER TABLE "archiveBlock" ADD CONSTRAINT "archiveBlock_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
@@ -2508,7 +2439,25 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "callToActionBlock_locales" ADD CONSTRAINT "callToActionBlock_locales_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "callToActionBlock_locales" ADD CONSTRAINT "callToActionBlock_locales_media_desktop_light_id_media_id_fk" FOREIGN KEY ("media_desktop_light_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "callToActionBlock_locales" ADD CONSTRAINT "callToActionBlock_locales_media_desktop_dark_id_media_id_fk" FOREIGN KEY ("media_desktop_dark_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "callToActionBlock_locales" ADD CONSTRAINT "callToActionBlock_locales_media_mobile_light_id_media_id_fk" FOREIGN KEY ("media_mobile_light_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "callToActionBlock_locales" ADD CONSTRAINT "callToActionBlock_locales_media_mobile_dark_id_media_id_fk" FOREIGN KEY ("media_mobile_dark_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -2550,25 +2499,25 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "pages_blocks_faq_block_block_header_links" ADD CONSTRAINT "pages_blocks_faq_block_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "faqBlock_block_header_links" ADD CONSTRAINT "faqBlock_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."faqBlock"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "pages_blocks_faq_block_block_header_links_locales" ADD CONSTRAINT "pages_blocks_faq_block_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_faq_block_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "faqBlock_block_header_links_locales" ADD CONSTRAINT "faqBlock_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."faqBlock_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "pages_blocks_faq_block" ADD CONSTRAINT "pages_blocks_faq_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "faqBlock" ADD CONSTRAINT "faqBlock_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "pages_blocks_faq_block_locales" ADD CONSTRAINT "pages_blocks_faq_block_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "faqBlock_locales" ADD CONSTRAINT "faqBlock_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."faqBlock"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -2646,13 +2595,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "featuresBlock" ADD CONSTRAINT "featuresBlock_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "featuresBlock" ADD CONSTRAINT "featuresBlock_block_image_id_media_id_fk" FOREIGN KEY ("block_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "featuresBlock_locales" ADD CONSTRAINT "featuresBlock_locales_block_image_id_media_id_fk" FOREIGN KEY ("block_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "featuresBlock" ADD CONSTRAINT "featuresBlock_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -2718,6 +2667,54 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
+   ALTER TABLE "logosBlock_block_header_links" ADD CONSTRAINT "logosBlock_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."logosBlock"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "logosBlock_block_header_links_locales" ADD CONSTRAINT "logosBlock_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."logosBlock_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "logosBlock" ADD CONSTRAINT "logosBlock_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "logosBlock_locales" ADD CONSTRAINT "logosBlock_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."logosBlock"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "richTextBlock_block_header_links" ADD CONSTRAINT "richTextBlock_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."richTextBlock"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "richTextBlock_block_header_links_locales" ADD CONSTRAINT "richTextBlock_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."richTextBlock_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "richTextBlock" ADD CONSTRAINT "richTextBlock_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "richTextBlock_locales" ADD CONSTRAINT "richTextBlock_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."richTextBlock"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
    ALTER TABLE "testimonialsBlock_block_header_links" ADD CONSTRAINT "testimonialsBlock_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."testimonialsBlock"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
@@ -2742,7 +2739,25 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "pages_locales" ADD CONSTRAINT "pages_locales_hero_media_id_media_id_fk" FOREIGN KEY ("hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "pages_locales" ADD CONSTRAINT "pages_locales_hero_media_desktop_light_id_media_id_fk" FOREIGN KEY ("hero_media_desktop_light_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "pages_locales" ADD CONSTRAINT "pages_locales_hero_media_desktop_dark_id_media_id_fk" FOREIGN KEY ("hero_media_desktop_dark_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "pages_locales" ADD CONSTRAINT "pages_locales_hero_media_mobile_light_id_media_id_fk" FOREIGN KEY ("hero_media_mobile_light_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "pages_locales" ADD CONSTRAINT "pages_locales_hero_media_mobile_dark_id_media_id_fk" FOREIGN KEY ("hero_media_mobile_dark_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -2766,6 +2781,18 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
+   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_solutions_fk" FOREIGN KEY ("solutions_id") REFERENCES "public"."solutions"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_integrations_fk" FOREIGN KEY ("integrations_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
    ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
@@ -2778,13 +2805,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_solutions_fk" FOREIGN KEY ("solutions_id") REFERENCES "public"."solutions"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_integrations_fk" FOREIGN KEY ("integrations_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -2802,13 +2823,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_testimonials_fk" FOREIGN KEY ("testimonials_id") REFERENCES "public"."testimonials"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_customers_fk" FOREIGN KEY ("customers_id") REFERENCES "public"."customers"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -2821,18 +2836,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   DO $$ BEGIN
    ALTER TABLE "_pages_v_version_hero_links_locales" ADD CONSTRAINT "_pages_v_version_hero_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_version_hero_links"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_pages_v_version_hero_logos" ADD CONSTRAINT "_pages_v_version_hero_logos_logo_id_media_id_fk" FOREIGN KEY ("logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_pages_v_version_hero_logos" ADD CONSTRAINT "_pages_v_version_hero_logos_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -2880,7 +2883,25 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_callToActionBlock_v_locales" ADD CONSTRAINT "_callToActionBlock_v_locales_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "_callToActionBlock_v_locales" ADD CONSTRAINT "_callToActionBlock_v_locales_media_desktop_light_id_media_id_fk" FOREIGN KEY ("media_desktop_light_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_callToActionBlock_v_locales" ADD CONSTRAINT "_callToActionBlock_v_locales_media_desktop_dark_id_media_id_fk" FOREIGN KEY ("media_desktop_dark_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_callToActionBlock_v_locales" ADD CONSTRAINT "_callToActionBlock_v_locales_media_mobile_light_id_media_id_fk" FOREIGN KEY ("media_mobile_light_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_callToActionBlock_v_locales" ADD CONSTRAINT "_callToActionBlock_v_locales_media_mobile_dark_id_media_id_fk" FOREIGN KEY ("media_mobile_dark_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -2922,25 +2943,25 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_pages_v_blocks_faq_block_block_header_links" ADD CONSTRAINT "_pages_v_blocks_faq_block_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_faqBlock_v_block_header_links" ADD CONSTRAINT "_faqBlock_v_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_faqBlock_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_pages_v_blocks_faq_block_block_header_links_locales" ADD CONSTRAINT "_pages_v_blocks_faq_block_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_faq_block_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_faqBlock_v_block_header_links_locales" ADD CONSTRAINT "_faqBlock_v_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_faqBlock_v_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_pages_v_blocks_faq_block" ADD CONSTRAINT "_pages_v_blocks_faq_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_faqBlock_v" ADD CONSTRAINT "_faqBlock_v_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_pages_v_blocks_faq_block_locales" ADD CONSTRAINT "_pages_v_blocks_faq_block_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_faqBlock_v_locales" ADD CONSTRAINT "_faqBlock_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_faqBlock_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -3018,13 +3039,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_featuresBlock_v" ADD CONSTRAINT "_featuresBlock_v_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_featuresBlock_v" ADD CONSTRAINT "_featuresBlock_v_block_image_id_media_id_fk" FOREIGN KEY ("block_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_featuresBlock_v_locales" ADD CONSTRAINT "_featuresBlock_v_locales_block_image_id_media_id_fk" FOREIGN KEY ("block_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "_featuresBlock_v" ADD CONSTRAINT "_featuresBlock_v_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -3090,6 +3111,54 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
+   ALTER TABLE "_logosBlock_v_block_header_links" ADD CONSTRAINT "_logosBlock_v_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_logosBlock_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_logosBlock_v_block_header_links_locales" ADD CONSTRAINT "_logosBlock_v_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_logosBlock_v_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_logosBlock_v" ADD CONSTRAINT "_logosBlock_v_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_logosBlock_v_locales" ADD CONSTRAINT "_logosBlock_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_logosBlock_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_richTextBlock_v_block_header_links" ADD CONSTRAINT "_richTextBlock_v_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_richTextBlock_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_richTextBlock_v_block_header_links_locales" ADD CONSTRAINT "_richTextBlock_v_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_richTextBlock_v_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_richTextBlock_v" ADD CONSTRAINT "_richTextBlock_v_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_richTextBlock_v_locales" ADD CONSTRAINT "_richTextBlock_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_richTextBlock_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
    ALTER TABLE "_testimonialsBlock_v_block_header_links" ADD CONSTRAINT "_testimonialsBlock_v_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_testimonialsBlock_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
@@ -3120,7 +3189,25 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_pages_v_locales" ADD CONSTRAINT "_pages_v_locales_version_hero_media_id_media_id_fk" FOREIGN KEY ("version_hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "_pages_v_locales" ADD CONSTRAINT "_pages_v_locales_version_hero_media_desktop_light_id_media_id_fk" FOREIGN KEY ("version_hero_media_desktop_light_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_pages_v_locales" ADD CONSTRAINT "_pages_v_locales_version_hero_media_desktop_dark_id_media_id_fk" FOREIGN KEY ("version_hero_media_desktop_dark_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_pages_v_locales" ADD CONSTRAINT "_pages_v_locales_version_hero_media_mobile_light_id_media_id_fk" FOREIGN KEY ("version_hero_media_mobile_light_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_pages_v_locales" ADD CONSTRAINT "_pages_v_locales_version_hero_media_mobile_dark_id_media_id_fk" FOREIGN KEY ("version_hero_media_mobile_dark_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -3144,6 +3231,18 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
+   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_solutions_fk" FOREIGN KEY ("solutions_id") REFERENCES "public"."solutions"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_integrations_fk" FOREIGN KEY ("integrations_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
    ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
@@ -3156,13 +3255,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_solutions_fk" FOREIGN KEY ("solutions_id") REFERENCES "public"."solutions"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_integrations_fk" FOREIGN KEY ("integrations_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -3180,13 +3273,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_testimonials_fk" FOREIGN KEY ("testimonials_id") REFERENCES "public"."testimonials"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_pages_v_rels" ADD CONSTRAINT "_pages_v_rels_customers_fk" FOREIGN KEY ("customers_id") REFERENCES "public"."customers"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -3384,61 +3471,19 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "integrations_hero_links" ADD CONSTRAINT "integrations_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "integrations_links" ADD CONSTRAINT "integrations_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "integrations_hero_links_locales" ADD CONSTRAINT "integrations_hero_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."integrations_hero_links"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "integrations_hero_logos" ADD CONSTRAINT "integrations_hero_logos_logo_id_media_id_fk" FOREIGN KEY ("logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "integrations_hero_logos" ADD CONSTRAINT "integrations_hero_logos_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "integrations_blocks_faq_block_block_header_links" ADD CONSTRAINT "integrations_blocks_faq_block_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."integrations_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "integrations_blocks_faq_block_block_header_links_locales" ADD CONSTRAINT "integrations_blocks_faq_block_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."integrations_blocks_faq_block_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "integrations_blocks_faq_block" ADD CONSTRAINT "integrations_blocks_faq_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "integrations_blocks_faq_block_locales" ADD CONSTRAINT "integrations_blocks_faq_block_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."integrations_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "integrations_links_locales" ADD CONSTRAINT "integrations_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."integrations_links"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
    ALTER TABLE "integrations" ADD CONSTRAINT "integrations_icon_id_media_id_fk" FOREIGN KEY ("icon_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "integrations_locales" ADD CONSTRAINT "integrations_locales_hero_media_id_media_id_fk" FOREIGN KEY ("hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -3480,73 +3525,19 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "integrations_rels" ADD CONSTRAINT "integrations_rels_integrations_fk" FOREIGN KEY ("integrations_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "integrations_rels" ADD CONSTRAINT "integrations_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "integrations_rels" ADD CONSTRAINT "integrations_rels_faq_fk" FOREIGN KEY ("faq_id") REFERENCES "public"."faq"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
    ALTER TABLE "integrations_rels" ADD CONSTRAINT "integrations_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_integrations_v_version_hero_links" ADD CONSTRAINT "_integrations_v_version_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_integrations_v"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_integrations_v_version_links" ADD CONSTRAINT "_integrations_v_version_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_integrations_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_integrations_v_version_hero_links_locales" ADD CONSTRAINT "_integrations_v_version_hero_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_integrations_v_version_hero_links"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_integrations_v_version_hero_logos" ADD CONSTRAINT "_integrations_v_version_hero_logos_logo_id_media_id_fk" FOREIGN KEY ("logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_integrations_v_version_hero_logos" ADD CONSTRAINT "_integrations_v_version_hero_logos_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_integrations_v"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_integrations_v_blocks_faq_block_block_header_links" ADD CONSTRAINT "_integrations_v_blocks_faq_block_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_integrations_v_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_integrations_v_blocks_faq_block_block_header_links_locales" ADD CONSTRAINT "_integrations_v_blocks_faq_block_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_integrations_v_blocks_faq_block_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_integrations_v_blocks_faq_block" ADD CONSTRAINT "_integrations_v_blocks_faq_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_integrations_v"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_integrations_v_blocks_faq_block_locales" ADD CONSTRAINT "_integrations_v_blocks_faq_block_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_integrations_v_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_integrations_v_version_links_locales" ADD CONSTRAINT "_integrations_v_version_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_integrations_v_version_links"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -3559,12 +3550,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   DO $$ BEGIN
    ALTER TABLE "_integrations_v" ADD CONSTRAINT "_integrations_v_version_icon_id_media_id_fk" FOREIGN KEY ("version_icon_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_integrations_v_locales" ADD CONSTRAINT "_integrations_v_locales_version_hero_media_id_media_id_fk" FOREIGN KEY ("version_hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -3606,24 +3591,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_integrations_v_rels" ADD CONSTRAINT "_integrations_v_rels_integrations_fk" FOREIGN KEY ("integrations_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_integrations_v_rels" ADD CONSTRAINT "_integrations_v_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_integrations_v_rels" ADD CONSTRAINT "_integrations_v_rels_faq_fk" FOREIGN KEY ("faq_id") REFERENCES "public"."faq"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
    ALTER TABLE "_integrations_v_rels" ADD CONSTRAINT "_integrations_v_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
@@ -3642,265 +3609,151 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "testimonials" ADD CONSTRAINT "testimonials_company_logo_id_media_id_fk" FOREIGN KEY ("company_logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "customers_testimonial_stats" ADD CONSTRAINT "customers_testimonial_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."customers"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "testimonials" ADD CONSTRAINT "testimonials_author_info_avatar_id_media_id_fk" FOREIGN KEY ("author_info_avatar_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "customers_testimonial_stats_locales" ADD CONSTRAINT "customers_testimonial_stats_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."customers_testimonial_stats"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "testimonials" ADD CONSTRAINT "testimonials_case_study_linked_case_study_id_case_studies_id_fk" FOREIGN KEY ("case_study_linked_case_study_id") REFERENCES "public"."case_studies"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "customers" ADD CONSTRAINT "customers_testimonial_featured_image_id_media_id_fk" FOREIGN KEY ("testimonial_featured_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "testimonials_locales" ADD CONSTRAINT "testimonials_locales_featured_image_id_media_id_fk" FOREIGN KEY ("featured_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "customers" ADD CONSTRAINT "customers_testimonial_company_company_logo_id_media_id_fk" FOREIGN KEY ("testimonial_company_company_logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "testimonials_locales" ADD CONSTRAINT "testimonials_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."testimonials"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "customers" ADD CONSTRAINT "customers_testimonial_author_info_avatar_id_media_id_fk" FOREIGN KEY ("testimonial_author_info_avatar_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "testimonials_rels" ADD CONSTRAINT "testimonials_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."testimonials"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "customers_locales" ADD CONSTRAINT "customers_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."customers"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "testimonials_rels" ADD CONSTRAINT "testimonials_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "customers_rels" ADD CONSTRAINT "customers_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."customers"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_testimonials_v" ADD CONSTRAINT "_testimonials_v_parent_id_testimonials_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."testimonials"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "customers_rels" ADD CONSTRAINT "customers_rels_solutions_fk" FOREIGN KEY ("solutions_id") REFERENCES "public"."solutions"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_testimonials_v" ADD CONSTRAINT "_testimonials_v_version_company_logo_id_media_id_fk" FOREIGN KEY ("version_company_logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "customers_rels" ADD CONSTRAINT "customers_rels_integrations_fk" FOREIGN KEY ("integrations_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_testimonials_v" ADD CONSTRAINT "_testimonials_v_version_author_info_avatar_id_media_id_fk" FOREIGN KEY ("version_author_info_avatar_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "customers_rels" ADD CONSTRAINT "customers_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_testimonials_v" ADD CONSTRAINT "_testimonials_v_version_case_study_linked_case_study_id_case_studies_id_fk" FOREIGN KEY ("version_case_study_linked_case_study_id") REFERENCES "public"."case_studies"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "customers_rels" ADD CONSTRAINT "customers_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_testimonials_v_locales" ADD CONSTRAINT "_testimonials_v_locales_version_featured_image_id_media_id_fk" FOREIGN KEY ("version_featured_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "customers_rels" ADD CONSTRAINT "customers_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_testimonials_v_locales" ADD CONSTRAINT "_testimonials_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_testimonials_v"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v_version_testimonial_stats" ADD CONSTRAINT "_customers_v_version_testimonial_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_customers_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_testimonials_v_rels" ADD CONSTRAINT "_testimonials_v_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."_testimonials_v"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v_version_testimonial_stats_locales" ADD CONSTRAINT "_customers_v_version_testimonial_stats_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_customers_v_version_testimonial_stats"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "_testimonials_v_rels" ADD CONSTRAINT "_testimonials_v_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v" ADD CONSTRAINT "_customers_v_parent_id_customers_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."customers"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "case_studies_stats" ADD CONSTRAINT "case_studies_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."case_studies"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v" ADD CONSTRAINT "_customers_v_version_testimonial_featured_image_id_media_id_fk" FOREIGN KEY ("version_testimonial_featured_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "case_studies_stats_locales" ADD CONSTRAINT "case_studies_stats_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."case_studies_stats"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v" ADD CONSTRAINT "_customers_v_version_testimonial_company_company_logo_id_media_id_fk" FOREIGN KEY ("version_testimonial_company_company_logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "case_studies_blocks_faq_block_block_header_links" ADD CONSTRAINT "case_studies_blocks_faq_block_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."case_studies_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v" ADD CONSTRAINT "_customers_v_version_testimonial_author_info_avatar_id_media_id_fk" FOREIGN KEY ("version_testimonial_author_info_avatar_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "case_studies_blocks_faq_block_block_header_links_locales" ADD CONSTRAINT "case_studies_blocks_faq_block_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."case_studies_blocks_faq_block_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v_locales" ADD CONSTRAINT "_customers_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_customers_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "case_studies_blocks_faq_block" ADD CONSTRAINT "case_studies_blocks_faq_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."case_studies"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v_rels" ADD CONSTRAINT "_customers_v_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."_customers_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "case_studies_blocks_faq_block_locales" ADD CONSTRAINT "case_studies_blocks_faq_block_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."case_studies_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v_rels" ADD CONSTRAINT "_customers_v_rels_solutions_fk" FOREIGN KEY ("solutions_id") REFERENCES "public"."solutions"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "case_studies_locales" ADD CONSTRAINT "case_studies_locales_featured_image_id_media_id_fk" FOREIGN KEY ("featured_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "_customers_v_rels" ADD CONSTRAINT "_customers_v_rels_integrations_fk" FOREIGN KEY ("integrations_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "case_studies_locales" ADD CONSTRAINT "case_studies_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."case_studies"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v_rels" ADD CONSTRAINT "_customers_v_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "case_studies_rels" ADD CONSTRAINT "case_studies_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."case_studies"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v_rels" ADD CONSTRAINT "_customers_v_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "case_studies_rels" ADD CONSTRAINT "case_studies_rels_solutions_fk" FOREIGN KEY ("solutions_id") REFERENCES "public"."solutions"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "case_studies_rels" ADD CONSTRAINT "case_studies_rels_integrations_fk" FOREIGN KEY ("integrations_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "case_studies_rels" ADD CONSTRAINT "case_studies_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "case_studies_rels" ADD CONSTRAINT "case_studies_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "case_studies_rels" ADD CONSTRAINT "case_studies_rels_faq_fk" FOREIGN KEY ("faq_id") REFERENCES "public"."faq"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_version_stats" ADD CONSTRAINT "_case_studies_v_version_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_case_studies_v"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_version_stats_locales" ADD CONSTRAINT "_case_studies_v_version_stats_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_case_studies_v_version_stats"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_blocks_faq_block_block_header_links" ADD CONSTRAINT "_case_studies_v_blocks_faq_block_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_case_studies_v_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_blocks_faq_block_block_header_links_locales" ADD CONSTRAINT "_case_studies_v_blocks_faq_block_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_case_studies_v_blocks_faq_block_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_blocks_faq_block" ADD CONSTRAINT "_case_studies_v_blocks_faq_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_case_studies_v"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_blocks_faq_block_locales" ADD CONSTRAINT "_case_studies_v_blocks_faq_block_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_case_studies_v_blocks_faq_block"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v" ADD CONSTRAINT "_case_studies_v_parent_id_case_studies_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."case_studies"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_locales" ADD CONSTRAINT "_case_studies_v_locales_version_featured_image_id_media_id_fk" FOREIGN KEY ("version_featured_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_locales" ADD CONSTRAINT "_case_studies_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_case_studies_v"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_rels" ADD CONSTRAINT "_case_studies_v_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."_case_studies_v"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_rels" ADD CONSTRAINT "_case_studies_v_rels_solutions_fk" FOREIGN KEY ("solutions_id") REFERENCES "public"."solutions"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_rels" ADD CONSTRAINT "_case_studies_v_rels_integrations_fk" FOREIGN KEY ("integrations_id") REFERENCES "public"."integrations"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_rels" ADD CONSTRAINT "_case_studies_v_rels_pages_fk" FOREIGN KEY ("pages_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_rels" ADD CONSTRAINT "_case_studies_v_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "_case_studies_v_rels" ADD CONSTRAINT "_case_studies_v_rels_faq_fk" FOREIGN KEY ("faq_id") REFERENCES "public"."faq"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "_customers_v_rels" ADD CONSTRAINT "_customers_v_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -3925,6 +3778,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   DO $$ BEGIN
    ALTER TABLE "categories_locales" ADD CONSTRAINT "categories_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "faq" ADD CONSTRAINT "faq_category_id_categories_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."categories"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -4188,13 +4047,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_testimonials_fk" FOREIGN KEY ("testimonials_id") REFERENCES "public"."testimonials"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_case_studies_fk" FOREIGN KEY ("case_studies_id") REFERENCES "public"."case_studies"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_customers_fk" FOREIGN KEY ("customers_id") REFERENCES "public"."customers"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -4442,9 +4295,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "pages_hero_links_order_idx" ON "pages_hero_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "pages_hero_links_parent_id_idx" ON "pages_hero_links" USING btree ("_parent_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "pages_hero_links_locales_locale_parent_id_unique" ON "pages_hero_links_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "pages_hero_logos_order_idx" ON "pages_hero_logos" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "pages_hero_logos_parent_id_idx" ON "pages_hero_logos" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "pages_hero_logos_logo_idx" ON "pages_hero_logos" USING btree ("logo_id");
   CREATE INDEX IF NOT EXISTS "archiveBlock_order_idx" ON "archiveBlock" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "archiveBlock_parent_id_idx" ON "archiveBlock" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "archiveBlock_path_idx" ON "archiveBlock" USING btree ("_path");
@@ -4459,7 +4309,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "callToActionBlock_parent_id_idx" ON "callToActionBlock" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "callToActionBlock_path_idx" ON "callToActionBlock" USING btree ("_path");
   CREATE INDEX IF NOT EXISTS "callToActionBlock_form_idx" ON "callToActionBlock" USING btree ("form_id");
-  CREATE INDEX IF NOT EXISTS "callToActionBlock_media_idx" ON "callToActionBlock_locales" USING btree ("media_id","_locale");
+  CREATE INDEX IF NOT EXISTS "callToActionBlock_media_desktop_media_desktop_light_idx" ON "callToActionBlock_locales" USING btree ("media_desktop_light_id","_locale");
+  CREATE INDEX IF NOT EXISTS "callToActionBlock_media_desktop_media_desktop_dark_idx" ON "callToActionBlock_locales" USING btree ("media_desktop_dark_id","_locale");
+  CREATE INDEX IF NOT EXISTS "callToActionBlock_media_mobile_media_mobile_light_idx" ON "callToActionBlock_locales" USING btree ("media_mobile_light_id","_locale");
+  CREATE INDEX IF NOT EXISTS "callToActionBlock_media_mobile_media_mobile_dark_idx" ON "callToActionBlock_locales" USING btree ("media_mobile_dark_id","_locale");
   CREATE UNIQUE INDEX IF NOT EXISTS "callToActionBlock_locales_locale_parent_id_unique" ON "callToActionBlock_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "customHtmlBlock_block_header_links_order_idx" ON "customHtmlBlock_block_header_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "customHtmlBlock_block_header_links_parent_id_idx" ON "customHtmlBlock_block_header_links" USING btree ("_parent_id");
@@ -4471,13 +4324,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "dividerBlock_order_idx" ON "dividerBlock" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "dividerBlock_parent_id_idx" ON "dividerBlock" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "dividerBlock_path_idx" ON "dividerBlock" USING btree ("_path");
-  CREATE INDEX IF NOT EXISTS "pages_blocks_faq_block_block_header_links_order_idx" ON "pages_blocks_faq_block_block_header_links" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "pages_blocks_faq_block_block_header_links_parent_id_idx" ON "pages_blocks_faq_block_block_header_links" USING btree ("_parent_id");
-  CREATE UNIQUE INDEX IF NOT EXISTS "pages_blocks_faq_block_block_header_links_locales_locale_parent_id_unique" ON "pages_blocks_faq_block_block_header_links_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "pages_blocks_faq_block_order_idx" ON "pages_blocks_faq_block" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "pages_blocks_faq_block_parent_id_idx" ON "pages_blocks_faq_block" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "pages_blocks_faq_block_path_idx" ON "pages_blocks_faq_block" USING btree ("_path");
-  CREATE UNIQUE INDEX IF NOT EXISTS "pages_blocks_faq_block_locales_locale_parent_id_unique" ON "pages_blocks_faq_block_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "faqBlock_block_header_links_order_idx" ON "faqBlock_block_header_links" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "faqBlock_block_header_links_parent_id_idx" ON "faqBlock_block_header_links" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "faqBlock_block_header_links_locales_locale_parent_id_unique" ON "faqBlock_block_header_links_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "faqBlock_order_idx" ON "faqBlock" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "faqBlock_parent_id_idx" ON "faqBlock" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "faqBlock_path_idx" ON "faqBlock" USING btree ("_path");
+  CREATE UNIQUE INDEX IF NOT EXISTS "faqBlock_locales_locale_parent_id_unique" ON "faqBlock_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "featuredAppsBlock_block_header_links_order_idx" ON "featuredAppsBlock_block_header_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "featuredAppsBlock_block_header_links_parent_id_idx" ON "featuredAppsBlock_block_header_links" USING btree ("_parent_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "featuredAppsBlock_block_header_links_locales_locale_parent_id_unique" ON "featuredAppsBlock_block_header_links_locales" USING btree ("_locale","_parent_id");
@@ -4499,7 +4352,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "featuresBlock_order_idx" ON "featuresBlock" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "featuresBlock_parent_id_idx" ON "featuresBlock" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "featuresBlock_path_idx" ON "featuresBlock" USING btree ("_path");
-  CREATE INDEX IF NOT EXISTS "featuresBlock_block_image_idx" ON "featuresBlock_locales" USING btree ("block_image_id","_locale");
+  CREATE INDEX IF NOT EXISTS "featuresBlock_block_image_idx" ON "featuresBlock" USING btree ("block_image_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "featuresBlock_locales_locale_parent_id_unique" ON "featuresBlock_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "formBlock_order_idx" ON "formBlock" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "formBlock_parent_id_idx" ON "formBlock" USING btree ("_parent_id");
@@ -4516,6 +4369,20 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "galleryBlock_parent_id_idx" ON "galleryBlock" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "galleryBlock_path_idx" ON "galleryBlock" USING btree ("_path");
   CREATE UNIQUE INDEX IF NOT EXISTS "galleryBlock_locales_locale_parent_id_unique" ON "galleryBlock_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "logosBlock_block_header_links_order_idx" ON "logosBlock_block_header_links" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "logosBlock_block_header_links_parent_id_idx" ON "logosBlock_block_header_links" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "logosBlock_block_header_links_locales_locale_parent_id_unique" ON "logosBlock_block_header_links_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "logosBlock_order_idx" ON "logosBlock" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "logosBlock_parent_id_idx" ON "logosBlock" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "logosBlock_path_idx" ON "logosBlock" USING btree ("_path");
+  CREATE UNIQUE INDEX IF NOT EXISTS "logosBlock_locales_locale_parent_id_unique" ON "logosBlock_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "richTextBlock_block_header_links_order_idx" ON "richTextBlock_block_header_links" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "richTextBlock_block_header_links_parent_id_idx" ON "richTextBlock_block_header_links" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "richTextBlock_block_header_links_locales_locale_parent_id_unique" ON "richTextBlock_block_header_links_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "richTextBlock_order_idx" ON "richTextBlock" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "richTextBlock_parent_id_idx" ON "richTextBlock" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "richTextBlock_path_idx" ON "richTextBlock" USING btree ("_path");
+  CREATE UNIQUE INDEX IF NOT EXISTS "richTextBlock_locales_locale_parent_id_unique" ON "richTextBlock_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "testimonialsBlock_block_header_links_order_idx" ON "testimonialsBlock_block_header_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "testimonialsBlock_block_header_links_parent_id_idx" ON "testimonialsBlock_block_header_links" USING btree ("_parent_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "testimonialsBlock_block_header_links_locales_locale_parent_id_unique" ON "testimonialsBlock_block_header_links_locales" USING btree ("_locale","_parent_id");
@@ -4527,27 +4394,27 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "pages_updated_at_idx" ON "pages" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "pages_created_at_idx" ON "pages" USING btree ("created_at");
   CREATE INDEX IF NOT EXISTS "pages__status_idx" ON "pages" USING btree ("_status");
-  CREATE INDEX IF NOT EXISTS "pages_hero_hero_media_idx" ON "pages_locales" USING btree ("hero_media_id","_locale");
+  CREATE INDEX IF NOT EXISTS "pages_hero_media_desktop_hero_media_desktop_light_idx" ON "pages_locales" USING btree ("hero_media_desktop_light_id","_locale");
+  CREATE INDEX IF NOT EXISTS "pages_hero_media_desktop_hero_media_desktop_dark_idx" ON "pages_locales" USING btree ("hero_media_desktop_dark_id","_locale");
+  CREATE INDEX IF NOT EXISTS "pages_hero_media_mobile_hero_media_mobile_light_idx" ON "pages_locales" USING btree ("hero_media_mobile_light_id","_locale");
+  CREATE INDEX IF NOT EXISTS "pages_hero_media_mobile_hero_media_mobile_dark_idx" ON "pages_locales" USING btree ("hero_media_mobile_dark_id","_locale");
   CREATE INDEX IF NOT EXISTS "pages_meta_meta_image_idx" ON "pages_locales" USING btree ("meta_image_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "pages_locales_locale_parent_id_unique" ON "pages_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "pages_rels_order_idx" ON "pages_rels" USING btree ("order");
   CREATE INDEX IF NOT EXISTS "pages_rels_parent_idx" ON "pages_rels" USING btree ("parent_id");
   CREATE INDEX IF NOT EXISTS "pages_rels_path_idx" ON "pages_rels" USING btree ("path");
   CREATE INDEX IF NOT EXISTS "pages_rels_locale_idx" ON "pages_rels" USING btree ("locale");
-  CREATE INDEX IF NOT EXISTS "pages_rels_pages_id_idx" ON "pages_rels" USING btree ("pages_id","locale");
-  CREATE INDEX IF NOT EXISTS "pages_rels_posts_id_idx" ON "pages_rels" USING btree ("posts_id","locale");
   CREATE INDEX IF NOT EXISTS "pages_rels_solutions_id_idx" ON "pages_rels" USING btree ("solutions_id","locale");
   CREATE INDEX IF NOT EXISTS "pages_rels_integrations_id_idx" ON "pages_rels" USING btree ("integrations_id","locale");
+  CREATE INDEX IF NOT EXISTS "pages_rels_pages_id_idx" ON "pages_rels" USING btree ("pages_id","locale");
+  CREATE INDEX IF NOT EXISTS "pages_rels_posts_id_idx" ON "pages_rels" USING btree ("posts_id","locale");
+  CREATE INDEX IF NOT EXISTS "pages_rels_media_id_idx" ON "pages_rels" USING btree ("media_id","locale");
   CREATE INDEX IF NOT EXISTS "pages_rels_categories_id_idx" ON "pages_rels" USING btree ("categories_id","locale");
   CREATE INDEX IF NOT EXISTS "pages_rels_faq_id_idx" ON "pages_rels" USING btree ("faq_id","locale");
-  CREATE INDEX IF NOT EXISTS "pages_rels_media_id_idx" ON "pages_rels" USING btree ("media_id","locale");
-  CREATE INDEX IF NOT EXISTS "pages_rels_testimonials_id_idx" ON "pages_rels" USING btree ("testimonials_id","locale");
+  CREATE INDEX IF NOT EXISTS "pages_rels_customers_id_idx" ON "pages_rels" USING btree ("customers_id","locale");
   CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_links_order_idx" ON "_pages_v_version_hero_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_links_parent_id_idx" ON "_pages_v_version_hero_links" USING btree ("_parent_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "_pages_v_version_hero_links_locales_locale_parent_id_unique" ON "_pages_v_version_hero_links_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_logos_order_idx" ON "_pages_v_version_hero_logos" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_logos_parent_id_idx" ON "_pages_v_version_hero_logos" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_logos_logo_idx" ON "_pages_v_version_hero_logos" USING btree ("logo_id");
   CREATE INDEX IF NOT EXISTS "_archiveBlock_v_order_idx" ON "_archiveBlock_v" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_archiveBlock_v_parent_id_idx" ON "_archiveBlock_v" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "_archiveBlock_v_path_idx" ON "_archiveBlock_v" USING btree ("_path");
@@ -4562,7 +4429,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_callToActionBlock_v_parent_id_idx" ON "_callToActionBlock_v" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "_callToActionBlock_v_path_idx" ON "_callToActionBlock_v" USING btree ("_path");
   CREATE INDEX IF NOT EXISTS "_callToActionBlock_v_form_idx" ON "_callToActionBlock_v" USING btree ("form_id");
-  CREATE INDEX IF NOT EXISTS "_callToActionBlock_v_media_idx" ON "_callToActionBlock_v_locales" USING btree ("media_id","_locale");
+  CREATE INDEX IF NOT EXISTS "_callToActionBlock_v_media_desktop_media_desktop_light_idx" ON "_callToActionBlock_v_locales" USING btree ("media_desktop_light_id","_locale");
+  CREATE INDEX IF NOT EXISTS "_callToActionBlock_v_media_desktop_media_desktop_dark_idx" ON "_callToActionBlock_v_locales" USING btree ("media_desktop_dark_id","_locale");
+  CREATE INDEX IF NOT EXISTS "_callToActionBlock_v_media_mobile_media_mobile_light_idx" ON "_callToActionBlock_v_locales" USING btree ("media_mobile_light_id","_locale");
+  CREATE INDEX IF NOT EXISTS "_callToActionBlock_v_media_mobile_media_mobile_dark_idx" ON "_callToActionBlock_v_locales" USING btree ("media_mobile_dark_id","_locale");
   CREATE UNIQUE INDEX IF NOT EXISTS "_callToActionBlock_v_locales_locale_parent_id_unique" ON "_callToActionBlock_v_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "_customHtmlBlock_v_block_header_links_order_idx" ON "_customHtmlBlock_v_block_header_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_customHtmlBlock_v_block_header_links_parent_id_idx" ON "_customHtmlBlock_v_block_header_links" USING btree ("_parent_id");
@@ -4574,13 +4444,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_dividerBlock_v_order_idx" ON "_dividerBlock_v" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_dividerBlock_v_parent_id_idx" ON "_dividerBlock_v" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "_dividerBlock_v_path_idx" ON "_dividerBlock_v" USING btree ("_path");
-  CREATE INDEX IF NOT EXISTS "_pages_v_blocks_faq_block_block_header_links_order_idx" ON "_pages_v_blocks_faq_block_block_header_links" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "_pages_v_blocks_faq_block_block_header_links_parent_id_idx" ON "_pages_v_blocks_faq_block_block_header_links" USING btree ("_parent_id");
-  CREATE UNIQUE INDEX IF NOT EXISTS "_pages_v_blocks_faq_block_block_header_links_locales_locale_parent_id_unique" ON "_pages_v_blocks_faq_block_block_header_links_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "_pages_v_blocks_faq_block_order_idx" ON "_pages_v_blocks_faq_block" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "_pages_v_blocks_faq_block_parent_id_idx" ON "_pages_v_blocks_faq_block" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "_pages_v_blocks_faq_block_path_idx" ON "_pages_v_blocks_faq_block" USING btree ("_path");
-  CREATE UNIQUE INDEX IF NOT EXISTS "_pages_v_blocks_faq_block_locales_locale_parent_id_unique" ON "_pages_v_blocks_faq_block_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_faqBlock_v_block_header_links_order_idx" ON "_faqBlock_v_block_header_links" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_faqBlock_v_block_header_links_parent_id_idx" ON "_faqBlock_v_block_header_links" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_faqBlock_v_block_header_links_locales_locale_parent_id_unique" ON "_faqBlock_v_block_header_links_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_faqBlock_v_order_idx" ON "_faqBlock_v" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_faqBlock_v_parent_id_idx" ON "_faqBlock_v" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "_faqBlock_v_path_idx" ON "_faqBlock_v" USING btree ("_path");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_faqBlock_v_locales_locale_parent_id_unique" ON "_faqBlock_v_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "_featuredAppsBlock_v_block_header_links_order_idx" ON "_featuredAppsBlock_v_block_header_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_featuredAppsBlock_v_block_header_links_parent_id_idx" ON "_featuredAppsBlock_v_block_header_links" USING btree ("_parent_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "_featuredAppsBlock_v_block_header_links_locales_locale_parent_id_unique" ON "_featuredAppsBlock_v_block_header_links_locales" USING btree ("_locale","_parent_id");
@@ -4602,7 +4472,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_featuresBlock_v_order_idx" ON "_featuresBlock_v" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_featuresBlock_v_parent_id_idx" ON "_featuresBlock_v" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "_featuresBlock_v_path_idx" ON "_featuresBlock_v" USING btree ("_path");
-  CREATE INDEX IF NOT EXISTS "_featuresBlock_v_block_image_idx" ON "_featuresBlock_v_locales" USING btree ("block_image_id","_locale");
+  CREATE INDEX IF NOT EXISTS "_featuresBlock_v_block_image_idx" ON "_featuresBlock_v" USING btree ("block_image_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "_featuresBlock_v_locales_locale_parent_id_unique" ON "_featuresBlock_v_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "_formBlock_v_order_idx" ON "_formBlock_v" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_formBlock_v_parent_id_idx" ON "_formBlock_v" USING btree ("_parent_id");
@@ -4619,6 +4489,20 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_galleryBlock_v_parent_id_idx" ON "_galleryBlock_v" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "_galleryBlock_v_path_idx" ON "_galleryBlock_v" USING btree ("_path");
   CREATE UNIQUE INDEX IF NOT EXISTS "_galleryBlock_v_locales_locale_parent_id_unique" ON "_galleryBlock_v_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_logosBlock_v_block_header_links_order_idx" ON "_logosBlock_v_block_header_links" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_logosBlock_v_block_header_links_parent_id_idx" ON "_logosBlock_v_block_header_links" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_logosBlock_v_block_header_links_locales_locale_parent_id_unique" ON "_logosBlock_v_block_header_links_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_logosBlock_v_order_idx" ON "_logosBlock_v" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_logosBlock_v_parent_id_idx" ON "_logosBlock_v" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "_logosBlock_v_path_idx" ON "_logosBlock_v" USING btree ("_path");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_logosBlock_v_locales_locale_parent_id_unique" ON "_logosBlock_v_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_richTextBlock_v_block_header_links_order_idx" ON "_richTextBlock_v_block_header_links" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_richTextBlock_v_block_header_links_parent_id_idx" ON "_richTextBlock_v_block_header_links" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_richTextBlock_v_block_header_links_locales_locale_parent_id_unique" ON "_richTextBlock_v_block_header_links_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_richTextBlock_v_order_idx" ON "_richTextBlock_v" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_richTextBlock_v_parent_id_idx" ON "_richTextBlock_v" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "_richTextBlock_v_path_idx" ON "_richTextBlock_v" USING btree ("_path");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_richTextBlock_v_locales_locale_parent_id_unique" ON "_richTextBlock_v_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "_testimonialsBlock_v_block_header_links_order_idx" ON "_testimonialsBlock_v_block_header_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_testimonialsBlock_v_block_header_links_parent_id_idx" ON "_testimonialsBlock_v_block_header_links" USING btree ("_parent_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "_testimonialsBlock_v_block_header_links_locales_locale_parent_id_unique" ON "_testimonialsBlock_v_block_header_links_locales" USING btree ("_locale","_parent_id");
@@ -4637,21 +4521,24 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_pages_v_published_locale_idx" ON "_pages_v" USING btree ("published_locale");
   CREATE INDEX IF NOT EXISTS "_pages_v_latest_idx" ON "_pages_v" USING btree ("latest");
   CREATE INDEX IF NOT EXISTS "_pages_v_autosave_idx" ON "_pages_v" USING btree ("autosave");
-  CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_version_hero_media_idx" ON "_pages_v_locales" USING btree ("version_hero_media_id","_locale");
+  CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_media_desktop_version_hero_media_desktop_light_idx" ON "_pages_v_locales" USING btree ("version_hero_media_desktop_light_id","_locale");
+  CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_media_desktop_version_hero_media_desktop_dark_idx" ON "_pages_v_locales" USING btree ("version_hero_media_desktop_dark_id","_locale");
+  CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_media_mobile_version_hero_media_mobile_light_idx" ON "_pages_v_locales" USING btree ("version_hero_media_mobile_light_id","_locale");
+  CREATE INDEX IF NOT EXISTS "_pages_v_version_hero_media_mobile_version_hero_media_mobile_dark_idx" ON "_pages_v_locales" USING btree ("version_hero_media_mobile_dark_id","_locale");
   CREATE INDEX IF NOT EXISTS "_pages_v_version_meta_version_meta_image_idx" ON "_pages_v_locales" USING btree ("version_meta_image_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "_pages_v_locales_locale_parent_id_unique" ON "_pages_v_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "_pages_v_rels_order_idx" ON "_pages_v_rels" USING btree ("order");
   CREATE INDEX IF NOT EXISTS "_pages_v_rels_parent_idx" ON "_pages_v_rels" USING btree ("parent_id");
   CREATE INDEX IF NOT EXISTS "_pages_v_rels_path_idx" ON "_pages_v_rels" USING btree ("path");
   CREATE INDEX IF NOT EXISTS "_pages_v_rels_locale_idx" ON "_pages_v_rels" USING btree ("locale");
-  CREATE INDEX IF NOT EXISTS "_pages_v_rels_pages_id_idx" ON "_pages_v_rels" USING btree ("pages_id","locale");
-  CREATE INDEX IF NOT EXISTS "_pages_v_rels_posts_id_idx" ON "_pages_v_rels" USING btree ("posts_id","locale");
   CREATE INDEX IF NOT EXISTS "_pages_v_rels_solutions_id_idx" ON "_pages_v_rels" USING btree ("solutions_id","locale");
   CREATE INDEX IF NOT EXISTS "_pages_v_rels_integrations_id_idx" ON "_pages_v_rels" USING btree ("integrations_id","locale");
+  CREATE INDEX IF NOT EXISTS "_pages_v_rels_pages_id_idx" ON "_pages_v_rels" USING btree ("pages_id","locale");
+  CREATE INDEX IF NOT EXISTS "_pages_v_rels_posts_id_idx" ON "_pages_v_rels" USING btree ("posts_id","locale");
+  CREATE INDEX IF NOT EXISTS "_pages_v_rels_media_id_idx" ON "_pages_v_rels" USING btree ("media_id","locale");
   CREATE INDEX IF NOT EXISTS "_pages_v_rels_categories_id_idx" ON "_pages_v_rels" USING btree ("categories_id","locale");
   CREATE INDEX IF NOT EXISTS "_pages_v_rels_faq_id_idx" ON "_pages_v_rels" USING btree ("faq_id","locale");
-  CREATE INDEX IF NOT EXISTS "_pages_v_rels_media_id_idx" ON "_pages_v_rels" USING btree ("media_id","locale");
-  CREATE INDEX IF NOT EXISTS "_pages_v_rels_testimonials_id_idx" ON "_pages_v_rels" USING btree ("testimonials_id","locale");
+  CREATE INDEX IF NOT EXISTS "_pages_v_rels_customers_id_idx" ON "_pages_v_rels" USING btree ("customers_id","locale");
   CREATE INDEX IF NOT EXISTS "posts_populated_authors_order_idx" ON "posts_populated_authors" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "posts_populated_authors_parent_id_idx" ON "posts_populated_authors" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "posts_slug_idx" ON "posts" USING btree ("slug");
@@ -4722,25 +4609,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_solutions_v_rels_pages_id_idx" ON "_solutions_v_rels" USING btree ("pages_id");
   CREATE INDEX IF NOT EXISTS "_solutions_v_rels_posts_id_idx" ON "_solutions_v_rels" USING btree ("posts_id");
   CREATE INDEX IF NOT EXISTS "_solutions_v_rels_solutions_id_idx" ON "_solutions_v_rels" USING btree ("solutions_id");
-  CREATE INDEX IF NOT EXISTS "integrations_hero_links_order_idx" ON "integrations_hero_links" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "integrations_hero_links_parent_id_idx" ON "integrations_hero_links" USING btree ("_parent_id");
-  CREATE UNIQUE INDEX IF NOT EXISTS "integrations_hero_links_locales_locale_parent_id_unique" ON "integrations_hero_links_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "integrations_hero_logos_order_idx" ON "integrations_hero_logos" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "integrations_hero_logos_parent_id_idx" ON "integrations_hero_logos" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "integrations_hero_logos_logo_idx" ON "integrations_hero_logos" USING btree ("logo_id");
-  CREATE INDEX IF NOT EXISTS "integrations_blocks_faq_block_block_header_links_order_idx" ON "integrations_blocks_faq_block_block_header_links" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "integrations_blocks_faq_block_block_header_links_parent_id_idx" ON "integrations_blocks_faq_block_block_header_links" USING btree ("_parent_id");
-  CREATE UNIQUE INDEX IF NOT EXISTS "integrations_blocks_faq_block_block_header_links_locales_locale_parent_id_unique" ON "integrations_blocks_faq_block_block_header_links_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "integrations_blocks_faq_block_order_idx" ON "integrations_blocks_faq_block" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "integrations_blocks_faq_block_parent_id_idx" ON "integrations_blocks_faq_block" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "integrations_blocks_faq_block_path_idx" ON "integrations_blocks_faq_block" USING btree ("_path");
-  CREATE UNIQUE INDEX IF NOT EXISTS "integrations_blocks_faq_block_locales_locale_parent_id_unique" ON "integrations_blocks_faq_block_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "integrations_links_order_idx" ON "integrations_links" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "integrations_links_parent_id_idx" ON "integrations_links" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "integrations_links_locales_locale_parent_id_unique" ON "integrations_links_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "integrations_icon_idx" ON "integrations" USING btree ("icon_id");
   CREATE INDEX IF NOT EXISTS "integrations_slug_idx" ON "integrations" USING btree ("slug");
   CREATE INDEX IF NOT EXISTS "integrations_updated_at_idx" ON "integrations" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "integrations_created_at_idx" ON "integrations" USING btree ("created_at");
   CREATE INDEX IF NOT EXISTS "integrations__status_idx" ON "integrations" USING btree ("_status");
-  CREATE INDEX IF NOT EXISTS "integrations_hero_hero_media_idx" ON "integrations_locales" USING btree ("hero_media_id","_locale");
   CREATE INDEX IF NOT EXISTS "integrations_meta_meta_image_idx" ON "integrations_locales" USING btree ("meta_image_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "integrations_locales_locale_parent_id_unique" ON "integrations_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "integrations_rels_order_idx" ON "integrations_rels" USING btree ("order");
@@ -4749,23 +4625,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "integrations_rels_pages_id_idx" ON "integrations_rels" USING btree ("pages_id");
   CREATE INDEX IF NOT EXISTS "integrations_rels_posts_id_idx" ON "integrations_rels" USING btree ("posts_id");
   CREATE INDEX IF NOT EXISTS "integrations_rels_solutions_id_idx" ON "integrations_rels" USING btree ("solutions_id");
-  CREATE INDEX IF NOT EXISTS "integrations_rels_integrations_id_idx" ON "integrations_rels" USING btree ("integrations_id");
-  CREATE INDEX IF NOT EXISTS "integrations_rels_media_id_idx" ON "integrations_rels" USING btree ("media_id");
-  CREATE INDEX IF NOT EXISTS "integrations_rels_faq_id_idx" ON "integrations_rels" USING btree ("faq_id");
   CREATE INDEX IF NOT EXISTS "integrations_rels_categories_id_idx" ON "integrations_rels" USING btree ("categories_id");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_version_hero_links_order_idx" ON "_integrations_v_version_hero_links" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_version_hero_links_parent_id_idx" ON "_integrations_v_version_hero_links" USING btree ("_parent_id");
-  CREATE UNIQUE INDEX IF NOT EXISTS "_integrations_v_version_hero_links_locales_locale_parent_id_unique" ON "_integrations_v_version_hero_links_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_version_hero_logos_order_idx" ON "_integrations_v_version_hero_logos" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_version_hero_logos_parent_id_idx" ON "_integrations_v_version_hero_logos" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_version_hero_logos_logo_idx" ON "_integrations_v_version_hero_logos" USING btree ("logo_id");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_blocks_faq_block_block_header_links_order_idx" ON "_integrations_v_blocks_faq_block_block_header_links" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_blocks_faq_block_block_header_links_parent_id_idx" ON "_integrations_v_blocks_faq_block_block_header_links" USING btree ("_parent_id");
-  CREATE UNIQUE INDEX IF NOT EXISTS "_integrations_v_blocks_faq_block_block_header_links_locales_locale_parent_id_unique" ON "_integrations_v_blocks_faq_block_block_header_links_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_blocks_faq_block_order_idx" ON "_integrations_v_blocks_faq_block" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_blocks_faq_block_parent_id_idx" ON "_integrations_v_blocks_faq_block" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_blocks_faq_block_path_idx" ON "_integrations_v_blocks_faq_block" USING btree ("_path");
-  CREATE UNIQUE INDEX IF NOT EXISTS "_integrations_v_blocks_faq_block_locales_locale_parent_id_unique" ON "_integrations_v_blocks_faq_block_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_integrations_v_version_links_order_idx" ON "_integrations_v_version_links" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_integrations_v_version_links_parent_id_idx" ON "_integrations_v_version_links" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_integrations_v_version_links_locales_locale_parent_id_unique" ON "_integrations_v_version_links_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "_integrations_v_parent_idx" ON "_integrations_v" USING btree ("parent_id");
   CREATE INDEX IF NOT EXISTS "_integrations_v_version_version_icon_idx" ON "_integrations_v" USING btree ("version_icon_id");
   CREATE INDEX IF NOT EXISTS "_integrations_v_version_version_slug_idx" ON "_integrations_v" USING btree ("version_slug");
@@ -4778,7 +4641,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_integrations_v_published_locale_idx" ON "_integrations_v" USING btree ("published_locale");
   CREATE INDEX IF NOT EXISTS "_integrations_v_latest_idx" ON "_integrations_v" USING btree ("latest");
   CREATE INDEX IF NOT EXISTS "_integrations_v_autosave_idx" ON "_integrations_v" USING btree ("autosave");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_version_hero_version_hero_media_idx" ON "_integrations_v_locales" USING btree ("version_hero_media_id","_locale");
   CREATE INDEX IF NOT EXISTS "_integrations_v_version_meta_version_meta_image_idx" ON "_integrations_v_locales" USING btree ("version_meta_image_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "_integrations_v_locales_locale_parent_id_unique" ON "_integrations_v_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "_integrations_v_rels_order_idx" ON "_integrations_v_rels" USING btree ("order");
@@ -4787,9 +4649,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_integrations_v_rels_pages_id_idx" ON "_integrations_v_rels" USING btree ("pages_id");
   CREATE INDEX IF NOT EXISTS "_integrations_v_rels_posts_id_idx" ON "_integrations_v_rels" USING btree ("posts_id");
   CREATE INDEX IF NOT EXISTS "_integrations_v_rels_solutions_id_idx" ON "_integrations_v_rels" USING btree ("solutions_id");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_rels_integrations_id_idx" ON "_integrations_v_rels" USING btree ("integrations_id");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_rels_media_id_idx" ON "_integrations_v_rels" USING btree ("media_id");
-  CREATE INDEX IF NOT EXISTS "_integrations_v_rels_faq_id_idx" ON "_integrations_v_rels" USING btree ("faq_id");
   CREATE INDEX IF NOT EXISTS "_integrations_v_rels_categories_id_idx" ON "_integrations_v_rels" USING btree ("categories_id");
   CREATE INDEX IF NOT EXISTS "media_updated_at_idx" ON "media" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "media_created_at_idx" ON "media" USING btree ("created_at");
@@ -4805,91 +4664,51 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "media_rels_parent_idx" ON "media_rels" USING btree ("parent_id");
   CREATE INDEX IF NOT EXISTS "media_rels_path_idx" ON "media_rels" USING btree ("path");
   CREATE INDEX IF NOT EXISTS "media_rels_categories_id_idx" ON "media_rels" USING btree ("categories_id");
-  CREATE INDEX IF NOT EXISTS "testimonials_company_logo_idx" ON "testimonials" USING btree ("company_logo_id");
-  CREATE INDEX IF NOT EXISTS "testimonials_author_info_author_info_avatar_idx" ON "testimonials" USING btree ("author_info_avatar_id");
-  CREATE INDEX IF NOT EXISTS "testimonials_case_study_case_study_linked_case_study_idx" ON "testimonials" USING btree ("case_study_linked_case_study_id");
-  CREATE INDEX IF NOT EXISTS "testimonials_updated_at_idx" ON "testimonials" USING btree ("updated_at");
-  CREATE INDEX IF NOT EXISTS "testimonials_created_at_idx" ON "testimonials" USING btree ("created_at");
-  CREATE INDEX IF NOT EXISTS "testimonials__status_idx" ON "testimonials" USING btree ("_status");
-  CREATE INDEX IF NOT EXISTS "testimonials_featured_image_idx" ON "testimonials_locales" USING btree ("featured_image_id","_locale");
-  CREATE UNIQUE INDEX IF NOT EXISTS "testimonials_locales_locale_parent_id_unique" ON "testimonials_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "testimonials_rels_order_idx" ON "testimonials_rels" USING btree ("order");
-  CREATE INDEX IF NOT EXISTS "testimonials_rels_parent_idx" ON "testimonials_rels" USING btree ("parent_id");
-  CREATE INDEX IF NOT EXISTS "testimonials_rels_path_idx" ON "testimonials_rels" USING btree ("path");
-  CREATE INDEX IF NOT EXISTS "testimonials_rels_categories_id_idx" ON "testimonials_rels" USING btree ("categories_id");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_parent_idx" ON "_testimonials_v" USING btree ("parent_id");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_version_version_company_logo_idx" ON "_testimonials_v" USING btree ("version_company_logo_id");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_version_author_info_version_author_info_avatar_idx" ON "_testimonials_v" USING btree ("version_author_info_avatar_id");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_version_case_study_version_case_study_linked_case_study_idx" ON "_testimonials_v" USING btree ("version_case_study_linked_case_study_id");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_version_version_updated_at_idx" ON "_testimonials_v" USING btree ("version_updated_at");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_version_version_created_at_idx" ON "_testimonials_v" USING btree ("version_created_at");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_version_version__status_idx" ON "_testimonials_v" USING btree ("version__status");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_created_at_idx" ON "_testimonials_v" USING btree ("created_at");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_updated_at_idx" ON "_testimonials_v" USING btree ("updated_at");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_snapshot_idx" ON "_testimonials_v" USING btree ("snapshot");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_published_locale_idx" ON "_testimonials_v" USING btree ("published_locale");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_latest_idx" ON "_testimonials_v" USING btree ("latest");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_autosave_idx" ON "_testimonials_v" USING btree ("autosave");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_version_version_featured_image_idx" ON "_testimonials_v_locales" USING btree ("version_featured_image_id","_locale");
-  CREATE UNIQUE INDEX IF NOT EXISTS "_testimonials_v_locales_locale_parent_id_unique" ON "_testimonials_v_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_rels_order_idx" ON "_testimonials_v_rels" USING btree ("order");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_rels_parent_idx" ON "_testimonials_v_rels" USING btree ("parent_id");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_rels_path_idx" ON "_testimonials_v_rels" USING btree ("path");
-  CREATE INDEX IF NOT EXISTS "_testimonials_v_rels_categories_id_idx" ON "_testimonials_v_rels" USING btree ("categories_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_stats_order_idx" ON "case_studies_stats" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "case_studies_stats_parent_id_idx" ON "case_studies_stats" USING btree ("_parent_id");
-  CREATE UNIQUE INDEX IF NOT EXISTS "case_studies_stats_locales_locale_parent_id_unique" ON "case_studies_stats_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_blocks_faq_block_block_header_links_order_idx" ON "case_studies_blocks_faq_block_block_header_links" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "case_studies_blocks_faq_block_block_header_links_parent_id_idx" ON "case_studies_blocks_faq_block_block_header_links" USING btree ("_parent_id");
-  CREATE UNIQUE INDEX IF NOT EXISTS "case_studies_blocks_faq_block_block_header_links_locales_locale_parent_id_unique" ON "case_studies_blocks_faq_block_block_header_links_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_blocks_faq_block_order_idx" ON "case_studies_blocks_faq_block" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "case_studies_blocks_faq_block_parent_id_idx" ON "case_studies_blocks_faq_block" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_blocks_faq_block_path_idx" ON "case_studies_blocks_faq_block" USING btree ("_path");
-  CREATE UNIQUE INDEX IF NOT EXISTS "case_studies_blocks_faq_block_locales_locale_parent_id_unique" ON "case_studies_blocks_faq_block_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_slug_idx" ON "case_studies" USING btree ("slug");
-  CREATE INDEX IF NOT EXISTS "case_studies_updated_at_idx" ON "case_studies" USING btree ("updated_at");
-  CREATE INDEX IF NOT EXISTS "case_studies_created_at_idx" ON "case_studies" USING btree ("created_at");
-  CREATE INDEX IF NOT EXISTS "case_studies__status_idx" ON "case_studies" USING btree ("_status");
-  CREATE INDEX IF NOT EXISTS "case_studies_featured_image_idx" ON "case_studies_locales" USING btree ("featured_image_id","_locale");
-  CREATE UNIQUE INDEX IF NOT EXISTS "case_studies_locales_locale_parent_id_unique" ON "case_studies_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_rels_order_idx" ON "case_studies_rels" USING btree ("order");
-  CREATE INDEX IF NOT EXISTS "case_studies_rels_parent_idx" ON "case_studies_rels" USING btree ("parent_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_rels_path_idx" ON "case_studies_rels" USING btree ("path");
-  CREATE INDEX IF NOT EXISTS "case_studies_rels_solutions_id_idx" ON "case_studies_rels" USING btree ("solutions_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_rels_integrations_id_idx" ON "case_studies_rels" USING btree ("integrations_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_rels_pages_id_idx" ON "case_studies_rels" USING btree ("pages_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_rels_posts_id_idx" ON "case_studies_rels" USING btree ("posts_id");
-  CREATE INDEX IF NOT EXISTS "case_studies_rels_faq_id_idx" ON "case_studies_rels" USING btree ("faq_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_version_stats_order_idx" ON "_case_studies_v_version_stats" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_version_stats_parent_id_idx" ON "_case_studies_v_version_stats" USING btree ("_parent_id");
-  CREATE UNIQUE INDEX IF NOT EXISTS "_case_studies_v_version_stats_locales_locale_parent_id_unique" ON "_case_studies_v_version_stats_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_blocks_faq_block_block_header_links_order_idx" ON "_case_studies_v_blocks_faq_block_block_header_links" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_blocks_faq_block_block_header_links_parent_id_idx" ON "_case_studies_v_blocks_faq_block_block_header_links" USING btree ("_parent_id");
-  CREATE UNIQUE INDEX IF NOT EXISTS "_case_studies_v_blocks_faq_block_block_header_links_locales_locale_parent_id_unique" ON "_case_studies_v_blocks_faq_block_block_header_links_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_blocks_faq_block_order_idx" ON "_case_studies_v_blocks_faq_block" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_blocks_faq_block_parent_id_idx" ON "_case_studies_v_blocks_faq_block" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_blocks_faq_block_path_idx" ON "_case_studies_v_blocks_faq_block" USING btree ("_path");
-  CREATE UNIQUE INDEX IF NOT EXISTS "_case_studies_v_blocks_faq_block_locales_locale_parent_id_unique" ON "_case_studies_v_blocks_faq_block_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_parent_idx" ON "_case_studies_v" USING btree ("parent_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_version_version_slug_idx" ON "_case_studies_v" USING btree ("version_slug");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_version_version_updated_at_idx" ON "_case_studies_v" USING btree ("version_updated_at");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_version_version_created_at_idx" ON "_case_studies_v" USING btree ("version_created_at");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_version_version__status_idx" ON "_case_studies_v" USING btree ("version__status");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_created_at_idx" ON "_case_studies_v" USING btree ("created_at");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_updated_at_idx" ON "_case_studies_v" USING btree ("updated_at");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_snapshot_idx" ON "_case_studies_v" USING btree ("snapshot");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_published_locale_idx" ON "_case_studies_v" USING btree ("published_locale");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_latest_idx" ON "_case_studies_v" USING btree ("latest");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_version_version_featured_image_idx" ON "_case_studies_v_locales" USING btree ("version_featured_image_id","_locale");
-  CREATE UNIQUE INDEX IF NOT EXISTS "_case_studies_v_locales_locale_parent_id_unique" ON "_case_studies_v_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_rels_order_idx" ON "_case_studies_v_rels" USING btree ("order");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_rels_parent_idx" ON "_case_studies_v_rels" USING btree ("parent_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_rels_path_idx" ON "_case_studies_v_rels" USING btree ("path");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_rels_solutions_id_idx" ON "_case_studies_v_rels" USING btree ("solutions_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_rels_integrations_id_idx" ON "_case_studies_v_rels" USING btree ("integrations_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_rels_pages_id_idx" ON "_case_studies_v_rels" USING btree ("pages_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_rels_posts_id_idx" ON "_case_studies_v_rels" USING btree ("posts_id");
-  CREATE INDEX IF NOT EXISTS "_case_studies_v_rels_faq_id_idx" ON "_case_studies_v_rels" USING btree ("faq_id");
+  CREATE INDEX IF NOT EXISTS "customers_testimonial_stats_order_idx" ON "customers_testimonial_stats" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "customers_testimonial_stats_parent_id_idx" ON "customers_testimonial_stats" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "customers_testimonial_stats_locales_locale_parent_id_unique" ON "customers_testimonial_stats_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "customers_testimonial_testimonial_featured_image_idx" ON "customers" USING btree ("testimonial_featured_image_id");
+  CREATE INDEX IF NOT EXISTS "customers_testimonial_company_testimonial_company_company_logo_idx" ON "customers" USING btree ("testimonial_company_company_logo_id");
+  CREATE INDEX IF NOT EXISTS "customers_testimonial_author_info_testimonial_author_info_avatar_idx" ON "customers" USING btree ("testimonial_author_info_avatar_id");
+  CREATE INDEX IF NOT EXISTS "customers_slug_idx" ON "customers" USING btree ("slug");
+  CREATE INDEX IF NOT EXISTS "customers_updated_at_idx" ON "customers" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "customers_created_at_idx" ON "customers" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "customers__status_idx" ON "customers" USING btree ("_status");
+  CREATE UNIQUE INDEX IF NOT EXISTS "customers_locales_locale_parent_id_unique" ON "customers_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "customers_rels_order_idx" ON "customers_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "customers_rels_parent_idx" ON "customers_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "customers_rels_path_idx" ON "customers_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "customers_rels_solutions_id_idx" ON "customers_rels" USING btree ("solutions_id");
+  CREATE INDEX IF NOT EXISTS "customers_rels_integrations_id_idx" ON "customers_rels" USING btree ("integrations_id");
+  CREATE INDEX IF NOT EXISTS "customers_rels_pages_id_idx" ON "customers_rels" USING btree ("pages_id");
+  CREATE INDEX IF NOT EXISTS "customers_rels_posts_id_idx" ON "customers_rels" USING btree ("posts_id");
+  CREATE INDEX IF NOT EXISTS "customers_rels_categories_id_idx" ON "customers_rels" USING btree ("categories_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_version_testimonial_stats_order_idx" ON "_customers_v_version_testimonial_stats" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_customers_v_version_testimonial_stats_parent_id_idx" ON "_customers_v_version_testimonial_stats" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_customers_v_version_testimonial_stats_locales_locale_parent_id_unique" ON "_customers_v_version_testimonial_stats_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_parent_idx" ON "_customers_v" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_version_testimonial_version_testimonial_featured_image_idx" ON "_customers_v" USING btree ("version_testimonial_featured_image_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_version_testimonial_company_version_testimonial_company_company_logo_idx" ON "_customers_v" USING btree ("version_testimonial_company_company_logo_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_version_testimonial_author_info_version_testimonial_author_info_avatar_idx" ON "_customers_v" USING btree ("version_testimonial_author_info_avatar_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_version_version_slug_idx" ON "_customers_v" USING btree ("version_slug");
+  CREATE INDEX IF NOT EXISTS "_customers_v_version_version_updated_at_idx" ON "_customers_v" USING btree ("version_updated_at");
+  CREATE INDEX IF NOT EXISTS "_customers_v_version_version_created_at_idx" ON "_customers_v" USING btree ("version_created_at");
+  CREATE INDEX IF NOT EXISTS "_customers_v_version_version__status_idx" ON "_customers_v" USING btree ("version__status");
+  CREATE INDEX IF NOT EXISTS "_customers_v_created_at_idx" ON "_customers_v" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "_customers_v_updated_at_idx" ON "_customers_v" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "_customers_v_snapshot_idx" ON "_customers_v" USING btree ("snapshot");
+  CREATE INDEX IF NOT EXISTS "_customers_v_published_locale_idx" ON "_customers_v" USING btree ("published_locale");
+  CREATE INDEX IF NOT EXISTS "_customers_v_latest_idx" ON "_customers_v" USING btree ("latest");
+  CREATE INDEX IF NOT EXISTS "_customers_v_autosave_idx" ON "_customers_v" USING btree ("autosave");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_customers_v_locales_locale_parent_id_unique" ON "_customers_v_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_rels_order_idx" ON "_customers_v_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "_customers_v_rels_parent_idx" ON "_customers_v_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_rels_path_idx" ON "_customers_v_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "_customers_v_rels_solutions_id_idx" ON "_customers_v_rels" USING btree ("solutions_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_rels_integrations_id_idx" ON "_customers_v_rels" USING btree ("integrations_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_rels_pages_id_idx" ON "_customers_v_rels" USING btree ("pages_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_rels_posts_id_idx" ON "_customers_v_rels" USING btree ("posts_id");
+  CREATE INDEX IF NOT EXISTS "_customers_v_rels_categories_id_idx" ON "_customers_v_rels" USING btree ("categories_id");
   CREATE INDEX IF NOT EXISTS "categories_breadcrumbs_order_idx" ON "categories_breadcrumbs" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "categories_breadcrumbs_parent_id_idx" ON "categories_breadcrumbs" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "categories_breadcrumbs_locale_idx" ON "categories_breadcrumbs" USING btree ("_locale");
@@ -4899,6 +4718,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "categories_updated_at_idx" ON "categories" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "categories_created_at_idx" ON "categories" USING btree ("created_at");
   CREATE UNIQUE INDEX IF NOT EXISTS "categories_locales_locale_parent_id_unique" ON "categories_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "faq_category_idx" ON "faq" USING btree ("category_id");
   CREATE INDEX IF NOT EXISTS "faq_updated_at_idx" ON "faq" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "faq_created_at_idx" ON "faq" USING btree ("created_at");
   CREATE UNIQUE INDEX IF NOT EXISTS "faq_locales_locale_parent_id_unique" ON "faq_locales" USING btree ("_locale","_parent_id");
@@ -5001,8 +4821,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_solutions_id_idx" ON "payload_locked_documents_rels" USING btree ("solutions_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_integrations_id_idx" ON "payload_locked_documents_rels" USING btree ("integrations_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_media_id_idx" ON "payload_locked_documents_rels" USING btree ("media_id");
-  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_testimonials_id_idx" ON "payload_locked_documents_rels" USING btree ("testimonials_id");
-  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_case_studies_id_idx" ON "payload_locked_documents_rels" USING btree ("case_studies_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_customers_id_idx" ON "payload_locked_documents_rels" USING btree ("customers_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_categories_id_idx" ON "payload_locked_documents_rels" USING btree ("categories_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_faq_id_idx" ON "payload_locked_documents_rels" USING btree ("faq_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_changelog_id_idx" ON "payload_locked_documents_rels" USING btree ("changelog_id");
@@ -5070,7 +4889,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.execute(sql`
    DROP TABLE "pages_hero_links" CASCADE;
   DROP TABLE "pages_hero_links_locales" CASCADE;
-  DROP TABLE "pages_hero_logos" CASCADE;
   DROP TABLE "archiveBlock" CASCADE;
   DROP TABLE "archiveBlock_locales" CASCADE;
   DROP TABLE "callToActionBlock_links" CASCADE;
@@ -5083,10 +4901,10 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "customHtmlBlock" CASCADE;
   DROP TABLE "customHtmlBlock_locales" CASCADE;
   DROP TABLE "dividerBlock" CASCADE;
-  DROP TABLE "pages_blocks_faq_block_block_header_links" CASCADE;
-  DROP TABLE "pages_blocks_faq_block_block_header_links_locales" CASCADE;
-  DROP TABLE "pages_blocks_faq_block" CASCADE;
-  DROP TABLE "pages_blocks_faq_block_locales" CASCADE;
+  DROP TABLE "faqBlock_block_header_links" CASCADE;
+  DROP TABLE "faqBlock_block_header_links_locales" CASCADE;
+  DROP TABLE "faqBlock" CASCADE;
+  DROP TABLE "faqBlock_locales" CASCADE;
   DROP TABLE "featuredAppsBlock_block_header_links" CASCADE;
   DROP TABLE "featuredAppsBlock_block_header_links_locales" CASCADE;
   DROP TABLE "featuredAppsBlock_cards" CASCADE;
@@ -5106,6 +4924,14 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "galleryBlock_interactive_gallery_locales" CASCADE;
   DROP TABLE "galleryBlock" CASCADE;
   DROP TABLE "galleryBlock_locales" CASCADE;
+  DROP TABLE "logosBlock_block_header_links" CASCADE;
+  DROP TABLE "logosBlock_block_header_links_locales" CASCADE;
+  DROP TABLE "logosBlock" CASCADE;
+  DROP TABLE "logosBlock_locales" CASCADE;
+  DROP TABLE "richTextBlock_block_header_links" CASCADE;
+  DROP TABLE "richTextBlock_block_header_links_locales" CASCADE;
+  DROP TABLE "richTextBlock" CASCADE;
+  DROP TABLE "richTextBlock_locales" CASCADE;
   DROP TABLE "testimonialsBlock_block_header_links" CASCADE;
   DROP TABLE "testimonialsBlock_block_header_links_locales" CASCADE;
   DROP TABLE "testimonialsBlock" CASCADE;
@@ -5115,7 +4941,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "pages_rels" CASCADE;
   DROP TABLE "_pages_v_version_hero_links" CASCADE;
   DROP TABLE "_pages_v_version_hero_links_locales" CASCADE;
-  DROP TABLE "_pages_v_version_hero_logos" CASCADE;
   DROP TABLE "_archiveBlock_v" CASCADE;
   DROP TABLE "_archiveBlock_v_locales" CASCADE;
   DROP TABLE "_callToActionBlock_v_links" CASCADE;
@@ -5128,10 +4953,10 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_customHtmlBlock_v" CASCADE;
   DROP TABLE "_customHtmlBlock_v_locales" CASCADE;
   DROP TABLE "_dividerBlock_v" CASCADE;
-  DROP TABLE "_pages_v_blocks_faq_block_block_header_links" CASCADE;
-  DROP TABLE "_pages_v_blocks_faq_block_block_header_links_locales" CASCADE;
-  DROP TABLE "_pages_v_blocks_faq_block" CASCADE;
-  DROP TABLE "_pages_v_blocks_faq_block_locales" CASCADE;
+  DROP TABLE "_faqBlock_v_block_header_links" CASCADE;
+  DROP TABLE "_faqBlock_v_block_header_links_locales" CASCADE;
+  DROP TABLE "_faqBlock_v" CASCADE;
+  DROP TABLE "_faqBlock_v_locales" CASCADE;
   DROP TABLE "_featuredAppsBlock_v_block_header_links" CASCADE;
   DROP TABLE "_featuredAppsBlock_v_block_header_links_locales" CASCADE;
   DROP TABLE "_featuredAppsBlock_v_cards" CASCADE;
@@ -5151,6 +4976,14 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_galleryBlock_v_interactive_gallery_locales" CASCADE;
   DROP TABLE "_galleryBlock_v" CASCADE;
   DROP TABLE "_galleryBlock_v_locales" CASCADE;
+  DROP TABLE "_logosBlock_v_block_header_links" CASCADE;
+  DROP TABLE "_logosBlock_v_block_header_links_locales" CASCADE;
+  DROP TABLE "_logosBlock_v" CASCADE;
+  DROP TABLE "_logosBlock_v_locales" CASCADE;
+  DROP TABLE "_richTextBlock_v_block_header_links" CASCADE;
+  DROP TABLE "_richTextBlock_v_block_header_links_locales" CASCADE;
+  DROP TABLE "_richTextBlock_v" CASCADE;
+  DROP TABLE "_richTextBlock_v_locales" CASCADE;
   DROP TABLE "_testimonialsBlock_v_block_header_links" CASCADE;
   DROP TABLE "_testimonialsBlock_v_block_header_links_locales" CASCADE;
   DROP TABLE "_testimonialsBlock_v" CASCADE;
@@ -5172,52 +5005,28 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_solutions_v" CASCADE;
   DROP TABLE "_solutions_v_locales" CASCADE;
   DROP TABLE "_solutions_v_rels" CASCADE;
-  DROP TABLE "integrations_hero_links" CASCADE;
-  DROP TABLE "integrations_hero_links_locales" CASCADE;
-  DROP TABLE "integrations_hero_logos" CASCADE;
-  DROP TABLE "integrations_blocks_faq_block_block_header_links" CASCADE;
-  DROP TABLE "integrations_blocks_faq_block_block_header_links_locales" CASCADE;
-  DROP TABLE "integrations_blocks_faq_block" CASCADE;
-  DROP TABLE "integrations_blocks_faq_block_locales" CASCADE;
+  DROP TABLE "integrations_links" CASCADE;
+  DROP TABLE "integrations_links_locales" CASCADE;
   DROP TABLE "integrations" CASCADE;
   DROP TABLE "integrations_locales" CASCADE;
   DROP TABLE "integrations_rels" CASCADE;
-  DROP TABLE "_integrations_v_version_hero_links" CASCADE;
-  DROP TABLE "_integrations_v_version_hero_links_locales" CASCADE;
-  DROP TABLE "_integrations_v_version_hero_logos" CASCADE;
-  DROP TABLE "_integrations_v_blocks_faq_block_block_header_links" CASCADE;
-  DROP TABLE "_integrations_v_blocks_faq_block_block_header_links_locales" CASCADE;
-  DROP TABLE "_integrations_v_blocks_faq_block" CASCADE;
-  DROP TABLE "_integrations_v_blocks_faq_block_locales" CASCADE;
+  DROP TABLE "_integrations_v_version_links" CASCADE;
+  DROP TABLE "_integrations_v_version_links_locales" CASCADE;
   DROP TABLE "_integrations_v" CASCADE;
   DROP TABLE "_integrations_v_locales" CASCADE;
   DROP TABLE "_integrations_v_rels" CASCADE;
   DROP TABLE "media" CASCADE;
   DROP TABLE "media_rels" CASCADE;
-  DROP TABLE "testimonials" CASCADE;
-  DROP TABLE "testimonials_locales" CASCADE;
-  DROP TABLE "testimonials_rels" CASCADE;
-  DROP TABLE "_testimonials_v" CASCADE;
-  DROP TABLE "_testimonials_v_locales" CASCADE;
-  DROP TABLE "_testimonials_v_rels" CASCADE;
-  DROP TABLE "case_studies_stats" CASCADE;
-  DROP TABLE "case_studies_stats_locales" CASCADE;
-  DROP TABLE "case_studies_blocks_faq_block_block_header_links" CASCADE;
-  DROP TABLE "case_studies_blocks_faq_block_block_header_links_locales" CASCADE;
-  DROP TABLE "case_studies_blocks_faq_block" CASCADE;
-  DROP TABLE "case_studies_blocks_faq_block_locales" CASCADE;
-  DROP TABLE "case_studies" CASCADE;
-  DROP TABLE "case_studies_locales" CASCADE;
-  DROP TABLE "case_studies_rels" CASCADE;
-  DROP TABLE "_case_studies_v_version_stats" CASCADE;
-  DROP TABLE "_case_studies_v_version_stats_locales" CASCADE;
-  DROP TABLE "_case_studies_v_blocks_faq_block_block_header_links" CASCADE;
-  DROP TABLE "_case_studies_v_blocks_faq_block_block_header_links_locales" CASCADE;
-  DROP TABLE "_case_studies_v_blocks_faq_block" CASCADE;
-  DROP TABLE "_case_studies_v_blocks_faq_block_locales" CASCADE;
-  DROP TABLE "_case_studies_v" CASCADE;
-  DROP TABLE "_case_studies_v_locales" CASCADE;
-  DROP TABLE "_case_studies_v_rels" CASCADE;
+  DROP TABLE "customers_testimonial_stats" CASCADE;
+  DROP TABLE "customers_testimonial_stats_locales" CASCADE;
+  DROP TABLE "customers" CASCADE;
+  DROP TABLE "customers_locales" CASCADE;
+  DROP TABLE "customers_rels" CASCADE;
+  DROP TABLE "_customers_v_version_testimonial_stats" CASCADE;
+  DROP TABLE "_customers_v_version_testimonial_stats_locales" CASCADE;
+  DROP TABLE "_customers_v" CASCADE;
+  DROP TABLE "_customers_v_locales" CASCADE;
+  DROP TABLE "_customers_v_rels" CASCADE;
   DROP TABLE "categories_breadcrumbs" CASCADE;
   DROP TABLE "categories" CASCADE;
   DROP TABLE "categories_locales" CASCADE;
@@ -5300,8 +5109,10 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."badge_icon_position";
   DROP TYPE "public"."enum_customHtmlBlock_block_header_type";
   DROP TYPE "public"."enum_customHtmlBlock_block_header_badge_type";
-  DROP TYPE "public"."enum_pages_blocks_faq_block_block_header_type";
-  DROP TYPE "public"."enum_pages_blocks_faq_block_block_header_badge_type";
+  DROP TYPE "public"."enum_dividerBlock_size";
+  DROP TYPE "public"."enum_faqBlock_block_header_type";
+  DROP TYPE "public"."enum_faqBlock_block_header_badge_type";
+  DROP TYPE "public"."enum_faqBlock_type";
   DROP TYPE "public"."enum_featuredAppsBlock_block_header_type";
   DROP TYPE "public"."enum_featuredAppsBlock_block_header_badge_type";
   DROP TYPE "public"."enum_featuredAppsBlock_type";
@@ -5313,6 +5124,13 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_galleryBlock_block_header_type";
   DROP TYPE "public"."enum_galleryBlock_block_header_badge_type";
   DROP TYPE "public"."enum_galleryBlock_type";
+  DROP TYPE "public"."enum_logosBlock_block_header_type";
+  DROP TYPE "public"."enum_logosBlock_block_header_badge_type";
+  DROP TYPE "public"."enum_logosBlock_type";
+  DROP TYPE "public"."enum_richTextBlock_block_header_type";
+  DROP TYPE "public"."enum_richTextBlock_block_header_badge_type";
+  DROP TYPE "public"."enum_richTextBlock_type";
+  DROP TYPE "public"."enum_richTextBlock_max_width";
   DROP TYPE "public"."enum_testimonialsBlock_block_header_type";
   DROP TYPE "public"."enum_testimonialsBlock_block_header_badge_type";
   DROP TYPE "public"."enum_testimonialsBlock_type";
@@ -5325,8 +5143,10 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__callToActionBlock_v_badge_type";
   DROP TYPE "public"."enum__customHtmlBlock_v_block_header_type";
   DROP TYPE "public"."enum__customHtmlBlock_v_block_header_badge_type";
-  DROP TYPE "public"."enum__pages_v_blocks_faq_block_block_header_type";
-  DROP TYPE "public"."enum__pages_v_blocks_faq_block_block_header_badge_type";
+  DROP TYPE "public"."enum__dividerBlock_v_size";
+  DROP TYPE "public"."enum__faqBlock_v_block_header_type";
+  DROP TYPE "public"."enum__faqBlock_v_block_header_badge_type";
+  DROP TYPE "public"."enum__faqBlock_v_type";
   DROP TYPE "public"."enum__featuredAppsBlock_v_block_header_type";
   DROP TYPE "public"."enum__featuredAppsBlock_v_block_header_badge_type";
   DROP TYPE "public"."enum__featuredAppsBlock_v_type";
@@ -5338,6 +5158,13 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__galleryBlock_v_block_header_type";
   DROP TYPE "public"."enum__galleryBlock_v_block_header_badge_type";
   DROP TYPE "public"."enum__galleryBlock_v_type";
+  DROP TYPE "public"."enum__logosBlock_v_block_header_type";
+  DROP TYPE "public"."enum__logosBlock_v_block_header_badge_type";
+  DROP TYPE "public"."enum__logosBlock_v_type";
+  DROP TYPE "public"."enum__richTextBlock_v_block_header_type";
+  DROP TYPE "public"."enum__richTextBlock_v_block_header_badge_type";
+  DROP TYPE "public"."enum__richTextBlock_v_type";
+  DROP TYPE "public"."enum__richTextBlock_v_max_width";
   DROP TYPE "public"."enum__testimonialsBlock_v_block_header_type";
   DROP TYPE "public"."enum__testimonialsBlock_v_block_header_badge_type";
   DROP TYPE "public"."enum__testimonialsBlock_v_type";
@@ -5351,28 +5178,17 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_solutions_status";
   DROP TYPE "public"."enum__solutions_v_version_status";
   DROP TYPE "public"."enum__solutions_v_published_locale";
-  DROP TYPE "public"."enum_integrations_blocks_faq_block_block_header_type";
-  DROP TYPE "public"."enum_integrations_blocks_faq_block_block_header_badge_type";
-  DROP TYPE "public"."enum_integrations_hero_type";
-  DROP TYPE "public"."enum_integrations_hero_badge_type";
   DROP TYPE "public"."enum_integrations_status";
-  DROP TYPE "public"."enum__integrations_v_blocks_faq_block_block_header_type";
-  DROP TYPE "public"."enum__integrations_v_blocks_faq_block_block_header_badge_type";
-  DROP TYPE "public"."enum__integrations_v_version_hero_type";
-  DROP TYPE "public"."enum__integrations_v_version_hero_badge_type";
   DROP TYPE "public"."enum__integrations_v_version_status";
   DROP TYPE "public"."enum__integrations_v_published_locale";
   DROP TYPE "public"."enum_media_locale";
-  DROP TYPE "public"."enum_testimonials_status";
-  DROP TYPE "public"."enum__testimonials_v_version_status";
-  DROP TYPE "public"."enum__testimonials_v_published_locale";
-  DROP TYPE "public"."enum_case_studies_blocks_faq_block_block_header_type";
-  DROP TYPE "public"."enum_case_studies_blocks_faq_block_block_header_badge_type";
-  DROP TYPE "public"."enum_case_studies_status";
-  DROP TYPE "public"."enum__case_studies_v_blocks_faq_block_block_header_type";
-  DROP TYPE "public"."enum__case_studies_v_blocks_faq_block_block_header_badge_type";
-  DROP TYPE "public"."enum__case_studies_v_version_status";
-  DROP TYPE "public"."enum__case_studies_v_published_locale";
+  DROP TYPE "public"."enum_customers_testimonial_stats_indicator";
+  DROP TYPE "public"."enum_customers_testimonial_company_industry";
+  DROP TYPE "public"."enum_customers_status";
+  DROP TYPE "public"."enum__customers_v_version_testimonial_stats_indicator";
+  DROP TYPE "public"."enum__customers_v_version_testimonial_company_industry";
+  DROP TYPE "public"."enum__customers_v_version_status";
+  DROP TYPE "public"."enum__customers_v_published_locale";
   DROP TYPE "public"."enum_changelog_categories";
   DROP TYPE "public"."enum_redirects_to_type";
   DROP TYPE "public"."enum_forms_confirmation_type";
