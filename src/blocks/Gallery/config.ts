@@ -47,7 +47,7 @@ const fields: Field[] = [
       { value: '04', label: 'Gallery 04 (Interactive)' },
     ],
     required: true,
-    defaultValue: 'gallery01',
+    defaultValue: '01',
     admin: {
       description: 'Select the layout for the gallery.',
     },
