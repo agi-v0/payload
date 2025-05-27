@@ -1,5 +1,5 @@
 {
-  "id": "1e6c573e-c6f0-4a78-b22c-4cd855d1440c",
+  "id": "e93745a4-13e0-4aa4-838a-d761e8f3622c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -5142,6 +5142,12 @@
         "table": {
           "name": "table",
           "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "logos_headline": {
+          "name": "logos_headline",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
@@ -12301,6 +12307,12 @@
         "table": {
           "name": "table",
           "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "logos_headline": {
+          "name": "logos_headline",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },

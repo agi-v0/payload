@@ -125,10 +125,36 @@ export const MetricsBlock: Block = {
       name: 'enableLogos',
       type: 'checkbox',
     },
-    logos({
-      overrides: {
-        admin: { condition: (data, siblingData) => siblingData.enableLogos },
+    {
+      type: 'collapsible',
+      label: 'Logos',
+      admin: {
+        initCollapsed: true,
+        condition: (data, siblingData) => siblingData.enableLogos,
       },
-    }),
+      fields: [
+        {
+          name: 'logos',
+          label: false,
+          type: 'group',
+          admin: {
+            hideGutter: true,
+          },
+          fields: [
+            {
+              name: 'headline',
+              type: 'text',
+              label: 'Headline',
+              required: false,
+              localized: true,
+              admin: {
+                placeholder: 'e.g., As Featured In, Our Partners',
+              },
+            },
+            logos({}),
+          ],
+        },
+      ],
+    },
   ],
 }

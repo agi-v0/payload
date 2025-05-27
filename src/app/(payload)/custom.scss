@@ -160,3 +160,23 @@ html:not([dir='RTL']) .btn--withPopup .popup-button {
   height: 32px;
   width: auto;
 }
+
+.forgot-password {
+  text-align: center;
+}
+
+.forgot-password .template-minimal__wrap .form {
+  margin-bottom: calc(var(--base) / 2);
+}
+
+.forgot-password .template-minimal__wrap .form > *:last-child {
+  margin-top: calc(var(--base));
+}
+
+.login__form__inputWrap {
+  margin-bottom: var(--base);
+}
+
+.form > *:last-child {
+  margin-top: calc(var(--base) / 2);
+}

@@ -581,6 +581,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_header_text" jsonb,
   	"block_image_media_id" uuid,
   	"table" jsonb,
+  	"logos_headline" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" varchar NOT NULL
@@ -1215,6 +1216,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_header_text" jsonb,
   	"block_image_media_id" uuid,
   	"table" jsonb,
+  	"logos_headline" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" uuid NOT NULL

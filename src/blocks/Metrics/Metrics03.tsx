@@ -1,10 +1,21 @@
 'use client'
 import React from 'react'
 import type { MetricsBlock as MetricsBlockProps } from '@/payload-types'
-
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@/components/ui/table'
 import { cn } from '@/utilities/ui'
+import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
+import { Media } from '@/components/Media'
 
 export const Metrics03: React.FC<MetricsBlockProps> = ({ table, enableLogos, logos }) => {
+  const { logos: logosGroup, headline } = logos || {}
+
   const renderTable = () => {
     if (!table) return null
 
@@ -37,68 +48,56 @@ export const Metrics03: React.FC<MetricsBlockProps> = ({ table, enableLogos, log
       const headers = Object.keys(firstRow)
 
       return (
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="border-border border-b">
-                {headers.map((header, index) => (
-                  <th
-                    key={index}
-                    className="text-foreground px-4 py-3 text-left text-sm font-semibold"
-                  >
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row: any, rowIndex: number) => (
-                <tr key={rowIndex} className="border-border/50 border-b">
-                  {headers.map((header, cellIndex) => (
-                    <td key={cellIndex} className="text-muted-foreground px-4 py-3 text-sm">
-                      {row[header]}
-                    </td>
-                  ))}
-                </tr>
+        <Table className="rounded-space-sm overflow-hidden">
+          <TableHeader className="[&_tr]:border-0">
+            <TableRow className="hover:bg-background-neutral bg-background-neutral">
+              {headers.map((header, index) => (
+                <TableHead key={index}>{header}</TableHead>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.map((row: any, rowIndex: number) => (
+              <TableRow
+                key={rowIndex}
+                className="even:bg-background-neutral even:hover:bg-background-neutral odd:bg-background odd:hover:bg-background"
+              >
+                {headers.map((header, cellIndex) => (
+                  <TableCell key={cellIndex}>{row[header]}</TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       )
     }
 
     // If it's an object with rows/columns structure
     if (typeof data === 'object' && data.rows) {
       return (
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            {data.headers && (
-              <thead>
-                <tr className="border-border border-b">
-                  {data.headers.map((header: string, index: number) => (
-                    <th
-                      key={index}
-                      className="text-foreground px-4 py-3 text-left text-sm font-semibold"
-                    >
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-            )}
-            <tbody>
-              {data.rows.map((row: any[], rowIndex: number) => (
-                <tr key={rowIndex} className="border-border/50 border-b">
-                  {row.map((cell, cellIndex) => (
-                    <td key={cellIndex} className="text-muted-foreground px-4 py-3 text-sm">
-                      {cell}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table>
+          {data.headers && (
+            <TableHeader className="bg-background-neutral [&_tr]:border-0">
+              <TableRow className="hover:bg-background-neutral">
+                {data.headers.map((header: string, index: number) => (
+                  <TableHead key={index}>{header}</TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+          )}
+          <TableBody>
+            {data.rows.map((row: any[], rowIndex: number) => (
+              <TableRow
+                key={rowIndex}
+                className="even:bg-background-neutral even:hover:bg-background-neutral odd:bg-background odd:hover:bg-background"
+              >
+                {row.map((cell, cellIndex) => (
+                  <TableCell key={cellIndex}>{cell}</TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       )
     }
 
@@ -106,25 +105,28 @@ export const Metrics03: React.FC<MetricsBlockProps> = ({ table, enableLogos, log
   }
 
   return (
-    <div className="py-xl container">
-      <div className="border-border bg-card rounded-lg border shadow-sm">{renderTable()}</div>
+    <div className="py-xl relative container">
+      <div className="">{renderTable()}</div>
 
-      {enableLogos && logos && logos.length > 0 && (
-        <div className="mt-xl">
-          <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
-            {logos.map((logo, index) => {
-              if (typeof logo === 'string') return null
-              return (
-                <div key={logo.id || index} className="h-8">
-                  <img
-                    src={logo.url || ''}
-                    alt={logo.alt}
-                    className="h-full w-auto object-contain"
-                  />
-                </div>
-              )
-            })}
-          </div>
+      {logos && logosGroup && logosGroup.length > 0 && (
+        <div className="gap-space-md mt-md md:gap-space-lg flex w-full flex-col items-start">
+          {headline && <p className="text-body-sm text-base-quaternary font-medium">{headline}</p>}
+          <ul
+            dir="ltr"
+            className="-mask-x-to-10% flex w-full flex-wrap items-center justify-center mask-x-from-90% mask-x-to-100% md:justify-between"
+          >
+            <InfiniteSlider gap={48} className="dark:invert">
+              {logosGroup.map((logo, i) => {
+                return (
+                  <li key={i} className="flex items-center justify-center">
+                    {logo && typeof logo === 'object' && (
+                      <Media imgClassName="h-6 w-auto object-contain" priority resource={logo} />
+                    )}
+                  </li>
+                )
+              })}
+            </InfiniteSlider>
+          </ul>
         </div>
       )}
     </div>
