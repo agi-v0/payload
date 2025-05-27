@@ -28,7 +28,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_featuresBlock_type" AS ENUM('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17');
   CREATE TYPE "public"."enum_galleryBlock_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum_galleryBlock_block_header_badge_type" AS ENUM('label', 'reference');
-  CREATE TYPE "public"."enum_galleryBlock_type" AS ENUM('gallery01', 'gallery02', 'gallery03', 'gallery04');
+    CREATE TYPE "public"."enum_galleryBlock_type" AS ENUM('01', '02', '03', '04');
   CREATE TYPE "public"."enum_logosBlock_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum_logosBlock_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum_logosBlock_type" AS ENUM('01', '02', '03');
@@ -66,7 +66,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__featuresBlock_v_type" AS ENUM('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17');
   CREATE TYPE "public"."enum__galleryBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum__galleryBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
-  CREATE TYPE "public"."enum__galleryBlock_v_type" AS ENUM('gallery01', 'gallery02', 'gallery03', 'gallery04');
+  CREATE TYPE "public"."enum__galleryBlock_v_type" AS ENUM('01', '02', '03', '04');
   CREATE TYPE "public"."enum__logosBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum__logosBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum__logosBlock_v_type" AS ENUM('01', '02', '03');

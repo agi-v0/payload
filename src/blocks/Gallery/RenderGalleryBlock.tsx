@@ -13,10 +13,10 @@ type GalleryBlockType = GalleryBlock & {
 }
 
 const blockComponents = {
-  gallery01: Gallery01,
-  gallery02: Gallery02,
-  gallery03: Gallery03,
-  gallery04: Gallery04,
+  '01': Gallery01,
+  '02': Gallery02,
+  '03': Gallery03,
+  '04': Gallery04,
 }
 
 export const RenderGalleryBlock: React.FC<GalleryBlockType> = async (props) => {
