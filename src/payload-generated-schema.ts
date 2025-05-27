@@ -146,12 +146,7 @@ export const enum_galleryBlock_block_header_badge_type = pgEnum(
   'enum_galleryBlock_block_header_badge_type',
   ['label', 'reference'],
 )
-export const enum_galleryBlock_type = pgEnum('enum_galleryBlock_type', [
-  'gallery01',
-  'gallery02',
-  'gallery03',
-  'gallery04',
-])
+export const enum_galleryBlock_type = pgEnum('enum_galleryBlock_type', ['01', '02', '03', '04'])
 export const enum_logosBlock_block_header_type = pgEnum('enum_logosBlock_block_header_type', [
   'center',
   'split',
@@ -322,10 +317,10 @@ export const enum__galleryBlock_v_block_header_badge_type = pgEnum(
   ['label', 'reference'],
 )
 export const enum__galleryBlock_v_type = pgEnum('enum__galleryBlock_v_type', [
-  'gallery01',
-  'gallery02',
-  'gallery03',
-  'gallery04',
+  '01',
+  '02',
+  '03',
+  '04',
 ])
 export const enum__logosBlock_v_block_header_type = pgEnum('enum__logosBlock_v_block_header_type', [
   'center',
