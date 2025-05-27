@@ -476,7 +476,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
   	"block_header_badge_icon" varchar,
   	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
-  	"type" "enum_galleryBlock_type" DEFAULT 'gallery01',
+  	"type" "enum_galleryBlock_type" DEFAULT '01',
   	"block_name" varchar
   );
   
@@ -1105,7 +1105,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
   	"block_header_badge_icon" varchar,
   	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
-  	"type" "enum__galleryBlock_v_type" DEFAULT 'gallery01',
+  	"type" "enum__galleryBlock_v_type" DEFAULT '01',
   	"_uuid" varchar,
   	"block_name" varchar
   );

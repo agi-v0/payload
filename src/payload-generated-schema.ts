@@ -1351,7 +1351,7 @@ export const galleryBlock = pgTable(
     blockHeader_badge_icon_position: badge_icon_position(
       'block_header_badge_icon_position',
     ).default('flex-row'),
-    type: enum_galleryBlock_type('type').default('gallery01'),
+    type: enum_galleryBlock_type('type').default('01'),
     blockName: varchar('block_name'),
   },
   (columns) => ({
@@ -2902,7 +2902,7 @@ export const _galleryBlock_v = pgTable(
     blockHeader_badge_icon_position: badge_icon_position(
       'block_header_badge_icon_position',
     ).default('flex-row'),
-    type: enum__galleryBlock_v_type('type').default('gallery01'),
+    type: enum__galleryBlock_v_type('type').default('01'),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
   },
