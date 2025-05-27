@@ -58,7 +58,7 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
                     <RichText data={richTextContent} className={cn('pe-md w-full')} />
                   )}
                   {image && (
-                    <div className="rounded-space-sm bg-background-neutral-subtle h-auto w-full overflow-hidden">
+                    <div className="rounded-space-sm bg-background-neutral h-auto w-full overflow-hidden">
                       <Media
                         resource={image}
                         className="group h-auto w-full"

@@ -184,6 +184,10 @@ html[data-theme='dark'] {
   gap: 0.125rem;
 }
 
+.blocks-field__block-header {
+  align-items: center;
+}
+
 .doc-tab:before {
   transition: var(--default-transition);
   background-color: var(--theme-elevation-100);

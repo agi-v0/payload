@@ -18,18 +18,18 @@ export interface Props {
   size?: string // for NextImage only
   src?: StaticImageData | string // for static media
   videoClassName?: string
-  resource?: MediaType | number
+  resource?: MediaType | string
   media?: {
     desktop?: {
-      light?: (number | null) | MediaType
-      dark?: (number | null) | MediaType
+      light?: (string | null) | MediaType
+      dark?: (string | null) | MediaType
     }
     /**
      * Optional
      */
     mobile?: {
-      light?: (number | null) | MediaType
-      dark?: (number | null) | MediaType
+      light?: (string | null) | MediaType
+      dark?: (string | null) | MediaType
     }
   }
 }

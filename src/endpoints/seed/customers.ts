@@ -3,7 +3,7 @@ import type { Media } from '@/payload-types'
 
 export interface CustomersResult {
   customers: any[]
-  slugToIdMap: Record<string, number>
+  slugToIdMap: Record<string, string>
 }
 
 export async function seedCustomers({
@@ -22,8 +22,8 @@ export async function seedCustomers({
   logo: Media
   imageSquare: Media
   image169: Media
-  solutionsSlugToIdMap: Record<string, number>
-  integrationsSlugToIdMap: Record<string, number>
+  solutionsSlugToIdMap: Record<string, string>
+  integrationsSlugToIdMap: Record<string, string>
 }): Promise<CustomersResult> {
   payload.logger.info('— Seeding customers (testimonials & case studies)...')
 
@@ -183,7 +183,7 @@ export async function seedCustomers({
   const customers = customerResults.filter(Boolean)
 
   // Create slug to ID map
-  const slugToIdMap: Record<string, number> = {}
+  const slugToIdMap: Record<string, string> = {}
   customers.forEach((customer) => {
     if (customer?.slug) {
       slugToIdMap[customer.slug] = customer.id

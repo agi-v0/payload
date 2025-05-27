@@ -44,11 +44,11 @@ export interface BadgeProps {
   reference?:
     | ({
         relationTo: 'solutions'
-        value: number | Solution
+        value: string | Solution
       } | null)
     | ({
         relationTo: 'integrations'
-        value: number | Integration
+        value: string | Integration
       } | null)
   icon?: string | null
   icon_position?: ('flex-row' | 'flex-row-reverse') | null

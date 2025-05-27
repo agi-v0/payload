@@ -234,6 +234,7 @@ export const Integrations: CollectionConfig<'integrations'> = {
             // },
             {
               name: 'layout',
+
               type: 'blocks',
               blocks: [],
               blockReferences: [
@@ -250,7 +251,6 @@ export const Integrations: CollectionConfig<'integrations'> = {
                 'richTextBlock',
                 'testimonialsBlock',
               ],
-
               admin: {
                 initCollapsed: true,
               },

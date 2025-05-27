@@ -4,13 +4,13 @@ import type { Media, Solution } from '@/payload-types'
 export const seedSolutions = async (
   payload: Payload,
   req: PayloadRequest,
-  { imageSquareId }: { imageSquareId?: number },
+  { imageSquareId }: { imageSquareId?: string },
   {
     sellCategoryId,
     operateCategoryId,
     manageCategoryId,
-  }: { sellCategoryId: number; operateCategoryId: number; manageCategoryId: number },
-): Promise<Record<string, number>> => {
+  }: { sellCategoryId: string; operateCategoryId: string; manageCategoryId: string },
+): Promise<Record<string, string>> => {
   const solutionsData: RequiredDataFromCollectionSlug<'solutions'>[] = [
     {
       title: 'Cashier',
@@ -183,7 +183,7 @@ export const seedSolutions = async (
     },
   })
 
-  const slugToIdMap: Record<string, number> = {}
+  const slugToIdMap: Record<string, string> = {}
   createdSolutions.forEach((doc) => {
     const solutionDoc = doc as Solution
     if (solutionDoc.slug) {

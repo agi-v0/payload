@@ -13,11 +13,11 @@ export interface BlockHeaderType {
     reference?:
       | ({
           relationTo: 'solutions'
-          value: number | Solution
+          value: string | Solution
         } | null)
       | ({
           relationTo: 'integrations'
-          value: number | Integration
+          value: string | Integration
         } | null)
     /**
      * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
@@ -48,15 +48,15 @@ export interface BlockHeaderType {
           reference?:
             | ({
                 relationTo: 'pages'
-                value: number | Page
+                value: string | Page
               } | null)
             | ({
                 relationTo: 'posts'
-                value: number | Post
+                value: string | Post
               } | null)
             | ({
                 relationTo: 'solutions'
-                value: number | Solution
+                value: string | Solution
               } | null)
           url?: string | null
           label: string

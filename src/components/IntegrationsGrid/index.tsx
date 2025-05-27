@@ -4,7 +4,7 @@ import { IntegrationCard, type IntegrationsCardData } from '@/components/Integra
 import { AnimatePresence, motion } from 'motion/react'
 import { itemVariants } from '@/utilities/motion'
 
-export type IntegrationWithId = IntegrationsCardData & { id: number }
+export type IntegrationWithId = IntegrationsCardData & { id: string }
 
 interface IntegrationsGridProps {
   integrations: IntegrationWithId[]

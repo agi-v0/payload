@@ -103,7 +103,7 @@ type CommonPayloadLink = {
   newTab?: boolean | null
   reference?: {
     relationTo: 'pages' | 'posts' | 'solutions' | 'integrations' // Add all valid relationTo targets
-    value: string | number | Page | Post | Solution | Integration // Or the actual related document type
+    value: string | string | Page | Post | Solution | Integration // Or the actual related document type
   } | null
   url?: string | null
   label: string // Label is often required

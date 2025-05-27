@@ -16,6 +16,7 @@ import { RenderCustomHtmlBlock } from './CustomHTML/RenderCustomHtmlBlock'
 import { RenderDividerBlock } from './Divider/RenderDividerBlock'
 import { RenderLogoBlock } from './Logos/RenderLogoBlock'
 import { RenderRichTextBlock } from './RichText/RenderRichTextBlock'
+import { RenderMetricsBlock } from './Metrics/RenderMetricsBlock'
 
 const blockComponents = {
   archiveBlock: ArchiveBlock,
@@ -27,8 +28,9 @@ const blockComponents = {
   featuresBlock: RenderFeaturesBlock,
   formBlock: FormBlock,
   galleryBlock: RenderGalleryBlock,
-  logoBlock: RenderLogoBlock,
+  logosBlock: RenderLogoBlock,
   mediaBlock: MediaBlock,
+  metricsBlock: RenderMetricsBlock,
   richTextBlock: RenderRichTextBlock,
   testimonialsBlock: RenderTestimonialsBlock,
 }

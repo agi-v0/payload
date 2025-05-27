@@ -32,6 +32,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_logosBlock_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum_logosBlock_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum_logosBlock_type" AS ENUM('01', '02', '03');
+  CREATE TYPE "public"."enum_metricsBlock_stats_indicator" AS ENUM('increase', 'decrease', 'noChange');
+  CREATE TYPE "public"."enum_metricsBlock_block_header_type" AS ENUM('center', 'split', 'start');
+  CREATE TYPE "public"."enum_metricsBlock_block_header_badge_type" AS ENUM('label', 'reference');
+  CREATE TYPE "public"."enum_metricsBlock_type" AS ENUM('01', '02', '03');
   CREATE TYPE "public"."enum_richTextBlock_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum_richTextBlock_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum_richTextBlock_type" AS ENUM('01', '02');
@@ -66,6 +70,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__logosBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum__logosBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum__logosBlock_v_type" AS ENUM('01', '02', '03');
+  CREATE TYPE "public"."enum__metricsBlock_v_stats_indicator" AS ENUM('increase', 'decrease', 'noChange');
+  CREATE TYPE "public"."enum__metricsBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
+  CREATE TYPE "public"."enum__metricsBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
+  CREATE TYPE "public"."enum__metricsBlock_v_type" AS ENUM('01', '02', '03');
   CREATE TYPE "public"."enum__richTextBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
   CREATE TYPE "public"."enum__richTextBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
   CREATE TYPE "public"."enum__richTextBlock_v_type" AS ENUM('01', '02');
@@ -103,7 +111,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_header_tabs_nav_items_style" AS ENUM('default', 'featured', 'list');
   CREATE TABLE IF NOT EXISTS "pages_hero_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
@@ -121,7 +129,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "archiveBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"populate_by" "enum_archiveBlock_populate_by" DEFAULT 'collection',
@@ -167,7 +175,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "callToActionBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"type" "enum_callToActionBlock_type" DEFAULT '01',
@@ -176,17 +184,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"badge_icon" varchar,
   	"badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
   	"supporting_text" varchar,
-  	"form_id" integer,
+  	"form_id" uuid,
   	"block_name" varchar
   );
   
   CREATE TABLE IF NOT EXISTS "callToActionBlock_locales" (
   	"badge_label" varchar,
   	"rich_text" jsonb,
-  	"media_desktop_light_id" integer,
-  	"media_desktop_dark_id" integer,
-  	"media_mobile_light_id" integer,
-  	"media_mobile_dark_id" integer,
+  	"media_desktop_light_id" uuid,
+  	"media_desktop_dark_id" uuid,
+  	"media_mobile_light_id" uuid,
+  	"media_mobile_dark_id" uuid,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" varchar NOT NULL
@@ -212,7 +220,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "customHtmlBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"block_header_type" "enum_customHtmlBlock_block_header_type" DEFAULT 'center',
@@ -234,7 +242,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "dividerBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"size" "enum_dividerBlock_size" DEFAULT 'small',
@@ -262,7 +270,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "faqBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"block_header_type" "enum_faqBlock_block_header_type" DEFAULT 'center',
@@ -316,7 +324,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "featuredAppsBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"block_header_type" "enum_featuredAppsBlock_block_header_type" DEFAULT 'center',
@@ -325,7 +333,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_badge_icon" varchar,
   	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
   	"type" "enum_featuredAppsBlock_type" DEFAULT '04',
-  	"media_id" integer,
+  	"media_id" uuid,
   	"block_name" varchar
   );
   
@@ -374,7 +382,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "featuresBlock_columns_locales" (
-  	"image_id" integer,
+  	"image_id" uuid,
   	"tab_label" varchar,
   	"content_title" varchar,
   	"content_subtitle" varchar,
@@ -388,7 +396,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "featuresBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"block_header_type" "enum_featuresBlock_block_header_type" DEFAULT 'center',
@@ -397,7 +405,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_badge_icon" varchar,
   	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
   	"type" "enum_featuresBlock_type" DEFAULT '01',
-  	"block_image_id" integer,
+  	"block_image_id" uuid,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -416,10 +424,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "formBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
-  	"form_id" integer,
+  	"form_id" uuid,
   	"enable_intro" boolean,
   	"intro_content" jsonb,
   	"block_name" varchar
@@ -450,7 +458,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "galleryBlock_interactive_gallery_locales" (
-  	"image_id" integer,
+  	"image_id" uuid,
   	"panel_title" varchar,
   	"panel_description" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
@@ -460,7 +468,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "galleryBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"block_header_type" "enum_galleryBlock_block_header_type" DEFAULT 'center',
@@ -500,7 +508,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "logosBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"block_header_type" "enum_logosBlock_block_header_type" DEFAULT 'center',
@@ -515,6 +523,64 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "logosBlock_locales" (
   	"block_header_badge_label" varchar,
   	"block_header_header_text" jsonb,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" varchar NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "metricsBlock_block_header_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"link_type" "link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_color" "link_color" DEFAULT 'neutral',
+  	"link_variant" "link_variant" DEFAULT 'primary'
+  );
+  
+  CREATE TABLE IF NOT EXISTS "metricsBlock_block_header_links_locales" (
+  	"link_label" varchar,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" varchar NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "metricsBlock_stats" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"indicator" "enum_metricsBlock_stats_indicator" DEFAULT 'noChange'
+  );
+  
+  CREATE TABLE IF NOT EXISTS "metricsBlock_stats_locales" (
+  	"label" varchar,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" varchar NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "metricsBlock" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"block_header_type" "enum_metricsBlock_block_header_type" DEFAULT 'center',
+  	"block_header_badge_type" "enum_metricsBlock_block_header_badge_type",
+  	"block_header_badge_color" "badge_color" DEFAULT 'blue',
+  	"block_header_badge_icon" varchar,
+  	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"type" "enum_metricsBlock_type" DEFAULT '01',
+  	"enable_logos" boolean,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "metricsBlock_locales" (
+  	"block_header_badge_label" varchar,
+  	"block_header_header_text" jsonb,
+  	"block_image_media_id" uuid,
+  	"table" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" varchar NOT NULL
@@ -540,7 +606,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "richTextBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"block_header_type" "enum_richTextBlock_block_header_type" DEFAULT 'center',
@@ -583,7 +649,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "testimonialsBlock" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"block_header_type" "enum_testimonialsBlock_block_header_type" DEFAULT 'center',
@@ -604,7 +670,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "pages" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"title" varchar,
   	"hero_type" "enum_pages_hero_type" DEFAULT 'hero01',
   	"hero_badge_type" "enum_pages_hero_badge_type",
@@ -623,39 +689,39 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "pages_locales" (
   	"hero_badge_label" varchar,
   	"hero_rich_text" jsonb,
-  	"hero_media_desktop_light_id" integer,
-  	"hero_media_desktop_dark_id" integer,
-  	"hero_media_mobile_light_id" integer,
-  	"hero_media_mobile_dark_id" integer,
+  	"hero_media_desktop_light_id" uuid,
+  	"hero_media_desktop_dark_id" uuid,
+  	"hero_media_mobile_light_id" uuid,
+  	"hero_media_mobile_dark_id" uuid,
   	"hero_logos_headline" varchar,
   	"meta_title" varchar,
-  	"meta_image_id" integer,
+  	"meta_image_id" uuid,
   	"meta_description" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "pages_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
   	"locale" "_locales",
-  	"solutions_id" integer,
-  	"integrations_id" integer,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"media_id" integer,
-  	"categories_id" integer,
-  	"faq_id" integer,
-  	"customers_id" integer
+  	"solutions_id" uuid,
+  	"integrations_id" uuid,
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"media_id" uuid,
+  	"categories_id" uuid,
+  	"faq_id" uuid,
+  	"customers_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "_pages_v_version_hero_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -668,14 +734,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_archiveBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"populate_by" "enum__archiveBlock_v_populate_by" DEFAULT 'collection',
   	"relation_to" "enum__archiveBlock_v_relation_to" DEFAULT 'posts',
   	"limit" numeric DEFAULT 10,
@@ -687,13 +753,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"intro_content" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_callToActionBlock_v_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -706,14 +772,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_callToActionBlock_v_list" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"icon" varchar,
   	"title" varchar,
   	"subtitle" varchar,
@@ -722,16 +788,16 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "_callToActionBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"type" "enum__callToActionBlock_v_type" DEFAULT '01',
   	"badge_type" "enum__callToActionBlock_v_badge_type",
   	"badge_color" "badge_color" DEFAULT 'blue',
   	"badge_icon" varchar,
   	"badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
   	"supporting_text" varchar,
-  	"form_id" integer,
+  	"form_id" uuid,
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -739,19 +805,19 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "_callToActionBlock_v_locales" (
   	"badge_label" varchar,
   	"rich_text" jsonb,
-  	"media_desktop_light_id" integer,
-  	"media_desktop_dark_id" integer,
-  	"media_mobile_light_id" integer,
-  	"media_mobile_dark_id" integer,
+  	"media_desktop_light_id" uuid,
+  	"media_desktop_dark_id" uuid,
+  	"media_mobile_light_id" uuid,
+  	"media_mobile_dark_id" uuid,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_customHtmlBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -764,14 +830,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_customHtmlBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"block_header_type" "enum__customHtmlBlock_v_block_header_type" DEFAULT 'center',
   	"block_header_badge_type" "enum__customHtmlBlock_v_block_header_badge_type",
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
@@ -787,14 +853,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_header_text" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_dividerBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"size" "enum__dividerBlock_v_size" DEFAULT 'small',
   	"enable_divider" boolean DEFAULT true,
   	"_uuid" varchar,
@@ -803,8 +869,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "_faqBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -817,14 +883,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_faqBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"block_header_type" "enum__faqBlock_v_block_header_type" DEFAULT 'center',
   	"block_header_badge_type" "enum__faqBlock_v_block_header_badge_type",
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
@@ -840,13 +906,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_header_text" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_featuredAppsBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -859,13 +925,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_featuredAppsBlock_v_cards" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"_uuid" varchar
   );
   
@@ -874,21 +940,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"description" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_featuredAppsBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"block_header_type" "enum__featuredAppsBlock_v_block_header_type" DEFAULT 'center',
   	"block_header_badge_type" "enum__featuredAppsBlock_v_block_header_badge_type",
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
   	"block_header_badge_icon" varchar,
   	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
   	"type" "enum__featuredAppsBlock_v_type" DEFAULT '04',
-  	"media_id" integer,
+  	"media_id" uuid,
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -898,13 +964,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_header_text" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_featuresBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -917,13 +983,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_featuresBlock_v_columns" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"size" "enum__featuresBlock_v_columns_size" DEFAULT 'half',
   	"icon" varchar,
   	"enable_badge" boolean,
@@ -940,7 +1006,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "_featuresBlock_v_columns_locales" (
-  	"image_id" integer,
+  	"image_id" uuid,
   	"tab_label" varchar,
   	"content_title" varchar,
   	"content_subtitle" varchar,
@@ -949,21 +1015,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_featuresBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"block_header_type" "enum__featuresBlock_v_block_header_type" DEFAULT 'center',
   	"block_header_badge_type" "enum__featuresBlock_v_block_header_badge_type",
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
   	"block_header_badge_icon" varchar,
   	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
   	"type" "enum__featuresBlock_v_type" DEFAULT '01',
-  	"block_image_id" integer,
+  	"block_image_id" uuid,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -978,15 +1044,15 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_formBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"form_id" integer,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"form_id" uuid,
   	"enable_intro" boolean,
   	"intro_content" jsonb,
   	"_uuid" varchar,
@@ -995,8 +1061,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "_galleryBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -1009,30 +1075,30 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_galleryBlock_v_interactive_gallery" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"_uuid" varchar
   );
   
   CREATE TABLE IF NOT EXISTS "_galleryBlock_v_interactive_gallery_locales" (
-  	"image_id" integer,
+  	"image_id" uuid,
   	"panel_title" varchar,
   	"panel_description" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_galleryBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"block_header_type" "enum__galleryBlock_v_block_header_type" DEFAULT 'center',
   	"block_header_badge_type" "enum__galleryBlock_v_block_header_badge_type",
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
@@ -1048,13 +1114,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_header_text" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_logosBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -1067,14 +1133,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_logosBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"block_header_type" "enum__logosBlock_v_block_header_type" DEFAULT 'center',
   	"block_header_badge_type" "enum__logosBlock_v_block_header_badge_type",
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
@@ -1090,13 +1156,74 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_header_text" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_metricsBlock_v_block_header_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"link_type" "link_type" DEFAULT 'reference',
+  	"link_new_tab" boolean,
+  	"link_url" varchar,
+  	"link_color" "link_color" DEFAULT 'neutral',
+  	"link_variant" "link_variant" DEFAULT 'primary',
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_metricsBlock_v_block_header_links_locales" (
+  	"link_label" varchar,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" uuid NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_metricsBlock_v_stats" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"value" varchar,
+  	"indicator" "enum__metricsBlock_v_stats_indicator" DEFAULT 'noChange',
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_metricsBlock_v_stats_locales" (
+  	"label" varchar,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" uuid NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_metricsBlock_v" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"block_header_type" "enum__metricsBlock_v_block_header_type" DEFAULT 'center',
+  	"block_header_badge_type" "enum__metricsBlock_v_block_header_badge_type",
+  	"block_header_badge_color" "badge_color" DEFAULT 'blue',
+  	"block_header_badge_icon" varchar,
+  	"block_header_badge_icon_position" "badge_icon_position" DEFAULT 'flex-row',
+  	"type" "enum__metricsBlock_v_type" DEFAULT '01',
+  	"enable_logos" boolean,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_metricsBlock_v_locales" (
+  	"block_header_badge_label" varchar,
+  	"block_header_header_text" jsonb,
+  	"block_image_media_id" uuid,
+  	"table" jsonb,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_richTextBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -1109,14 +1236,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_richTextBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"block_header_type" "enum__richTextBlock_v_block_header_type" DEFAULT 'center',
   	"block_header_badge_type" "enum__richTextBlock_v_block_header_badge_type",
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
@@ -1135,13 +1262,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"content" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_testimonialsBlock_v_block_header_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -1154,14 +1281,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_testimonialsBlock_v" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"block_header_type" "enum__testimonialsBlock_v_block_header_type" DEFAULT 'center',
   	"block_header_badge_type" "enum__testimonialsBlock_v_block_header_badge_type",
   	"block_header_badge_color" "badge_color" DEFAULT 'blue',
@@ -1177,12 +1304,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_header_header_text" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_pages_v" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"parent_id" integer,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"parent_id" uuid,
   	"version_title" varchar,
   	"version_hero_type" "enum__pages_v_version_hero_type" DEFAULT 'hero01',
   	"version_hero_badge_type" "enum__pages_v_version_hero_badge_type",
@@ -1207,44 +1334,44 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "_pages_v_locales" (
   	"version_hero_badge_label" varchar,
   	"version_hero_rich_text" jsonb,
-  	"version_hero_media_desktop_light_id" integer,
-  	"version_hero_media_desktop_dark_id" integer,
-  	"version_hero_media_mobile_light_id" integer,
-  	"version_hero_media_mobile_dark_id" integer,
+  	"version_hero_media_desktop_light_id" uuid,
+  	"version_hero_media_desktop_dark_id" uuid,
+  	"version_hero_media_mobile_light_id" uuid,
+  	"version_hero_media_mobile_dark_id" uuid,
   	"version_hero_logos_headline" varchar,
   	"version_meta_title" varchar,
-  	"version_meta_image_id" integer,
+  	"version_meta_image_id" uuid,
   	"version_meta_description" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_pages_v_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
   	"locale" "_locales",
-  	"solutions_id" integer,
-  	"integrations_id" integer,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"media_id" integer,
-  	"categories_id" integer,
-  	"faq_id" integer,
-  	"customers_id" integer
+  	"solutions_id" uuid,
+  	"integrations_id" uuid,
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"media_id" uuid,
+  	"categories_id" uuid,
+  	"faq_id" uuid,
+  	"customers_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "posts_populated_authors" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"name" varchar
   );
   
   CREATE TABLE IF NOT EXISTS "posts" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"slug" varchar,
   	"slug_lock" boolean DEFAULT true,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -1254,39 +1381,39 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "posts_locales" (
   	"title" varchar,
-  	"hero_image_id" integer,
+  	"hero_image_id" uuid,
   	"content" jsonb,
   	"meta_title" varchar,
-  	"meta_image_id" integer,
+  	"meta_image_id" uuid,
   	"meta_description" varchar,
   	"published_at" timestamp(3) with time zone,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "posts_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
   	"locale" "_locales",
-  	"posts_id" integer,
-  	"categories_id" integer,
-  	"users_id" integer
+  	"posts_id" uuid,
+  	"categories_id" uuid,
+  	"users_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "_posts_v_version_populated_authors" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"_uuid" varchar,
   	"name" varchar
   );
   
   CREATE TABLE IF NOT EXISTS "_posts_v" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"parent_id" integer,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"parent_id" uuid,
   	"version_slug" varchar,
   	"version_slug_lock" boolean DEFAULT true,
   	"version_updated_at" timestamp(3) with time zone,
@@ -1301,37 +1428,37 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "_posts_v_locales" (
   	"version_title" varchar,
-  	"version_hero_image_id" integer,
+  	"version_hero_image_id" uuid,
   	"version_content" jsonb,
   	"version_meta_title" varchar,
-  	"version_meta_image_id" integer,
+  	"version_meta_image_id" uuid,
   	"version_meta_description" varchar,
   	"version_published_at" timestamp(3) with time zone,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_posts_v_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
   	"locale" "_locales",
-  	"posts_id" integer,
-  	"categories_id" integer,
-  	"users_id" integer
+  	"posts_id" uuid,
+  	"categories_id" uuid,
+  	"users_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "solutions" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"title" varchar,
-  	"icon_id" integer,
+  	"icon_id" uuid,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
   	"published_at" timestamp(3) with time zone,
-  	"ecosystem_id" integer,
+  	"ecosystem_id" uuid,
   	"slug" varchar,
   	"slug_lock" boolean DEFAULT true,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -1345,29 +1472,29 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "solutions_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"solutions_id" integer
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"solutions_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "_solutions_v" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"parent_id" integer,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"parent_id" uuid,
   	"version_title" varchar,
-  	"version_icon_id" integer,
+  	"version_icon_id" uuid,
   	"version_link_type" "link_type" DEFAULT 'reference',
   	"version_link_new_tab" boolean,
   	"version_link_url" varchar,
   	"version_published_at" timestamp(3) with time zone,
-  	"version_ecosystem_id" integer,
+  	"version_ecosystem_id" uuid,
   	"version_slug" varchar,
   	"version_slug_lock" boolean DEFAULT true,
   	"version_updated_at" timestamp(3) with time zone,
@@ -1386,22 +1513,22 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"version_link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_solutions_v_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"solutions_id" integer
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"solutions_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "integrations_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
@@ -1418,9 +1545,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "integrations" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"title" varchar,
-  	"icon_id" integer,
+  	"icon_id" uuid,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -1447,28 +1574,28 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"docs_link_label" varchar,
   	"hero" jsonb,
   	"meta_title" varchar,
-  	"meta_image_id" integer,
+  	"meta_image_id" uuid,
   	"meta_description" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "integrations_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"solutions_id" integer,
-  	"categories_id" integer
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"solutions_id" uuid,
+  	"categories_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "_integrations_v_version_links" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
   	"link_url" varchar,
@@ -1481,14 +1608,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_integrations_v" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"parent_id" integer,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"parent_id" uuid,
   	"version_title" varchar,
-  	"version_icon_id" integer,
+  	"version_icon_id" uuid,
   	"version_link_type" "link_type" DEFAULT 'reference',
   	"version_link_new_tab" boolean,
   	"version_link_url" varchar,
@@ -1521,26 +1648,26 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"version_docs_link_label" varchar,
   	"version_hero" jsonb,
   	"version_meta_title" varchar,
-  	"version_meta_image_id" integer,
+  	"version_meta_image_id" uuid,
   	"version_meta_description" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_integrations_v_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"solutions_id" integer,
-  	"categories_id" integer
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"solutions_id" uuid,
+  	"categories_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "media" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"alt" varchar NOT NULL,
   	"caption" jsonb,
   	"locale" "enum_media_locale",
@@ -1604,14 +1731,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "media_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"categories_id" integer
+  	"categories_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "customers_testimonial_stats" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"value" varchar,
   	"indicator" "enum_customers_testimonial_stats_indicator" DEFAULT 'noChange'
@@ -1625,17 +1752,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "customers" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"title" varchar,
-  	"testimonial_featured_image_id" integer,
-  	"testimonial_company_company_logo_id" integer,
+  	"testimonial_featured_image_id" uuid,
+  	"testimonial_company_company_logo_id" uuid,
   	"testimonial_company_link_type" "link_type" DEFAULT 'reference',
   	"testimonial_company_link_new_tab" boolean,
   	"testimonial_company_link_url" varchar,
   	"testimonial_company_industry" "enum_customers_testimonial_company_industry",
   	"testimonial_company_founding_year" numeric,
   	"testimonial_company_branches" varchar,
-  	"testimonial_author_info_avatar_id" integer,
+  	"testimonial_author_info_avatar_id" uuid,
   	"enable_case_study" boolean DEFAULT false,
   	"slug" varchar,
   	"slug_lock" boolean DEFAULT true,
@@ -1657,25 +1784,25 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"case_study_content" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "customers_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"solutions_id" integer,
-  	"integrations_id" integer,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"categories_id" integer
+  	"solutions_id" uuid,
+  	"integrations_id" uuid,
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"categories_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "_customers_v_version_testimonial_stats" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"value" varchar,
   	"indicator" "enum__customers_v_version_testimonial_stats_indicator" DEFAULT 'noChange',
   	"_uuid" varchar
@@ -1685,22 +1812,22 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"label" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_customers_v" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"parent_id" integer,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"parent_id" uuid,
   	"version_title" varchar,
-  	"version_testimonial_featured_image_id" integer,
-  	"version_testimonial_company_company_logo_id" integer,
+  	"version_testimonial_featured_image_id" uuid,
+  	"version_testimonial_company_company_logo_id" uuid,
   	"version_testimonial_company_link_type" "link_type" DEFAULT 'reference',
   	"version_testimonial_company_link_new_tab" boolean,
   	"version_testimonial_company_link_url" varchar,
   	"version_testimonial_company_industry" "enum__customers_v_version_testimonial_company_industry",
   	"version_testimonial_company_founding_year" numeric,
   	"version_testimonial_company_branches" varchar,
-  	"version_testimonial_author_info_avatar_id" integer,
+  	"version_testimonial_author_info_avatar_id" uuid,
   	"version_enable_case_study" boolean DEFAULT false,
   	"version_slug" varchar,
   	"version_slug_lock" boolean DEFAULT true,
@@ -1728,36 +1855,36 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"version_case_study_content" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "_customers_v_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"solutions_id" integer,
-  	"integrations_id" integer,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"categories_id" integer
+  	"solutions_id" uuid,
+  	"integrations_id" uuid,
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"categories_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "categories_breadcrumbs" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
-  	"doc_id" integer,
+  	"doc_id" uuid,
   	"url" varchar,
   	"label" varchar
   );
   
   CREATE TABLE IF NOT EXISTS "categories" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"slug" varchar,
   	"slug_lock" boolean DEFAULT true,
-  	"parent_id" integer,
+  	"parent_id" uuid,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -1766,12 +1893,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"title" varchar NOT NULL,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "faq" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"category_id" integer,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"category_id" uuid,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -1781,18 +1908,18 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"answer" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "changelog_categories" (
   	"order" integer NOT NULL,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"value" "enum_changelog_categories",
-  	"id" serial PRIMARY KEY NOT NULL
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "changelog" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"date" timestamp(3) with time zone NOT NULL,
   	"version" varchar NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -1804,11 +1931,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"description" jsonb NOT NULL,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "users" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"name" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -1822,7 +1949,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "redirects" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"from" varchar NOT NULL,
   	"to_type" "enum_redirects_to_type" DEFAULT 'reference',
   	"to_url" varchar,
@@ -1833,15 +1960,15 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "redirects_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"pages_id" integer,
-  	"posts_id" integer
+  	"pages_id" uuid,
+  	"posts_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "forms_blocks_checkbox" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
@@ -1860,7 +1987,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "forms_blocks_country" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
@@ -1878,7 +2005,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "forms_blocks_email" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
@@ -1896,7 +2023,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "forms_blocks_message" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"block_name" varchar
@@ -1911,7 +2038,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "forms_blocks_number" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
@@ -1944,7 +2071,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "forms_blocks_select" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
@@ -1964,7 +2091,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "forms_blocks_state" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
@@ -1982,7 +2109,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "forms_blocks_text" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
@@ -2001,7 +2128,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "forms_blocks_textarea" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
@@ -2020,7 +2147,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "forms_emails" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"email_to" varchar,
   	"cc" varchar,
@@ -2038,7 +2165,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "forms" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"title" varchar NOT NULL,
   	"confirmation_type" "enum_forms_confirmation_type" DEFAULT 'message',
   	"redirect_url" varchar,
@@ -2051,39 +2178,39 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"confirmation_message" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "form_submissions_submission_data" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"field" varchar NOT NULL,
   	"value" varchar NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "form_submissions" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"form_id" integer NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"form_id" uuid NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "search_categories" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"relation_to" varchar,
   	"title" varchar
   );
   
   CREATE TABLE IF NOT EXISTS "search" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"priority" numeric,
   	"slug" varchar,
   	"meta_title" varchar,
   	"meta_description" varchar,
-  	"meta_image_id" integer,
+  	"meta_image_id" uuid,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -2092,20 +2219,20 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"title" varchar,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "search_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"posts_id" integer
+  	"posts_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "payload_jobs_log" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"executed_at" timestamp(3) with time zone NOT NULL,
   	"completed_at" timestamp(3) with time zone NOT NULL,
@@ -2118,7 +2245,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "payload_jobs" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"input" jsonb,
   	"completed_at" timestamp(3) with time zone,
   	"total_tried" numeric DEFAULT 0,
@@ -2133,7 +2260,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "payload_locked_documents" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"global_slug" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
@@ -2142,27 +2269,27 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "payload_locked_documents_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"solutions_id" integer,
-  	"integrations_id" integer,
-  	"media_id" integer,
-  	"customers_id" integer,
-  	"categories_id" integer,
-  	"faq_id" integer,
-  	"changelog_id" integer,
-  	"users_id" integer,
-  	"redirects_id" integer,
-  	"forms_id" integer,
-  	"form_submissions_id" integer,
-  	"search_id" integer,
-  	"payload_jobs_id" integer
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"solutions_id" uuid,
+  	"integrations_id" uuid,
+  	"media_id" uuid,
+  	"customers_id" uuid,
+  	"categories_id" uuid,
+  	"faq_id" uuid,
+  	"changelog_id" uuid,
+  	"users_id" uuid,
+  	"redirects_id" uuid,
+  	"forms_id" uuid,
+  	"form_submissions_id" uuid,
+  	"search_id" uuid,
+  	"payload_jobs_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "payload_preferences" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"key" varchar,
   	"value" jsonb,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -2172,13 +2299,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "payload_preferences_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"users_id" integer
+  	"users_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "payload_migrations" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"name" varchar,
   	"batch" numeric,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -2186,7 +2313,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "settings" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"announcement_bar_link_type" "link_type" DEFAULT 'reference',
   	"announcement_bar_link_new_tab" boolean,
   	"announcement_bar_link_url" varchar,
@@ -2200,23 +2327,23 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "settings_locales" (
   	"meta_title" varchar,
-  	"meta_image_id" integer,
+  	"meta_image_id" uuid,
   	"meta_description" varchar,
   	"announcement_bar_text" varchar,
   	"announcement_bar_link_label" varchar NOT NULL,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  	"_parent_id" uuid NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "settings_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"solutions_id" integer
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"solutions_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "header_tabs_description_links" (
@@ -2294,7 +2421,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "header_tabs" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"enable_direct_link" boolean DEFAULT true,
   	"enable_dropdown" boolean DEFAULT false,
@@ -2313,7 +2440,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "header_cta" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"link_type" "link_type" DEFAULT 'reference',
   	"link_new_tab" boolean,
@@ -2330,7 +2457,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   CREATE TABLE IF NOT EXISTS "header" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"updated_at" timestamp(3) with time zone,
   	"created_at" timestamp(3) with time zone
   );
@@ -2338,11 +2465,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "header_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"solutions_id" integer
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"solutions_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "footer_columns_nav_items" (
@@ -2363,13 +2490,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "footer_columns" (
   	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"label" varchar NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "footer" (
-  	"id" serial PRIMARY KEY NOT NULL,
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"updated_at" timestamp(3) with time zone,
   	"created_at" timestamp(3) with time zone
   );
@@ -2377,11 +2504,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "footer_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
-  	"parent_id" integer NOT NULL,
+  	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"pages_id" integer,
-  	"posts_id" integer,
-  	"solutions_id" integer
+  	"pages_id" uuid,
+  	"posts_id" uuid,
+  	"solutions_id" uuid
   );
   
   DO $$ BEGIN
@@ -2686,6 +2813,48 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   DO $$ BEGIN
    ALTER TABLE "logosBlock_locales" ADD CONSTRAINT "logosBlock_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."logosBlock"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "metricsBlock_block_header_links" ADD CONSTRAINT "metricsBlock_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."metricsBlock"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "metricsBlock_block_header_links_locales" ADD CONSTRAINT "metricsBlock_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."metricsBlock_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "metricsBlock_stats" ADD CONSTRAINT "metricsBlock_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."metricsBlock"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "metricsBlock_stats_locales" ADD CONSTRAINT "metricsBlock_stats_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."metricsBlock_stats"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "metricsBlock" ADD CONSTRAINT "metricsBlock_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "metricsBlock_locales" ADD CONSTRAINT "metricsBlock_locales_block_image_media_id_media_id_fk" FOREIGN KEY ("block_image_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "metricsBlock_locales" ADD CONSTRAINT "metricsBlock_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."metricsBlock"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -3130,6 +3299,48 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   DO $$ BEGIN
    ALTER TABLE "_logosBlock_v_locales" ADD CONSTRAINT "_logosBlock_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_logosBlock_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_metricsBlock_v_block_header_links" ADD CONSTRAINT "_metricsBlock_v_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_metricsBlock_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_metricsBlock_v_block_header_links_locales" ADD CONSTRAINT "_metricsBlock_v_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_metricsBlock_v_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_metricsBlock_v_stats" ADD CONSTRAINT "_metricsBlock_v_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_metricsBlock_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_metricsBlock_v_stats_locales" ADD CONSTRAINT "_metricsBlock_v_stats_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_metricsBlock_v_stats"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_metricsBlock_v" ADD CONSTRAINT "_metricsBlock_v_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_metricsBlock_v_locales" ADD CONSTRAINT "_metricsBlock_v_locales_block_image_media_id_media_id_fk" FOREIGN KEY ("block_image_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_metricsBlock_v_locales" ADD CONSTRAINT "_metricsBlock_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_metricsBlock_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -4376,6 +4587,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "logosBlock_parent_id_idx" ON "logosBlock" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "logosBlock_path_idx" ON "logosBlock" USING btree ("_path");
   CREATE UNIQUE INDEX IF NOT EXISTS "logosBlock_locales_locale_parent_id_unique" ON "logosBlock_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "metricsBlock_block_header_links_order_idx" ON "metricsBlock_block_header_links" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "metricsBlock_block_header_links_parent_id_idx" ON "metricsBlock_block_header_links" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "metricsBlock_block_header_links_locales_locale_parent_id_unique" ON "metricsBlock_block_header_links_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "metricsBlock_stats_order_idx" ON "metricsBlock_stats" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "metricsBlock_stats_parent_id_idx" ON "metricsBlock_stats" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "metricsBlock_stats_locales_locale_parent_id_unique" ON "metricsBlock_stats_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "metricsBlock_order_idx" ON "metricsBlock" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "metricsBlock_parent_id_idx" ON "metricsBlock" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "metricsBlock_path_idx" ON "metricsBlock" USING btree ("_path");
+  CREATE INDEX IF NOT EXISTS "metricsBlock_block_image_block_image_media_idx" ON "metricsBlock_locales" USING btree ("block_image_media_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "metricsBlock_locales_locale_parent_id_unique" ON "metricsBlock_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "richTextBlock_block_header_links_order_idx" ON "richTextBlock_block_header_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "richTextBlock_block_header_links_parent_id_idx" ON "richTextBlock_block_header_links" USING btree ("_parent_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "richTextBlock_block_header_links_locales_locale_parent_id_unique" ON "richTextBlock_block_header_links_locales" USING btree ("_locale","_parent_id");
@@ -4496,6 +4718,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_logosBlock_v_parent_id_idx" ON "_logosBlock_v" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "_logosBlock_v_path_idx" ON "_logosBlock_v" USING btree ("_path");
   CREATE UNIQUE INDEX IF NOT EXISTS "_logosBlock_v_locales_locale_parent_id_unique" ON "_logosBlock_v_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_metricsBlock_v_block_header_links_order_idx" ON "_metricsBlock_v_block_header_links" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_metricsBlock_v_block_header_links_parent_id_idx" ON "_metricsBlock_v_block_header_links" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_metricsBlock_v_block_header_links_locales_locale_parent_id_unique" ON "_metricsBlock_v_block_header_links_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_metricsBlock_v_stats_order_idx" ON "_metricsBlock_v_stats" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_metricsBlock_v_stats_parent_id_idx" ON "_metricsBlock_v_stats" USING btree ("_parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_metricsBlock_v_stats_locales_locale_parent_id_unique" ON "_metricsBlock_v_stats_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_metricsBlock_v_order_idx" ON "_metricsBlock_v" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "_metricsBlock_v_parent_id_idx" ON "_metricsBlock_v" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "_metricsBlock_v_path_idx" ON "_metricsBlock_v" USING btree ("_path");
+  CREATE INDEX IF NOT EXISTS "_metricsBlock_v_block_image_block_image_media_idx" ON "_metricsBlock_v_locales" USING btree ("block_image_media_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_metricsBlock_v_locales_locale_parent_id_unique" ON "_metricsBlock_v_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "_richTextBlock_v_block_header_links_order_idx" ON "_richTextBlock_v_block_header_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_richTextBlock_v_block_header_links_parent_id_idx" ON "_richTextBlock_v_block_header_links" USING btree ("_parent_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "_richTextBlock_v_block_header_links_locales_locale_parent_id_unique" ON "_richTextBlock_v_block_header_links_locales" USING btree ("_locale","_parent_id");
@@ -4928,6 +5161,12 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "logosBlock_block_header_links_locales" CASCADE;
   DROP TABLE "logosBlock" CASCADE;
   DROP TABLE "logosBlock_locales" CASCADE;
+  DROP TABLE "metricsBlock_block_header_links" CASCADE;
+  DROP TABLE "metricsBlock_block_header_links_locales" CASCADE;
+  DROP TABLE "metricsBlock_stats" CASCADE;
+  DROP TABLE "metricsBlock_stats_locales" CASCADE;
+  DROP TABLE "metricsBlock" CASCADE;
+  DROP TABLE "metricsBlock_locales" CASCADE;
   DROP TABLE "richTextBlock_block_header_links" CASCADE;
   DROP TABLE "richTextBlock_block_header_links_locales" CASCADE;
   DROP TABLE "richTextBlock" CASCADE;
@@ -4980,6 +5219,12 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_logosBlock_v_block_header_links_locales" CASCADE;
   DROP TABLE "_logosBlock_v" CASCADE;
   DROP TABLE "_logosBlock_v_locales" CASCADE;
+  DROP TABLE "_metricsBlock_v_block_header_links" CASCADE;
+  DROP TABLE "_metricsBlock_v_block_header_links_locales" CASCADE;
+  DROP TABLE "_metricsBlock_v_stats" CASCADE;
+  DROP TABLE "_metricsBlock_v_stats_locales" CASCADE;
+  DROP TABLE "_metricsBlock_v" CASCADE;
+  DROP TABLE "_metricsBlock_v_locales" CASCADE;
   DROP TABLE "_richTextBlock_v_block_header_links" CASCADE;
   DROP TABLE "_richTextBlock_v_block_header_links_locales" CASCADE;
   DROP TABLE "_richTextBlock_v" CASCADE;
@@ -5127,6 +5372,10 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_logosBlock_block_header_type";
   DROP TYPE "public"."enum_logosBlock_block_header_badge_type";
   DROP TYPE "public"."enum_logosBlock_type";
+  DROP TYPE "public"."enum_metricsBlock_stats_indicator";
+  DROP TYPE "public"."enum_metricsBlock_block_header_type";
+  DROP TYPE "public"."enum_metricsBlock_block_header_badge_type";
+  DROP TYPE "public"."enum_metricsBlock_type";
   DROP TYPE "public"."enum_richTextBlock_block_header_type";
   DROP TYPE "public"."enum_richTextBlock_block_header_badge_type";
   DROP TYPE "public"."enum_richTextBlock_type";
@@ -5161,6 +5410,10 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__logosBlock_v_block_header_type";
   DROP TYPE "public"."enum__logosBlock_v_block_header_badge_type";
   DROP TYPE "public"."enum__logosBlock_v_type";
+  DROP TYPE "public"."enum__metricsBlock_v_stats_indicator";
+  DROP TYPE "public"."enum__metricsBlock_v_block_header_type";
+  DROP TYPE "public"."enum__metricsBlock_v_block_header_badge_type";
+  DROP TYPE "public"."enum__metricsBlock_v_type";
   DROP TYPE "public"."enum__richTextBlock_v_block_header_type";
   DROP TYPE "public"."enum__richTextBlock_v_block_header_badge_type";
   DROP TYPE "public"."enum__richTextBlock_v_type";

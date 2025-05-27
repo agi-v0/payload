@@ -13,6 +13,7 @@ import {
   uniqueIndex,
   foreignKey,
   integer,
+  uuid,
   varchar,
   boolean,
   serial,
@@ -161,6 +162,21 @@ export const enum_logosBlock_block_header_badge_type = pgEnum(
   ['label', 'reference'],
 )
 export const enum_logosBlock_type = pgEnum('enum_logosBlock_type', ['01', '02', '03'])
+export const enum_metricsBlock_stats_indicator = pgEnum('enum_metricsBlock_stats_indicator', [
+  'increase',
+  'decrease',
+  'noChange',
+])
+export const enum_metricsBlock_block_header_type = pgEnum('enum_metricsBlock_block_header_type', [
+  'center',
+  'split',
+  'start',
+])
+export const enum_metricsBlock_block_header_badge_type = pgEnum(
+  'enum_metricsBlock_block_header_badge_type',
+  ['label', 'reference'],
+)
+export const enum_metricsBlock_type = pgEnum('enum_metricsBlock_type', ['01', '02', '03'])
 export const enum_richTextBlock_block_header_type = pgEnum('enum_richTextBlock_block_header_type', [
   'center',
   'split',
@@ -321,6 +337,20 @@ export const enum__logosBlock_v_block_header_badge_type = pgEnum(
   ['label', 'reference'],
 )
 export const enum__logosBlock_v_type = pgEnum('enum__logosBlock_v_type', ['01', '02', '03'])
+export const enum__metricsBlock_v_stats_indicator = pgEnum('enum__metricsBlock_v_stats_indicator', [
+  'increase',
+  'decrease',
+  'noChange',
+])
+export const enum__metricsBlock_v_block_header_type = pgEnum(
+  'enum__metricsBlock_v_block_header_type',
+  ['center', 'split', 'start'],
+)
+export const enum__metricsBlock_v_block_header_badge_type = pgEnum(
+  'enum__metricsBlock_v_block_header_badge_type',
+  ['label', 'reference'],
+)
+export const enum__metricsBlock_v_type = pgEnum('enum__metricsBlock_v_type', ['01', '02', '03'])
 export const enum__richTextBlock_v_block_header_type = pgEnum(
   'enum__richTextBlock_v_block_header_type',
   ['center', 'split', 'start'],
@@ -450,7 +480,7 @@ export const pages_hero_links = pgTable(
   'pages_hero_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
@@ -494,7 +524,7 @@ export const archiveBlock = pgTable(
   'archiveBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     populateBy: enum_archiveBlock_populate_by('populate_by').default('collection'),
@@ -606,7 +636,7 @@ export const callToActionBlock = pgTable(
   'callToActionBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     type: enum_callToActionBlock_type('type').default('01'),
@@ -615,7 +645,7 @@ export const callToActionBlock = pgTable(
     badge_icon: varchar('badge_icon'),
     badge_icon_position: badge_icon_position('badge_icon_position').default('flex-row'),
     supportingText: varchar('supporting_text'),
-    form: integer('form_id').references(() => forms.id, {
+    form: uuid('form_id').references(() => forms.id, {
       onDelete: 'set null',
     }),
     blockName: varchar('block_name'),
@@ -638,16 +668,16 @@ export const callToActionBlock_locales = pgTable(
   {
     badge_label: varchar('badge_label'),
     richText: jsonb('rich_text'),
-    media_desktop_light: integer('media_desktop_light_id').references(() => media.id, {
+    media_desktop_light: uuid('media_desktop_light_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    media_desktop_dark: integer('media_desktop_dark_id').references(() => media.id, {
+    media_desktop_dark: uuid('media_desktop_dark_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    media_mobile_light: integer('media_mobile_light_id').references(() => media.id, {
+    media_mobile_light: uuid('media_mobile_light_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    media_mobile_dark: integer('media_mobile_dark_id').references(() => media.id, {
+    media_mobile_dark: uuid('media_mobile_dark_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     id: serial('id').primaryKey(),
@@ -726,7 +756,7 @@ export const customHtmlBlock = pgTable(
   'customHtmlBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     blockHeader_type: enum_customHtmlBlock_block_header_type('block_header_type').default('center'),
@@ -777,7 +807,7 @@ export const dividerBlock = pgTable(
   'dividerBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     size: enum_dividerBlock_size('size').default('small'),
@@ -844,7 +874,7 @@ export const faqBlock = pgTable(
   'faqBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     blockHeader_type: enum_faqBlock_block_header_type('block_header_type').default('center'),
@@ -978,7 +1008,7 @@ export const featuredAppsBlock = pgTable(
   'featuredAppsBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     blockHeader_type:
@@ -991,7 +1021,7 @@ export const featuredAppsBlock = pgTable(
       'block_header_badge_icon_position',
     ).default('flex-row'),
     type: enum_featuredAppsBlock_type('type').default('04'),
-    media: integer('media_id').references(() => media.id, {
+    media: uuid('media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     blockName: varchar('block_name'),
@@ -1107,7 +1137,7 @@ export const featuresBlock_columns = pgTable(
 export const featuresBlock_columns_locales = pgTable(
   'featuresBlock_columns_locales',
   {
-    image: integer('image_id').references(() => media.id, {
+    image: uuid('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     tabLabel: varchar('tab_label'),
@@ -1141,7 +1171,7 @@ export const featuresBlock = pgTable(
   'featuresBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     blockHeader_type: enum_featuresBlock_block_header_type('block_header_type').default('center'),
@@ -1152,7 +1182,7 @@ export const featuresBlock = pgTable(
       'block_header_badge_icon_position',
     ).default('flex-row'),
     type: enum_featuresBlock_type('type').default('01'),
-    blockImage: integer('block_image_id').references(() => media.id, {
+    blockImage: uuid('block_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     link_type: link_type('link_type').default('reference'),
@@ -1201,10 +1231,10 @@ export const formBlock = pgTable(
   'formBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
-    form: integer('form_id').references(() => forms.id, {
+    form: uuid('form_id').references(() => forms.id, {
       onDelete: 'set null',
     }),
     enableIntro: boolean('enable_intro'),
@@ -1288,7 +1318,7 @@ export const galleryBlock_interactive_gallery = pgTable(
 export const galleryBlock_interactive_gallery_locales = pgTable(
   'galleryBlock_interactive_gallery_locales',
   {
-    image: integer('image_id').references(() => media.id, {
+    image: uuid('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     panel_title: varchar('panel_title'),
@@ -1316,7 +1346,7 @@ export const galleryBlock = pgTable(
   'galleryBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     blockHeader_type: enum_galleryBlock_block_header_type('block_header_type').default('center'),
@@ -1411,7 +1441,7 @@ export const logosBlock = pgTable(
   'logosBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     blockHeader_type: enum_logosBlock_block_header_type('block_header_type').default('center'),
@@ -1454,6 +1484,149 @@ export const logosBlock_locales = pgTable(
       columns: [columns['_parentID']],
       foreignColumns: [logosBlock.id],
       name: 'logosBlock_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const metricsBlock_block_header_links = pgTable(
+  'metricsBlock_block_header_links',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    id: varchar('id').primaryKey(),
+    link_type: link_type('link_type').default('reference'),
+    link_newTab: boolean('link_new_tab'),
+    link_url: varchar('link_url'),
+    link_color: link_color('link_color').default('neutral'),
+    link_variant: link_variant('link_variant').default('primary'),
+  },
+  (columns) => ({
+    _orderIdx: index('metricsBlock_block_header_links_order_idx').on(columns._order),
+    _parentIDIdx: index('metricsBlock_block_header_links_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [metricsBlock.id],
+      name: 'metricsBlock_block_header_links_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const metricsBlock_block_header_links_locales = pgTable(
+  'metricsBlock_block_header_links_locales',
+  {
+    link_label: varchar('link_label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex(
+      'metricsBlock_block_header_links_locales_locale_parent_id_unique',
+    ).on(columns._locale, columns._parentID),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [metricsBlock_block_header_links.id],
+      name: 'metricsBlock_block_header_links_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const metricsBlock_stats = pgTable(
+  'metricsBlock_stats',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+    id: varchar('id').primaryKey(),
+    value: varchar('value'),
+    indicator: enum_metricsBlock_stats_indicator('indicator').default('noChange'),
+  },
+  (columns) => ({
+    _orderIdx: index('metricsBlock_stats_order_idx').on(columns._order),
+    _parentIDIdx: index('metricsBlock_stats_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [metricsBlock.id],
+      name: 'metricsBlock_stats_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const metricsBlock_stats_locales = pgTable(
+  'metricsBlock_stats_locales',
+  {
+    label: varchar('label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('metricsBlock_stats_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [metricsBlock_stats.id],
+      name: 'metricsBlock_stats_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const metricsBlock = pgTable(
+  'metricsBlock',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _path: text('_path').notNull(),
+    id: varchar('id').primaryKey(),
+    blockHeader_type: enum_metricsBlock_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type: enum_metricsBlock_block_header_badge_type('block_header_badge_type'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
+    blockHeader_badge_icon: varchar('block_header_badge_icon'),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
+    type: enum_metricsBlock_type('type').default('01'),
+    enableLogos: boolean('enable_logos'),
+    blockName: varchar('block_name'),
+  },
+  (columns) => ({
+    _orderIdx: index('metricsBlock_order_idx').on(columns._order),
+    _parentIDIdx: index('metricsBlock_parent_id_idx').on(columns._parentID),
+    _pathIdx: index('metricsBlock_path_idx').on(columns._path),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [pages.id],
+      name: 'metricsBlock_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const metricsBlock_locales = pgTable(
+  'metricsBlock_locales',
+  {
+    blockHeader_badge_label: varchar('block_header_badge_label'),
+    blockHeader_headerText: jsonb('block_header_header_text'),
+    blockImage_media: uuid('block_image_media_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    table: jsonb('table'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: varchar('_parent_id').notNull(),
+  },
+  (columns) => ({
+    metricsBlock_block_image_block_image_media_idx: index(
+      'metricsBlock_block_image_block_image_media_idx',
+    ).on(columns.blockImage_media),
+    _localeParent: uniqueIndex('metricsBlock_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [metricsBlock.id],
+      name: 'metricsBlock_locales_parent_id_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -1505,7 +1678,7 @@ export const richTextBlock = pgTable(
   'richTextBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     blockHeader_type: enum_richTextBlock_block_header_type('block_header_type').default('center'),
@@ -1602,7 +1775,7 @@ export const testimonialsBlock = pgTable(
   'testimonialsBlock',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     blockHeader_type:
@@ -1654,7 +1827,7 @@ export const testimonialsBlock_locales = pgTable(
 export const pages = pgTable(
   'pages',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     title: varchar('title'),
     hero_type: enum_pages_hero_type('hero_type').default('hero01'),
     hero_badge_type: enum_pages_hero_badge_type('hero_badge_type'),
@@ -1686,27 +1859,27 @@ export const pages_locales = pgTable(
   {
     hero_badge_label: varchar('hero_badge_label'),
     hero_richText: jsonb('hero_rich_text'),
-    hero_media_desktop_light: integer('hero_media_desktop_light_id').references(() => media.id, {
+    hero_media_desktop_light: uuid('hero_media_desktop_light_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    hero_media_desktop_dark: integer('hero_media_desktop_dark_id').references(() => media.id, {
+    hero_media_desktop_dark: uuid('hero_media_desktop_dark_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    hero_media_mobile_light: integer('hero_media_mobile_light_id').references(() => media.id, {
+    hero_media_mobile_light: uuid('hero_media_mobile_light_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    hero_media_mobile_dark: integer('hero_media_mobile_dark_id').references(() => media.id, {
+    hero_media_mobile_dark: uuid('hero_media_mobile_dark_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     hero_logos_headline: varchar('hero_logos_headline'),
     meta_title: varchar('meta_title'),
-    meta_image: integer('meta_image_id').references(() => media.id, {
+    meta_image: uuid('meta_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     meta_description: varchar('meta_description'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     pages_hero_media_desktop_hero_media_desktop_light_idx: index(
@@ -1739,17 +1912,17 @@ export const pages_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     locale: enum__locales('locale'),
-    solutionsID: integer('solutions_id'),
-    integrationsID: integer('integrations_id'),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    mediaID: integer('media_id'),
-    categoriesID: integer('categories_id'),
-    faqID: integer('faq_id'),
-    customersID: integer('customers_id'),
+    solutionsID: uuid('solutions_id'),
+    integrationsID: uuid('integrations_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    mediaID: uuid('media_id'),
+    categoriesID: uuid('categories_id'),
+    faqID: uuid('faq_id'),
+    customersID: uuid('customers_id'),
   },
   (columns) => ({
     order: index('pages_rels_order_idx').on(columns.order),
@@ -1828,8 +2001,8 @@ export const _pages_v_version_hero_links = pgTable(
   '_pages_v_version_hero_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -1854,7 +2027,7 @@ export const _pages_v_version_hero_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_pages_v_version_hero_links_locales_locale_parent_id_unique').on(
@@ -1873,9 +2046,9 @@ export const _archiveBlock_v = pgTable(
   '_archiveBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     populateBy: enum__archiveBlock_v_populate_by('populate_by').default('collection'),
     relationTo: enum__archiveBlock_v_relation_to('relation_to').default('posts'),
     limit: numeric('limit').default('10'),
@@ -1900,7 +2073,7 @@ export const _archiveBlock_v_locales = pgTable(
     introContent: jsonb('intro_content'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_archiveBlock_v_locales_locale_parent_id_unique').on(
@@ -1919,8 +2092,8 @@ export const _callToActionBlock_v_links = pgTable(
   '_callToActionBlock_v_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -1945,7 +2118,7 @@ export const _callToActionBlock_v_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_callToActionBlock_v_links_locales_locale_parent_id_unique').on(
@@ -1964,9 +2137,9 @@ export const _callToActionBlock_v_list = pgTable(
   '_callToActionBlock_v_list',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _locale: enum__locales('_locale').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     icon: varchar('icon'),
     title: varchar('title'),
     subtitle: varchar('subtitle'),
@@ -1988,16 +2161,16 @@ export const _callToActionBlock_v = pgTable(
   '_callToActionBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     type: enum__callToActionBlock_v_type('type').default('01'),
     badge_type: enum__callToActionBlock_v_badge_type('badge_type'),
     badge_color: badge_color('badge_color').default('blue'),
     badge_icon: varchar('badge_icon'),
     badge_icon_position: badge_icon_position('badge_icon_position').default('flex-row'),
     supportingText: varchar('supporting_text'),
-    form: integer('form_id').references(() => forms.id, {
+    form: uuid('form_id').references(() => forms.id, {
       onDelete: 'set null',
     }),
     _uuid: varchar('_uuid'),
@@ -2021,21 +2194,21 @@ export const _callToActionBlock_v_locales = pgTable(
   {
     badge_label: varchar('badge_label'),
     richText: jsonb('rich_text'),
-    media_desktop_light: integer('media_desktop_light_id').references(() => media.id, {
+    media_desktop_light: uuid('media_desktop_light_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    media_desktop_dark: integer('media_desktop_dark_id').references(() => media.id, {
+    media_desktop_dark: uuid('media_desktop_dark_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    media_mobile_light: integer('media_mobile_light_id').references(() => media.id, {
+    media_mobile_light: uuid('media_mobile_light_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    media_mobile_dark: integer('media_mobile_dark_id').references(() => media.id, {
+    media_mobile_dark: uuid('media_mobile_dark_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _callToActionBlock_v_media_desktop_media_desktop_light_idx: index(
@@ -2066,8 +2239,8 @@ export const _customHtmlBlock_v_block_header_links = pgTable(
   '_customHtmlBlock_v_block_header_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -2094,7 +2267,7 @@ export const _customHtmlBlock_v_block_header_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex(
@@ -2112,9 +2285,9 @@ export const _customHtmlBlock_v = pgTable(
   '_customHtmlBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     blockHeader_type:
       enum__customHtmlBlock_v_block_header_type('block_header_type').default('center'),
     blockHeader_badge_type:
@@ -2147,7 +2320,7 @@ export const _customHtmlBlock_v_locales = pgTable(
     blockHeader_headerText: jsonb('block_header_header_text'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_customHtmlBlock_v_locales_locale_parent_id_unique').on(
@@ -2166,9 +2339,9 @@ export const _dividerBlock_v = pgTable(
   '_dividerBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     size: enum__dividerBlock_v_size('size').default('small'),
     enableDivider: boolean('enable_divider').default(true),
     _uuid: varchar('_uuid'),
@@ -2190,8 +2363,8 @@ export const _faqBlock_v_block_header_links = pgTable(
   '_faqBlock_v_block_header_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -2216,7 +2389,7 @@ export const _faqBlock_v_block_header_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_faqBlock_v_block_header_links_locales_locale_parent_id_unique').on(
@@ -2235,9 +2408,9 @@ export const _faqBlock_v = pgTable(
   '_faqBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     blockHeader_type: enum__faqBlock_v_block_header_type('block_header_type').default('center'),
     blockHeader_badge_type: enum__faqBlock_v_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
@@ -2268,7 +2441,7 @@ export const _faqBlock_v_locales = pgTable(
     blockHeader_headerText: jsonb('block_header_header_text'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_faqBlock_v_locales_locale_parent_id_unique').on(
@@ -2287,8 +2460,8 @@ export const _featuredAppsBlock_v_block_header_links = pgTable(
   '_featuredAppsBlock_v_block_header_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -2315,7 +2488,7 @@ export const _featuredAppsBlock_v_block_header_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex(
@@ -2333,8 +2506,8 @@ export const _featuredAppsBlock_v_cards = pgTable(
   '_featuredAppsBlock_v_cards',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     _uuid: varchar('_uuid'),
   },
   (columns) => ({
@@ -2355,7 +2528,7 @@ export const _featuredAppsBlock_v_cards_locales = pgTable(
     description: varchar('description'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_featuredAppsBlock_v_cards_locales_locale_parent_id_unique').on(
@@ -2374,9 +2547,9 @@ export const _featuredAppsBlock_v = pgTable(
   '_featuredAppsBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     blockHeader_type:
       enum__featuredAppsBlock_v_block_header_type('block_header_type').default('center'),
     blockHeader_badge_type:
@@ -2387,7 +2560,7 @@ export const _featuredAppsBlock_v = pgTable(
       'block_header_badge_icon_position',
     ).default('flex-row'),
     type: enum__featuredAppsBlock_v_type('type').default('04'),
-    media: integer('media_id').references(() => media.id, {
+    media: uuid('media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     _uuid: varchar('_uuid'),
@@ -2413,7 +2586,7 @@ export const _featuredAppsBlock_v_locales = pgTable(
     blockHeader_headerText: jsonb('block_header_header_text'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_featuredAppsBlock_v_locales_locale_parent_id_unique').on(
@@ -2432,8 +2605,8 @@ export const _featuresBlock_v_block_header_links = pgTable(
   '_featuresBlock_v_block_header_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -2458,7 +2631,7 @@ export const _featuresBlock_v_block_header_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex(
@@ -2476,8 +2649,8 @@ export const _featuresBlock_v_columns = pgTable(
   '_featuresBlock_v_columns',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     size: enum__featuresBlock_v_columns_size('size').default('half'),
     icon: varchar('icon'),
     enableBadge: boolean('enable_badge'),
@@ -2506,7 +2679,7 @@ export const _featuresBlock_v_columns = pgTable(
 export const _featuresBlock_v_columns_locales = pgTable(
   '_featuresBlock_v_columns_locales',
   {
-    image: integer('image_id').references(() => media.id, {
+    image: uuid('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     tabLabel: varchar('tab_label'),
@@ -2517,7 +2690,7 @@ export const _featuresBlock_v_columns_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _featuresBlock_v_columns_image_idx: index('_featuresBlock_v_columns_image_idx').on(
@@ -2540,9 +2713,9 @@ export const _featuresBlock_v = pgTable(
   '_featuresBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     blockHeader_type:
       enum__featuresBlock_v_block_header_type('block_header_type').default('center'),
     blockHeader_badge_type:
@@ -2553,7 +2726,7 @@ export const _featuresBlock_v = pgTable(
       'block_header_badge_icon_position',
     ).default('flex-row'),
     type: enum__featuresBlock_v_type('type').default('01'),
-    blockImage: integer('block_image_id').references(() => media.id, {
+    blockImage: uuid('block_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     link_type: link_type('link_type').default('reference'),
@@ -2586,7 +2759,7 @@ export const _featuresBlock_v_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_featuresBlock_v_locales_locale_parent_id_unique').on(
@@ -2605,10 +2778,10 @@ export const _formBlock_v = pgTable(
   '_formBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
-    form: integer('form_id').references(() => forms.id, {
+    id: uuid('id').defaultRandom().primaryKey(),
+    form: uuid('form_id').references(() => forms.id, {
       onDelete: 'set null',
     }),
     enableIntro: boolean('enable_intro'),
@@ -2633,8 +2806,8 @@ export const _galleryBlock_v_block_header_links = pgTable(
   '_galleryBlock_v_block_header_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -2659,7 +2832,7 @@ export const _galleryBlock_v_block_header_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex(
@@ -2677,8 +2850,8 @@ export const _galleryBlock_v_interactive_gallery = pgTable(
   '_galleryBlock_v_interactive_gallery',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     _uuid: varchar('_uuid'),
   },
   (columns) => ({
@@ -2695,14 +2868,14 @@ export const _galleryBlock_v_interactive_gallery = pgTable(
 export const _galleryBlock_v_interactive_gallery_locales = pgTable(
   '_galleryBlock_v_interactive_gallery_locales',
   {
-    image: integer('image_id').references(() => media.id, {
+    image: uuid('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     panel_title: varchar('panel_title'),
     panel_description: varchar('panel_description'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _galleryBlock_v_interactive_gallery_image_idx: index(
@@ -2723,9 +2896,9 @@ export const _galleryBlock_v = pgTable(
   '_galleryBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     blockHeader_type: enum__galleryBlock_v_block_header_type('block_header_type').default('center'),
     blockHeader_badge_type: enum__galleryBlock_v_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
@@ -2756,7 +2929,7 @@ export const _galleryBlock_v_locales = pgTable(
     blockHeader_headerText: jsonb('block_header_header_text'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_galleryBlock_v_locales_locale_parent_id_unique').on(
@@ -2775,8 +2948,8 @@ export const _logosBlock_v_block_header_links = pgTable(
   '_logosBlock_v_block_header_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -2801,7 +2974,7 @@ export const _logosBlock_v_block_header_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex(
@@ -2819,9 +2992,9 @@ export const _logosBlock_v = pgTable(
   '_logosBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     blockHeader_type: enum__logosBlock_v_block_header_type('block_header_type').default('center'),
     blockHeader_badge_type: enum__logosBlock_v_block_header_badge_type('block_header_badge_type'),
     blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
@@ -2852,7 +3025,7 @@ export const _logosBlock_v_locales = pgTable(
     blockHeader_headerText: jsonb('block_header_header_text'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_logosBlock_v_locales_locale_parent_id_unique').on(
@@ -2867,12 +3040,158 @@ export const _logosBlock_v_locales = pgTable(
   }),
 )
 
+export const _metricsBlock_v_block_header_links = pgTable(
+  '_metricsBlock_v_block_header_links',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    link_type: link_type('link_type').default('reference'),
+    link_newTab: boolean('link_new_tab'),
+    link_url: varchar('link_url'),
+    link_color: link_color('link_color').default('neutral'),
+    link_variant: link_variant('link_variant').default('primary'),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_metricsBlock_v_block_header_links_order_idx').on(columns._order),
+    _parentIDIdx: index('_metricsBlock_v_block_header_links_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_metricsBlock_v.id],
+      name: '_metricsBlock_v_block_header_links_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _metricsBlock_v_block_header_links_locales = pgTable(
+  '_metricsBlock_v_block_header_links_locales',
+  {
+    link_label: varchar('link_label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex(
+      '_metricsBlock_v_block_header_links_locales_locale_parent_id_unique',
+    ).on(columns._locale, columns._parentID),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_metricsBlock_v_block_header_links.id],
+      name: '_metricsBlock_v_block_header_links_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _metricsBlock_v_stats = pgTable(
+  '_metricsBlock_v_stats',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    value: varchar('value'),
+    indicator: enum__metricsBlock_v_stats_indicator('indicator').default('noChange'),
+    _uuid: varchar('_uuid'),
+  },
+  (columns) => ({
+    _orderIdx: index('_metricsBlock_v_stats_order_idx').on(columns._order),
+    _parentIDIdx: index('_metricsBlock_v_stats_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_metricsBlock_v.id],
+      name: '_metricsBlock_v_stats_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _metricsBlock_v_stats_locales = pgTable(
+  '_metricsBlock_v_stats_locales',
+  {
+    label: varchar('label'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('_metricsBlock_v_stats_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_metricsBlock_v_stats.id],
+      name: '_metricsBlock_v_stats_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _metricsBlock_v = pgTable(
+  '_metricsBlock_v',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    _path: text('_path').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
+    blockHeader_type: enum__metricsBlock_v_block_header_type('block_header_type').default('center'),
+    blockHeader_badge_type: enum__metricsBlock_v_block_header_badge_type('block_header_badge_type'),
+    blockHeader_badge_color: badge_color('block_header_badge_color').default('blue'),
+    blockHeader_badge_icon: varchar('block_header_badge_icon'),
+    blockHeader_badge_icon_position: badge_icon_position(
+      'block_header_badge_icon_position',
+    ).default('flex-row'),
+    type: enum__metricsBlock_v_type('type').default('01'),
+    enableLogos: boolean('enable_logos'),
+    _uuid: varchar('_uuid'),
+    blockName: varchar('block_name'),
+  },
+  (columns) => ({
+    _orderIdx: index('_metricsBlock_v_order_idx').on(columns._order),
+    _parentIDIdx: index('_metricsBlock_v_parent_id_idx').on(columns._parentID),
+    _pathIdx: index('_metricsBlock_v_path_idx').on(columns._path),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_pages_v.id],
+      name: '_metricsBlock_v_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _metricsBlock_v_locales = pgTable(
+  '_metricsBlock_v_locales',
+  {
+    blockHeader_badge_label: varchar('block_header_badge_label'),
+    blockHeader_headerText: jsonb('block_header_header_text'),
+    blockImage_media: uuid('block_image_media_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    table: jsonb('table'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _metricsBlock_v_block_image_block_image_media_idx: index(
+      '_metricsBlock_v_block_image_block_image_media_idx',
+    ).on(columns.blockImage_media),
+    _localeParent: uniqueIndex('_metricsBlock_v_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_metricsBlock_v.id],
+      name: '_metricsBlock_v_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const _richTextBlock_v_block_header_links = pgTable(
   '_richTextBlock_v_block_header_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -2897,7 +3216,7 @@ export const _richTextBlock_v_block_header_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex(
@@ -2915,9 +3234,9 @@ export const _richTextBlock_v = pgTable(
   '_richTextBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     blockHeader_type:
       enum__richTextBlock_v_block_header_type('block_header_type').default('center'),
     blockHeader_badge_type:
@@ -2953,7 +3272,7 @@ export const _richTextBlock_v_locales = pgTable(
     content: jsonb('content'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_richTextBlock_v_locales_locale_parent_id_unique').on(
@@ -2972,8 +3291,8 @@ export const _testimonialsBlock_v_block_header_links = pgTable(
   '_testimonialsBlock_v_block_header_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -3000,7 +3319,7 @@ export const _testimonialsBlock_v_block_header_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex(
@@ -3018,9 +3337,9 @@ export const _testimonialsBlock_v = pgTable(
   '_testimonialsBlock_v',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     blockHeader_type:
       enum__testimonialsBlock_v_block_header_type('block_header_type').default('center'),
     blockHeader_badge_type:
@@ -3053,7 +3372,7 @@ export const _testimonialsBlock_v_locales = pgTable(
     blockHeader_headerText: jsonb('block_header_header_text'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_testimonialsBlock_v_locales_locale_parent_id_unique').on(
@@ -3071,8 +3390,8 @@ export const _testimonialsBlock_v_locales = pgTable(
 export const _pages_v = pgTable(
   '_pages_v',
   {
-    id: serial('id').primaryKey(),
-    parent: integer('parent_id').references(() => pages.id, {
+    id: uuid('id').defaultRandom().primaryKey(),
+    parent: uuid('parent_id').references(() => pages.id, {
       onDelete: 'set null',
     }),
     version_title: varchar('version_title'),
@@ -3143,25 +3462,25 @@ export const _pages_v_locales = pgTable(
   {
     version_hero_badge_label: varchar('version_hero_badge_label'),
     version_hero_richText: jsonb('version_hero_rich_text'),
-    version_hero_media_desktop_light: integer('version_hero_media_desktop_light_id').references(
+    version_hero_media_desktop_light: uuid('version_hero_media_desktop_light_id').references(
       () => media.id,
       {
         onDelete: 'set null',
       },
     ),
-    version_hero_media_desktop_dark: integer('version_hero_media_desktop_dark_id').references(
+    version_hero_media_desktop_dark: uuid('version_hero_media_desktop_dark_id').references(
       () => media.id,
       {
         onDelete: 'set null',
       },
     ),
-    version_hero_media_mobile_light: integer('version_hero_media_mobile_light_id').references(
+    version_hero_media_mobile_light: uuid('version_hero_media_mobile_light_id').references(
       () => media.id,
       {
         onDelete: 'set null',
       },
     ),
-    version_hero_media_mobile_dark: integer('version_hero_media_mobile_dark_id').references(
+    version_hero_media_mobile_dark: uuid('version_hero_media_mobile_dark_id').references(
       () => media.id,
       {
         onDelete: 'set null',
@@ -3169,13 +3488,13 @@ export const _pages_v_locales = pgTable(
     ),
     version_hero_logos_headline: varchar('version_hero_logos_headline'),
     version_meta_title: varchar('version_meta_title'),
-    version_meta_image: integer('version_meta_image_id').references(() => media.id, {
+    version_meta_image: uuid('version_meta_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     version_meta_description: varchar('version_meta_description'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _pages_v_version_hero_media_desktop_version_hero_media_desktop_light_idx: index(
@@ -3210,17 +3529,17 @@ export const _pages_v_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     locale: enum__locales('locale'),
-    solutionsID: integer('solutions_id'),
-    integrationsID: integer('integrations_id'),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    mediaID: integer('media_id'),
-    categoriesID: integer('categories_id'),
-    faqID: integer('faq_id'),
-    customersID: integer('customers_id'),
+    solutionsID: uuid('solutions_id'),
+    integrationsID: uuid('integrations_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    mediaID: uuid('media_id'),
+    categoriesID: uuid('categories_id'),
+    faqID: uuid('faq_id'),
+    customersID: uuid('customers_id'),
   },
   (columns) => ({
     order: index('_pages_v_rels_order_idx').on(columns.order),
@@ -3308,7 +3627,7 @@ export const posts_populated_authors = pgTable(
   'posts_populated_authors',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name'),
   },
@@ -3326,7 +3645,7 @@ export const posts_populated_authors = pgTable(
 export const posts = pgTable(
   'posts',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -3349,19 +3668,19 @@ export const posts_locales = pgTable(
   'posts_locales',
   {
     title: varchar('title'),
-    heroImage: integer('hero_image_id').references(() => media.id, {
+    heroImage: uuid('hero_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     content: jsonb('content'),
     meta_title: varchar('meta_title'),
-    meta_image: integer('meta_image_id').references(() => media.id, {
+    meta_image: uuid('meta_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     meta_description: varchar('meta_description'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     posts_hero_image_idx: index('posts_hero_image_idx').on(columns.heroImage, columns._locale),
@@ -3383,12 +3702,12 @@ export const posts_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     locale: enum__locales('locale'),
-    postsID: integer('posts_id'),
-    categoriesID: integer('categories_id'),
-    usersID: integer('users_id'),
+    postsID: uuid('posts_id'),
+    categoriesID: uuid('categories_id'),
+    usersID: uuid('users_id'),
   },
   (columns) => ({
     order: index('posts_rels_order_idx').on(columns.order),
@@ -3428,8 +3747,8 @@ export const _posts_v_version_populated_authors = pgTable(
   '_posts_v_version_populated_authors',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     _uuid: varchar('_uuid'),
     name: varchar('name'),
   },
@@ -3447,8 +3766,8 @@ export const _posts_v_version_populated_authors = pgTable(
 export const _posts_v = pgTable(
   '_posts_v',
   {
-    id: serial('id').primaryKey(),
-    parent: integer('parent_id').references(() => posts.id, {
+    id: uuid('id').defaultRandom().primaryKey(),
+    parent: uuid('parent_id').references(() => posts.id, {
       onDelete: 'set null',
     }),
     version_slug: varchar('version_slug'),
@@ -3502,12 +3821,12 @@ export const _posts_v_locales = pgTable(
   '_posts_v_locales',
   {
     version_title: varchar('version_title'),
-    version_heroImage: integer('version_hero_image_id').references(() => media.id, {
+    version_heroImage: uuid('version_hero_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     version_content: jsonb('version_content'),
     version_meta_title: varchar('version_meta_title'),
-    version_meta_image: integer('version_meta_image_id').references(() => media.id, {
+    version_meta_image: uuid('version_meta_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     version_meta_description: varchar('version_meta_description'),
@@ -3518,7 +3837,7 @@ export const _posts_v_locales = pgTable(
     }),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _posts_v_version_version_hero_image_idx: index('_posts_v_version_version_hero_image_idx').on(
@@ -3545,12 +3864,12 @@ export const _posts_v_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     locale: enum__locales('locale'),
-    postsID: integer('posts_id'),
-    categoriesID: integer('categories_id'),
-    usersID: integer('users_id'),
+    postsID: uuid('posts_id'),
+    categoriesID: uuid('categories_id'),
+    usersID: uuid('users_id'),
   },
   (columns) => ({
     order: index('_posts_v_rels_order_idx').on(columns.order),
@@ -3595,16 +3914,16 @@ export const _posts_v_rels = pgTable(
 export const solutions = pgTable(
   'solutions',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     title: varchar('title'),
-    icon: integer('icon_id').references(() => media.id, {
+    icon: uuid('icon_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
-    ecosystem: integer('ecosystem_id').references(() => categories.id, {
+    ecosystem: uuid('ecosystem_id').references(() => categories.id, {
       onDelete: 'set null',
     }),
     slug: varchar('slug'),
@@ -3635,7 +3954,7 @@ export const solutions_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('solutions_locales_locale_parent_id_unique').on(
@@ -3655,11 +3974,11 @@ export const solutions_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    solutionsID: integer('solutions_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    solutionsID: uuid('solutions_id'),
   },
   (columns) => ({
     order: index('solutions_rels_order_idx').on(columns.order),
@@ -3696,12 +4015,12 @@ export const solutions_rels = pgTable(
 export const _solutions_v = pgTable(
   '_solutions_v',
   {
-    id: serial('id').primaryKey(),
-    parent: integer('parent_id').references(() => solutions.id, {
+    id: uuid('id').defaultRandom().primaryKey(),
+    parent: uuid('parent_id').references(() => solutions.id, {
       onDelete: 'set null',
     }),
     version_title: varchar('version_title'),
-    version_icon: integer('version_icon_id').references(() => media.id, {
+    version_icon: uuid('version_icon_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     version_link_type: link_type('version_link_type').default('reference'),
@@ -3712,7 +4031,7 @@ export const _solutions_v = pgTable(
       withTimezone: true,
       precision: 3,
     }),
-    version_ecosystem: integer('version_ecosystem_id').references(() => categories.id, {
+    version_ecosystem: uuid('version_ecosystem_id').references(() => categories.id, {
       onDelete: 'set null',
     }),
     version_slug: varchar('version_slug'),
@@ -3776,7 +4095,7 @@ export const _solutions_v_locales = pgTable(
     version_link_label: varchar('version_link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_solutions_v_locales_locale_parent_id_unique').on(
@@ -3796,11 +4115,11 @@ export const _solutions_v_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    solutionsID: integer('solutions_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    solutionsID: uuid('solutions_id'),
   },
   (columns) => ({
     order: index('_solutions_v_rels_order_idx').on(columns.order),
@@ -3838,7 +4157,7 @@ export const integrations_links = pgTable(
   'integrations_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
@@ -3881,9 +4200,9 @@ export const integrations_links_locales = pgTable(
 export const integrations = pgTable(
   'integrations',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     title: varchar('title'),
-    icon: integer('icon_id').references(() => media.id, {
+    icon: uuid('icon_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     link_type: link_type('link_type').default('reference'),
@@ -3926,13 +4245,13 @@ export const integrations_locales = pgTable(
     docsLink_label: varchar('docs_link_label'),
     hero: jsonb('hero'),
     meta_title: varchar('meta_title'),
-    meta_image: integer('meta_image_id').references(() => media.id, {
+    meta_image: uuid('meta_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     meta_description: varchar('meta_description'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     integrations_meta_meta_image_idx: index('integrations_meta_meta_image_idx').on(
@@ -3955,12 +4274,12 @@ export const integrations_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    solutionsID: integer('solutions_id'),
-    categoriesID: integer('categories_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    solutionsID: uuid('solutions_id'),
+    categoriesID: uuid('categories_id'),
   },
   (columns) => ({
     order: index('integrations_rels_order_idx').on(columns.order),
@@ -4006,8 +4325,8 @@ export const _integrations_v_version_links = pgTable(
   '_integrations_v_version_links',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -4032,7 +4351,7 @@ export const _integrations_v_version_links_locales = pgTable(
     link_label: varchar('link_label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_integrations_v_version_links_locales_locale_parent_id_unique').on(
@@ -4050,12 +4369,12 @@ export const _integrations_v_version_links_locales = pgTable(
 export const _integrations_v = pgTable(
   '_integrations_v',
   {
-    id: serial('id').primaryKey(),
-    parent: integer('parent_id').references(() => integrations.id, {
+    id: uuid('id').defaultRandom().primaryKey(),
+    parent: uuid('parent_id').references(() => integrations.id, {
       onDelete: 'set null',
     }),
     version_title: varchar('version_title'),
-    version_icon: integer('version_icon_id').references(() => media.id, {
+    version_icon: uuid('version_icon_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     version_link_type: link_type('version_link_type').default('reference'),
@@ -4135,13 +4454,13 @@ export const _integrations_v_locales = pgTable(
     version_docsLink_label: varchar('version_docs_link_label'),
     version_hero: jsonb('version_hero'),
     version_meta_title: varchar('version_meta_title'),
-    version_meta_image: integer('version_meta_image_id').references(() => media.id, {
+    version_meta_image: uuid('version_meta_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     version_meta_description: varchar('version_meta_description'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _integrations_v_version_meta_version_meta_image_idx: index(
@@ -4164,12 +4483,12 @@ export const _integrations_v_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    solutionsID: integer('solutions_id'),
-    categoriesID: integer('categories_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    solutionsID: uuid('solutions_id'),
+    categoriesID: uuid('categories_id'),
   },
   (columns) => ({
     order: index('_integrations_v_rels_order_idx').on(columns.order),
@@ -4218,7 +4537,7 @@ export const _integrations_v_rels = pgTable(
 export const media = pgTable(
   'media',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     alt: varchar('alt').notNull(),
     caption: jsonb('caption'),
     locale: enum_media_locale('locale'),
@@ -4315,9 +4634,9 @@ export const media_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    categoriesID: integer('categories_id'),
+    categoriesID: uuid('categories_id'),
   },
   (columns) => ({
     order: index('media_rels_order_idx').on(columns.order),
@@ -4341,7 +4660,7 @@ export const customers_testimonial_stats = pgTable(
   'customers_testimonial_stats',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     value: varchar('value'),
     indicator: enum_customers_testimonial_stats_indicator('indicator').default('noChange'),
@@ -4381,12 +4700,12 @@ export const customers_testimonial_stats_locales = pgTable(
 export const customers = pgTable(
   'customers',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     title: varchar('title'),
-    testimonial_featuredImage: integer('testimonial_featured_image_id').references(() => media.id, {
+    testimonial_featuredImage: uuid('testimonial_featured_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    testimonial_company_companyLogo: integer('testimonial_company_company_logo_id').references(
+    testimonial_company_companyLogo: uuid('testimonial_company_company_logo_id').references(
       () => media.id,
       {
         onDelete: 'set null',
@@ -4400,7 +4719,7 @@ export const customers = pgTable(
     ),
     testimonial_company_foundingYear: numeric('testimonial_company_founding_year'),
     testimonial_company_branches: varchar('testimonial_company_branches'),
-    testimonial_authorInfo_avatar: integer('testimonial_author_info_avatar_id').references(
+    testimonial_authorInfo_avatar: uuid('testimonial_author_info_avatar_id').references(
       () => media.id,
       {
         onDelete: 'set null',
@@ -4449,7 +4768,7 @@ export const customers_locales = pgTable(
     caseStudy_content: jsonb('case_study_content'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('customers_locales_locale_parent_id_unique').on(
@@ -4469,13 +4788,13 @@ export const customers_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    solutionsID: integer('solutions_id'),
-    integrationsID: integer('integrations_id'),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    categoriesID: integer('categories_id'),
+    solutionsID: uuid('solutions_id'),
+    integrationsID: uuid('integrations_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    categoriesID: uuid('categories_id'),
   },
   (columns) => ({
     order: index('customers_rels_order_idx').on(columns.order),
@@ -4529,8 +4848,8 @@ export const _customers_v_version_testimonial_stats = pgTable(
   '_customers_v_version_testimonial_stats',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
-    id: serial('id').primaryKey(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: uuid('id').defaultRandom().primaryKey(),
     value: varchar('value'),
     indicator:
       enum__customers_v_version_testimonial_stats_indicator('indicator').default('noChange'),
@@ -4555,7 +4874,7 @@ export const _customers_v_version_testimonial_stats_locales = pgTable(
     label: varchar('label'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex(
@@ -4572,18 +4891,18 @@ export const _customers_v_version_testimonial_stats_locales = pgTable(
 export const _customers_v = pgTable(
   '_customers_v',
   {
-    id: serial('id').primaryKey(),
-    parent: integer('parent_id').references(() => customers.id, {
+    id: uuid('id').defaultRandom().primaryKey(),
+    parent: uuid('parent_id').references(() => customers.id, {
       onDelete: 'set null',
     }),
     version_title: varchar('version_title'),
-    version_testimonial_featuredImage: integer('version_testimonial_featured_image_id').references(
+    version_testimonial_featuredImage: uuid('version_testimonial_featured_image_id').references(
       () => media.id,
       {
         onDelete: 'set null',
       },
     ),
-    version_testimonial_company_companyLogo: integer(
+    version_testimonial_company_companyLogo: uuid(
       'version_testimonial_company_company_logo_id',
     ).references(() => media.id, {
       onDelete: 'set null',
@@ -4598,7 +4917,7 @@ export const _customers_v = pgTable(
     ),
     version_testimonial_company_foundingYear: numeric('version_testimonial_company_founding_year'),
     version_testimonial_company_branches: varchar('version_testimonial_company_branches'),
-    version_testimonial_authorInfo_avatar: integer(
+    version_testimonial_authorInfo_avatar: uuid(
       'version_testimonial_author_info_avatar_id',
     ).references(() => media.id, {
       onDelete: 'set null',
@@ -4681,7 +5000,7 @@ export const _customers_v_locales = pgTable(
     version_caseStudy_content: jsonb('version_case_study_content'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('_customers_v_locales_locale_parent_id_unique').on(
@@ -4701,13 +5020,13 @@ export const _customers_v_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    solutionsID: integer('solutions_id'),
-    integrationsID: integer('integrations_id'),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    categoriesID: integer('categories_id'),
+    solutionsID: uuid('solutions_id'),
+    integrationsID: uuid('integrations_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    categoriesID: uuid('categories_id'),
   },
   (columns) => ({
     order: index('_customers_v_rels_order_idx').on(columns.order),
@@ -4761,10 +5080,10 @@ export const categories_breadcrumbs = pgTable(
   'categories_breadcrumbs',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
-    doc: integer('doc_id').references(() => categories.id, {
+    doc: uuid('doc_id').references(() => categories.id, {
       onDelete: 'set null',
     }),
     url: varchar('url'),
@@ -4786,10 +5105,10 @@ export const categories_breadcrumbs = pgTable(
 export const categories = pgTable(
   'categories',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
-    parent: integer('parent_id').references((): AnyPgColumn => categories.id, {
+    parent: uuid('parent_id').references((): AnyPgColumn => categories.id, {
       onDelete: 'set null',
     }),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -4813,7 +5132,7 @@ export const categories_locales = pgTable(
     title: varchar('title').notNull(),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('categories_locales_locale_parent_id_unique').on(
@@ -4831,8 +5150,8 @@ export const categories_locales = pgTable(
 export const faq = pgTable(
   'faq',
   {
-    id: serial('id').primaryKey(),
-    category: integer('category_id').references(() => categories.id, {
+    id: uuid('id').defaultRandom().primaryKey(),
+    category: uuid('category_id').references(() => categories.id, {
       onDelete: 'set null',
     }),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -4856,7 +5175,7 @@ export const faq_locales = pgTable(
     answer: jsonb('answer'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('faq_locales_locale_parent_id_unique').on(
@@ -4875,9 +5194,9 @@ export const changelog_categories = pgTable(
   'changelog_categories',
   {
     order: integer('order').notNull(),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     value: enum_changelog_categories('value'),
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
   },
   (columns) => ({
     orderIdx: index('changelog_categories_order_idx').on(columns.order),
@@ -4893,7 +5212,7 @@ export const changelog_categories = pgTable(
 export const changelog = pgTable(
   'changelog',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     date: timestamp('date', { mode: 'string', withTimezone: true, precision: 3 }).notNull(),
     version: varchar('version').notNull(),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -4916,7 +5235,7 @@ export const changelog_locales = pgTable(
     description: jsonb('description').notNull(),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('changelog_locales_locale_parent_id_unique').on(
@@ -4934,7 +5253,7 @@ export const changelog_locales = pgTable(
 export const users = pgTable(
   'users',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     name: varchar('name'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
@@ -4964,7 +5283,7 @@ export const users = pgTable(
 export const redirects = pgTable(
   'redirects',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     from: varchar('from').notNull(),
     to_type: enum_redirects_to_type('to_type').default('reference'),
     to_url: varchar('to_url'),
@@ -4987,10 +5306,10 @@ export const redirects_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
   },
   (columns) => ({
     order: index('redirects_rels_order_idx').on(columns.order),
@@ -5020,7 +5339,7 @@ export const forms_blocks_checkbox = pgTable(
   'forms_blocks_checkbox',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
@@ -5066,7 +5385,7 @@ export const forms_blocks_country = pgTable(
   'forms_blocks_country',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
@@ -5111,7 +5430,7 @@ export const forms_blocks_email = pgTable(
   'forms_blocks_email',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
@@ -5156,7 +5475,7 @@ export const forms_blocks_message = pgTable(
   'forms_blocks_message',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     blockName: varchar('block_name'),
@@ -5198,7 +5517,7 @@ export const forms_blocks_number = pgTable(
   'forms_blocks_number',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
@@ -5284,7 +5603,7 @@ export const forms_blocks_select = pgTable(
   'forms_blocks_select',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
@@ -5331,7 +5650,7 @@ export const forms_blocks_state = pgTable(
   'forms_blocks_state',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
@@ -5376,7 +5695,7 @@ export const forms_blocks_text = pgTable(
   'forms_blocks_text',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
@@ -5422,7 +5741,7 @@ export const forms_blocks_textarea = pgTable(
   'forms_blocks_textarea',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
     name: varchar('name').notNull(),
@@ -5468,7 +5787,7 @@ export const forms_emails = pgTable(
   'forms_emails',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     emailTo: varchar('email_to'),
     cc: varchar('cc'),
@@ -5512,7 +5831,7 @@ export const forms_emails_locales = pgTable(
 export const forms = pgTable(
   'forms',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     title: varchar('title').notNull(),
     confirmationType: enum_forms_confirmation_type('confirmation_type').default('message'),
     redirect_url: varchar('redirect_url'),
@@ -5536,7 +5855,7 @@ export const forms_locales = pgTable(
     confirmationMessage: jsonb('confirmation_message'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('forms_locales_locale_parent_id_unique').on(
@@ -5555,7 +5874,7 @@ export const form_submissions_submission_data = pgTable(
   'form_submissions_submission_data',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     field: varchar('field').notNull(),
     value: varchar('value').notNull(),
@@ -5574,8 +5893,8 @@ export const form_submissions_submission_data = pgTable(
 export const form_submissions = pgTable(
   'form_submissions',
   {
-    id: serial('id').primaryKey(),
-    form: integer('form_id')
+    id: uuid('id').defaultRandom().primaryKey(),
+    form: uuid('form_id')
       .notNull()
       .references(() => forms.id, {
         onDelete: 'set null',
@@ -5598,7 +5917,7 @@ export const search_categories = pgTable(
   'search_categories',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     relationTo: varchar('relation_to'),
     title: varchar('title'),
@@ -5617,12 +5936,12 @@ export const search_categories = pgTable(
 export const search = pgTable(
   'search',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     priority: numeric('priority'),
     slug: varchar('slug'),
     meta_title: varchar('meta_title'),
     meta_description: varchar('meta_description'),
-    meta_image: integer('meta_image_id').references(() => media.id, {
+    meta_image: uuid('meta_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -5646,7 +5965,7 @@ export const search_locales = pgTable(
     title: varchar('title'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     _localeParent: uniqueIndex('search_locales_locale_parent_id_unique').on(
@@ -5666,9 +5985,9 @@ export const search_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    postsID: integer('posts_id'),
+    postsID: uuid('posts_id'),
   },
   (columns) => ({
     order: index('search_rels_order_idx').on(columns.order),
@@ -5692,7 +6011,7 @@ export const payload_jobs_log = pgTable(
   'payload_jobs_log',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     executedAt: timestamp('executed_at', {
       mode: 'string',
@@ -5725,7 +6044,7 @@ export const payload_jobs_log = pgTable(
 export const payload_jobs = pgTable(
   'payload_jobs',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     input: jsonb('input'),
     completedAt: timestamp('completed_at', { mode: 'string', withTimezone: true, precision: 3 }),
     totalTried: numeric('total_tried').default('0'),
@@ -5758,7 +6077,7 @@ export const payload_jobs = pgTable(
 export const payload_locked_documents = pgTable(
   'payload_locked_documents',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     globalSlug: varchar('global_slug'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
@@ -5785,23 +6104,23 @@ export const payload_locked_documents_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    solutionsID: integer('solutions_id'),
-    integrationsID: integer('integrations_id'),
-    mediaID: integer('media_id'),
-    customersID: integer('customers_id'),
-    categoriesID: integer('categories_id'),
-    faqID: integer('faq_id'),
-    changelogID: integer('changelog_id'),
-    usersID: integer('users_id'),
-    redirectsID: integer('redirects_id'),
-    formsID: integer('forms_id'),
-    'form-submissionsID': integer('form_submissions_id'),
-    searchID: integer('search_id'),
-    'payload-jobsID': integer('payload_jobs_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    solutionsID: uuid('solutions_id'),
+    integrationsID: uuid('integrations_id'),
+    mediaID: uuid('media_id'),
+    customersID: uuid('customers_id'),
+    categoriesID: uuid('categories_id'),
+    faqID: uuid('faq_id'),
+    changelogID: uuid('changelog_id'),
+    usersID: uuid('users_id'),
+    redirectsID: uuid('redirects_id'),
+    formsID: uuid('forms_id'),
+    'form-submissionsID': uuid('form_submissions_id'),
+    searchID: uuid('search_id'),
+    'payload-jobsID': uuid('payload_jobs_id'),
   },
   (columns) => ({
     order: index('payload_locked_documents_rels_order_idx').on(columns.order),
@@ -5938,7 +6257,7 @@ export const payload_locked_documents_rels = pgTable(
 export const payload_preferences = pgTable(
   'payload_preferences',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     key: varchar('key'),
     value: jsonb('value'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -5964,9 +6283,9 @@ export const payload_preferences_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    usersID: integer('users_id'),
+    usersID: uuid('users_id'),
   },
   (columns) => ({
     order: index('payload_preferences_rels_order_idx').on(columns.order),
@@ -5991,7 +6310,7 @@ export const payload_preferences_rels = pgTable(
 export const payload_migrations = pgTable(
   'payload_migrations',
   {
-    id: serial('id').primaryKey(),
+    id: uuid('id').defaultRandom().primaryKey(),
     name: varchar('name'),
     batch: numeric('batch'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -6012,7 +6331,7 @@ export const payload_migrations = pgTable(
 )
 
 export const settings = pgTable('settings', {
-  id: serial('id').primaryKey(),
+  id: uuid('id').defaultRandom().primaryKey(),
   announcementBar_link_type: link_type('announcement_bar_link_type').default('reference'),
   announcementBar_link_newTab: boolean('announcement_bar_link_new_tab'),
   announcementBar_link_url: varchar('announcement_bar_link_url'),
@@ -6028,7 +6347,7 @@ export const settings_locales = pgTable(
   'settings_locales',
   {
     meta_title: varchar('meta_title'),
-    meta_image: integer('meta_image_id').references(() => media.id, {
+    meta_image: uuid('meta_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
     meta_description: varchar('meta_description'),
@@ -6036,7 +6355,7 @@ export const settings_locales = pgTable(
     announcementBar_link_label: varchar('announcement_bar_link_label').notNull(),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
   },
   (columns) => ({
     settings_meta_meta_image_idx: index('settings_meta_meta_image_idx').on(
@@ -6060,11 +6379,11 @@ export const settings_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    solutionsID: integer('solutions_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    solutionsID: uuid('solutions_id'),
   },
   (columns) => ({
     order: index('settings_rels_order_idx').on(columns.order),
@@ -6279,7 +6598,7 @@ export const header_tabs = pgTable(
   'header_tabs',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     enableDirectLink: boolean('enable_direct_link').default(true),
     enableDropdown: boolean('enable_dropdown').default(false),
@@ -6324,7 +6643,7 @@ export const header_cta = pgTable(
   'header_cta',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
@@ -6365,7 +6684,7 @@ export const header_cta_locales = pgTable(
 )
 
 export const header = pgTable('header', {
-  id: serial('id').primaryKey(),
+  id: uuid('id').defaultRandom().primaryKey(),
   updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }),
   createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }),
 })
@@ -6375,11 +6694,11 @@ export const header_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    solutionsID: integer('solutions_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    solutionsID: uuid('solutions_id'),
   },
   (columns) => ({
     order: index('header_rels_order_idx').on(columns.order),
@@ -6457,7 +6776,7 @@ export const footer_columns = pgTable(
   'footer_columns',
   {
     _order: integer('_order').notNull(),
-    _parentID: integer('_parent_id').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     label: varchar('label').notNull(),
   },
@@ -6473,7 +6792,7 @@ export const footer_columns = pgTable(
 )
 
 export const footer = pgTable('footer', {
-  id: serial('id').primaryKey(),
+  id: uuid('id').defaultRandom().primaryKey(),
   updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }),
   createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }),
 })
@@ -6483,11 +6802,11 @@ export const footer_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: integer('parent_id').notNull(),
+    parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    pagesID: integer('pages_id'),
-    postsID: integer('posts_id'),
-    solutionsID: integer('solutions_id'),
+    pagesID: uuid('pages_id'),
+    postsID: uuid('posts_id'),
+    solutionsID: uuid('solutions_id'),
   },
   (columns) => ({
     order: index('footer_rels_order_idx').on(columns.order),
@@ -7051,6 +7370,83 @@ export const relations_logosBlock = relations(logosBlock, ({ one, many }) => ({
     relationName: 'blockHeader_links',
   }),
 }))
+export const relations_metricsBlock_block_header_links_locales = relations(
+  metricsBlock_block_header_links_locales,
+  ({ one }) => ({
+    _parentID: one(metricsBlock_block_header_links, {
+      fields: [metricsBlock_block_header_links_locales._parentID],
+      references: [metricsBlock_block_header_links.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_metricsBlock_block_header_links = relations(
+  metricsBlock_block_header_links,
+  ({ one, many }) => ({
+    _parentID: one(metricsBlock, {
+      fields: [metricsBlock_block_header_links._parentID],
+      references: [metricsBlock.id],
+      relationName: 'blockHeader_links',
+    }),
+    _locales: many(metricsBlock_block_header_links_locales, {
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_metricsBlock_stats_locales = relations(
+  metricsBlock_stats_locales,
+  ({ one }) => ({
+    _parentID: one(metricsBlock_stats, {
+      fields: [metricsBlock_stats_locales._parentID],
+      references: [metricsBlock_stats.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations_metricsBlock_stats = relations(metricsBlock_stats, ({ one, many }) => ({
+  _parentID: one(metricsBlock, {
+    fields: [metricsBlock_stats._parentID],
+    references: [metricsBlock.id],
+    relationName: 'stats',
+  }),
+  _locales: many(metricsBlock_stats_locales, {
+    relationName: '_locales',
+  }),
+}))
+export const relations_metricsBlock_locales = relations(metricsBlock_locales, ({ one }) => ({
+  _parentID: one(metricsBlock, {
+    fields: [metricsBlock_locales._parentID],
+    references: [metricsBlock.id],
+    relationName: '_locales',
+  }),
+  blockImage_media: one(media, {
+    fields: [metricsBlock_locales.blockImage_media],
+    references: [media.id],
+    relationName: 'blockImage_media',
+  }),
+}))
+export const relations_metricsBlock = relations(metricsBlock, ({ one, many }) => ({
+  _parentID: one(pages, {
+    fields: [metricsBlock._parentID],
+    references: [pages.id],
+    relationName: '_blocks_metricsBlock',
+  }),
+  _locales: many(metricsBlock_locales, {
+    relationName: '_locales',
+  }),
+  blockHeader_links: many(metricsBlock_block_header_links, {
+    relationName: 'blockHeader_links',
+  }),
+  blockImage_media: one(media, {
+    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
+    fields: [metricsBlock_locales.blockImage_media],
+    references: [media.id],
+    relationName: 'blockImage_media',
+  }),
+  stats: many(metricsBlock_stats, {
+    relationName: 'stats',
+  }),
+}))
 export const relations_richTextBlock_block_header_links_locales = relations(
   richTextBlock_block_header_links_locales,
   ({ one }) => ({
@@ -7252,6 +7648,9 @@ export const relations_pages = relations(pages, ({ many }) => ({
   }),
   _blocks_logosBlock: many(logosBlock, {
     relationName: '_blocks_logosBlock',
+  }),
+  _blocks_metricsBlock: many(metricsBlock, {
+    relationName: '_blocks_metricsBlock',
   }),
   _blocks_richTextBlock: many(richTextBlock, {
     relationName: '_blocks_richTextBlock',
@@ -7810,6 +8209,86 @@ export const relations__logosBlock_v = relations(_logosBlock_v, ({ one, many }) 
     relationName: 'blockHeader_links',
   }),
 }))
+export const relations__metricsBlock_v_block_header_links_locales = relations(
+  _metricsBlock_v_block_header_links_locales,
+  ({ one }) => ({
+    _parentID: one(_metricsBlock_v_block_header_links, {
+      fields: [_metricsBlock_v_block_header_links_locales._parentID],
+      references: [_metricsBlock_v_block_header_links.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations__metricsBlock_v_block_header_links = relations(
+  _metricsBlock_v_block_header_links,
+  ({ one, many }) => ({
+    _parentID: one(_metricsBlock_v, {
+      fields: [_metricsBlock_v_block_header_links._parentID],
+      references: [_metricsBlock_v.id],
+      relationName: 'blockHeader_links',
+    }),
+    _locales: many(_metricsBlock_v_block_header_links_locales, {
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations__metricsBlock_v_stats_locales = relations(
+  _metricsBlock_v_stats_locales,
+  ({ one }) => ({
+    _parentID: one(_metricsBlock_v_stats, {
+      fields: [_metricsBlock_v_stats_locales._parentID],
+      references: [_metricsBlock_v_stats.id],
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations__metricsBlock_v_stats = relations(
+  _metricsBlock_v_stats,
+  ({ one, many }) => ({
+    _parentID: one(_metricsBlock_v, {
+      fields: [_metricsBlock_v_stats._parentID],
+      references: [_metricsBlock_v.id],
+      relationName: 'stats',
+    }),
+    _locales: many(_metricsBlock_v_stats_locales, {
+      relationName: '_locales',
+    }),
+  }),
+)
+export const relations__metricsBlock_v_locales = relations(_metricsBlock_v_locales, ({ one }) => ({
+  _parentID: one(_metricsBlock_v, {
+    fields: [_metricsBlock_v_locales._parentID],
+    references: [_metricsBlock_v.id],
+    relationName: '_locales',
+  }),
+  blockImage_media: one(media, {
+    fields: [_metricsBlock_v_locales.blockImage_media],
+    references: [media.id],
+    relationName: 'blockImage_media',
+  }),
+}))
+export const relations__metricsBlock_v = relations(_metricsBlock_v, ({ one, many }) => ({
+  _parentID: one(_pages_v, {
+    fields: [_metricsBlock_v._parentID],
+    references: [_pages_v.id],
+    relationName: '_blocks_metricsBlock',
+  }),
+  _locales: many(_metricsBlock_v_locales, {
+    relationName: '_locales',
+  }),
+  blockHeader_links: many(_metricsBlock_v_block_header_links, {
+    relationName: 'blockHeader_links',
+  }),
+  blockImage_media: one(media, {
+    // @ts-expect-error Drizzle TypeScript bug for ONE relationships with a field in different table
+    fields: [_metricsBlock_v_locales.blockImage_media],
+    references: [media.id],
+    relationName: 'blockImage_media',
+  }),
+  stats: many(_metricsBlock_v_stats, {
+    relationName: 'stats',
+  }),
+}))
 export const relations__richTextBlock_v_block_header_links_locales = relations(
   _richTextBlock_v_block_header_links_locales,
   ({ one }) => ({
@@ -8019,6 +8498,9 @@ export const relations__pages_v = relations(_pages_v, ({ one, many }) => ({
   }),
   _blocks_logosBlock: many(_logosBlock_v, {
     relationName: '_blocks_logosBlock',
+  }),
+  _blocks_metricsBlock: many(_metricsBlock_v, {
+    relationName: '_blocks_metricsBlock',
   }),
   _blocks_richTextBlock: many(_richTextBlock_v, {
     relationName: '_blocks_richTextBlock',
@@ -9615,6 +10097,10 @@ type DatabaseSchema = {
   enum_logosBlock_block_header_type: typeof enum_logosBlock_block_header_type
   enum_logosBlock_block_header_badge_type: typeof enum_logosBlock_block_header_badge_type
   enum_logosBlock_type: typeof enum_logosBlock_type
+  enum_metricsBlock_stats_indicator: typeof enum_metricsBlock_stats_indicator
+  enum_metricsBlock_block_header_type: typeof enum_metricsBlock_block_header_type
+  enum_metricsBlock_block_header_badge_type: typeof enum_metricsBlock_block_header_badge_type
+  enum_metricsBlock_type: typeof enum_metricsBlock_type
   enum_richTextBlock_block_header_type: typeof enum_richTextBlock_block_header_type
   enum_richTextBlock_block_header_badge_type: typeof enum_richTextBlock_block_header_badge_type
   enum_richTextBlock_type: typeof enum_richTextBlock_type
@@ -9649,6 +10135,10 @@ type DatabaseSchema = {
   enum__logosBlock_v_block_header_type: typeof enum__logosBlock_v_block_header_type
   enum__logosBlock_v_block_header_badge_type: typeof enum__logosBlock_v_block_header_badge_type
   enum__logosBlock_v_type: typeof enum__logosBlock_v_type
+  enum__metricsBlock_v_stats_indicator: typeof enum__metricsBlock_v_stats_indicator
+  enum__metricsBlock_v_block_header_type: typeof enum__metricsBlock_v_block_header_type
+  enum__metricsBlock_v_block_header_badge_type: typeof enum__metricsBlock_v_block_header_badge_type
+  enum__metricsBlock_v_type: typeof enum__metricsBlock_v_type
   enum__richTextBlock_v_block_header_type: typeof enum__richTextBlock_v_block_header_type
   enum__richTextBlock_v_block_header_badge_type: typeof enum__richTextBlock_v_block_header_badge_type
   enum__richTextBlock_v_type: typeof enum__richTextBlock_v_type
@@ -9725,6 +10215,12 @@ type DatabaseSchema = {
   logosBlock_block_header_links_locales: typeof logosBlock_block_header_links_locales
   logosBlock: typeof logosBlock
   logosBlock_locales: typeof logosBlock_locales
+  metricsBlock_block_header_links: typeof metricsBlock_block_header_links
+  metricsBlock_block_header_links_locales: typeof metricsBlock_block_header_links_locales
+  metricsBlock_stats: typeof metricsBlock_stats
+  metricsBlock_stats_locales: typeof metricsBlock_stats_locales
+  metricsBlock: typeof metricsBlock
+  metricsBlock_locales: typeof metricsBlock_locales
   richTextBlock_block_header_links: typeof richTextBlock_block_header_links
   richTextBlock_block_header_links_locales: typeof richTextBlock_block_header_links_locales
   richTextBlock: typeof richTextBlock
@@ -9777,6 +10273,12 @@ type DatabaseSchema = {
   _logosBlock_v_block_header_links_locales: typeof _logosBlock_v_block_header_links_locales
   _logosBlock_v: typeof _logosBlock_v
   _logosBlock_v_locales: typeof _logosBlock_v_locales
+  _metricsBlock_v_block_header_links: typeof _metricsBlock_v_block_header_links
+  _metricsBlock_v_block_header_links_locales: typeof _metricsBlock_v_block_header_links_locales
+  _metricsBlock_v_stats: typeof _metricsBlock_v_stats
+  _metricsBlock_v_stats_locales: typeof _metricsBlock_v_stats_locales
+  _metricsBlock_v: typeof _metricsBlock_v
+  _metricsBlock_v_locales: typeof _metricsBlock_v_locales
   _richTextBlock_v_block_header_links: typeof _richTextBlock_v_block_header_links
   _richTextBlock_v_block_header_links_locales: typeof _richTextBlock_v_block_header_links_locales
   _richTextBlock_v: typeof _richTextBlock_v
@@ -9935,6 +10437,12 @@ type DatabaseSchema = {
   relations_logosBlock_block_header_links: typeof relations_logosBlock_block_header_links
   relations_logosBlock_locales: typeof relations_logosBlock_locales
   relations_logosBlock: typeof relations_logosBlock
+  relations_metricsBlock_block_header_links_locales: typeof relations_metricsBlock_block_header_links_locales
+  relations_metricsBlock_block_header_links: typeof relations_metricsBlock_block_header_links
+  relations_metricsBlock_stats_locales: typeof relations_metricsBlock_stats_locales
+  relations_metricsBlock_stats: typeof relations_metricsBlock_stats
+  relations_metricsBlock_locales: typeof relations_metricsBlock_locales
+  relations_metricsBlock: typeof relations_metricsBlock
   relations_richTextBlock_block_header_links_locales: typeof relations_richTextBlock_block_header_links_locales
   relations_richTextBlock_block_header_links: typeof relations_richTextBlock_block_header_links
   relations_richTextBlock_locales: typeof relations_richTextBlock_locales
@@ -9987,6 +10495,12 @@ type DatabaseSchema = {
   relations__logosBlock_v_block_header_links: typeof relations__logosBlock_v_block_header_links
   relations__logosBlock_v_locales: typeof relations__logosBlock_v_locales
   relations__logosBlock_v: typeof relations__logosBlock_v
+  relations__metricsBlock_v_block_header_links_locales: typeof relations__metricsBlock_v_block_header_links_locales
+  relations__metricsBlock_v_block_header_links: typeof relations__metricsBlock_v_block_header_links
+  relations__metricsBlock_v_stats_locales: typeof relations__metricsBlock_v_stats_locales
+  relations__metricsBlock_v_stats: typeof relations__metricsBlock_v_stats
+  relations__metricsBlock_v_locales: typeof relations__metricsBlock_v_locales
+  relations__metricsBlock_v: typeof relations__metricsBlock_v
   relations__richTextBlock_v_block_header_links_locales: typeof relations__richTextBlock_v_block_header_links_locales
   relations__richTextBlock_v_block_header_links: typeof relations__richTextBlock_v_block_header_links
   relations__richTextBlock_v_locales: typeof relations__richTextBlock_v_locales

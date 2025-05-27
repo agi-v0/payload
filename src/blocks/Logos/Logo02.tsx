@@ -48,7 +48,7 @@ export const Logo02: React.FC<Logo02Props> = ({ logos, className }) => {
 
   return (
     <div className={cn('py-xl container w-full', className)}>
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="sync">
         <AnimatedGroup
           preset="flip"
           key={`logo-group-${currentIndex}`}

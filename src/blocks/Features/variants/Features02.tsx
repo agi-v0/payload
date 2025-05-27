@@ -106,12 +106,9 @@ function FeatureCardContent({
       {image && (
         <Media
           resource={image}
-          className={cn(
-            'group rounded-space-sm bg-background-neutral-subtle w-full flex-1 overflow-hidden',
-            {
-              'flex-auto lg:basis-1/2': size === 'full',
-            },
-          )}
+          className={cn('group rounded-space-sm bg-background w-full flex-1 overflow-hidden', {
+            'flex-auto lg:basis-1/2': size === 'full',
+          })}
           imgClassName="w-full group-hover:scale-102 transition-all duration-300 h-full object-cover"
         />
       )}

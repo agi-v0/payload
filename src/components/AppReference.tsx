@@ -2,18 +2,18 @@ import React from 'react'
 import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
 import { Button } from '@/components/ui/button'
-import { Solution, Integration } from '@/payload-types'
+import { Solution, Integration, Media as MediaType } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 
 interface AppReferenceProps {
   appReference:
     | ({
         relationTo: 'solutions'
-        value: number | Solution
+        value: string | Solution
       } | null)
     | ({
         relationTo: 'integrations'
-        value: number | Integration
+        value: string | Integration
       } | null)
   className?: string
 }
@@ -30,7 +30,7 @@ export const AppReference: React.FC<AppReferenceProps> = ({ appReference, classN
       <div className="flex items-center gap-4">
         {appReference.value.icon && (
           <Media
-            resource={appReference.value.icon}
+            resource={appReference.value.icon as MediaType}
             className="size-15 shrink-0"
             imgClassName="w-full h-full rounded-xl aspect-square"
           />

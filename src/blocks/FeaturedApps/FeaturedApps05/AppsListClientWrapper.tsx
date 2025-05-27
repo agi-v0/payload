@@ -72,7 +72,8 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
             <Media
               priority
               resource={icon as MediaType}
-              className="size-12 flex-none overflow-hidden rounded-lg"
+              className="flex-none overflow-hidden rounded-lg"
+              imgClassName="size-12"
             /> // Cast icon
           )}
           <div className="flex w-full flex-col py-4">

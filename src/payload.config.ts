@@ -43,6 +43,8 @@ import { FaqBlock } from '@/blocks/FAQ/config'
 import { DividerBlock } from '@/blocks/Divider/config'
 import { LogosBlock } from '@/blocks/Logos/config'
 import { RichTextBlock } from '@/blocks/RichText/config'
+import { MetricsBlock } from '@/blocks/Metrics/config'
+
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
 
@@ -129,6 +131,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+    idType: 'uuid',
     // push: false, // disable push mode
   }),
   blocks: [
@@ -143,6 +146,7 @@ export default buildConfig({
     FormBlock,
     LogosBlock,
     MediaBlock,
+    MetricsBlock,
     RichTextBlock,
     StyledList,
     TestimonialsBlock,

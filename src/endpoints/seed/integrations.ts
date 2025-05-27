@@ -2,7 +2,7 @@ import type { Payload, PayloadRequest, RequiredDataFromCollectionSlug } from 'pa
 import type { Media, Integration, Category } from '@/payload-types'
 
 type IntegrationDataArgs = {
-  imageSquare?: Media | number // Allow ID or full object
+  imageSquare?: Media | string // Allow ID or full object
   ecosystems?: Category[]
 }
 
@@ -108,10 +108,10 @@ const createIntegrationObject = (
 export const seedIntegrations = async (
   payload: Payload,
   req: PayloadRequest,
-  imageSquareId: number,
+  imageSquareId: string,
   ecosystems: Category[],
   integrationCategories: Record<string, Category>,
-): Promise<Record<string, number>> => {
+): Promise<Record<string, string>> => {
   const integrationsToSeed = [
     // Loyalty & Rewards Platforms
     createIntegrationObject(
@@ -684,6 +684,7 @@ export const seedIntegrations = async (
       collection: 'integrations',
       depth: 0,
       data: integrationData,
+      req,
     })
   }
 
@@ -699,7 +700,7 @@ export const seedIntegrations = async (
     depth: 0,
   })
 
-  const slugToIdMap: Record<string, number> = {}
+  const slugToIdMap: Record<string, string> = {}
   createdIntegrations.forEach((doc) => {
     const integrationDoc = doc as Integration
     if (integrationDoc.slug && integrationDoc.id) {

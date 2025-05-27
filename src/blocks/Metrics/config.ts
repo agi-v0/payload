@@ -1,5 +1,13 @@
 import { blockHeader } from '@/components/BlockHeader/config'
 import { logos } from '@/fields/logos'
+import {
+  FixedToolbarFeature,
+  HeadingFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+  BlocksFeature,
+  EXPERIMENTAL_TableFeature,
+} from '@payloadcms/richtext-lexical'
 import { Block } from 'payload'
 
 export const MetricsBlock: Block = {
@@ -18,43 +26,109 @@ export const MetricsBlock: Block = {
       defaultValue: '01',
       required: true,
       options: [
-        { label: '01 - Bento', value: '01' },
-        { label: '02 - Bento (2)', value: '02' },
-        { label: '03 - Two Column', value: '03' },
-        { label: '04 - Basic Image with Text', value: '04' },
+        { label: '01 - Grid', value: '01' },
+        { label: '02 - Grid with Image', value: '02' },
+        { label: '03 - Table', value: '03' },
       ],
     },
+    // {
+    //   name: 'blockImage',
+    //   type: 'upload',
+    //   relationTo: 'media',
+    //   label: 'Image',
+    //   localized: true,
+    //   required: false,
+    //   admin: {
+    //     condition: (data, siblingData) => ['02'].includes(siblingData.type),
+    //   },
+    // },
     {
       name: 'blockImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Image',
+      type: 'group',
+      label: false,
+      admin: {
+        hideGutter: true,
+        condition: (data, siblingData) => ['02'].includes(siblingData.type),
+      },
+      fields: [
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Media',
+        },
+      ],
       localized: true,
     },
+
     {
-      name: 'metrics',
+      name: 'stats',
       type: 'array',
       fields: [
         {
-          name: 'metric',
-          type: 'text',
-          label: 'Metric',
-          required: true,
+          type: 'row',
+          fields: [
+            {
+              name: 'label',
+              type: 'text',
+              // required: true,
+              admin: {
+                width: '50%',
+                description: 'Label for the stat',
+              },
+              localized: true,
+            },
+            {
+              name: 'value',
+              type: 'text',
+              // required: true,
+              admin: {
+                width: '50%',
+                description: 'Value for the stat. Example: 85% or 250 SAR',
+              },
+            },
+          ],
         },
         {
-          name: 'value',
-          type: 'text',
-        },
-        {
-          name: 'enableLogos',
-          type: 'checkbox',
-        },
-        logos({
-          overrides: {
-            admin: { condition: (data, siblingData) => siblingData.enableLogos },
+          type: 'select',
+          label: 'Indicator',
+          name: 'indicator',
+          options: [
+            { label: 'Increase', value: 'increase' },
+            { label: 'Decrease', value: 'decrease' },
+            { label: 'None', value: 'noChange' },
+          ],
+          defaultValue: 'noChange',
+          admin: {
+            description: 'Whether the value is an increase or decrease',
           },
-        }),
+        },
       ],
+      admin: {
+        condition: (data, siblingData) => ['01', '02'].includes(siblingData.type),
+      },
     },
+
+    {
+      name: 'table',
+      type: 'json',
+      label: 'Table',
+      localized: true,
+      required: true,
+      admin: {
+        condition: (data, siblingData) => siblingData.type === '03',
+        description:
+          'Use Google Sheets to generate the table data, convert that into JSON, and paste here.',
+      },
+    },
+    {
+      name: 'enableLogos',
+      type: 'checkbox',
+    },
+    logos({
+      overrides: {
+        admin: { condition: (data, siblingData) => siblingData.enableLogos },
+      },
+    }),
   ],
 }
