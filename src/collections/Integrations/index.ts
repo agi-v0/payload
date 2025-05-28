@@ -1,11 +1,11 @@
 import type { CollectionConfig, Field } from 'payload'
 
-import { authenticated } from '../access/authenticated'
-import { authenticatedOrPublished } from '../access/authenticatedOrPublished'
+import { authenticated } from '../../access/authenticated'
+import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 
 import { slugField } from '@/fields/slug'
-import { populatePublishedAt } from '../hooks/populatePublishedAt'
-import { generatePreviewPath } from '../utilities/generatePreviewPath'
+import { populatePublishedAt } from '../../hooks/populatePublishedAt'
+import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 
 import {
   MetaDescriptionField,
@@ -306,6 +306,16 @@ export const Integrations: CollectionConfig<'integrations'> = {
       admin: {
         position: 'sidebar',
       },
+      hooks: {
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (siblingData._status === 'published' && !value) {
+              return new Date()
+            }
+            return value
+          },
+        ],
+      },
     },
     {
       name: 'ecosystem',
@@ -342,6 +352,6 @@ export const Integrations: CollectionConfig<'integrations'> = {
       },
       schedulePublish: true,
     },
-    maxPerDoc: 50,
+    maxPerDoc: 25,
   },
 }

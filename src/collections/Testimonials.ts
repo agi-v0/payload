@@ -154,6 +154,16 @@ export const Testimonials: CollectionConfig = {
           pickerAppearance: 'dayOnly',
         },
       },
+      hooks: {
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (siblingData._status === 'published' && !value) {
+              return new Date()
+            }
+            return value
+          },
+        ],
+      },
     },
   ],
   versions: {
