@@ -72,7 +72,7 @@ export const hero: Field = {
       overrides: {
         maxRows: 2,
       },
-      supportingText: true,
+      caption: true,
     }),
     {
       type: 'collapsible',

@@ -639,7 +639,7 @@ export const callToActionBlock = pgTable(
     badge_color: badge_color('badge_color').default('blue'),
     badge_icon: varchar('badge_icon'),
     badge_icon_position: badge_icon_position('badge_icon_position').default('flex-row'),
-    supportingText: varchar('supporting_text'),
+    caption: varchar('caption'),
     form: uuid('form_id').references(() => forms.id, {
       onDelete: 'set null',
     }),
@@ -1830,7 +1830,7 @@ export const pages = pgTable(
     hero_badge_color: badge_color('hero_badge_color').default('blue'),
     hero_badge_icon: varchar('hero_badge_icon'),
     hero_badge_icon_position: badge_icon_position('hero_badge_icon_position').default('flex-row'),
-    hero_supportingText: varchar('hero_supporting_text'),
+    hero_caption: varchar('hero_caption'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
@@ -2165,7 +2165,7 @@ export const _callToActionBlock_v = pgTable(
     badge_color: badge_color('badge_color').default('blue'),
     badge_icon: varchar('badge_icon'),
     badge_icon_position: badge_icon_position('badge_icon_position').default('flex-row'),
-    supportingText: varchar('supporting_text'),
+    caption: varchar('caption'),
     form: uuid('form_id').references(() => forms.id, {
       onDelete: 'set null',
     }),
@@ -3399,7 +3399,7 @@ export const _pages_v = pgTable(
     version_hero_badge_icon_position: badge_icon_position(
       'version_hero_badge_icon_position',
     ).default('flex-row'),
-    version_hero_supportingText: varchar('version_hero_supporting_text'),
+    version_hero_caption: varchar('version_hero_caption'),
     version_publishedAt: timestamp('version_published_at', {
       mode: 'string',
       withTimezone: true,
@@ -4212,7 +4212,7 @@ export const integrations = pgTable(
     docsLink_type: link_type('docs_link_type').default('reference'),
     docsLink_newTab: boolean('docs_link_new_tab'),
     docsLink_url: varchar('docs_link_url'),
-    supportingText: varchar('supporting_text'),
+    caption: varchar('caption'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
@@ -4384,7 +4384,7 @@ export const _integrations_v = pgTable(
     version_docsLink_type: link_type('version_docs_link_type').default('reference'),
     version_docsLink_newTab: boolean('version_docs_link_new_tab'),
     version_docsLink_url: varchar('version_docs_link_url'),
-    version_supportingText: varchar('version_supporting_text'),
+    version_caption: varchar('version_caption'),
     version_publishedAt: timestamp('version_published_at', {
       mode: 'string',
       withTimezone: true,
@@ -4537,11 +4537,11 @@ export const media = pgTable(
   'media',
   {
     id: uuid('id').defaultRandom().primaryKey(),
-    prefix: varchar('prefix').default('media'),
     alt: varchar('alt').notNull(),
     caption: jsonb('caption'),
     locale: enum_media_locale('locale'),
     blurhash: varchar('blurhash'),
+    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),

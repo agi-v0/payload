@@ -13,7 +13,7 @@ export const CallToAction04: React.FC<CTABlockProps> = ({
   badge,
   richText,
   links,
-  supportingText,
+  caption,
   list,
   media,
 }) => {

@@ -87,7 +87,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           id: '6800e854462e705cdaf2a9ce',
         },
       ],
-      supportingText: null,
+      caption: null,
       headline: null,
       logos: {
         headline: null,

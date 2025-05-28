@@ -27,7 +27,7 @@ export const CallToAction07: React.FC<CTABlockType> = (props) => {
     badge,
     richText,
     links,
-    supportingText,
+    caption,
     list,
     media,
     form: formFromProps,

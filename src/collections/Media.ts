@@ -25,6 +25,7 @@ export const Media: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['filename', 'alt', 'category', 'locale'],
+    // folders: true,
   },
   fields: [
     {

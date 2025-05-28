@@ -107,7 +107,7 @@ export const CallToActionBlock: Block = {
       overrides: {
         maxRows: 2,
       },
-      supportingText: true,
+      caption: true,
     }),
 
     {

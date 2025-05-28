@@ -208,7 +208,7 @@ export const Integrations: CollectionConfig<'integrations'> = {
                 maxRows: 2,
                 label: 'CTA',
               },
-              supportingText: true,
+              caption: true,
             }),
             // {
             //   name: 'gallery',
