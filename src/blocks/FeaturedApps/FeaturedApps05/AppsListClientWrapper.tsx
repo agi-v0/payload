@@ -65,7 +65,8 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
           {...link}
           key={index}
           label={null}
-          className="px-xs hover:bg-background-neutral flex h-fit w-full flex-row items-center justify-start gap-4 rounded-3xl whitespace-normal transition-colors"
+          variant="inline"
+          className="px-xs hover:bg-background-neutral flex h-fit w-full flex-row items-center justify-start gap-4 rounded-3xl whitespace-normal transition-colors hover:no-underline"
         >
           {/* Pass resource directly if it matches MediaProps resource type */}
           {icon && typeof icon === 'object' && (
