@@ -15,7 +15,7 @@ export const Hero05: React.FC<Page['hero']> = ({
   richText,
   media,
   links,
-  supportingText,
+  caption,
   logos,
   badge,
 }) => {
@@ -62,7 +62,7 @@ export const Hero05: React.FC<Page['hero']> = ({
                   })}
                 </ul>
               )}
-              {supportingText && <p className="text-base-tertiary text-sm">{supportingText}</p>}
+              {caption && <p className="text-base-tertiary text-sm">{caption}</p>}
             </div>
           </div>
         </div>
