@@ -4053,6 +4053,7 @@ export const _solutions_v = pgTable(
     snapshot: boolean('snapshot'),
     publishedLocale: enum__solutions_v_published_locale('published_locale'),
     latest: boolean('latest'),
+    autosave: boolean('autosave'),
   },
   (columns) => ({
     _solutions_v_parent_idx: index('_solutions_v_parent_idx').on(columns.parent),
@@ -4081,6 +4082,7 @@ export const _solutions_v = pgTable(
       columns.publishedLocale,
     ),
     _solutions_v_latest_idx: index('_solutions_v_latest_idx').on(columns.latest),
+    _solutions_v_autosave_idx: index('_solutions_v_autosave_idx').on(columns.autosave),
   }),
 )
 
@@ -4535,11 +4537,11 @@ export const media = pgTable(
   'media',
   {
     id: uuid('id').defaultRandom().primaryKey(),
+    prefix: varchar('prefix').default('media'),
     alt: varchar('alt').notNull(),
     caption: jsonb('caption'),
     locale: enum_media_locale('locale'),
     blurhash: varchar('blurhash'),
-    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
