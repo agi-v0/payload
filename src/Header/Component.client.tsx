@@ -14,8 +14,18 @@ import { DesktopNav } from './DesktopNav'
 import { MobileNav } from './MobileNav'
 import { motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { AnimatePresence } from 'motion/react'
+import { AdminBar } from '@/components/AdminBar'
+import { PayloadAdminBarProps } from 'payload-admin-bar'
 
-export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
+interface AdminBarProps {
+  adminBarProps: PayloadAdminBarProps
+}
+
+export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
+  cta,
+  tabs,
+  adminBarProps,
+}) => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [hideBackground, setHideBackground] = React.useState(true)
   const lastScrollY = useRef(0)
@@ -66,13 +76,14 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
     <header
       data-theme={headerTheme || 'light'}
       className={cn(
-        'border-border fixed left-0 z-10 w-full max-w-screen border-0 bg-transparent transition-colors duration-300',
-        'top-0 md:top-[var(--admin-bar-height,0px)]',
+        'border-border fixed top-0 left-0 z-10 w-full max-w-screen border-0 bg-transparent transition-colors duration-300',
+        '-md:top-[var(--admin-bar-height,0px)]',
         hideBackground && 'before:opacity-0 after:opacity-0',
         isMobileNavOpen && 'bg-background',
         y > 20 && 'bg-background border-b',
       )}
     >
+      <AdminBar adminBarProps={adminBarProps} />
       {/* Main container with flex layout */}
       <div
         className={cn(

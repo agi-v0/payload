@@ -28,8 +28,8 @@ export const Hero02: React.FC<Page['hero']> = ({
   // }, [setHeaderTheme])
 
   return (
-    <section className="container mt-(--header-height) md:mt-[calc(var(--header-height)+var(--admin-bar-height))]">
-      <div className="pb-site bg-background-neutral rounded-space-sm gap-space-3xl container flex flex-col items-center pt-[calc(1*var(--header-height))]">
+    <section className="mt-header md:mt-header-plus-admin-bar container">
+      <div className="pb-site bg-background-neutral rounded-space-sm gap-space-3xl pt-header container flex flex-col items-center">
         <div className="gap-md flex max-w-[36rem] flex-col items-center">
           {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 

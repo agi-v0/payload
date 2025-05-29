@@ -1,6 +1,4 @@
-'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
@@ -19,11 +17,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
     type,
   } = props
 
-  const { setHeaderTheme } = useHeaderTheme()
-
-  useEffect(() => {
-    setHeaderTheme('light')
-  })
+  if (!headerText && !links) return null
 
   return (
     <div
@@ -41,7 +35,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
       {headerText && (
         <RichText
           className={cn(
-            '-md:row-start-2 col-span-2 mx-0',
+            'col-span-2 mx-0',
             type === 'split' &&
               'md:grid md:grid-cols-subgrid [&>*:is(h1,h2,h3,h4,h5,h6)]:pe-(length:--spacing-xl)',
             type === 'center' && 'mx-auto text-center',
