@@ -39,7 +39,7 @@ export const CallToAction03: React.FC<CTABlockProps> = ({
             })}
           </div>
         </div>
-        {media && <Media media={media} className="m-sm rounded-space-md overflow-hidden" />}
+        {media && <Media media={media} className="m-sm rounded-space-sm overflow-hidden" />}
       </motion.div>
     </div>
   )

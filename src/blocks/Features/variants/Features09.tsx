@@ -64,7 +64,9 @@ export const Features09: React.FC<FeaturesBlock> = ({ columns }) => {
                   <h3 className="text-body-lg text-start font-medium">{column.content.title}</h3>
                 )}
               </AccordionTrigger>
-              <AccordionContent className="flex flex-col items-start gap-4 p-0 ps-[clamp(2rem,1.2rem+2vw,3rem)]">
+              <AccordionContent
+                className={`flex flex-col items-start gap-4 p-0 ${column.icon && 'ps-[clamp(2rem,1.2rem+2vw,3rem)]'}`}
+              >
                 {column.content && (
                   <p className="text-base-secondary text-(length:--text-body-md)">
                     {column.content.subtitle}

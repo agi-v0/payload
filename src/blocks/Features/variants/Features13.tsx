@@ -10,11 +10,11 @@ export const Features13: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="gap-md py-xl container grid grid-cols-1 md:grid-cols-3">
+    <div className="gap-xs py-xl container grid grid-cols-1 md:grid-cols-3">
       {columns.map((column, index) => {
         const iconName = column.icon as keyof typeof dynamicIconImports
         return (
-          <Card key={index} className="rounded-none border-0 bg-transparent">
+          <Card key={index} className="rounded-none border-0">
             <CardContent key={index} className={cn('gap-md flex flex-col justify-start p-0')}>
               {column.icon && (
                 <DynamicIcon

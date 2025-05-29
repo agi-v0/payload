@@ -51,7 +51,7 @@ export const CallToAction05: React.FC<CTABlockProps> = ({
         {media && (
           <Media
             media={media}
-            className="rounded-space-md overflow-hidden md:max-w-[32rem] md:basis-1/2"
+            className="rounded-space-sm overflow-hidden md:max-w-[32rem] md:basis-1/2"
           />
         )}
       </div>

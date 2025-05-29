@@ -30,10 +30,10 @@ export const CallToAction01: React.FC<CTABlockProps> = ({
 
   return (
     <div className="py-xl container" ref={containerRef}>
-      <div className="rounded-space-md relative overflow-hidden">
+      <div className="rounded-space-sm relative overflow-hidden">
         <div
           data-theme="dark"
-          className="rounded-space-md p-md gap-sm relative z-1 flex aspect-[9/16] h-auto w-full flex-col items-start justify-end bg-transparent md:aspect-video md:flex-row md:items-end md:justify-between"
+          className="rounded-space-sm p-md gap-sm relative z-1 flex aspect-[9/16] h-auto w-full flex-col items-start justify-end bg-transparent md:aspect-video md:flex-row md:items-end md:justify-between"
         >
           {richText && (
             <RichText className="mx-0 lg:max-w-[32rem]" data={richText} enableGutter={false} />
@@ -52,7 +52,7 @@ export const CallToAction01: React.FC<CTABlockProps> = ({
             <Media
               fill
               className="relative h-full w-full object-cover"
-              imgClassName="object-cover rounded-space-md overflow-hidden"
+              imgClassName="object-cover rounded-space-sm overflow-hidden"
               media={media}
             />
           </motion.div>

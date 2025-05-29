@@ -28,6 +28,7 @@ export type FormBlockType = {
   enableIntro: boolean
   form: FormType
   introContent?: SerializedEditorState
+  locale?: string
 }
 
 export const FormBlock: React.FC<
@@ -40,6 +41,7 @@ export const FormBlock: React.FC<
     form: formFromProps,
     form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
     introContent,
+    locale,
   } = props
 
   const formMethods = useForm({
@@ -123,13 +125,13 @@ export const FormBlock: React.FC<
     },
     [router, formID, redirect, confirmationType],
   )
-
+  console.log('locale', locale)
   return (
     <div className="container lg:max-w-[48rem]">
       {enableIntro && introContent && !hasSubmitted && (
         <RichText className="mb-8 lg:mb-12" data={introContent} enableGutter={false} />
       )}
-      <div className="p-4 lg:p-6 border border-border rounded-[0.8rem]">
+      <div className="border-border rounded-[0.8rem] border p-4 lg:p-6">
         <FormProvider {...formMethods}>
           {!isLoading && hasSubmitted && confirmationType === 'message' && (
             <RichText data={confirmationMessage} />
@@ -148,11 +150,13 @@ export const FormBlock: React.FC<
                         <div className="mb-6 last:mb-0" key={index}>
                           <Field
                             form={formFromProps}
+                            // dir={locale === 'ar' ? 'rtl' : 'ltr'}
                             {...field}
                             {...formMethods}
                             control={control}
                             errors={errors}
                             register={register}
+                            locale={locale}
                           />
                         </div>
                       )
@@ -161,7 +165,7 @@ export const FormBlock: React.FC<
                   })}
               </div>
 
-              <Button form={formID} type="submit" variant="primary" color="brand">
+              <Button form={formID} type="submit" variant="primary" color="brand" className="h-12">
                 {submitButtonLabel}
               </Button>
             </form>

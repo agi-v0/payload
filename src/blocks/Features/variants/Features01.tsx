@@ -46,25 +46,25 @@ export const Features01: React.FC<FeaturesBlock> = ({ columns }) => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
                 variants={itemVariants}
-                className={cn('rounded-space-sm bg-background-neutral p-md w-full')}
+                className={cn('rounded-space-sm bg-background-neutral w-full p-4')}
               >
-                {appReference && <AppReference appReference={appReference} className="mb-md" />}
+                {appReference && (
+                  <AppReference appReference={appReference} className="py-xs px-xs" />
+                )}
                 <div
-                  className={cn('gap-md flex flex-col', {
+                  className={cn('gap-xs flex flex-col', {
                     'md:flex-row': size === 'full' || row?.length === 1,
                   })}
                 >
                   {richTextContent && (
-                    <RichText data={richTextContent} className={cn('pe-md w-full')} />
+                    <RichText data={richTextContent} className="pe-md p-xs ps-xs w-full" />
                   )}
                   {image && (
-                    <div className="rounded-space-sm bg-background-neutral h-auto w-full overflow-hidden">
-                      <Media
-                        resource={image}
-                        className="group h-auto w-full"
-                        imgClassName="w-full group-hover:scale-102 transition-all duration-300 h-auto aspect-[4/3] object-cover"
-                      />
-                    </div>
+                    <Media
+                      resource={image}
+                      className="group h-auto w-full overflow-hidden rounded-lg"
+                      imgClassName="w-full group-hover:scale-105 transition-all duration-300 h-auto aspect-[4/3] object-cover"
+                    />
                   )}
                 </div>
               </motion.div>

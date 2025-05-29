@@ -192,7 +192,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px); */
 
-  --radius-space-sm: clamp(1rem, 0.6rem + 1vw, 1.5rem);
+  --radius-space-sm: 1.5rem;
   --radius-space-md: clamp(1rem, 0.6rem + 1vw, 1.5rem);
 
   --font-sans: var(--font-rubik);
