@@ -30,11 +30,11 @@ export const Hero05: React.FC<Page['hero']> = ({
   return (
     <section
       className={cn(
-        'pb-xl gap-xs container flex flex-col items-center pt-(--header-plus-admin-bar-height)',
+        'pb-xl gap-xs container flex flex-col items-stretch pt-(--header-plus-admin-bar-height)',
         media?.desktop?.light && 'min-h-screen',
       )}
     >
-      <div className="gap-xs flex w-full flex-col items-center lg:flex-row lg:items-stretch">
+      <div className="gap-xs flex w-full grow flex-col items-center justify-stretch lg:flex-row lg:items-stretch">
         <div className="p-xl bg-background-neutral rounded-space-sm w-full">
           <div className="gap-md flex h-full max-w-[36rem] flex-col items-start justify-center">
             {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
@@ -73,7 +73,7 @@ export const Hero05: React.FC<Page['hero']> = ({
             imgClassName="object-cover"
             priority
             media={media}
-            // fill
+            fill
           />
         )}
       </div>

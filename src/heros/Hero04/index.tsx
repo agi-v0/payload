@@ -34,8 +34,8 @@ export const Hero04: React.FC<Page['hero']> = ({
         media?.desktop?.light && 'min-h-screen',
       )}
     >
-      <div className="flex w-full flex-col items-center gap-4 lg:flex-row">
-        <div className="lg:pe-xl mt-header w-full">
+      <div className="my-header flex w-full flex-col items-center gap-4 lg:flex-row">
+        <div className="lg:pe-xl w-full">
           <div className="gap-md flex max-w-[36rem] flex-col items-start">
             {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 

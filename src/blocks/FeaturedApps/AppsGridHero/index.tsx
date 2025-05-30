@@ -145,15 +145,15 @@ const AnimatedAppIcon: React.FC<{
 
 export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader }) => {
   /* ──────────────────────────── 1.  Environment hooks */
-  const breakpoint = useBreakpoint() // 'mobile' | 'tablet' | 'desktop'
+  const breakpoint = useBreakpoint()
   const shouldReduce = useReducedMotion()
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start end', 'start start'], // 0 = grid bottom hits viewport bottom
+    offset: ['start end', 'start start'],
   })
-  // console.log(apps.map((app) => app.id))
+
   /* ──────────────────────────── 2.  Breakpoint-specific constants */
   const { COLUMNS, ROWS, RESERVED, POSITIONS } = GRID_CONFIG[breakpoint]
 
@@ -237,7 +237,10 @@ export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader 
   /* ──────────────────────────── 4.  Render */
   return (
     <div className="relative overflow-x-clip">
-      <div ref={containerRef} className="relative container w-full py-6 sm:py-8 md:py-12">
+      <div
+        ref={containerRef}
+        className="relative container w-full py-[calc(var(--spacing-space-lg)*3)]"
+      >
         <div
           className="relative isolate grid gap-2 sm:gap-3"
           style={{

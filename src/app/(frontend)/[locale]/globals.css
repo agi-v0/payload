@@ -196,6 +196,8 @@
   --radius-space-md: clamp(1rem, 0.6rem + 1vw, 1.5rem);
 
   --font-sans: var(--font-rubik);
+  --spacing-header: var(--header-height);
+  --spacing-header-plus-admin-bar: calc(var(--header-height) + var(--admin-bar-height));
 
   --spacing-space-site: clamp(1rem, 0.2rem + 2vw, 2rem); /* 16px - 32px site margin */
   --spacing-space-2xs: clamp(

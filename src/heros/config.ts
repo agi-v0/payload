@@ -43,7 +43,6 @@ export const hero: Field = {
           label: 'Hero 05',
           value: 'hero05',
         },
-
         {
           label: 'None',
           value: 'none',
