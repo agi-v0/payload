@@ -1,6 +1,5 @@
 'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import type { Page } from '@/payload-types'
 
@@ -34,7 +33,12 @@ export const Hero04: React.FC<Page['hero']> = ({
         media?.desktop?.light && 'min-h-screen',
       )}
     >
-      <div className="my-header flex w-full flex-col items-center gap-4 lg:flex-row">
+      <div
+        className={cn(
+          'flex w-full flex-col items-center gap-4 lg:flex-row',
+          media?.desktop?.light && 'mt-header',
+        )}
+      >
         <div className="lg:pe-xl w-full">
           <div className="gap-md flex max-w-[36rem] flex-col items-start">
             {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}

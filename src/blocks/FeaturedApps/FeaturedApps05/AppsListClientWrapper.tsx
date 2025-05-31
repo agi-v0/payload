@@ -73,13 +73,14 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
             {/* Pass resource directly if it matches MediaProps resource type */}
             {icon && typeof icon === 'object' && (
               <Media
+                key={`media-${name}-${index}`}
                 priority
                 resource={icon as MediaType}
                 className="flex-none overflow-hidden rounded-lg"
                 imgClassName="size-12"
               /> // Cast icon
             )}
-            <div className="flex w-full flex-col py-4">
+            <div className="flex w-full flex-col py-4" key={`info-${name}-${index}`}>
               <p className="text-body-lg text-base-primary font-medium">{name}</p>
               <p className="text-body-md text-base-secondary font-normal">{tagline}</p>
             </div>
@@ -98,7 +99,7 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
-          {/* Basic loading indicator */}
+
           {isLoading && <p>Loading...</p>}
           {!isLoading && <AppList />}
           {!isLoading && appsData.docs.length === 0 && <p>No apps found.</p>}

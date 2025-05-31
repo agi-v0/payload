@@ -37,7 +37,7 @@ export const colorOptions: Record<BadgeColors, { label: string; value: string }>
 type BadgeType = (options?: {
   colors?: BadgeColors[]
   icon?: boolean
-  lable?: string
+  label?: string
   overrides?: Record<string, unknown>
 }) => Field
 
