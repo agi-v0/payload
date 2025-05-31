@@ -17,7 +17,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
     type,
   } = props
 
-  if (!headerText && !links) return null
+  if (!headerText) return null
 
   return (
     <div

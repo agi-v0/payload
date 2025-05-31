@@ -133,7 +133,8 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
   const iconMedia = icon as MediaType | undefined
   console.log(theme)
   return (
-    <div
+    <motion.div
+      layout
       data-theme={
         type === 'featured'
           ? theme === 'dark'
@@ -150,7 +151,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
         type === null && 'p-space-md',
       )}
     >
-      <div className="flex flex-col gap-4">
+      <motion.div layout className="flex flex-col gap-4">
         <div className="relative flex flex-row gap-4">
           {badge?.label && (
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -189,17 +190,16 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
             </span>
           </p>
         )}
-      </div>
-
-      {link && (
-        <CMSLink
-          {...link}
-          className="w-full"
-          size="lg"
-          variant={type === 'featured' ? 'primary' : 'secondary'}
-        />
-      )}
-      <hr className="border-input" />
+        {link && (
+          <CMSLink
+            {...link}
+            className="w-full"
+            size="lg"
+            variant={type === 'featured' ? 'primary' : 'secondary'}
+          />
+        )}
+        <hr className="border-input" />
+      </motion.div>
 
       {/* Featured Solutions */}
       {featuredSolutions && featuredSolutions.length > 0 && (
@@ -207,9 +207,10 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           layout
           style={{ borderRadius: 12 }}
           onClick={() => setIsExpanded(!isExpanded)}
-          className="hover:bg-neutral/5 mb-0 w-full space-y-4 rounded-xl px-4 py-3 pt-2 transition-colors duration-200 max-md:px-0"
+          data-state={isExpanded ? 'expanded' : 'collapsed'}
+          className="hover:bg-neutral/5 data-[state=expanded]:hover:bg-neutral/10 data-[state=expanded]:bg-neutral/5 mb-0 w-full space-y-4 rounded-xl px-4 py-3 pt-2 transition-colors duration-200 max-md:px-0"
         >
-          <motion.div layout className="flex w-full flex-row items-center justify-between">
+          <motion.div layout className="-me-2 flex w-full flex-row items-center justify-between">
             <p className="text-body-sm text-base-tertiary font-normal">
               {translations.includedSolutions}
             </p>
@@ -218,38 +219,57 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
               className="text-base-tertiary size-5 transition-transform duration-200 data-[state=expanded]:rotate-180"
             />
           </motion.div>
-          <LayoutGroup>
-            <motion.ul
-              className={cn(
-                'flex w-full items-start justify-start gap-1',
-                isExpanded ? 'flex-col flex-nowrap gap-2' : 'flex-row flex-wrap',
-              )}
-              initial={false}
-              animate={isExpanded ? 'expanded' : 'collapsed'}
-              variants={parentVariants}
-            >
-              {featuredSolutions.map((solution, idx) => {
-                const { name, icon, tagline } = (solution as Solution) ?? {}
-                const solutionItem = (
-                  <motion.li
-                    key={`solution-${type}-${name}`}
-                    className="flex flex-row items-center gap-4"
-                    layout="position"
-                  >
-                    <motion.div
-                      layout="position"
-                      layoutId={`solution-icon-${type}-${name}`}
-                      className="flex-shrink-0"
-                    >
-                      <Media
-                        resource={icon as MediaType}
-                        imgClassName={cn('size-12 object-contain', isExpanded && 'size-12')}
-                      />
-                    </motion.div>
+          <motion.ul
+            className={cn(
+              'flex w-full items-start justify-start gap-1',
+              isExpanded ? 'flex-col flex-nowrap gap-2' : 'flex-row flex-wrap',
+            )}
+            layout
+          >
+            {featuredSolutions.map((solution, idx) => {
+              const { name, icon, tagline } = (solution as Solution) ?? {}
+              const solutionItem = (
+                <motion.li key={idx} className="flex flex-row items-center gap-4">
+                  <Tooltip delayDuration={0}>
+                    {isExpanded ? (
+                      <motion.div
+                        layout="position"
+                        layoutId={`solution-icon-${type}-${name}`}
+                        className="flex-shrink-0"
+                      >
+                        <Media
+                          resource={icon as MediaType}
+                          imgClassName={cn('size-12 object-contain', isExpanded && 'size-12')}
+                        />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        layout="position"
+                        layoutId={`solution-icon-${type}-${name}`}
+                        className="flex-shrink-0"
+                      >
+                        <TooltipTrigger>
+                          <Media
+                            resource={icon as MediaType}
+                            imgClassName={cn('size-12 object-contain', isExpanded && 'size-12')}
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent
+                          transition={{
+                            ease: [0.68, -0.23, 0.35, 0.95],
+                          }}
+                        >
+                          <div className="text-center">
+                            <p className="text-base-secondary text-sm font-medium">{name}</p>
+                            <p className="text-base-tertiary text-sm">{tagline}</p>
+                          </div>
+                        </TooltipContent>
+                      </motion.div>
+                    )}
+
                     <AnimatePresence mode="popLayout">
                       {isExpanded && (
                         <motion.div
-                          // key={`solution-text-${type}-${isExpanded}-${name}`}
                           initial={{ opacity: 0, x: 16 }}
                           animate={{
                             opacity: 1,
@@ -259,46 +279,31 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                           exit={{
                             opacity: 0,
                             x: 16,
-                            transition: { ease: [0, 0, 0.2, 1], duration: 0.2 },
+                            transition: {
+                              ease: [0, 0, 0.2, 1],
+                              delay: (featuredSolutions.length - 1 - idx) * 0.02,
+                            },
                           }}
                           className="flex flex-col items-start justify-start text-start"
+                          // layout
                         >
                           <p className="text-base-secondary text-base font-medium">{name}</p>
                           <p className="text-base-tertiary text-sm">{tagline}</p>
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </motion.li>
-                )
-
-                if (!isExpanded) {
-                  return (
-                    <Tooltip key={`tooltip-${type}-${idx}`}>
-                      <TooltipTrigger asChild>{solutionItem}</TooltipTrigger>
-                      <TooltipContent
-                        transition={{
-                          ease: [0.68, -0.23, 0.35, 0.95],
-                        }}
-                      >
-                        <div className="text-center">
-                          <p className="text-base-secondary text-sm font-medium">{name}</p>
-                          <p className="text-base-tertiary text-sm">{tagline}</p>
-                        </div>
-                      </TooltipContent>
-                    </Tooltip>
-                  )
-                }
-
-                return solutionItem
-              })}
-            </motion.ul>
-          </LayoutGroup>
+                  </Tooltip>
+                </motion.li>
+              )
+              return solutionItem
+            })}
+          </motion.ul>
         </motion.button>
       )}
 
       {/* Featured Integrations */}
       {featuredIntegrations && featuredIntegrations.length > 0 && (
-        <div className="">
+        <div className="px-4 max-md:px-0">
           <p className="text-body-sm mb-space-xs text-base-tertiary font-normal">
             {translations.integrations}
           </p>
@@ -344,6 +349,6 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           </ul>
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
