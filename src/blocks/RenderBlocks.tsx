@@ -17,6 +17,7 @@ import { RenderDividerBlock } from './Divider/RenderDividerBlock'
 import { RenderLogoBlock } from './Logos/RenderLogoBlock'
 import { RenderRichTextBlock } from './RichText/RenderRichTextBlock'
 import { RenderMetricsBlock } from './Metrics/RenderMetricsBlock'
+import { RenderPricingBlock } from './Pricing/RenderPricingBlock'
 
 const blockComponents = {
   archiveBlock: ArchiveBlock,
@@ -31,6 +32,7 @@ const blockComponents = {
   logosBlock: RenderLogoBlock,
   mediaBlock: MediaBlock,
   metricsBlock: RenderMetricsBlock,
+  pricingBlock: RenderPricingBlock,
   richTextBlock: RenderRichTextBlock,
   testimonialsBlock: RenderTestimonialsBlock,
 }

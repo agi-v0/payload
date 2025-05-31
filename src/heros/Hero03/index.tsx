@@ -1,6 +1,4 @@
-'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import type { Page } from '@/payload-types'
 
@@ -11,13 +9,14 @@ import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
 import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 
-export const Hero03: React.FC<Page['hero']> = ({
+export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = ({
   richText,
   media,
   links,
   caption,
   logos,
   badge,
+  children,
 }) => {
   const { logos: logosGroup, headline } = logos || {}
   // const { setHeaderTheme } = useHeaderTheme()
@@ -56,6 +55,7 @@ export const Hero03: React.FC<Page['hero']> = ({
           )}
           {caption && <p className="text-base-tertiary text-sm">{caption}</p>}
         </div>
+        {children}
       </div>
 
       {logos && logosGroup && logosGroup.length > 0 && (

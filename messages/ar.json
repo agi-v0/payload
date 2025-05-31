@@ -9,6 +9,13 @@
   "TestimonialsBlock": {
     "readMore": "إقرأ القصة"
   },
+  "PricingBlock": {
+    "annually": "سنويا",
+    "monthly": "شهريا",
+    "includedSolutions": "الحلول المتاحة",
+    "integrations": "مع تطبيق مجمّع طلبات من اختيارك",
+    "features": "الميزات"
+  },
   "Header": {
     "home": "الرئيسية",
     "pages": "الصفحات",

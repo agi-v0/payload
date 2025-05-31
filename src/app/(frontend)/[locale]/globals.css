@@ -32,6 +32,13 @@
     color: var(--color-marn-500);
   }
 
+  [data-theme='dark'] {
+    ::selection {
+      background-color: --alpha(var(--color-sky-700) / 20%);
+      color: var(--color-marn-50);
+    }
+  }
+
   h1,
   h2,
   h3,
@@ -112,7 +119,7 @@
     /* use for background */
     --background: var(--color-neutral-50);
     --background-light: var(--color-white);
-    --background-medium: var(--color-neutral-200);
+    --background-medium: var(--color-neutral-100);
     --background-inverted: var(--color-neutral-950);
 
     /*for foreground (text & icons) */
@@ -198,6 +205,8 @@
   --font-sans: var(--font-rubik);
   --spacing-header: var(--header-height);
   --spacing-header-plus-admin-bar: calc(var(--header-height) + var(--admin-bar-height));
+
+  --spacing-card-xl: clamp(1.5rem, 0.3rem + 3vw, 3rem);
 
   --spacing-space-site: clamp(1rem, 0.2rem + 2vw, 2rem); /* 16px - 32px site margin */
   --spacing-space-2xs: clamp(
@@ -321,17 +330,17 @@
   --color-yellow-900: #733e0a;
   --color-yellow-950: #432004;
 
-  --color-foreground: var(--foreground);
+  --color-foreground: var(--neutral-primary);
   --color-card: var(--color-background-neutral);
   --color-card-foreground: var(--color-base-secondary);
   --color-popover: var(--color-background-neutral);
   --color-popover-foreground: var(--color-base-primary);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--background);
+  --color-primary-foreground: var(--neutral-primary);
   --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
+  --color-secondary-foreground: var(--color-base-secondary);
+  --color-muted: var(--color-background-neutral-subtle);
+  --color-muted-foreground: var(--color-base-tertiary);
   --color-accent: var(--color-background);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
