@@ -100,6 +100,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 'galleryBlock',
                 'logosBlock',
                 'metricsBlock',
+                'pricingBlock',
                 'richTextBlock',
                 'testimonialsBlock',
               ],

@@ -78,6 +78,7 @@ export interface Config {
     logosBlock: LogoBlock;
     mediaBlock: MediaBlock;
     metricsBlock: MetricsBlock;
+    pricingBlock: PricingBlock;
     richTextBlock: RichTextBlock;
     styledListBlock: StyledListBlock;
     testimonialsBlock: TestimonialsBlock;
@@ -642,6 +643,7 @@ export interface Page {
     | GalleryBlock
     | LogoBlock
     | MetricsBlock
+    | PricingBlock
     | RichTextBlock
     | TestimonialsBlock
   )[];
@@ -2150,6 +2152,168 @@ export interface MetricsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'metricsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingBlock".
+ */
+export interface PricingBlock {
+  blockHeader: {
+    type: 'center' | 'split' | 'start';
+    badge?: {
+      type?: ('label' | 'reference') | null;
+      label?: string | null;
+      color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+      reference?:
+        | ({
+            relationTo: 'solutions';
+            value: string | Solution;
+          } | null)
+        | ({
+            relationTo: 'integrations';
+            value: string | Integration;
+          } | null);
+      /**
+       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       */
+      icon?: string | null;
+      icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+    };
+    headerText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: string | Post;
+                } | null)
+              | ({
+                  relationTo: 'solutions';
+                  value: string | Solution;
+                } | null);
+            url?: string | null;
+            label: string;
+            /**
+             * Choose the button style.
+             */
+            color?: ('brand' | 'neutral') | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  type: '01' | '02' | '03' | '04';
+  pricingCards?:
+    | {
+        /**
+         * Select the type of pricing card
+         */
+        type?: ('basic' | 'featured') | null;
+        badge?: {
+          type?: ('label' | 'reference') | null;
+          label?: string | null;
+          color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null;
+          reference?:
+            | ({
+                relationTo: 'solutions';
+                value: string | Solution;
+              } | null)
+            | ({
+                relationTo: 'integrations';
+                value: string | Integration;
+              } | null);
+          /**
+           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+           */
+          icon?: string | null;
+          icon_position?: ('flex-row' | 'flex-row-reverse') | null;
+        };
+        title?: string | null;
+        subtitle?: string | null;
+        media?: (string | null) | Media;
+        price?: {
+          annually?: string | null;
+          monthly?: string | null;
+        };
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: string | Post;
+              } | null)
+            | ({
+                relationTo: 'solutions';
+                value: string | Solution;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose the button style.
+           */
+          color?: ('brand' | 'neutral') | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null;
+        };
+        features?:
+          | {
+              enabled?: boolean | null;
+              feature?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        featuredSolutions?: (string | Solution)[] | null;
+        featuredIntegrations?: (string | Integration)[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Use Google Sheets to generate the table data, convert that into JSON, and paste here.
+   */
+  table?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pricingBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

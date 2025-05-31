@@ -49,7 +49,7 @@ interface PricingCardProps {
   }
   title?: string | null
   subtitle?: string | null
-  icon?: (string | null) | MediaType
+  media?: (string | null) | MediaType
   price?: {
     annually?: string | null
     monthly?: string | null
@@ -117,7 +117,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
     badge,
     title,
     subtitle,
-    icon,
+    media,
     price,
     link,
     features,
@@ -130,7 +130,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
   const breakpoint = useBreakpoint()
 
   const [isExpanded, setIsExpanded] = useState(false)
-  const iconMedia = icon as MediaType | undefined
+  const iconMedia = media as MediaType | undefined
   console.log(theme)
   return (
     <motion.div

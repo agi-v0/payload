@@ -1,19 +1,8 @@
 import type { Block, Field } from 'payload'
 
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-  ChecklistFeature,
-} from '@payloadcms/richtext-lexical'
-
 import { link } from '@/fields/link'
 import { blockHeader } from '@/components/BlockHeader/config'
 import { badge } from '@/fields/badge'
-import { iconPickerField } from '@/fields/iconPickerField'
-import lucideIcons from '@/fields/iconPickerField/lucide-icons.json'
-import { StyledList } from '@/blocks/StyledList/config'
 
 const pricingCard: Field[] = [
   {
@@ -52,7 +41,7 @@ const pricingCard: Field[] = [
     localized: true,
   },
   {
-    name: 'icon',
+    name: 'media',
     type: 'upload',
     relationTo: 'media',
   },
@@ -126,6 +115,8 @@ export const PricingBlock: Block = {
       options: [
         { label: '01 - Hero', value: '01' },
         { label: '02 - Add ons', value: '02' },
+        { label: '03 - Carousel', value: '03' },
+        { label: '04 - Table', value: '04' },
       ],
       required: true,
     },
@@ -133,6 +124,23 @@ export const PricingBlock: Block = {
       name: 'pricingCards',
       type: 'array',
       fields: [...pricingCard],
+      admin: {
+        condition: (_, siblingData, { blockData }) => {
+          return ['01', '02', '03'].includes(blockData.type)
+        },
+      },
+    },
+    {
+      name: 'table',
+      type: 'json',
+      label: 'Table',
+      localized: true,
+      required: true,
+      admin: {
+        condition: (data, siblingData) => siblingData.type === '04',
+        description:
+          'Use Google Sheets to generate the table data, convert that into JSON, and paste here.',
+      },
     },
   ],
 }

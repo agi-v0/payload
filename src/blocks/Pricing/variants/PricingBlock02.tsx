@@ -40,13 +40,13 @@ export const PricingBlock02: React.FC<PricingBlock02Props> = ({
               badge,
               title,
               subtitle,
-              icon,
+              media,
               price,
               features,
               featuredSolutions,
               featuredIntegrations,
             } = card
-            const iconMedia = icon as MediaType | undefined
+            const iconMedia = media as MediaType | undefined
 
             return (
               <PricingCard
