@@ -50,6 +50,7 @@ export const PricingBlock02: React.FC<PricingBlock02Props> = ({
 
             return (
               <PricingCard
+                key={index}
                 type={null}
                 title={title}
                 subtitle={subtitle}
