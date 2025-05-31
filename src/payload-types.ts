@@ -1025,6 +1025,7 @@ export interface Faq {
   category?: (string | null) | Category;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2886,6 +2887,7 @@ export interface FaqSelect<T extends boolean = true> {
   category?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3656,6 +3658,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'integrations';
           value: string | Integration;
+        } | null)
+      | ({
+          relationTo: 'faq';
+          value: string | Faq;
         } | null);
     global?: string | null;
     user?: (string | null) | User;

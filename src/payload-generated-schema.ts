@@ -441,6 +441,12 @@ export const enum__customers_v_published_locale = pgEnum('enum__customers_v_publ
   'en',
   'ar',
 ])
+export const enum_faq_status = pgEnum('enum_faq_status', ['draft', 'published'])
+export const enum__faq_v_version_status = pgEnum('enum__faq_v_version_status', [
+  'draft',
+  'published',
+])
+export const enum__faq_v_published_locale = pgEnum('enum__faq_v_published_locale', ['en', 'ar'])
 export const enum_changelog_categories = pgEnum('enum_changelog_categories', [
   'bug-fix',
   'feature',
@@ -5159,11 +5165,13 @@ export const faq = pgTable(
     createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
+    _status: enum_faq_status('_status').default('draft'),
   },
   (columns) => ({
     faq_category_idx: index('faq_category_idx').on(columns.category),
     faq_updated_at_idx: index('faq_updated_at_idx').on(columns.updatedAt),
     faq_created_at_idx: index('faq_created_at_idx').on(columns.createdAt),
+    faq__status_idx: index('faq__status_idx').on(columns._status),
   }),
 )
 
@@ -5185,6 +5193,83 @@ export const faq_locales = pgTable(
       columns: [columns['_parentID']],
       foreignColumns: [faq.id],
       name: 'faq_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _faq_v = pgTable(
+  '_faq_v',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    parent: uuid('parent_id').references(() => faq.id, {
+      onDelete: 'set null',
+    }),
+    version_category: uuid('version_category_id').references(() => categories.id, {
+      onDelete: 'set null',
+    }),
+    version_updatedAt: timestamp('version_updated_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    version_createdAt: timestamp('version_created_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    version__status: enum__faq_v_version_status('version__status').default('draft'),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    snapshot: boolean('snapshot'),
+    publishedLocale: enum__faq_v_published_locale('published_locale'),
+    latest: boolean('latest'),
+    autosave: boolean('autosave'),
+  },
+  (columns) => ({
+    _faq_v_parent_idx: index('_faq_v_parent_idx').on(columns.parent),
+    _faq_v_version_version_category_idx: index('_faq_v_version_version_category_idx').on(
+      columns.version_category,
+    ),
+    _faq_v_version_version_updated_at_idx: index('_faq_v_version_version_updated_at_idx').on(
+      columns.version_updatedAt,
+    ),
+    _faq_v_version_version_created_at_idx: index('_faq_v_version_version_created_at_idx').on(
+      columns.version_createdAt,
+    ),
+    _faq_v_version_version__status_idx: index('_faq_v_version_version__status_idx').on(
+      columns.version__status,
+    ),
+    _faq_v_created_at_idx: index('_faq_v_created_at_idx').on(columns.createdAt),
+    _faq_v_updated_at_idx: index('_faq_v_updated_at_idx').on(columns.updatedAt),
+    _faq_v_snapshot_idx: index('_faq_v_snapshot_idx').on(columns.snapshot),
+    _faq_v_published_locale_idx: index('_faq_v_published_locale_idx').on(columns.publishedLocale),
+    _faq_v_latest_idx: index('_faq_v_latest_idx').on(columns.latest),
+    _faq_v_autosave_idx: index('_faq_v_autosave_idx').on(columns.autosave),
+  }),
+)
+
+export const _faq_v_locales = pgTable(
+  '_faq_v_locales',
+  {
+    version_question: varchar('version_question'),
+    version_answer: jsonb('version_answer'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('_faq_v_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_faq_v.id],
+      name: '_faq_v_locales_parent_id_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -5808,7 +5893,7 @@ export const forms_emails = pgTable(
 export const forms_emails_locales = pgTable(
   'forms_emails_locales',
   {
-    subject: varchar('subject').notNull().default("You''ve received a new message."),
+    subject: varchar('subject').notNull().default("You've received a new message."),
     message: jsonb('message'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
@@ -9284,6 +9369,28 @@ export const relations_faq = relations(faq, ({ one, many }) => ({
     relationName: '_locales',
   }),
 }))
+export const relations__faq_v_locales = relations(_faq_v_locales, ({ one }) => ({
+  _parentID: one(_faq_v, {
+    fields: [_faq_v_locales._parentID],
+    references: [_faq_v.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations__faq_v = relations(_faq_v, ({ one, many }) => ({
+  parent: one(faq, {
+    fields: [_faq_v.parent],
+    references: [faq.id],
+    relationName: 'parent',
+  }),
+  version_category: one(categories, {
+    fields: [_faq_v.version_category],
+    references: [categories.id],
+    relationName: 'version_category',
+  }),
+  _locales: many(_faq_v_locales, {
+    relationName: '_locales',
+  }),
+}))
 export const relations_changelog_categories = relations(changelog_categories, ({ one }) => ({
   parent: one(changelog, {
     fields: [changelog_categories.parent],
@@ -10166,6 +10273,9 @@ type DatabaseSchema = {
   enum__customers_v_version_testimonial_company_industry: typeof enum__customers_v_version_testimonial_company_industry
   enum__customers_v_version_status: typeof enum__customers_v_version_status
   enum__customers_v_published_locale: typeof enum__customers_v_published_locale
+  enum_faq_status: typeof enum_faq_status
+  enum__faq_v_version_status: typeof enum__faq_v_version_status
+  enum__faq_v_published_locale: typeof enum__faq_v_published_locale
   enum_changelog_categories: typeof enum_changelog_categories
   enum_redirects_to_type: typeof enum_redirects_to_type
   enum_forms_confirmation_type: typeof enum_forms_confirmation_type
@@ -10330,6 +10440,8 @@ type DatabaseSchema = {
   categories_locales: typeof categories_locales
   faq: typeof faq
   faq_locales: typeof faq_locales
+  _faq_v: typeof _faq_v
+  _faq_v_locales: typeof _faq_v_locales
   changelog_categories: typeof changelog_categories
   changelog: typeof changelog
   changelog_locales: typeof changelog_locales
@@ -10552,6 +10664,8 @@ type DatabaseSchema = {
   relations_categories: typeof relations_categories
   relations_faq_locales: typeof relations_faq_locales
   relations_faq: typeof relations_faq
+  relations__faq_v_locales: typeof relations__faq_v_locales
+  relations__faq_v: typeof relations__faq_v
   relations_changelog_categories: typeof relations_changelog_categories
   relations_changelog_locales: typeof relations_changelog_locales
   relations_changelog: typeof relations_changelog
