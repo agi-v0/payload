@@ -44,7 +44,19 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   ALTER TABLE "forms_emails_locales" ALTER COLUMN "subject" SET DEFAULT 'You''ve received a new message.';
-  ALTER TABLE "faq" ADD COLUMN "_status" "enum_faq_status" DEFAULT 'draft';
+  DO $$
+  BEGIN
+    IF NOT EXISTS (
+      SELECT 1
+      FROM information_schema.columns
+      WHERE table_schema = 'public' -- Assuming 'public' schema, adjust if different
+      AND table_name = 'faq'
+      AND column_name = '_status'
+    ) THEN
+      ALTER TABLE "public"."faq" ADD COLUMN "_status" "public"."enum_faq_status" DEFAULT 'draft';
+    END IF;
+  END$$;
+  
   DO $$ BEGIN
    ALTER TABLE "_faq_v" ADD CONSTRAINT "_faq_v_parent_id_faq_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."faq"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
