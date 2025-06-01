@@ -177,7 +177,7 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
           <span className="text-base-tertiary text-sm font-medium">{t.sortBy}</span>
           <Select
             dir={locale === 'ar' ? 'rtl' : 'ltr'}
-            defaultValue={initialFilters.sort || 'name'}
+            defaultValue={initialFilters.sort || 'newest'}
             onValueChange={handleSortChange}
           >
             <SelectTrigger className="w-full">

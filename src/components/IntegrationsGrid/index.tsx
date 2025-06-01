@@ -13,7 +13,7 @@ interface IntegrationsGridProps {
 
 export const IntegrationsGrid: React.FC<IntegrationsGridProps> = ({ integrations, locale }) => {
   return (
-    <div className="container">
+    <div className="">
       <motion.div
         initial="hidden"
         animate="visible"

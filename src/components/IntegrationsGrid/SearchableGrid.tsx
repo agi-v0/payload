@@ -24,15 +24,13 @@ export const SearchableIntegrationsGrid: React.FC<SearchableIntegrationsGridProp
   initialFilters,
 }) => {
   return (
-    <div className="space-y-8">
-      <div className="container">
-        <SearchFilters
-          categories={categories}
-          ecosystems={ecosystems}
-          locale={locale}
-          initialFilters={initialFilters}
-        />
-      </div>
+    <div className="py-xl space-y-md container">
+      <SearchFilters
+        categories={categories}
+        ecosystems={ecosystems}
+        locale={locale}
+        initialFilters={initialFilters}
+      />
       <IntegrationsGrid integrations={integrations} locale={locale} />
     </div>
   )

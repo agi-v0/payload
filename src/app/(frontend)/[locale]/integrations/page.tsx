@@ -120,7 +120,7 @@ export default async function Page({
           search: searchParams.q || '',
           category: searchParams.category || '',
           ecosystem: searchParams.ecosystem || '',
-          sort: searchParams.sort || 'name',
+          sort: searchParams.sort || 'newest',
         }}
       />
       <RenderBlocks blocks={layout as any} locale={locale} />
