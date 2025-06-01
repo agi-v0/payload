@@ -2,16 +2,69 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-vercel-postg
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   CREATE TYPE "public"."enum_pricingBlock_pricing_cards_type" AS ENUM('basic', 'featured');
-  CREATE TYPE "public"."enum_pricingBlock_pricing_cards_badge_type" AS ENUM('label', 'reference');
+
+  DO $$ BEGIN
+    CREATE TYPE "public"."enum_pricingBlock_pricing_cards_type" AS ENUM('basic', 'featured');
+    EXCEPTION
+    WHEN duplicate_object THEN NULL;
+    END $$;
+    
+  DO $$ BEGIN
+   CREATE TYPE "public"."enum_pricingBlock_pricing_cards_badge_type" AS ENUM('label', 'reference');
+   EXCEPTION
+   WHEN duplicate_object THEN NULL;
+   END $$;
+   
+  DO $$ BEGIN
   CREATE TYPE "public"."enum_pricingBlock_block_header_type" AS ENUM('center', 'split', 'start');
+  EXCEPTION
+  WHEN duplicate_object THEN NULL;
+  END $$;
+  
+  DO $$ BEGIN
   CREATE TYPE "public"."enum_pricingBlock_block_header_badge_type" AS ENUM('label', 'reference');
+  EXCEPTION
+  WHEN duplicate_object THEN NULL;
+  END $$;
+  
+  DO $$ BEGIN
   CREATE TYPE "public"."enum_pricingBlock_type" AS ENUM('01', '02', '03', '04');
+  EXCEPTION
+  WHEN duplicate_object THEN NULL;
+  END $$;
+  
+  DO $$ BEGIN
   CREATE TYPE "public"."enum__pricingBlock_v_pricing_cards_type" AS ENUM('basic', 'featured');
+  EXCEPTION
+  WHEN duplicate_object THEN NULL;
+  END $$;
+  
+  DO $$ BEGIN
   CREATE TYPE "public"."enum__pricingBlock_v_pricing_cards_badge_type" AS ENUM('label', 'reference');
+  EXCEPTION
+  WHEN duplicate_object THEN NULL;
+  END $$;
+  
+  DO $$ BEGIN
   CREATE TYPE "public"."enum__pricingBlock_v_block_header_type" AS ENUM('center', 'split', 'start');
+  EXCEPTION
+  WHEN duplicate_object THEN NULL;
+  END $$;
+  
+  DO $$ BEGIN
   CREATE TYPE "public"."enum__pricingBlock_v_block_header_badge_type" AS ENUM('label', 'reference');
+  EXCEPTION
+  WHEN duplicate_object THEN NULL;
+  END $$;
+  
+  DO $$ BEGIN
   CREATE TYPE "public"."enum__pricingBlock_v_type" AS ENUM('01', '02', '03', '04');
+  EXCEPTION
+  WHEN duplicate_object THEN NULL;
+  END $$;
+  
+
+
   CREATE TABLE IF NOT EXISTS "pricingBlock_block_header_links" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
@@ -190,11 +243,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    WHEN duplicate_object THEN null;
   END $$;
   
+  
   DO $$ BEGIN
    ALTER TABLE "pricingBlock_block_header_links_locales" ADD CONSTRAINT "pricingBlock_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pricingBlock_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
+  
   
   DO $$ BEGIN
    ALTER TABLE "pricingBlock_pricing_cards_features" ADD CONSTRAINT "pricingBlock_pricing_cards_features_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pricingBlock_pricing_cards"("id") ON DELETE cascade ON UPDATE no action;
@@ -202,11 +257,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    WHEN duplicate_object THEN null;
   END $$;
   
+  
   DO $$ BEGIN
    ALTER TABLE "pricingBlock_pricing_cards_features_locales" ADD CONSTRAINT "pricingBlock_pricing_cards_features_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pricingBlock_pricing_cards_features"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
+  
   
   DO $$ BEGIN
    ALTER TABLE "pricingBlock_pricing_cards" ADD CONSTRAINT "pricingBlock_pricing_cards_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
@@ -214,11 +271,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    WHEN duplicate_object THEN null;
   END $$;
   
+  
   DO $$ BEGIN
    ALTER TABLE "pricingBlock_pricing_cards" ADD CONSTRAINT "pricingBlock_pricing_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pricingBlock"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
+  
   
   DO $$ BEGIN
    ALTER TABLE "pricingBlock_pricing_cards_locales" ADD CONSTRAINT "pricingBlock_pricing_cards_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pricingBlock_pricing_cards"("id") ON DELETE cascade ON UPDATE no action;
@@ -226,11 +285,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    WHEN duplicate_object THEN null;
   END $$;
   
+  
   DO $$ BEGIN
    ALTER TABLE "pricingBlock" ADD CONSTRAINT "pricingBlock_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
+  
   
   DO $$ BEGIN
    ALTER TABLE "pricingBlock_locales" ADD CONSTRAINT "pricingBlock_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pricingBlock"("id") ON DELETE cascade ON UPDATE no action;
@@ -238,11 +299,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    WHEN duplicate_object THEN null;
   END $$;
   
+  
   DO $$ BEGIN
    ALTER TABLE "_pricingBlock_v_block_header_links" ADD CONSTRAINT "_pricingBlock_v_block_header_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pricingBlock_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
+  
   
   DO $$ BEGIN
    ALTER TABLE "_pricingBlock_v_block_header_links_locales" ADD CONSTRAINT "_pricingBlock_v_block_header_links_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pricingBlock_v_block_header_links"("id") ON DELETE cascade ON UPDATE no action;
@@ -250,11 +313,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    WHEN duplicate_object THEN null;
   END $$;
   
+  
   DO $$ BEGIN
    ALTER TABLE "_pricingBlock_v_pricing_cards_features" ADD CONSTRAINT "_pricingBlock_v_pricing_cards_features_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pricingBlock_v_pricing_cards"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
+  
   
   DO $$ BEGIN
    ALTER TABLE "_pricingBlock_v_pricing_cards_features_locales" ADD CONSTRAINT "_pricingBlock_v_pricing_cards_features_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pricingBlock_v_pricing_cards_features"("id") ON DELETE cascade ON UPDATE no action;
@@ -262,11 +327,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    WHEN duplicate_object THEN null;
   END $$;
   
+  
   DO $$ BEGIN
    ALTER TABLE "_pricingBlock_v_pricing_cards" ADD CONSTRAINT "_pricingBlock_v_pricing_cards_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
+  
   
   DO $$ BEGIN
    ALTER TABLE "_pricingBlock_v_pricing_cards" ADD CONSTRAINT "_pricingBlock_v_pricing_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pricingBlock_v"("id") ON DELETE cascade ON UPDATE no action;
@@ -274,11 +341,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    WHEN duplicate_object THEN null;
   END $$;
   
+  
   DO $$ BEGIN
    ALTER TABLE "_pricingBlock_v_pricing_cards_locales" ADD CONSTRAINT "_pricingBlock_v_pricing_cards_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pricingBlock_v_pricing_cards"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
+  
   
   DO $$ BEGIN
    ALTER TABLE "_pricingBlock_v" ADD CONSTRAINT "_pricingBlock_v_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
@@ -286,11 +355,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    WHEN duplicate_object THEN null;
   END $$;
   
+  
   DO $$ BEGIN
    ALTER TABLE "_pricingBlock_v_locales" ADD CONSTRAINT "_pricingBlock_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pricingBlock_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
+  
   
   CREATE INDEX IF NOT EXISTS "pricingBlock_block_header_links_order_idx" ON "pricingBlock_block_header_links" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "pricingBlock_block_header_links_parent_id_idx" ON "pricingBlock_block_header_links" USING btree ("_parent_id");
