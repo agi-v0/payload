@@ -2,9 +2,24 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-vercel-postg
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
+  DO $$ BEGIN
    CREATE TYPE "public"."enum_faq_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__faq_v_version_status" AS ENUM('draft', 'published');
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END$$;
+
+  DO $$ BEGIN
+   CREATE TYPE "public"."enum__faq_v_version_status" AS ENUM('draft', 'published');
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END$$;
+
+  DO $$ BEGIN
   CREATE TYPE "public"."enum__faq_v_published_locale" AS ENUM('en', 'ar');
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END$$;
+
   CREATE TABLE IF NOT EXISTS "_faq_v" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"parent_id" uuid,
