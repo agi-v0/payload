@@ -1,5 +1,5 @@
 {
-  "id": "513747f8-0c0a-4b25-a8a1-5da43ac364be",
+  "id": "9fdf0c14-a41c-4651-a027-e2f847cd8677",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -20405,6 +20405,13 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "prefix": {
+          "name": "prefix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'media'"
+        },
         "alt": {
           "name": "alt",
           "type": "varchar",
@@ -20429,13 +20436,6 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
-        },
-        "prefix": {
-          "name": "prefix",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'media'"
         },
         "updated_at": {
           "name": "updated_at",

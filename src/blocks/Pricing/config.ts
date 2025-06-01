@@ -64,9 +64,9 @@ const pricingCard: Field[] = [
     ],
   },
   {
-    label: 'Link',
     type: 'collapsible',
-    fields: [link({ overrides: { label: false } })],
+    label: 'Link',
+    fields: [link({})],
   },
   {
     name: 'features',
