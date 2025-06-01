@@ -43,6 +43,7 @@ import { FaqBlock } from '@/blocks/FAQ/config'
 import { DividerBlock } from '@/blocks/Divider/config'
 import { LogosBlock } from '@/blocks/Logos/config'
 import { RichTextBlock } from '@/blocks/RichText/config'
+import { PricingBlock } from '@/blocks/Pricing/config'
 import { MetricsBlock } from '@/blocks/Metrics/config'
 
 import { en } from '@payloadcms/translations/languages/en'
@@ -127,13 +128,7 @@ export default buildConfig({
     },
     user: Users.slug,
   },
-  db: vercelPostgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI || '',
-    },
-    idType: 'uuid',
-    // push: false, // disable push mode
-  }),
+
   blocks: [
     ArchiveBlock,
     CallToActionBlock,
@@ -147,6 +142,7 @@ export default buildConfig({
     LogosBlock,
     MediaBlock,
     MetricsBlock,
+    PricingBlock,
     RichTextBlock,
     StyledList,
     TestimonialsBlock,
@@ -164,6 +160,13 @@ export default buildConfig({
     Users,
   ],
   cors: [getServerSideURL()].filter(Boolean),
+  db: vercelPostgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI || '',
+    },
+    idType: 'uuid',
+    // push: false, // disable push mode
+  }),
   editor: defaultLexical,
   email: resendAdapter({
     defaultFromAddress: process.env.RESEND_EMAIL || '',
