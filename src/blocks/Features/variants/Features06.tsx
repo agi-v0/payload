@@ -17,10 +17,10 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="gap-md rounded-space-sm p-md bg-background-neutral flex flex-col"
+          className="rounded-space-sm bg-background-neutral gap-xs flex flex-col p-4"
         >
-          <div className="gap-sm flex flex-col md:flex-row">
-            <div className="gap-md md:pe-md md:pt-md flex w-full flex-col lg:basis-1/2">
+          <div className="gap-xs flex flex-col md:flex-row">
+            <div className="gap-md mt-xs px-xs flex w-full flex-col lg:basis-1/2">
               {blockHeader && (
                 <BlockHeader
                   {...blockHeader}
@@ -31,17 +31,15 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
               )}
             </div>
             {blockImage && (
-              <div className="rounded-space-sm overflow-hidden lg:basis-1/2">
-                <Media
-                  resource={blockImage}
-                  className="h-auto w-full"
-                  imgClassName="w-full h-auto aspect-square object-cover"
-                />
-              </div>
+              <Media
+                resource={blockImage}
+                className="h-auto w-full overflow-hidden rounded-lg lg:basis-1/2"
+                imgClassName="w-full h-auto aspect-square object-cover"
+              />
             )}
           </div>
           <motion.div
-            className="gap-xs grid grid-cols-2 md:grid-cols-(--columns)"
+            className="gap-xs p-xs grid grid-cols-2 md:grid-cols-(--columns)"
             style={
               { '--columns': `repeat(${columns.length}, minmax(0, 1fr))` } as React.CSSProperties
             }

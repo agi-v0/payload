@@ -42,7 +42,7 @@ export const Features02: React.FC<Features02Props> = ({ columns, readMoreLabel }
             viewport={{ once: true, amount: 0.3 }}
             variants={itemVariants}
             className={cn(
-              'gap-md group rounded-space-sm bg-background-neutral p-md col-span-4 flex flex-col',
+              'gap-xs group rounded-space-sm bg-background-neutral col-span-4 flex flex-col p-4',
               lgColSpanClass,
               {
                 'lg:flex-row': size === 'full',
@@ -81,7 +81,7 @@ function FeatureCardContent({
   return (
     <>
       <div
-        className={cn('gap-sm flex w-full flex-col', {
+        className={cn('gap-xs p-xs flex w-full flex-col', {
           'lg:pe-md lg:basis-1/2': size === 'full',
         })}
       >
@@ -106,7 +106,7 @@ function FeatureCardContent({
       {image && (
         <Media
           resource={image}
-          className={cn('group rounded-space-sm bg-background w-full flex-1 overflow-hidden', {
+          className={cn('group bg-background w-full flex-1 overflow-hidden rounded-lg', {
             'flex-auto lg:basis-1/2': size === 'full',
           })}
           imgClassName="w-full group-hover:scale-102 transition-all duration-300 h-full object-cover"

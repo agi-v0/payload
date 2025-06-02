@@ -12,14 +12,14 @@ export const Features16: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
     <div className="py-xl container grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 md:grid-rows-3">
       {limitedColumns.map((column, index) => {
         return (
-          <Card key={index} className="h-full overflow-hidden rounded-none border-0">
-            <CardContent className="grid grid-cols-2 items-start p-0 md:items-center">
+          <Card key={index} className="p-4">
+            <CardContent className="gap-sm grid grid-cols-2 items-center p-0">
               {column.image && (
                 <div className="h-auto w-full">
                   <Media
                     resource={column.image}
                     className="h-auto w-full"
-                    imgClassName="w-full h-auto aspect-square object-cover rounded-space-sm "
+                    imgClassName="w-full h-auto aspect-square object-cover rounded-lg "
                   />
                 </div>
               )}

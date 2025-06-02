@@ -34,7 +34,7 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
                   color="neutral"
                   onClick={() => setCarouselIndex(index)}
                   className={cn(
-                    'relative inline-flex items-center gap-1 rounded-full px-4 text-base font-medium transition-colors duration-200',
+                    'relative inline-flex h-10 items-center gap-1 rounded-full px-5 text-base font-medium transition-colors duration-200',
                     index === carouselIndex
                       ? 'bg-neutral hover:bg-neutral/90 text-inverted-primary'
                       : '',
@@ -73,17 +73,21 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
                   {
                     key: index,
                     className: cn(
-                      'gap-md group bg-background-neutral p-md rounded-space-sm hover:shadow-border grid grid-cols-1 hover:no-underline md:grid-cols-2',
+                      'gap-xs group bg-background-neutral rounded-space-sm hover:shadow-border grid grid-cols-1 p-4 hover:no-underline md:grid-cols-2',
                     ),
                     ...(column.link?.label
                       ? { ...column.link, label: null, variant: 'inline' }
                       : {}),
                   },
                   <>
-                    <div className={cn('gap-md grid h-full grid-rows-[auto_1fr_auto] items-start')}>
+                    <div
+                      className={cn(
+                        'gap-sm p-xs grid h-full grid-rows-[auto_1fr_auto] items-start',
+                      )}
+                    >
                       {column.enableBadge && column.badge && <Badge {...column.badge} />}
                       {column.content && (
-                        <div className="gap-sm flex grow auto-rows-auto flex-col">
+                        <div className="gap-xs flex grow auto-rows-auto flex-col">
                           {column.content.title && (
                             <h3 className="text-h3 text-base-primary font-medium">
                               {column.content.title}
@@ -102,13 +106,11 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
                       )}
                     </div>
                     {column.image && (
-                      <div className={cn('overflow-hidden')}>
-                        <Media
-                          resource={column.image}
-                          className="h-auto w-full"
-                          imgClassName="w-full h-auto aspect-[4/3] object-cover rounded-xl md:rounded-2xl"
-                        />
-                      </div>
+                      <Media
+                        resource={column.image}
+                        className="h-auto w-full"
+                        imgClassName="w-full h-auto aspect-[4/3] object-cover rounded-lg"
+                      />
                     )}
                   </>,
                 )}

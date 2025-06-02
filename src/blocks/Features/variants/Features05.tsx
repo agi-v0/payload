@@ -24,24 +24,26 @@ export const Features05: React.FC<FeaturesBlock> = ({ columns }) => {
         const { image, enableBadge, badge, richTextContent, enableCta, link } = column
         return (
           <motion.div key={index} variants={itemsFling} className="overflow-hidden border-0">
-            <Card className="overflow-hidden border-0">
-              <CardContent className="gap-sm flex flex-col">
+            <Card className="overflow-hidden border-0 p-4">
+              <CardContent className="gap-xs flex flex-col">
                 {image && (
                   <div className="h-auto w-full">
                     <Media
                       resource={image}
-                      className="rounded-space-sm h-auto w-full overflow-hidden"
+                      className="h-auto w-full overflow-hidden rounded-lg"
                       imgClassName="w-full h-auto object-cover"
                     />
                   </div>
                 )}
-                {enableBadge && badge && <Badge {...badge} />}
-                {richTextContent && (
-                  <RichText className={cn('mx-0')} data={richTextContent} enableGutter={false} />
-                )}
-                {enableCta && link?.label && (
-                  <CMSLink {...link} variant="primary" className="mt-auto" />
-                )}
+                <div className="gap-xs p-xs flex flex-col">
+                  {enableBadge && badge && <Badge {...badge} />}
+                  {richTextContent && (
+                    <RichText className={cn('mx-0')} data={richTextContent} enableGutter={false} />
+                  )}
+                  {enableCta && link?.label && (
+                    <CMSLink {...link} variant="primary" className="mt-xs" />
+                  )}
+                </div>
               </CardContent>
             </Card>
           </motion.div>

@@ -21,13 +21,13 @@ export const Features09: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
 
   return (
-    <div className="py-xl gap-md container flex flex-col md:grid md:grid-cols-2 md:items-start">
+    <div className="py-xl gap-xs container flex flex-col md:grid md:grid-cols-2 md:items-start">
       <Accordion
         type="single"
         collapsible={false}
         value={activeAccordionId || undefined}
         onValueChange={(value) => setActiveAccordionId(value)}
-        className="flex flex-col"
+        className="md:pe-xs flex flex-col"
       >
         {columns.map((column, index) => {
           const iconName = column.icon as keyof typeof dynamicIconImports
@@ -42,12 +42,7 @@ export const Features09: React.FC<FeaturesBlock> = ({ columns }) => {
                 isActive && 'bg-background-neutral',
               )}
             >
-              <AccordionTrigger
-                className={cn(
-                  'text-base-tertiary gap-xs flex items-center justify-start bg-transparent p-0 hover:no-underline',
-                  isActive && 'pb-xs text-(color:--color-base-primary)',
-                )}
-              >
+              <AccordionTrigger className="text-base-tertiary gap-xs flex items-center justify-start bg-transparent p-0 hover:no-underline">
                 {column.icon && (
                   <div className={`flex-shrink-0`}>
                     <DynamicIcon
@@ -76,7 +71,7 @@ export const Features09: React.FC<FeaturesBlock> = ({ columns }) => {
                 {column.image && (
                   <Media
                     resource={column.image}
-                    className="rounded-space-sm h-auto w-full overflow-hidden md:hidden"
+                    className="h-auto w-full overflow-hidden rounded-lg md:hidden"
                     imgClassName="w-full h-auto object-cover"
                   />
                 )}

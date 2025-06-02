@@ -14,7 +14,7 @@ export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, block
   if (!columns || columns.length === 0) return null
   return (
     <div className="gap-md rounded-space-sm py-xl container flex flex-col">
-      <div className={cn('gap-sm flex flex-col')}>
+      <div className="gap-md flex flex-col">
         {blockHeader && <BlockHeader {...blockHeader} type="center" />}
         <motion.div
           variants={containerVariants}
