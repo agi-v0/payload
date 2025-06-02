@@ -8,6 +8,7 @@ import { FeaturedApps03 } from './FeaturedApps03'
 import { FeaturedApps04 } from './FeaturedApps04'
 import { FeaturedApps05 } from './FeaturedApps05'
 import { AppsGridHero } from './AppsGridHero'
+import { FeaturedApps06 } from './FeaturedApps06'
 // import { AppsCarouselClient } from './FeaturedApps01'
 
 const appsBlocks = {
@@ -16,6 +17,7 @@ const appsBlocks = {
   '03': FeaturedApps03,
   '04': FeaturedApps04,
   '05': FeaturedApps05,
+  '06': FeaturedApps06,
 }
 
 type FeaturedAppsBlockWithLocale = FeaturedAppsBlock & {
@@ -23,7 +25,7 @@ type FeaturedAppsBlockWithLocale = FeaturedAppsBlock & {
 }
 
 export const RenderFeaturedAppsBlock: React.FC<FeaturedAppsBlockWithLocale> = async (props) => {
-  const { type, apps, blockHeader, media, locale } = props || {}
+  const { type, apps, blockHeader, media, cards, locale } = props || {}
   if (!type) return null
 
   // let appsList = apps?.map((ref) => (typeof ref.value === 'object' ? ref.value : '')) || []
@@ -60,6 +62,7 @@ export const RenderFeaturedAppsBlock: React.FC<FeaturedAppsBlockWithLocale> = as
       media={media as Media}
       blockHeader={blockHeader}
       locale={locale}
+      cards={cards}
     />
   )
 }
