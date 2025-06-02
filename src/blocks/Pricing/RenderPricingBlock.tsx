@@ -30,7 +30,7 @@ export const RenderPricingBlock: React.FC<PricingBlockType> = async (props) => {
     console.warn(`No component found for pricing block type: ${type}`)
     return null
   }
-  console.log(locale)
+
   return (
     <Fragment>
       <BlockComponent

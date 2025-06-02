@@ -12,7 +12,7 @@ import { containerVariants, itemsFling } from '@/utilities/motion'
 
 export const Features07: React.FC<FeaturesBlock> = ({ columns, blockImage, blockHeader }) => {
   if (!columns || columns.length === 0) return null
-  console.log(blockImage)
+
   return (
     <div className="gap-md rounded-space-sm py-xl container flex flex-col">
       <div className="gap-md flex flex-col">

@@ -42,6 +42,7 @@ export const Integrations: CollectionConfig<'integrations'> = {
     name: true,
     title: true,
     summary: true,
+    slug: true,
   },
   admin: {
     defaultColumns: ['icon', 'name', 'tagline', 'updatedAt'],

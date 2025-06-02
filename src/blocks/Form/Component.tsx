@@ -125,7 +125,7 @@ export const FormBlock: React.FC<
     },
     [router, formID, redirect, confirmationType],
   )
-  console.log('locale', locale)
+
   return (
     <div className="container lg:max-w-[48rem]">
       {enableIntro && introContent && !hasSubmitted && (

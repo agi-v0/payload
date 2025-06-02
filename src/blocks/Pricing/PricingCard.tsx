@@ -131,7 +131,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
 
   const [isExpanded, setIsExpanded] = useState(false)
   const iconMedia = media as MediaType | undefined
-  console.log(theme)
+
   return (
     <motion.div
       layout

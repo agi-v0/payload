@@ -64,9 +64,17 @@ const pricingCard: Field[] = [
     ],
   },
   {
+    name: 'enableCta',
+    label: 'Enable Link',
+    type: 'checkbox',
+  },
+  {
     type: 'collapsible',
     label: 'Link',
     fields: [link({})],
+    admin: {
+      condition: (_, siblingData, { blockData }) => Boolean(siblingData?.enableCta),
+    },
   },
   {
     name: 'features',
