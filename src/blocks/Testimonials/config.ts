@@ -7,7 +7,7 @@ const fields: Field[] = [
     name: 'type',
     type: 'select',
     options: [
-      { value: '01', label: 'Testimonials Modular Grid (Hero)' },
+      { value: '01', label: 'Testimonials Modular Grid (Hero) [NOT READY]' },
       { value: '02', label: 'Testimonials Block 01 (Featured)' },
       { value: '03', label: 'Testimonials Block 02 (Carousel)' },
       // Add other layout options here later (e.g., Slider)

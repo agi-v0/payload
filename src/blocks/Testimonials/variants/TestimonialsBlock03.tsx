@@ -97,7 +97,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, linkLabe
           <Media
             resource={featuredImage}
             fill
-            className="rounded-space-sm relative aspect-[4/3] h-auto w-full overflow-hidden"
+            className="relative aspect-[4/3] h-auto w-full overflow-hidden rounded-lg"
             imgClassName="object-cover"
           />
         </div>

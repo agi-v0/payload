@@ -59,7 +59,7 @@ const fields: Field[] = [
     hasMany: true,
     admin: {
       description: 'Select or upload images for the gallery.',
-      condition: (data, siblingData, { blockData }) => blockData?.type !== 'gallery04',
+      condition: (data, siblingData, { blockData }) => blockData?.type !== '04',
     },
     localized: true,
   },
@@ -70,7 +70,7 @@ const fields: Field[] = [
     minRows: 1,
     fields: imageEntry,
     admin: {
-      condition: (data, siblingData, { blockData }) => blockData?.type === 'gallery04',
+      condition: (data, siblingData, { blockData }) => blockData?.type === '04',
     },
   },
 ]

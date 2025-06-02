@@ -41,6 +41,7 @@ export const Features16: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
           className="md:col-span-2"
           label={link?.label}
           CTALabel={CTALabel || ''}
+          position="corner"
         />
       )}
     </div>

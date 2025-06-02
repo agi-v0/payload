@@ -30,7 +30,7 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
   const { companyLogo } = company
 
   return (
-    <section className="bg-background-neutral-subtle py-lg">
+    <section className="bg-background py-lg">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -77,7 +77,7 @@ export const TestimonialsBlock02: React.FC<Props> = ({ testimonials, linkLabel }
               <Media
                 resource={featuredImage}
                 fill
-                className="rounded-space-sm relative aspect-[4/3] h-auto w-full overflow-hidden"
+                className="relative aspect-[4/3] h-auto w-full overflow-hidden rounded-lg"
                 imgClassName="object-cover"
               />
             </motion.div>

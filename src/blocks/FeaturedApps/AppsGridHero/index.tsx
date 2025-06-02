@@ -130,14 +130,14 @@ const AnimatedAppIcon: React.FC<{
 
   return (
     <motion.div
-      className="shadow-card z-2 transform-gpu" // Tailwind: force GPU layer
+      className="z-2 transform-gpu" // Tailwind: force GPU layer
       style={{ filter: blurPx, x, y, scale }}
       transformTemplate={({ x, y, scale }) => `translate3d(${x}, ${y}, 0) scale(${scale})`}
     >
       <Media
         resource={app.icon as MediaType}
-        className="h-full w-full"
-        imgClassName="object-cover w-full h-full rounded-space-sm"
+        className="h-full w-full drop-shadow-lg"
+        imgClassName="object-cover rounded-2xl lg:rounded-3xl w-full h-full"
       />
     </motion.div>
   )
@@ -253,7 +253,7 @@ export const AppsGridHero: React.FC<AppsGridClientProps> = ({ apps, blockHeader 
             <div
               key={idx}
               className={cn(
-                'bg-neutral/2 hover:bg-background rounded-space-sm relative -z-1 transition-colors',
+                'bg-neutral/2 hover:bg-background relative rounded-2xl transition-colors lg:rounded-3xl',
                 cell.isReserved && 'pointer-events-none opacity-0',
               )}
             >
