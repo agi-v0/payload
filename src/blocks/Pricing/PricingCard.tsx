@@ -208,7 +208,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           style={{ borderRadius: 12 }}
           onClick={() => setIsExpanded(!isExpanded)}
           data-state={isExpanded ? 'expanded' : 'collapsed'}
-          className="hover:bg-neutral/5 data-[state=expanded]:hover:bg-neutral/10 data-[state=expanded]:bg-neutral/5 mb-0 w-full space-y-4 rounded-xl px-4 py-3 pt-2 transition-colors duration-200 max-md:px-0"
+          className="hover:bg-neutral/5 data-[state=expanded]:hover:bg-neutral/10 data-[state=expanded]:bg-neutral/5 w-full space-y-4 rounded-xl px-4 py-3 pt-2 transition-colors duration-200 max-md:px-0 data-[state=expanded]:max-md:px-4"
         >
           <motion.div layout className="-me-2 flex w-full flex-row items-center justify-between">
             <p className="text-body-sm text-base-tertiary font-normal">
@@ -222,14 +222,24 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           <motion.ul
             className={cn(
               'flex w-full items-start justify-start gap-1',
-              isExpanded ? 'flex-col flex-nowrap gap-2' : 'flex-row flex-wrap',
+              isExpanded ? 'flex-col flex-nowrap gap-2' : 'flex-row flex-wrap gap-1',
             )}
             layout
           >
             {featuredSolutions.map((solution, idx) => {
               const { name, icon, tagline } = (solution as Solution) ?? {}
+              const iconMedia = (
+                <Media
+                  resource={icon as MediaType}
+                  imgClassName={cn('size-12 object-contain', isExpanded && 'size-12')}
+                />
+              )
               const solutionItem = (
-                <motion.li key={idx} className="flex flex-row items-center gap-4">
+                <motion.li
+                  data-state={isExpanded ? 'expanded' : 'collapsed'}
+                  key={idx}
+                  className="flex flex-row items-center gap-4 data-[state=collapsed]:size-12"
+                >
                   <Tooltip delayDuration={0}>
                     {isExpanded ? (
                       <motion.div
@@ -237,23 +247,15 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                         layoutId={`solution-icon-${type}-${name}`}
                         className="flex-shrink-0"
                       >
-                        <Media
-                          resource={icon as MediaType}
-                          imgClassName={cn('size-12 object-contain', isExpanded && 'size-12')}
-                        />
+                        {iconMedia}
                       </motion.div>
                     ) : (
                       <motion.div
                         layout="position"
                         layoutId={`solution-icon-${type}-${name}`}
-                        className="flex-shrink-0"
+                        className="h-fit flex-shrink-0"
                       >
-                        <TooltipTrigger>
-                          <Media
-                            resource={icon as MediaType}
-                            imgClassName={cn('size-12 object-contain', isExpanded && 'size-12')}
-                          />
-                        </TooltipTrigger>
+                        <TooltipTrigger>{iconMedia}</TooltipTrigger>
                         <TooltipContent
                           transition={{
                             ease: [0.68, -0.23, 0.35, 0.95],
@@ -304,7 +306,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
       {/* Featured Integrations */}
       {featuredIntegrations && featuredIntegrations.length > 0 && (
         <div className="px-4 max-md:px-0">
-          <p className="text-body-sm mb-space-xs text-base-tertiary font-normal">
+          <p className="text-body-sm text-base-tertiary mb-4 font-normal">
             {translations.integrations}
           </p>
           <div className="flex flex-wrap gap-1">
