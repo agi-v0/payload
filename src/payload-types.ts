@@ -1117,7 +1117,7 @@ export interface FeaturedAppsBlock {
   cards?:
     | {
         title?: string | null;
-        description?: string | null;
+        subtitle?: string | null;
         appReference?:
           | (
               | {
@@ -2260,6 +2260,7 @@ export interface PricingBlock {
           annually?: string | null;
           monthly?: string | null;
         };
+        enableCta?: boolean | null;
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;

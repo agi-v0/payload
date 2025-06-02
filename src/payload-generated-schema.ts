@@ -1027,7 +1027,7 @@ export const featuredAppsBlock_cards_locales = pgTable(
   'featuredAppsBlock_cards_locales',
   {
     title: varchar('title'),
-    description: varchar('description'),
+    subtitle: varchar('subtitle'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: varchar('_parent_id').notNull(),
@@ -1769,6 +1769,7 @@ export const pricingBlock_pricing_cards = pgTable(
     media: uuid('media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
+    enableCta: boolean('enable_cta'),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
@@ -2761,7 +2762,7 @@ export const _featuredAppsBlock_v_cards_locales = pgTable(
   '_featuredAppsBlock_v_cards_locales',
   {
     title: varchar('title'),
-    description: varchar('description'),
+    subtitle: varchar('subtitle'),
     id: serial('id').primaryKey(),
     _locale: enum__locales('_locale').notNull(),
     _parentID: uuid('_parent_id').notNull(),
@@ -3523,6 +3524,7 @@ export const _pricingBlock_v_pricing_cards = pgTable(
     media: uuid('media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
+    enableCta: boolean('enable_cta'),
     link_type: link_type('link_type').default('reference'),
     link_newTab: boolean('link_new_tab'),
     link_url: varchar('link_url'),
