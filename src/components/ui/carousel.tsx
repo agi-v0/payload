@@ -67,7 +67,7 @@ function useSlidesPerView(slidesPerView: number | Record<string, number>): numbe
             // pick the largest matching breakpoint
             value = matches[matches.length - 1][2]
           } else {
-            // below smallest: fallback to smallest’s value
+            // below smallest: fallback to smallest's value
             value = valid[0][2]
           }
         }
@@ -143,6 +143,13 @@ function CarouselProvider({
   useEffect(() => {
     setIndex(initialIndex)
   }, [initialIndex])
+
+  // Clamp index when pagesCount shrinks (e.g., slidesPerView grows)
+  useEffect(() => {
+    if (index + 1 > pagesCount) {
+      handleSetIndex(Math.max(pagesCount - 1, 0))
+    }
+  }, [pagesCount, index])
 
   return (
     <CarouselContext.Provider
