@@ -101,16 +101,6 @@ interface PricingCardProps {
   }
 }
 
-const parentVariants = {
-  collapsed: { transition: { staggerChildren: 0.02, staggerDirection: -1 } },
-  expanded: { transition: { staggerChildren: 0.05 } },
-}
-
-const itemVariants = {
-  collapsed: { opacity: 1, x: 0 },
-  expanded: { opacity: 1, x: 0 },
-}
-
 export const PricingCard: React.FC<PricingCardProps> = (props) => {
   const {
     type,
@@ -184,7 +174,12 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
             )}
           >
             {isMonthly ? price.monthly : price.annually}{' '}
-            <SaudiRiyal className={cn('inline-block size-6', type === null && 'size-5')} />{' '}
+            <SaudiRiyal
+              className={cn(
+                'text-h4 inline-block',
+                type === null && 'text-(length:--text-body-sm)',
+              )}
+            />{' '}
             <span className="text-base-tertiary text-body-sm font-normal">
               /{isMonthly ? translations.monthly : translations.annually}
             </span>

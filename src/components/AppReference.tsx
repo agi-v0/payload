@@ -32,7 +32,7 @@ export const AppReference: React.FC<AppReferenceProps> = ({ appReference, classN
           <Media
             resource={appReference.value.icon as MediaType}
             className="size-[clamp(2.5rem,1.7rem+2vw,3.5rem)] shrink-0"
-            imgClassName="w-full h-full rounded-xl aspect-square"
+            imgClassName="w-full h-full rounded-md aspect-square"
           />
         )}
         <div>

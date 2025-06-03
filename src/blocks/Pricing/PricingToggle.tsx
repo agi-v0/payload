@@ -6,7 +6,13 @@ import { cn } from '@/utilities/ui'
 import { Tabs, TabsList, TabsTrigger } from '@/components/motion-ui/tabs'
 import { itemsFling } from '@/utilities/motion'
 
-export const PricingToggle = ({ className }: { className?: string }) => {
+export const PricingToggle = ({
+  className,
+  locale,
+}: {
+  className?: string
+  locale: 'en' | 'ar'
+}) => {
   const { isMonthly, setIsMonthly } = usePricing()
 
   const handleValueChange = (value: string) => {
@@ -29,8 +35,8 @@ export const PricingToggle = ({ className }: { className?: string }) => {
             mass: 4,
           }}
         >
-          <TabsTrigger value="annual">Annual</TabsTrigger>
-          <TabsTrigger value="monthly">Monthly</TabsTrigger>
+          <TabsTrigger value="annual">{locale === 'ar' ? 'سنوي' : 'Yearly'}</TabsTrigger>
+          <TabsTrigger value="monthly">{locale === 'ar' ? 'شهري' : 'Monthly'}</TabsTrigger>
         </TabsList>
       </Tabs>
     </div>

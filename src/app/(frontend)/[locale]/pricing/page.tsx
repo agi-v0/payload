@@ -69,7 +69,7 @@ export default async function Page({
 
         {/* <RenderHero {...hero} /> */}
         <Hero03 {...hero}>
-          <PricingToggle className="w-full md:max-w-[400px]" />
+          <PricingToggle className="w-full md:max-w-[400px]" locale={locale} />
         </Hero03>
 
         <RenderBlocks blocks={layout as any} locale={locale} />
