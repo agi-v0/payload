@@ -223,12 +223,14 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           >
             {featuredSolutions.map((solution, idx) => {
               const { name, icon, tagline } = (solution as Solution) ?? {}
-              const iconMedia = (
+
+              const mediaElement = (
                 <Media
                   resource={icon as MediaType}
                   imgClassName={cn('size-12 object-contain', isExpanded && 'size-12')}
                 />
               )
+
               const solutionItem = (
                 <motion.li
                   data-state={isExpanded ? 'expanded' : 'collapsed'}
@@ -236,33 +238,29 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                   className="flex flex-row items-center gap-4 data-[state=collapsed]:size-12"
                 >
                   <Tooltip delayDuration={0}>
-                    {isExpanded ? (
-                      <motion.div
-                        layout="position"
-                        layoutId={`solution-icon-${type}-${name}`}
-                        className="flex-shrink-0"
-                      >
-                        {iconMedia}
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        layout="position"
-                        layoutId={`solution-icon-${type}-${name}`}
-                        className="h-fit flex-shrink-0"
-                      >
-                        <TooltipTrigger>{iconMedia}</TooltipTrigger>
-                        <TooltipContent
-                          transition={{
-                            ease: [0.68, -0.23, 0.35, 0.95],
-                          }}
-                        >
-                          <div className="text-center">
-                            <p className="text-base-secondary text-sm font-medium">{name}</p>
-                            <p className="text-base-tertiary text-sm">{tagline}</p>
-                          </div>
-                        </TooltipContent>
-                      </motion.div>
-                    )}
+                    <motion.div
+                      layout="position"
+                      layoutId={`solution-icon-${type}-${name}`}
+                      className={cn('flex-shrink-0', isExpanded ? '' : 'h-fit')}
+                    >
+                      {isExpanded ? (
+                        mediaElement
+                      ) : (
+                        <>
+                          <TooltipTrigger>{mediaElement}</TooltipTrigger>
+                          <TooltipContent
+                            transition={{
+                              ease: [0.68, -0.23, 0.35, 0.95],
+                            }}
+                          >
+                            <div className="text-center">
+                              <p className="text-base-secondary text-sm font-medium">{name}</p>
+                              <p className="text-base-tertiary text-sm">{tagline}</p>
+                            </div>
+                          </TooltipContent>
+                        </>
+                      )}
+                    </motion.div>
 
                     <AnimatePresence mode="popLayout">
                       {isExpanded && (
@@ -282,7 +280,6 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                             },
                           }}
                           className="flex flex-col items-start justify-start text-start"
-                          // layout
                         >
                           <p className="text-base-secondary text-base font-medium">{name}</p>
                           <p className="text-base-tertiary text-sm">{tagline}</p>
