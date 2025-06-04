@@ -27,12 +27,12 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
   adminBarProps,
 }) => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
-  const [hideBackground, setHideBackground] = React.useState(true)
+  const [hideBackground, setHideBackground] = useState(true)
   const lastScrollY = useRef(0)
 
   const pathname = usePathname()
 
-  const { headerTheme } = useHeaderObserver()
+  const { headerTheme, setHeaderTheme } = useHeaderObserver()
 
   const { scrollY } = useScroll()
   const [scrollDirection, setScrollDirection] = useState('down')
@@ -48,7 +48,7 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
     setIsMobileNavOpen(false)
   }, [pathname])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isMobileNavOpen) {
       setHideBackground(false)
     } else {
