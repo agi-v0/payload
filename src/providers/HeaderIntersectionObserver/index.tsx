@@ -81,10 +81,16 @@ export const HeaderIntersectionObserver: React.FC<HeaderIntersectionObserverProp
               if (elementTheme && elementTheme !== headerTheme) {
                 setPreviousTheme(headerTheme)
                 setHeaderTheme(elementTheme)
+                document
+                  .querySelector('meta[name=theme-color]')
+                  ?.setAttribute('content', elementTheme === 'dark' ? '#000000' : '#fafafa')
               }
             } else if (shouldRestoreOnExit) {
               // Element is exiting and should restore theme
               setHeaderTheme(previousTheme)
+              document
+                .querySelector('meta[name=theme-color]')
+                ?.setAttribute('content', previousTheme === 'dark' ? '#000000' : '#fafafa')
             }
           })
         },
@@ -112,6 +118,9 @@ export const HeaderIntersectionObserver: React.FC<HeaderIntersectionObserverProp
   React.useEffect(() => {
     setHeaderTheme(theme)
     setPreviousTheme(theme)
+    document
+      .querySelector('meta[name=theme-color]')
+      ?.setAttribute('content', theme === 'dark' ? '#000000' : '#fafafa')
   }, [pathname])
 
   return (
