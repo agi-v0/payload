@@ -44,7 +44,6 @@ export default async function Page({
   page = await queryPageBySlug({
     slug: slugPath,
     locale,
-    draft,
   })
 
   if (!page && slugPath === 'integrations') {
@@ -128,9 +127,18 @@ export default async function Page({
   )
 }
 
-// ... existing generateMetadata and queryPageBySlug functions ...
+export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+  const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
+  const slugPath = slugSegments.join('/') || 'home'
 
-// ✅ Improved filtering function
+  const page = await queryPageBySlug({
+    slug: slugPath,
+    locale,
+  })
+
+  return generateMeta({ doc: page })
+}
+
 async function getFilteredIntegrations({
   search,
   category,
@@ -231,17 +239,9 @@ async function getFilteredIntegrations({
 }
 
 const queryPageBySlug = cache(
-  async ({
-    slug,
-    locale,
-    draft,
-  }: {
-    slug: string
-    locale?: 'ar' | 'en' | undefined
-    draft: boolean
-  }) => {
+  async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' | undefined }) => {
     const payload = await getPayload({ config: configPromise })
-
+    const { isEnabled: draft } = await draftMode()
     const result = await payload.find({
       collection: 'pages',
       locale: locale,

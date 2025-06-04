@@ -45,7 +45,7 @@ type Args = {
   }>
 }
 
-export default async function Post({ params: paramsPromise }: Args) {
+export default async function Integration({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '', locale = 'ar' } = await paramsPromise
   const url = `/${locale}/integrations/` + slug
