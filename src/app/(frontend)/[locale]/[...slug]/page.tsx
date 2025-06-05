@@ -14,34 +14,34 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
-export async function generateStaticParams({
-  params: { locale },
-}: {
-  params: { locale?: 'ar' | 'en' | undefined }
-}) {
+export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
-  const pages = await payload.find({
-    collection: 'pages',
-    locale: locale,
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    select: {
-      slug: true,
-    },
-  })
 
-  const params = pages.docs
-    ?.filter((doc) => {
-      // Filter out the home page and any slugs that might be null/undefined
-      return doc.slug && doc.slug !== 'home'
+  const locales = ['en', 'ar']
+  const params: { slug: string[]; locale: 'ar' | 'en' }[] = []
+  locales.forEach(async (locale) => {
+    const pages = await payload.find({
+      collection: 'pages',
+      locale: locale as 'ar' | 'en',
+      draft: false,
+      limit: 1000,
+      overrideAccess: false,
+      pagination: false,
+      select: {
+        slug: true,
+      },
     })
-    .map(({ slug }) => {
-      // Split the full slug path into an array of segments
-      // We've already filtered for non-null slugs, but TS might not know
-      return { slug: (slug || '').split('/') }
-    })
+    pages.docs
+      ?.filter((doc) => {
+        return doc.slug && doc.slug !== 'home'
+      })
+      .map((doc) => {
+        params.push({
+          slug: doc.slug?.split('/') || [],
+          locale: locale as 'ar' | 'en',
+        })
+      })
+  })
 
   return params
 }
