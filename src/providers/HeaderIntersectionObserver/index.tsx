@@ -81,16 +81,10 @@ export const HeaderIntersectionObserver: React.FC<HeaderIntersectionObserverProp
               if (elementTheme && elementTheme !== headerTheme) {
                 setPreviousTheme(headerTheme)
                 setHeaderTheme(elementTheme)
-                document
-                  .querySelector('meta[name=theme-color]')
-                  ?.setAttribute('content', elementTheme === 'dark' ? '#000000' : '#fafafa')
               }
             } else if (shouldRestoreOnExit) {
               // Element is exiting and should restore theme
               setHeaderTheme(previousTheme)
-              document
-                .querySelector('meta[name=theme-color]')
-                ?.setAttribute('content', previousTheme === 'dark' ? '#000000' : '#fafafa')
             }
           })
         },
@@ -115,13 +109,30 @@ export const HeaderIntersectionObserver: React.FC<HeaderIntersectionObserverProp
     }
   }, [windowWidth, windowHeight, theme, tick, headerTheme, previousTheme])
 
+  // Ensure meta theme-color is set immediately on mount and whenever theme changes
+  React.useEffect(() => {
+    if (theme) {
+      setHeaderTheme(theme)
+      setPreviousTheme(theme)
+      document
+        .querySelector('meta[name=theme-color]')
+        ?.setAttribute('content', theme === 'dark' ? '#000000' : '#fafafa')
+    }
+  }, [theme])
+
+  // Update meta theme-color when headerTheme changes (from intersection observer)
+  React.useEffect(() => {
+    if (headerTheme && headerTheme !== theme) {
+      document
+        .querySelector('meta[name=theme-color]')
+        ?.setAttribute('content', headerTheme === 'dark' ? '#000000' : '#fafafa')
+    }
+  }, [headerTheme, theme])
+
   React.useEffect(() => {
     setHeaderTheme(theme)
     setPreviousTheme(theme)
-    document
-      .querySelector('meta[name=theme-color]')
-      ?.setAttribute('content', theme === 'dark' ? '#000000' : '#fafafa')
-  }, [pathname])
+  }, [pathname, theme])
 
   return (
     <Context
