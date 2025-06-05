@@ -50,20 +50,18 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
   const [direction, setDirection] = useState(1)
   const [ref, bounds] = useMeasure()
 
+  if (!interactiveGallery || interactiveGallery.length === 0) return null
+
   useEffect(() => {
-    if (activeIndex < 0) setActiveIndex(0)
-    if (interactiveGallery && activeIndex >= interactiveGallery.length) {
+    if (activeIndex >= interactiveGallery.length) {
       setActiveIndex(interactiveGallery.length - 1)
     }
-  }, [activeIndex, interactiveGallery])
-
-  if (!interactiveGallery || interactiveGallery.length === 0) {
-    return null
-  }
+  }, [interactiveGallery])
 
   const handleSetActiveIndex = (newIndex: number) => {
-    setDirection(newIndex > activeIndex ? 1 : -1)
-    setActiveIndex(newIndex)
+    const clampedIndex = Math.max(0, Math.min(newIndex, interactiveGallery.length - 1))
+    setDirection(clampedIndex > activeIndex ? 1 : -1)
+    setActiveIndex(clampedIndex)
   }
 
   return (
