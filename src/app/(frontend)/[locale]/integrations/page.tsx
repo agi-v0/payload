@@ -13,7 +13,36 @@ import { draftMode } from 'next/headers'
 import { generateMeta } from '@/utilities/generateMeta'
 import { SearchableIntegrationsGrid } from '@/components/IntegrationsGrid/SearchableGrid'
 
-export const revalidate = 600
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise })
+  const locales = ['en', 'ar']
+  const params: { slug: string[]; locale: 'ar' | 'en' }[] = []
+  for (const locale of locales) {
+    const pages = await payload.find({
+      collection: 'integrations',
+      locale: locale as 'ar' | 'en',
+      draft: false,
+      limit: 1000,
+      overrideAccess: false,
+      pagination: false,
+      select: {
+        slug: true,
+      },
+    })
+    pages.docs
+      ?.filter((doc) => {
+        return doc.slug && doc.slug !== 'home'
+      })
+      .map((doc) => {
+        params.push({
+          slug: doc.slug?.split('/') || [],
+          locale: locale as 'ar' | 'en',
+        })
+      })
+  }
+
+  return params
+}
 
 type Args = {
   params: Promise<{
