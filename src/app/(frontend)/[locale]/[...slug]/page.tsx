@@ -16,10 +16,9 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
-
   const locales = ['en', 'ar']
   const params: { slug: string[]; locale: 'ar' | 'en' }[] = []
-  locales.forEach(async (locale) => {
+  for (const locale of locales) {
     const pages = await payload.find({
       collection: 'pages',
       locale: locale as 'ar' | 'en',
@@ -41,7 +40,7 @@ export async function generateStaticParams() {
           locale: locale as 'ar' | 'en',
         })
       })
-  })
+  }
 
   return params
 }
@@ -55,9 +54,9 @@ type Args = {
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
+  const { slug: slugSegments = ['home'], locale = 'ar' } = await paramsPromise
   const slugPath = slugSegments.join('/') || 'home'
-  const url = `/${locale}/${slugPath === 'home' ? '' : slugPath}`
+  const url = `/${locale}/${slugPath}`
 
   let page: PageType | null
 
@@ -90,7 +89,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
+  const { slug: slugSegments = ['home'], locale = 'ar' } = await paramsPromise
   const slugPath = slugSegments.join('/') || 'home'
 
   const page = await queryPageBySlug({
@@ -101,24 +100,24 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   return generateMeta({ doc: page })
 }
 
-const queryPageBySlug = cache(
-  async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' | undefined }) => {
-    const payload = await getPayload({ config: configPromise })
-    const { isEnabled: draft } = await draftMode()
-    const result = await payload.find({
-      collection: 'pages',
-      locale: locale,
-      draft,
-      limit: 1,
-      pagination: false,
-      overrideAccess: draft,
-      where: {
-        slug: {
-          equals: slug,
-        },
-      },
-    })
+const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' }) => {
+  const { isEnabled: draft } = await draftMode()
 
-    return result.docs?.[0] || null
-  },
-)
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'pages',
+    locale: locale,
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  })
+
+  return result.docs?.[0] || null
+})
