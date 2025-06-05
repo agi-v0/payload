@@ -22,9 +22,8 @@ export const ThemeProvider = ({
   children: React.ReactNode
   initialTheme?: Theme
 }) => {
-  const [theme, setThemeState] = useState<Theme | undefined>(
-    canUseDOM ? (document.documentElement.getAttribute('data-theme') as Theme) : initialTheme,
-  )
+  // Initialize with the server-provided theme to prevent hydration mismatch
+  const [theme, setThemeState] = useState<Theme | undefined>(initialTheme)
 
   const setTheme = useCallback((themeToSet: Theme | null) => {
     if (themeToSet === null) {
@@ -48,7 +47,7 @@ export const ThemeProvider = ({
       return
     }
 
-    let themeToSet: Theme = defaultTheme
+    let themeToSet: Theme = initialTheme || defaultTheme
     const preference = window.localStorage.getItem(themeLocalStorageKey)
     const cookieTheme = document.cookie
       .split('; ')
@@ -68,9 +67,15 @@ export const ThemeProvider = ({
       }
     }
 
-    document.documentElement.setAttribute('data-theme', themeToSet)
-    document.cookie = `theme=${themeToSet}; path=/; max-age=31536000`
-    setThemeState(themeToSet)
+    // Only update if different from the initial theme to prevent unnecessary re-renders
+    if (themeToSet !== initialTheme) {
+      document.documentElement.setAttribute('data-theme', themeToSet)
+      document.cookie = `theme=${themeToSet}; path=/; max-age=31536000`
+      setThemeState(themeToSet)
+    } else {
+      // Ensure the document element has the correct theme attribute
+      document.documentElement.setAttribute('data-theme', themeToSet)
+    }
 
     /* watch system theme change */
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -80,7 +85,7 @@ export const ThemeProvider = ({
         const newImplicitPreference = getImplicitPreference()
         const themeToSet = newImplicitPreference || defaultTheme
         document.documentElement.setAttribute('data-theme', themeToSet)
-        document.cookie = `theme=; path=/; max-age=0`
+        document.cookie = `theme=${themeToSet}; path=/; max-age=31536000`
         setThemeState(themeToSet)
       }
     }
@@ -90,7 +95,7 @@ export const ThemeProvider = ({
     return () => {
       mediaQuery.removeEventListener('change', handleSystemThemeChange)
     }
-  }, [])
+  }, [initialTheme])
 
   return <ThemeContext.Provider value={{ setTheme, theme }}>{children}</ThemeContext.Provider>
 }
