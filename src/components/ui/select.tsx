@@ -36,6 +36,7 @@ function SelectTrigger({
         'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
         className,
       )}
+      suppressHydrationWarning
       {...props}
     >
       {children}
