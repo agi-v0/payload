@@ -50,19 +50,20 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
   const [direction, setDirection] = useState(1)
   const [ref, bounds] = useMeasure()
 
-  if (!interactiveGallery || interactiveGallery.length === 0) return null
-
   useEffect(() => {
-    if (activeIndex >= interactiveGallery.length) {
+    if (interactiveGallery && activeIndex >= interactiveGallery.length) {
       setActiveIndex(interactiveGallery.length - 1)
     }
-  }, [interactiveGallery])
+  }, [interactiveGallery, activeIndex])
 
   const handleSetActiveIndex = (newIndex: number) => {
+    if (!interactiveGallery) return
     const clampedIndex = Math.max(0, Math.min(newIndex, interactiveGallery.length - 1))
     setDirection(clampedIndex > activeIndex ? 1 : -1)
     setActiveIndex(clampedIndex)
   }
+
+  if (!interactiveGallery || interactiveGallery.length === 0) return null
 
   return (
     <div className={cn('py-xl relative container w-full', className)}>
