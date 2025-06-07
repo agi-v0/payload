@@ -8,19 +8,39 @@ import { cn } from '@/utilities/ui'
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
->(({ className, children, ...props }, ref) => (
-  <NavigationMenuPrimitive.Root
-    ref={ref}
-    className={cn(
-      'relative z-10 mx-auto flex w-full flex-1 items-center justify-center',
-      className,
-    )}
-    {...props}
-  >
-    {children}
-    <NavigationMenuViewport />
-  </NavigationMenuPrimitive.Root>
-))
+>(({ className, children, onValueChange, ...props }, ref) => {
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  const handleValueChange = (value: string) => {
+    setIsOpen(Boolean(value))
+    onValueChange?.(value)
+  }
+
+  return (
+    <>
+      <NavigationMenuPrimitive.Root
+        ref={ref}
+        className={cn(
+          'relative z-10 mx-auto flex w-full flex-1 items-center justify-center',
+          className,
+        )}
+        onValueChange={handleValueChange}
+        {...props}
+      >
+        {children}
+        <NavigationMenuViewport />
+      </NavigationMenuPrimitive.Root>
+      {/* Dark overlay that appears when any menu item is open */}
+      <div
+        className={cn(
+          'bg-background-inverted/20 pointer-events-none fixed inset-0 transition-opacity duration-300',
+          isOpen ? 'opacity-100' : 'opacity-0',
+        )}
+        style={{ zIndex: 5 }} // Between content and navigation menu
+      />
+    </>
+  )
+})
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
 
 const NavigationMenuList = React.forwardRef<
