@@ -69,7 +69,7 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
         {/* Added pb-20 for CTA spacing */}
         {/* Main Menu View using Accordion */}
         <Accordion
-          className="flex w-full flex-col divide-y divide-neutral-200"
+          className="divide-border flex w-full flex-col divide-y"
           transition={{ duration: 0.2, ease: 'easeInOut' }}
         >
           {validTabs.map((tab, i) => {
@@ -201,6 +201,11 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                   className={cn(
                     baseItemClasses,
                     'group flex items-center justify-start gap-2', // Use flex, add gap
+                    isReferenceObject &&
+                      'icon' in referenceValue &&
+                      typeof referenceValue.icon === 'object' && // Ensure icon itself is an object
+                      referenceValue.icon &&
+                      'items-start',
                   )}
                 >
                   {/* Icon/Image Rendering */}
@@ -238,13 +243,13 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                     </div>
                   )}
                   {/* Text Content (with type safety for tagline) */}
-                  <div className="flex-grow space-y-1">
+                  <div className="flex-grow space-y-1 font-medium">
                     {subLink.link.label}
                     {(subLink.link.description ||
                       (isReferenceObject &&
                         'tagline' in referenceValue &&
                         referenceValue.tagline)) && (
-                      <p className="text-base-secondary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
+                      <p className="text-base-tertiary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
                         {subLink.link.description ||
                           (isReferenceObject && 'tagline' in referenceValue
                             ? referenceValue.tagline
