@@ -60,7 +60,7 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
   }
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="bg-background-neutral flex h-full w-full flex-col rounded-3xl">
       {/* Preload all navigation images */}
       <NavigationImagePreloader tabs={tabs} />
 
@@ -278,3 +278,6 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
       )
   }
 }
+
+// Export the AnimatedToggle component
+export { AnimatedToggle } from './AnimatedToggle'
