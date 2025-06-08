@@ -14,6 +14,7 @@ import { motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { AnimatePresence } from 'motion/react'
 import { AdminBar } from '@/components/AdminBar'
 import { PayloadAdminBarProps } from 'payload-admin-bar'
+import { itemsFling, itemsFling2 } from '@/utilities/motion'
 
 interface AdminBarProps {
   adminBarProps: PayloadAdminBarProps
@@ -77,7 +78,7 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
         'border-border fixed top-0 left-0 z-10 w-full max-w-screen border-0 bg-transparent transition-colors duration-300',
         '-md:top-[var(--admin-bar-height,0px)]',
         hideBackground && 'before:opacity-0 after:opacity-0',
-        isMobileNavOpen && 'bg-background',
+        isMobileNavOpen && 'bg-background border-none',
         y > 20 && 'bg-background border-b',
       )}
     >
@@ -107,25 +108,23 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
 
       {/* Conditionally rendered Mobile Nav Dropdown */}
       {/* Animate presence will be added later with framer-motion */}
-      {isMobileNavOpen && (
-        <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="wait">
+        {isMobileNavOpen && (
           <motion.div
             key="mobile-nav-content"
-            // initial={{ opacity: 0, y: 40 }}
-            // animate={{ opacity: 1, y: 0 }}
-            // exit={{ opacity: 0, y: 40 }}
-            transition={{ ease: 'easeInOut', duration: 0.2 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 20, mass: 1 }}
             className={cn(
-              // Remove island styles: absolute inset-x-4 top-full my-4 rounded-2xl border
               'px-site pb-site fixed inset-x-0 top-[var(--header-height)] bottom-0 z-50 overflow-y-auto lg:hidden',
-              // Remove animation for now, can be added back later
               // 'animate-in slide-in-from-top-4 duration-300 ease-out',
             )}
           >
             <MobileNav cta={cta} tabs={tabs} onLinkClick={() => setIsMobileNavOpen(false)} />
           </motion.div>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </header>
   )
 }

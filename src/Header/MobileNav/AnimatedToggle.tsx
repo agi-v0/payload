@@ -43,7 +43,7 @@ export const AnimatedToggle: React.FC<AnimatedToggleProps> = ({
             transform: isOpen
               ? `rotate(45deg) translateY(${shift}%)` // NOTE: translate is **last** → applied **first**
               : 'rotate(0deg) translateY(0)',
-            transition: 'transform .3s ease',
+            transition: 'transform .2s ease',
           }}
           stroke="currentColor"
           strokeWidth={2}
@@ -53,7 +53,7 @@ export const AnimatedToggle: React.FC<AnimatedToggleProps> = ({
         <path
           d="M4 12L20 12"
           className={cn(
-            'transition-all duration-300 ease-in-out',
+            'transition-all duration-200 ease-in-out',
             isOpen ? 'opacity-0' : 'opacity-100',
           )}
           stroke="currentColor"
@@ -69,7 +69,7 @@ export const AnimatedToggle: React.FC<AnimatedToggleProps> = ({
             transform: isOpen
               ? `rotate(-45deg) translateY(-${shift}%)`
               : 'rotate(0deg) translateY(0)',
-            transition: 'transform .3s ease ',
+            transition: 'transform .2s ease ',
             transitionDelay: '100ms',
           }}
           stroke="currentColor"

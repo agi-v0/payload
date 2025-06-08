@@ -117,7 +117,7 @@ function AccordionItem({ value, children, className }: AccordionItemProps) {
 export type AccordionTriggerProps = {
   children: ReactNode
   className?: string
-}
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 function AccordionTrigger({ children, className, ...props }: AccordionTriggerProps) {
   const { toggleItem, expandedValue } = useAccordion()
@@ -131,6 +131,7 @@ function AccordionTrigger({ children, className, ...props }: AccordionTriggerPro
       type="button"
       className={cn('group', className)}
       {...(isExpanded ? { 'data-expanded': '' } : { 'data-closed': '' })}
+      {...props}
     >
       {children}
     </button>

@@ -3,7 +3,6 @@
 import * as React from 'react'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
-import { ChevronLeft } from 'lucide-react' // Import back icon
 
 import { cn } from '@/utilities/ui'
 import { CMSLink } from '@/components/Link'
@@ -41,12 +40,13 @@ interface MobileNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdA
 }
 
 const navigationMenuTriggerStyle = cva(
-  'focus:text-base-primary data-[closed]:text-base-secondary inline-flex w-full items-center justify-start gap-2 bg-transparent py-4 text-(length:--text-h3) font-medium text-(color:--color-base-secondary) transition-colors group-data-[expanded]:text-(color:--color-base-primary) hover:text-(color:--color-base-primary) hover:no-underline focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-transparent data-[state=open]:focus:bg-transparent',
+  'hover:text-base-primary inline-flex w-full items-center justify-start gap-2 bg-transparent py-4 text-(length:--text-h3) font-medium transition-colors hover:no-underline focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[expanded]:bg-transparent data-[expanded]:focus:bg-transparent',
 )
 
 export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
   const validTabs = tabs || []
   const pathname = usePathname()
+  const [expandedValue, setExpandedValue] = React.useState<React.Key | null>(null)
 
   const handleLinkClick = () => {
     if (onLinkClick) {
@@ -57,6 +57,10 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
   const handleDirectLinkClick = () => {
     handleLinkClick() // Close sheet for direct links
     // Navigation is handled by CMSLink
+  }
+
+  const handleAccordionValueChange = (value: React.Key | null) => {
+    value ? setExpandedValue(value) : setExpandedValue(null)
   }
 
   return (
@@ -70,14 +74,25 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
         {/* Main Menu View using Accordion */}
         <Accordion
           className="divide-border flex w-full flex-col divide-y"
-          transition={{ duration: 0.2, ease: 'easeInOut' }}
+          onValueChange={handleAccordionValueChange}
+          expandedValue={expandedValue}
         >
           {validTabs.map((tab, i) => {
             // --- Dropdown Tab (renders as AccordionItem) ---
             if (tab.enableDropdown) {
               return (
                 <AccordionItem value={`item-${i}`} key={i}>
-                  <AccordionTrigger className={cn(navigationMenuTriggerStyle(), '')}>
+                  <AccordionTrigger
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      'justify-between',
+                      expandedValue === null && 'text-base-secondary',
+                      'data-[expanded]:text-base-primary',
+                      expandedValue !== null &&
+                        expandedValue !== `item-${i}` &&
+                        'text-base-tertiary',
+                    )}
+                  >
                     <span>{tab.label}</span>
                     <CaretLeft className="size-4 -rotate-90 transition-transform duration-200 group-data-[expanded]:rotate-90" />
                   </AccordionTrigger>
@@ -103,6 +118,7 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
                   className={cn(
                     navigationMenuTriggerStyle(),
                     'text-base-secondary text-(length:--text-h3)',
+                    expandedValue !== null && expandedValue !== `item-${i}` && 'text-base-tertiary',
                   )}
                 />
               )
@@ -201,11 +217,6 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                   className={cn(
                     baseItemClasses,
                     'group flex items-center justify-start gap-2', // Use flex, add gap
-                    isReferenceObject &&
-                      'icon' in referenceValue &&
-                      typeof referenceValue.icon === 'object' && // Ensure icon itself is an object
-                      referenceValue.icon &&
-                      'items-start',
                   )}
                 >
                   {/* Icon/Image Rendering */}
