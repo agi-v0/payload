@@ -1,12 +1,19 @@
 import type { TextField } from '@payloadcms/plugin-form-builder/types'
-import type { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
+import type {
+  FieldErrorsImpl,
+  FieldValues,
+  UseFormRegister,
+  Control,
+} from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
-import { Input } from '@/components/ui/input'
+import PhoneInput from '@/components/ui/phone-input'
 import { Label } from '@/components/ui/label'
 import React from 'react'
 
 import { Error } from '../Error'
 import { Width } from '../Width'
+
 export const Number: React.FC<
   TextField & {
     errors: Partial<
@@ -15,17 +22,35 @@ export const Number: React.FC<
       }>
     >
     register: UseFormRegister<FieldValues>
+    control: Control<FieldValues>
   }
-> = ({ name, defaultValue, errors, label, register, required: requiredFromProps, width }) => {
+> = ({
+  name,
+  defaultValue,
+  errors,
+  label,
+  register,
+  control,
+  required: requiredFromProps,
+  width,
+}) => {
   return (
     <Width width={width}>
-      {/* <Label htmlFor={name}>{label}</Label> */}
-      <Input
-        placeholder={label}
+      <Controller
+        name={name}
+        control={control}
         defaultValue={defaultValue}
-        id={name}
-        type="number"
-        {...register(name, { required: requiredFromProps })}
+        rules={{ required: requiredFromProps }}
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <PhoneInput
+            ref={ref}
+            placeholder={label}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+            id={name}
+          />
+        )}
       />
       {requiredFromProps && errors[name] && <Error />}
     </Width>
