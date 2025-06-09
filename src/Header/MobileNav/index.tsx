@@ -63,7 +63,11 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
   }
 
   const handleAccordionValueChange = (value: React.Key | null) => {
-    value ? setExpandedValue(value) : setExpandedValue(null)
+    if (value) {
+      setExpandedValue(value)
+    } else {
+      setExpandedValue(null)
+    }
   }
 
   return (

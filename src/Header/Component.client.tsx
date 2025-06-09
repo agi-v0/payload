@@ -95,7 +95,11 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
           </Link>
         </div>
 
-        <DesktopNav cta={cta} tabs={tabs} className="hidden lg:flex lg:w-full lg:justify-end" />
+        <DesktopNav
+          cta={cta}
+          tabs={tabs}
+          className="hidden lg:flex lg:w-full lg:items-center lg:justify-end"
+        />
 
         <div className="flex flex-shrink-0 justify-end lg:hidden">
           <AnimatedToggle
@@ -115,13 +119,22 @@ export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 20, mass: 1 }}
+            transition={{
+              type: 'spring',
+              stiffness: 200,
+              damping: 20,
+              mass: 1,
+            }}
             className={cn(
               'px-site pb-site fixed inset-x-0 top-[var(--header-height)] bottom-0 z-50 overflow-y-auto lg:hidden',
               // 'animate-in slide-in-from-top-4 duration-300 ease-out',
             )}
           >
-            <MobileNav cta={cta} tabs={tabs} onLinkClick={() => setIsMobileNavOpen(false)} />
+            <MobileNav
+              cta={cta}
+              tabs={tabs}
+              onLinkClick={() => setIsMobileNavOpen(false)}
+            />
           </motion.div>
         )}
       </AnimatePresence>

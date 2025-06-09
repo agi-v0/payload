@@ -21,12 +21,15 @@ import MarnIcon from '@/components/ui/marn-icon'
 import { CaretLeft } from '@/icons/caret-left-filled'
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
-interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
+interface DesktopNavProps
+  extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
   className?: string
 }
 
 // Define the type for a single nav item directly based on HeaderType structure
-type NavItem = NonNullable<NonNullable<HeaderType['tabs']>[number]['navItems']>[number]
+type NavItem = NonNullable<
+  NonNullable<HeaderType['tabs']>[number]['navItems']
+>[number]
 
 // Explicitly define props for ListItem based on the NavItem structure
 interface ListItemProps {
@@ -112,7 +115,10 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
                   <NavigationMenuItem key={i + 'directLink'}>
                     <NavigationMenuLink asChild>
                       <CMSLink
-                        className={cn(navigationMenuTriggerStyle(), 'rounded-full')}
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          'rounded-full',
+                        )}
                         label={tab.label}
                         {...tab.link}
                         variant="inline"
@@ -132,9 +138,9 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
             <CMSLink
               key={id}
               {...ctaItem.link}
-              size="sm"
+              size="md"
               color={ctaItem.link.color ?? undefined}
-              className="pointer-events-auto z-10"
+              className="pointer-events-auto z-10 h-10 text-sm"
             />
           ))}
       </div>
@@ -142,14 +148,24 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
   )
 }
 
-const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemProps>(
-  ({ className, style, defaultLink, featuredLink, listLinks, ...props }, ref) => {
+const ListItem = React.forwardRef<
+  HTMLAnchorElement | HTMLDivElement,
+  ListItemProps
+>(
+  (
+    { className, style, defaultLink, featuredLink, listLinks, ...props },
+    ref,
+  ) => {
     let itemContent: React.ReactNode | null = null
 
     switch (style) {
       case 'featured':
         itemContent = (
-          <div ref={ref as React.Ref<HTMLDivElement>} className={cn('p-3', className)} {...props}>
+          <div
+            ref={ref as React.Ref<HTMLDivElement>}
+            className={cn('p-3', className)}
+            {...props}
+          >
             {featuredLink?.tag && (
               <div className="text-base-tertiary mb-1 text-xs font-semibold">
                 {featuredLink.tag}
@@ -171,7 +187,11 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
         break
       case 'list':
         itemContent = (
-          <div ref={ref as React.Ref<HTMLDivElement>} className={cn('', className)} {...props}>
+          <div
+            ref={ref as React.Ref<HTMLDivElement>}
+            className={cn('', className)}
+            {...props}
+          >
             {listLinks?.tag && (
               <div className="text-base-tertiary mb-1 px-4 text-xs font-normal">
                 {listLinks.tag}
@@ -206,26 +226,30 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                         )}
                       </div>
                     )}
-                    {subLink.link.type === 'reference' && subLink.link.reference?.value?.icon && (
-                      <Image
-                        src={
-                          subLink.link.reference.value.icon.url ||
-                          subLink.link.reference.value.icon.sizes?.thumbnail?.url ||
-                          ''
-                        }
-                        alt={subLink.link.reference.value.icon.alt}
-                        width={40}
-                        height={40}
-                        className="aspect-square size-10 flex-none rounded-md"
-                        priority
-                        sizes="40px"
-                      />
-                    )}
+                    {subLink.link.type === 'reference' &&
+                      subLink.link.reference?.value?.icon && (
+                        <Image
+                          src={
+                            subLink.link.reference.value.icon.url ||
+                            subLink.link.reference.value.icon.sizes
+                              ?.thumbnail?.url ||
+                            ''
+                          }
+                          alt={subLink.link.reference.value.icon.alt}
+                          width={40}
+                          height={40}
+                          className="aspect-square size-10 flex-none rounded-md"
+                          priority
+                          sizes="40px"
+                        />
+                      )}
                     <div className="flex w-[calc(100%-1.5rem)] w-full flex-col justify-start gap-1">
                       {subLink.link.label}
-                      {(subLink.link.description || subLink.link.reference?.value?.tagline) && (
+                      {(subLink.link.description ||
+                        subLink.link.reference?.value?.tagline) && (
                         <p className="text-base-tertiary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
-                          {subLink.link.description || subLink.link.reference?.value?.tagline}
+                          {subLink.link.description ||
+                            subLink.link.reference?.value?.tagline}
                         </p>
                       )}
                     </div>
@@ -251,7 +275,9 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
               {...defaultLink.link}
               {...props}
             >
-              <div className="text-sm leading-none font-medium">{defaultLink.link.label}</div>
+              <div className="text-sm leading-none font-medium">
+                {defaultLink.link.label}
+              </div>
               {defaultLink.description && (
                 <p className="text-base-tertiary line-clamp-2 text-sm leading-snug">
                   {defaultLink.description}
