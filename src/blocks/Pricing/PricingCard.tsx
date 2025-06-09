@@ -10,7 +10,7 @@ import type {
   Post,
   Page,
 } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { Badge } from '@/components/ui/badge'
 import { ChevronDown, CircleCheck, X } from 'lucide-react'
 import { CMSLink } from '@/components/Link'
@@ -31,7 +31,9 @@ interface PricingCardProps {
   badge?: {
     type?: ('label' | 'reference') | null
     label?: string | null
-    color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null
+    color?:
+      | ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted')
+      | null
     reference?:
       | ({
           relationTo: 'solutions'
@@ -79,7 +81,9 @@ interface PricingCardProps {
     /**
      * Choose how the link should be rendered.
      */
-    variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null
+    variant?:
+      | ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link')
+      | null
   }
   features?:
     | {
@@ -149,7 +153,12 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
             </div>
           )}
 
-          {iconMedia && <Media resource={iconMedia} imgClassName="size-space-3xl object-contain" />}
+          {iconMedia && (
+            <Media
+              resource={iconMedia}
+              imgClassName="size-space-3xl object-contain"
+            />
+          )}
 
           <div className="text-start">
             {title && (
@@ -162,7 +171,9 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                 {title}
               </h3>
             )}
-            {subtitle && <p className="text-base-tertiary text-body-sm">{subtitle}</p>}
+            {subtitle && (
+              <p className="text-base-tertiary text-body-sm">{subtitle}</p>
+            )}
           </div>
         </div>
 
@@ -205,7 +216,10 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           data-state={isExpanded ? 'expanded' : 'collapsed'}
           className="hover:bg-neutral/5 data-[state=expanded]:hover:bg-neutral/10 data-[state=expanded]:bg-neutral/5 w-full space-y-4 rounded-xl px-4 py-3 pt-2 transition-colors duration-200 max-md:px-0 data-[state=expanded]:max-md:px-4"
         >
-          <motion.div layout className="-me-2 flex w-full flex-row items-center justify-between">
+          <motion.div
+            layout
+            className="-me-2 flex w-full flex-row items-center justify-between"
+          >
             <p className="text-body-sm text-base-tertiary font-normal">
               {translations.includedSolutions}
             </p>
@@ -217,7 +231,9 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           <motion.ul
             className={cn(
               'flex w-full items-start justify-start gap-1',
-              isExpanded ? 'flex-col flex-nowrap gap-2' : 'flex-row flex-wrap gap-1',
+              isExpanded
+                ? 'flex-col flex-nowrap gap-2'
+                : 'flex-row flex-wrap gap-1',
             )}
             layout
           >
@@ -227,7 +243,10 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
               const mediaElement = (
                 <Media
                   resource={icon as MediaType}
-                  imgClassName={cn('size-12 object-contain', isExpanded && 'size-12')}
+                  imgClassName={cn(
+                    'size-12 object-contain',
+                    isExpanded && 'size-12',
+                  )}
                 />
               )
 
@@ -241,7 +260,10 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                     <motion.div
                       layout="position"
                       layoutId={`solution-icon-${type}-${name}`}
-                      className={cn('flex-shrink-0', isExpanded ? '' : 'h-fit')}
+                      className={cn(
+                        'flex-shrink-0',
+                        isExpanded ? '' : 'h-fit',
+                      )}
                     >
                       {isExpanded ? (
                         mediaElement
@@ -254,8 +276,12 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                             }}
                           >
                             <div className="text-center">
-                              <p className="text-base-secondary text-sm font-medium">{name}</p>
-                              <p className="text-base-tertiary text-sm">{tagline}</p>
+                              <p className="text-base-secondary text-sm font-medium">
+                                {name}
+                              </p>
+                              <p className="text-base-tertiary text-sm">
+                                {tagline}
+                              </p>
                             </div>
                           </TooltipContent>
                         </>
@@ -269,20 +295,29 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                           animate={{
                             opacity: 1,
                             x: 0,
-                            transition: { ease: [0, 0, 0.2, 1], delay: idx * 0.1 },
+                            transition: {
+                              ease: [0, 0, 0.2, 1],
+                              delay: idx * 0.1,
+                            },
                           }}
                           exit={{
                             opacity: 0,
                             x: 16,
                             transition: {
                               ease: [0, 0, 0.2, 1],
-                              delay: (featuredSolutions.length - 1 - idx) * 0.02,
+                              delay:
+                                (featuredSolutions.length - 1 - idx) *
+                                0.02,
                             },
                           }}
                           className="flex flex-col items-start justify-start text-start"
                         >
-                          <p className="text-base-secondary text-base font-medium">{name}</p>
-                          <p className="text-base-tertiary text-sm">{tagline}</p>
+                          <p className="text-base-secondary text-base font-medium">
+                            {name}
+                          </p>
+                          <p className="text-base-tertiary text-sm">
+                            {tagline}
+                          </p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -304,12 +339,20 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           <div className="flex flex-wrap gap-1">
             {featuredIntegrations.map((integration, idx) => {
               const integrationTitle =
-                typeof integration === 'object' && integration.title ? integration.title : ''
+                typeof integration === 'object' && integration.title
+                  ? integration.title
+                  : ''
               const integrationIcon =
-                typeof integration === 'object' && integration.icon ? integration.icon : ''
+                typeof integration === 'object' && integration.icon
+                  ? integration.icon
+                  : ''
 
               return (
-                <Media key={idx} resource={integrationIcon} imgClassName="size-12 object-contain" />
+                <Media
+                  key={idx}
+                  resource={integrationIcon}
+                  imgClassName="size-12 object-contain"
+                />
               )
             })}
           </div>
@@ -324,7 +367,10 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           </p> */}
           <ul className="space-y-2.5">
             {features.map((feature, featureIndex) => (
-              <li key={featureIndex} className="flex items-center justify-start gap-2">
+              <li
+                key={featureIndex}
+                className="flex items-center justify-start gap-2"
+              >
                 {feature.enabled ? (
                   <CircleCheck className="text-base-secondary size-5 flex-shrink-0" />
                 ) : (
@@ -333,7 +379,9 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                 <span
                   className={cn(
                     'text-caption',
-                    feature.enabled ? 'text-base-secondary' : 'text-base-tertiary',
+                    feature.enabled
+                      ? 'text-base-secondary'
+                      : 'text-base-tertiary',
                   )}
                 >
                   {feature.feature}
