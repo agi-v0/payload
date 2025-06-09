@@ -247,10 +247,10 @@ export function FooterClient({ columns, currentYear }: Props) {
                   <LanguageSwitcher />
                 </div>
               </div>
-              <nav className="pb-site grid grid-cols-2 gap-4 md:col-span-2 lg:col-span-6 lg:col-start-7 lg:grid-cols-3">
+              <nav className="pb-site grid grid-cols-2 gap-4 md:col-span-2 md:grid-cols-3 lg:col-span-6 lg:col-start-7">
                 {columns?.map(({ label, navItems }, i) => {
                   return (
-                    <nav key={i} className="grid grid-cols-1">
+                    <div key={i} className="grid grid-cols-1">
                       <p className="text-base-tertiary mb-1 text-sm font-medium">{label}</p>
                       {navItems?.map(({ link }, j) => {
                         return (
@@ -262,7 +262,7 @@ export function FooterClient({ columns, currentYear }: Props) {
                           />
                         )
                       })}
-                    </nav>
+                    </div>
                   )
                 })}
               </nav>
