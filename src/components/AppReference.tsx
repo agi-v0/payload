@@ -1,5 +1,5 @@
 import React from 'react'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { CMSLink } from '@/components/Link'
 import { Button } from '@/components/ui/button'
 import { Solution, Integration, Media as MediaType } from '@/payload-types'
@@ -18,14 +18,20 @@ interface AppReferenceProps {
   className?: string
 }
 
-export const AppReference: React.FC<AppReferenceProps> = ({ appReference, className }) => {
+export const AppReference: React.FC<AppReferenceProps> = ({
+  appReference,
+  className,
+}) => {
   if (!appReference) return null
   // Check if appReference.value is an object
   if (typeof appReference.value !== 'object') return null
 
   return (
     <div
-      className={cn('group flex flex-row items-center justify-between gap-4 lg:gap-0', className)}
+      className={cn(
+        'group flex flex-row items-center justify-between gap-4 lg:gap-0',
+        className,
+      )}
     >
       <div className="flex items-center gap-4">
         {appReference.value.icon && (
@@ -42,7 +48,9 @@ export const AppReference: React.FC<AppReferenceProps> = ({ appReference, classN
             </p>
           )}
           {appReference.value.tagline && (
-            <p className="text-base-tertiary text-body-sm">{appReference.value.tagline}</p>
+            <p className="text-base-tertiary text-body-sm">
+              {appReference.value.tagline}
+            </p>
           )}
         </div>
       </div>

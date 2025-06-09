@@ -1,6 +1,6 @@
 import { CMSLink } from '@/components/Link'
 import { Integration } from '@/payload-types'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { TypedLocale } from 'payload'
@@ -8,14 +8,22 @@ import { getEcosystemBadgeColorFromObject } from '@/utilities/getEcosystemBadgeC
 
 export type IntegrationsCardData = Pick<
   Integration,
-  'slug' | 'icon' | 'tagline' | 'link' | 'name' | 'summary' | 'categories' | 'ecosystem'
+  | 'slug'
+  | 'icon'
+  | 'tagline'
+  | 'link'
+  | 'name'
+  | 'summary'
+  | 'categories'
+  | 'ecosystem'
 >
 
 export const IntegrationCard: React.FC<{
   integration: IntegrationsCardData
   locale?: TypedLocale
 }> = ({ integration, locale }) => {
-  const { icon, tagline, link, name, summary, categories, ecosystem } = integration
+  const { icon, tagline, link, name, summary, categories, ecosystem } =
+    integration
 
   return (
     // Use background variable and explicit rounding from Figma
@@ -33,7 +41,11 @@ export const IntegrationCard: React.FC<{
               />
             )}
             <div className="flex flex-col gap-2">
-              {name && <span className="text-body-lg text-base-secondary font-medium">{name}</span>}
+              {name && (
+                <span className="text-body-lg text-base-secondary font-medium">
+                  {name}
+                </span>
+              )}
               {categories && (
                 <span className="flex flex-wrap gap-2">
                   {ecosystem &&
@@ -46,7 +58,9 @@ export const IntegrationCard: React.FC<{
                             type="label"
                             size="md"
                             label={ecosystem.title}
-                            color={getEcosystemBadgeColorFromObject(ecosystem)}
+                            color={getEcosystemBadgeColorFromObject(
+                              ecosystem,
+                            )}
                           />
                         ),
                     )}
