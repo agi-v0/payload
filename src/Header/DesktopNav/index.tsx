@@ -243,7 +243,7 @@ const ListItem = React.forwardRef<
                           sizes="40px"
                         />
                       )}
-                    <div className="flex w-[calc(100%-1.5rem)] w-full flex-col justify-start gap-1">
+                    <div className="flex flex-col justify-start gap-1">
                       {subLink.link.label}
                       {(subLink.link.description ||
                         subLink.link.reference?.value?.tagline) && (
