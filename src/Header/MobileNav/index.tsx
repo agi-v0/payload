@@ -7,7 +7,6 @@ import Image from 'next/image'
 import { cn } from '@/utilities/ui'
 import { CMSLink } from '@/components/Link'
 import type { Header as HeaderType } from '@/payload-types'
-import { Button } from '@/components/ui/button' // Import Button for Back button
 import { DynamicIcon } from 'lucide-react/dynamic'
 import MarnIcon from '@/components/ui/marn-icon'
 import { cva } from 'class-variance-authority'
@@ -21,7 +20,9 @@ import { CaretLeft } from '@/icons/caret-left-filled'
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
 // Define the type for a single nav item from HeaderType
-type NavItem = NonNullable<NonNullable<HeaderType['tabs']>[number]['navItems']>[number]
+type NavItem = NonNullable<
+  NonNullable<HeaderType['tabs']>[number]['navItems']
+>[number]
 type Tab = NonNullable<HeaderType['tabs']>[number] // Define Tab type
 
 // Explicitly define props for ListItem based on the NavItem structure
@@ -35,7 +36,8 @@ interface ListItemProps {
   [key: string]: any // Allow other props temporarily
 }
 
-interface MobileNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
+interface MobileNavProps
+  extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
   onLinkClick?: () => void // Callback to close sheet on link click
 }
 
@@ -46,7 +48,8 @@ const navigationMenuTriggerStyle = cva(
 export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
   const validTabs = tabs || []
   const pathname = usePathname()
-  const [expandedValue, setExpandedValue] = React.useState<React.Key | null>(null)
+  const [expandedValue, setExpandedValue] =
+    React.useState<React.Key | null>(null)
 
   const handleLinkClick = () => {
     if (onLinkClick) {
@@ -99,7 +102,11 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
                   <AccordionContent className="">
                     <nav className="space-y-4 pb-4">
                       {tab.navItems?.map((navItem) => (
-                        <MobileNavItem key={navItem.id} item={navItem} onClick={handleLinkClick} />
+                        <MobileNavItem
+                          key={navItem.id}
+                          item={navItem}
+                          onClick={handleLinkClick}
+                        />
                       ))}
                     </nav>
                   </AccordionContent>
@@ -118,7 +125,9 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
                   className={cn(
                     navigationMenuTriggerStyle(),
                     'text-base-secondary text-(length:--text-h3)',
-                    expandedValue !== null && expandedValue !== `item-${i}` && 'text-base-tertiary',
+                    expandedValue !== null &&
+                      expandedValue !== `item-${i}` &&
+                      'text-base-tertiary',
                   )}
                 />
               )
@@ -183,7 +192,11 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && onClick()}
             >
-              <CMSLink {...subLink.link} variant="inline" className={baseItemClasses} />
+              <CMSLink
+                {...subLink.link}
+                variant="inline"
+                className={baseItemClasses}
+              />
             </div>
           ))}
         </div>
@@ -199,7 +212,9 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
           {item.listLinks?.links?.map((subLink, i) => {
             const referenceValue = subLink.link.reference?.value
             const isReferenceObject =
-              referenceValue && typeof referenceValue === 'object' && !Array.isArray(referenceValue)
+              referenceValue &&
+              typeof referenceValue === 'object' &&
+              !Array.isArray(referenceValue)
 
             return (
               <div
@@ -221,7 +236,9 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                 >
                   {/* Icon/Image Rendering */}
                   {(subLink.link.icon ||
-                    (isReferenceObject && 'icon' in referenceValue && referenceValue.icon)) && (
+                    (isReferenceObject &&
+                      'icon' in referenceValue &&
+                      referenceValue.icon)) && (
                     <div className="group-hover:bg-background-neutral bg-background flex size-10 flex-none items-center justify-center rounded-full [&_svg]:size-4">
                       {subLink.link.icon ? (
                         subLink.link.icon === 'marn-icon' ? (
@@ -284,7 +301,10 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
           tabIndex={0}
           onKeyDown={(e) => e.key === 'Enter' && onClick()}
         >
-          <CMSLink {...item.defaultLink.link} className={cn(baseItemClasses, 'font-medium')} />
+          <CMSLink
+            {...item.defaultLink.link}
+            className={cn(baseItemClasses, 'font-medium')}
+          />
         </div>
       )
   }
