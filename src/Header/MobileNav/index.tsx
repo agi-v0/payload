@@ -59,15 +59,10 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
 
   const handleDirectLinkClick = () => {
     handleLinkClick() // Close sheet for direct links
-    // Navigation is handled by CMSLink
   }
 
   const handleAccordionValueChange = (value: React.Key | null) => {
-    if (value) {
-      setExpandedValue(value)
-    } else {
-      setExpandedValue(null)
-    }
+    setExpandedValue(value)
   }
 
   return (
