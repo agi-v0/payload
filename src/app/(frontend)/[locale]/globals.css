@@ -2,14 +2,8 @@
 @import 'tw-animate-css';
 @import './typography.css' layer(components);
 
-@custom-variant dark (&:is(.dark *));
-
 /* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
-@variant dark {
-  &:where([data-theme='dark'], [data-theme='dark'] *) {
-    @slot;
-  }
-}
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 /* @config '../../../../tailwind.config.mjs'; */
 
@@ -48,9 +42,8 @@
     font-size: unset;
     font-weight: 500;
   }
-
   /*
-  The default border color has changed to `currentColor` in Tailwind CSS v4;
+ The default border color has changed to `currentColor` in Tailwind CSS v4;
   so we've added these compatibility styles to make sure everything still
   looks the same as it did with Tailwind CSS v3.
 
@@ -65,7 +58,6 @@
   html[data-theme='light'] {
     opacity: initial;
   }
-
   /* Workaround for <select> modal causing layout shift */
   html body[data-scroll-locked] {
     overflow: visible !important;
@@ -74,13 +66,16 @@
 
   body {
     background-color: var(--color-background);
+    color: var(--color-base-secondary);
   }
 
   :root {
     overscroll-behavior: none;
-    overflow-x: hidden; /* or you could use overflow-x: clip */
+    overflow-x: hidden;
+    /* or you could use overflow-x: clip */
 
     --header-height: 56px;
+
     @media (min-width: 1024px) {
       --header-height: 60px;
     }
@@ -193,9 +188,8 @@
 
 @theme inline {
   /* --breakpoint-2xl: 90rem; */
-
   /* --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+ --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px); */
 
@@ -209,30 +203,14 @@
   --spacing-card-xl: clamp(1.5rem, 0.3rem + 3vw, 3rem);
 
   --spacing-space-site: clamp(1rem, 0.2rem + 2vw, 2rem); /* 16px - 32px site margin */
-  --spacing-space-2xs: clamp(
-    0.25rem,
-    0.05rem + 0.5vw,
-    0.5rem
-  ); /* 4px - 8px smaller element spacing */
+  --spacing-space-2xs: clamp(0.25rem, 0.05rem + 0.5vw, 0.5rem); /* 4px - 8px smaller element spacing */
   --spacing-space-xs: clamp(0.5rem, 0.1rem + 1vw, 1rem); /* 8px - 16px smaller element spacing */
   --spacing-space-sm: clamp(1rem, 0.6rem + 1vw, 1.5rem); /* 16px - 24px main element spacing */
   --spacing-space-md: clamp(1.5rem, 1.1rem + 1vw, 2rem); /* 24px - 32px main card padding */
   --spacing-space-lg: clamp(2rem, 1.6rem + 1vw, 2.5rem); /* 32px - 40px larger element spacing */
-  --spacing-space-xl: clamp(
-    2.5rem,
-    2.1rem + 1vw,
-    3rem
-  ); /* 40px - 48px extra large element spacing*/
-  --spacing-space-2xl: clamp(
-    3rem,
-    2.6rem + 1vw,
-    3.5rem
-  ); /* 48px - 56px extra large element spacing*/
-  --spacing-space-3xl: clamp(
-    3.5rem,
-    3.1rem + 1vw,
-    4rem
-  ); /* 56px - 64px extra large element spacing*/
+  --spacing-space-xl: clamp(2.5rem, 2.1rem + 1vw, 3rem); /* 40px - 48px extra large element spacing*/
+  --spacing-space-2xl: clamp(3rem, 2.6rem + 1vw, 3.5rem); /* 48px - 56px extra large element spacing*/
+  --spacing-space-3xl: clamp(3.5rem, 3.1rem + 1vw, 4rem); /* 56px - 64px extra large element spacing*/
 
   --spacing-site: clamp(1rem, 0.2rem + 2vw, 2rem); /* 16px - 32px site margin */
   --spacing-2xs: clamp(0.25rem, 0.05rem + 0.5vw, 0.5rem); /* 4px - 8px smaller element spacing */
@@ -255,7 +233,6 @@
 
   --color-brand: var(--brand);
   --color-neutral: var(--neutral);
-
   /* use for background */
   --color-background: var(--background); /* default */
   --color-background-neutral: var(--background-light);
@@ -265,7 +242,6 @@
 
   --color-button-neutral: var(--neutral);
   --color-button-brand: var(--brand);
-
   /* use for foreground (text & icons) */
   --color-base-primary: var(--neutral-primary);
   --color-base-secondary: var(--neutral-secondary);
@@ -279,7 +255,6 @@
 
   --color-inverted-primary: var(--inverted-primary);
   --color-inverted-secondary: var(--inverted-secondary);
-
   /* indigo */
   --color-marn-50: #eef1fc;
   --color-marn-100: #d8dff8;
@@ -373,6 +348,7 @@
     from {
       height: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
     }
@@ -382,6 +358,7 @@
     from {
       height: var(--radix-accordion-content-height);
     }
+
     to {
       height: 0;
     }
