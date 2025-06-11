@@ -162,6 +162,7 @@ export const Integrations: CollectionConfig<'integrations'> = {
                       admin: {
                         description: 'Contact phone number for the integration.',
                         width: '50%',
+                        rtl: false,
                       },
                     },
                   ],

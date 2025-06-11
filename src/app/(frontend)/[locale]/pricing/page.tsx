@@ -11,7 +11,6 @@ import { RenderHero } from '@/heros/RenderHero'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { draftMode } from 'next/headers'
 import { generateMeta } from '@/utilities/generateMeta'
-import { SearchableIntegrationsGrid } from '@/components/IntegrationsGrid/SearchableGrid'
 import { PricingProvider, usePricing } from '@/providers/Pricing'
 import { Hero03 } from '@/heros/Hero03'
 import { PricingToggle } from '@/blocks/Pricing/PricingToggle'
@@ -31,10 +30,7 @@ type Args = {
   }>
 }
 
-export default async function Page({
-  params: paramsPromise,
-  searchParams: searchParamsPromise,
-}: Args) {
+export default async function Page({ params: paramsPromise, searchParams: searchParamsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
 
@@ -89,24 +85,22 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   return generateMeta({ doc: page })
 }
 
-const queryPageBySlug = cache(
-  async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' | undefined }) => {
-    const payload = await getPayload({ config: configPromise })
-    const { isEnabled: draft } = await draftMode()
-    const result = await payload.find({
-      collection: 'pages',
-      locale: locale,
-      draft,
-      limit: 1,
-      pagination: false,
-      overrideAccess: draft,
-      where: {
-        slug: {
-          equals: slug,
-        },
+const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' | undefined }) => {
+  const payload = await getPayload({ config: configPromise })
+  const { isEnabled: draft } = await draftMode()
+  const result = await payload.find({
+    collection: 'pages',
+    locale: locale,
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+    where: {
+      slug: {
+        equals: slug,
       },
-    })
+    },
+  })
 
-    return result.docs?.[0] || null
-  },
-)
+  return result.docs?.[0] || null
+})
