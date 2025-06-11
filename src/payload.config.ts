@@ -48,6 +48,7 @@ import { MetricsBlock } from '@/blocks/Metrics/config'
 
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
+import { Marketplace } from './blocks/Marketplace/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -141,24 +142,14 @@ export default buildConfig({
     FormBlock,
     LogosBlock,
     MediaBlock,
+    Marketplace,
     MetricsBlock,
     PricingBlock,
     RichTextBlock,
     StyledList,
     TestimonialsBlock,
   ],
-  collections: [
-    Pages,
-    Posts,
-    Solutions,
-    Integrations,
-    Media,
-    Customers,
-    Categories,
-    FAQ,
-    Changelog,
-    Users,
-  ],
+  collections: [Pages, Posts, Solutions, Integrations, Media, Customers, Categories, FAQ, Changelog, Users],
   cors: [getServerSideURL()].filter(Boolean),
   db: vercelPostgresAdapter({
     pool: {
@@ -170,7 +161,7 @@ export default buildConfig({
   editor: defaultLexical,
   email: resendAdapter({
     defaultFromAddress: process.env.RESEND_EMAIL || '',
-    defaultFromName: 'Payload CMS',
+    defaultFromName: 'Marn CMS',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
   i18n: {

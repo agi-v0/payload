@@ -77,6 +77,7 @@ export interface Config {
     formBlock: FormBlock;
     logosBlock: LogoBlock;
     mediaBlock: MediaBlock;
+    marketplaceBlock: MarketplaceBlock;
     metricsBlock: MetricsBlock;
     pricingBlock: PricingBlock;
     richTextBlock: RichTextBlock;
@@ -642,6 +643,7 @@ export interface Page {
     | FormBlock
     | GalleryBlock
     | LogoBlock
+    | MarketplaceBlock
     | MetricsBlock
     | PricingBlock
     | RichTextBlock
@@ -2036,6 +2038,15 @@ export interface Customer {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MarketplaceBlock".
+ */
+export interface MarketplaceBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'marketplaceBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
