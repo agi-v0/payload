@@ -21,15 +21,12 @@ import MarnIcon from '@/components/ui/marn-icon'
 import { CaretLeft } from '@/icons/caret-left-filled'
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
-interface DesktopNavProps
-  extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
+interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
   className?: string
 }
 
 // Define the type for a single nav item directly based on HeaderType structure
-type NavItem = NonNullable<
-  NonNullable<HeaderType['tabs']>[number]['navItems']
->[number]
+type NavItem = NonNullable<NonNullable<HeaderType['tabs']>[number]['navItems']>[number]
 
 // Explicitly define props for ListItem based on the NavItem structure
 interface ListItemProps {
@@ -67,9 +64,7 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
                         </CMSLink>
                       </NavigationMenuTrigger>
                     ) : (
-                      <NavigationMenuTrigger className="rounded-full">
-                        {tab.label}
-                      </NavigationMenuTrigger>
+                      <NavigationMenuTrigger className="rounded-full">{tab.label}</NavigationMenuTrigger>
                     )}
                     <NavigationMenuContent>
                       <ul
@@ -115,10 +110,7 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
                   <NavigationMenuItem key={i + 'directLink'}>
                     <NavigationMenuLink asChild>
                       <CMSLink
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          'rounded-full',
-                        )}
+                        className={cn(navigationMenuTriggerStyle(), 'rounded-full')}
                         label={tab.label}
                         {...tab.link}
                         variant="inline"
@@ -148,38 +140,22 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
   )
 }
 
-const ListItem = React.forwardRef<
-  HTMLAnchorElement | HTMLDivElement,
-  ListItemProps
->(
-  (
-    { className, style, defaultLink, featuredLink, listLinks, ...props },
-    ref,
-  ) => {
+const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemProps>(
+  ({ className, style, defaultLink, featuredLink, listLinks, ...props }, ref) => {
     let itemContent: React.ReactNode | null = null
 
     switch (style) {
       case 'featured':
         itemContent = (
-          <div
-            ref={ref as React.Ref<HTMLDivElement>}
-            className={cn('p-3', className)}
-            {...props}
-          >
+          <div ref={ref as React.Ref<HTMLDivElement>} className={cn('p-3', className)} {...props}>
             {featuredLink?.tag && (
-              <div className="text-base-tertiary mb-1 text-xs font-semibold">
-                {featuredLink.tag}
-              </div>
+              <div className="text-base-tertiary mb-1 text-xs font-semibold">{featuredLink.tag}</div>
             )}
 
             <RichText data={featuredLink?.label} />
             <div className="mt-2 flex flex-col space-y-1">
               {featuredLink?.links?.map((subLink, i) => (
-                <CMSLink
-                  key={i}
-                  {...subLink.link}
-                  className="text-base-tertiary hover:text-base-secondary text-sm"
-                />
+                <CMSLink key={i} {...subLink.link} className="text-base-tertiary hover:text-base-secondary text-sm" />
               ))}
             </div>
           </div>
@@ -187,16 +163,8 @@ const ListItem = React.forwardRef<
         break
       case 'list':
         itemContent = (
-          <div
-            ref={ref as React.Ref<HTMLDivElement>}
-            className={cn('', className)}
-            {...props}
-          >
-            {listLinks?.tag && (
-              <div className="text-base-tertiary mb-1 px-4 text-xs font-normal">
-                {listLinks.tag}
-              </div>
-            )}
+          <div ref={ref as React.Ref<HTMLDivElement>} className={cn('', className)} {...props}>
+            {listLinks?.tag && <div className="text-base-tertiary mb-1 px-4 text-xs font-normal">{listLinks.tag}</div>}
             <div className="mt-1 flex flex-col gap-0">
               {listLinks?.links?.map((subLink, i) => {
                 return (
@@ -209,9 +177,7 @@ const ListItem = React.forwardRef<
                     className={cn(
                       navigationMenuTriggerStyle(),
                       'ease-in-out-quad relative h-fit w-full gap-4 rounded-2xl px-3 text-base transition-all duration-300 hover:px-4 [&_svg]:size-5',
-                      subLink.link.type === 'reference' &&
-                        subLink.link.reference?.value?.icon &&
-                        'items-start',
+                      subLink.link.type === 'reference' && subLink.link.reference?.value?.icon && 'items-start',
                     )}
                   >
                     {subLink.link.icon && (
@@ -219,41 +185,34 @@ const ListItem = React.forwardRef<
                         {subLink.link.icon === 'marn-icon' ? (
                           <MarnIcon className="text-base-secondary" />
                         ) : (
-                          <DynamicIcon
-                            name={subLink.link.icon as any}
-                            className="text-base-secondary"
-                          />
+                          <DynamicIcon name={subLink.link.icon as any} className="text-base-secondary" />
                         )}
                       </div>
                     )}
-                    {subLink.link.type === 'reference' &&
-                      subLink.link.reference?.value?.icon && (
-                        <Image
-                          src={
-                            subLink.link.reference.value.icon.url ||
-                            subLink.link.reference.value.icon.sizes
-                              ?.thumbnail?.url ||
-                            ''
-                          }
-                          alt={subLink.link.reference.value.icon.alt}
-                          width={40}
-                          height={40}
-                          className="aspect-square size-10 flex-none rounded-md"
-                          priority
-                          sizes="40px"
-                        />
-                      )}
-                    <div className="flex flex-col justify-start gap-1">
+                    {subLink.link.type === 'reference' && subLink.link.reference?.value?.icon && (
+                      <Image
+                        src={
+                          subLink.link.reference.value.icon.url ||
+                          subLink.link.reference.value.icon.sizes?.thumbnail?.url ||
+                          ''
+                        }
+                        alt={subLink.link.reference.value.icon.alt}
+                        width={40}
+                        height={40}
+                        className="aspect-square size-10 flex-none rounded-md"
+                        priority
+                        sizes="40px"
+                      />
+                    )}
+                    <div className="flex flex-1 flex-col justify-start gap-1">
                       {subLink.link.label}
-                      {(subLink.link.description ||
-                        subLink.link.reference?.value?.tagline) && (
+                      {(subLink.link.description || subLink.link.reference?.value?.tagline) && (
                         <p className="text-base-tertiary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
-                          {subLink.link.description ||
-                            subLink.link.reference?.value?.tagline}
+                          {subLink.link.description || subLink.link.reference?.value?.tagline}
                         </p>
                       )}
                     </div>
-                    <CaretLeft className="text-base-tertiary group-hover:text-base-tertiary translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                    <CaretLeft className="text-base-tertiary group-hover:text-base-tertiary shrink-0 translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
                   </CMSLink>
                 )
               })}
@@ -275,13 +234,9 @@ const ListItem = React.forwardRef<
               {...defaultLink.link}
               {...props}
             >
-              <div className="text-sm leading-none font-medium">
-                {defaultLink.link.label}
-              </div>
+              <div className="text-sm leading-none font-medium">{defaultLink.link.label}</div>
               {defaultLink.description && (
-                <p className="text-base-tertiary line-clamp-2 text-sm leading-snug">
-                  {defaultLink.description}
-                </p>
+                <p className="text-base-tertiary line-clamp-2 text-sm leading-snug">{defaultLink.description}</p>
               )}
             </CMSLink>
           </NavigationMenuLink>
