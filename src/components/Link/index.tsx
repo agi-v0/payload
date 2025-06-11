@@ -42,14 +42,30 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     icon,
   } = props
 
-  // console.log('reference ', reference)
-  const href =
-    type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ``}/${
-          reference.value.slug
-        }`
-      : url
-  // console.log(href)
+  const urlHandler = (link) => {
+    const { type, reference, url } = link
+    const { relationTo, value } = reference || {}
+    switch (relationTo) {
+      case 'pages':
+        return `/${value.slug}`
+      case 'posts':
+        return `/blog/${value.slug}`
+      case 'solutions':
+        return `/solutions/${value.slug}`
+      case 'integrations':
+        return `/marketplace/${value.slug}`
+      default:
+        return url
+    }
+  }
+
+  // const href =
+  //   type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
+  //     ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ``}/${reference.value.slug}`
+  //     : url
+
+  const href = urlHandler(props)
+
   if (!href) return null
 
   const size = variant === 'inline' ? 'clear' : sizeFromProps

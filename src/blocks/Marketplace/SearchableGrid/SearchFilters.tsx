@@ -4,13 +4,7 @@ import React, { useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Search, Filter } from 'lucide-react'
 import type { Category } from '@/payload-types'
 
@@ -18,7 +12,7 @@ interface SearchFiltersProps {
   categories: Pick<Category, 'id' | 'title' | 'slug'>[]
   ecosystems: Pick<Category, 'id' | 'title' | 'slug'>[]
   locale: 'ar' | 'en'
-  initialFilters: {
+  initialFilters?: {
     search: string
     category: string
     ecosystem: string
@@ -26,14 +20,16 @@ interface SearchFiltersProps {
   }
 }
 
-export const SearchFilters: React.FC<SearchFiltersProps> = ({
-  categories,
-  ecosystems,
-  locale,
-  initialFilters,
-}) => {
+export const SearchFilters: React.FC<SearchFiltersProps> = ({ categories, ecosystems, locale, initialFilters }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
+
+  initialFilters = {
+    search: searchParams.get('q') || '',
+    category: searchParams.get('category') || '',
+    ecosystem: searchParams.get('ecosystem') || '',
+    sort: searchParams.get('sort') || 'newest',
+  }
 
   const updateSearchParams = useCallback(
     (updates: Record<string, string | undefined>) => {

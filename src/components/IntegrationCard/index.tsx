@@ -8,23 +8,15 @@ import { getEcosystemBadgeColorFromObject } from '@/utilities/getEcosystemBadgeC
 
 export type IntegrationsCardData = Pick<
   Integration,
-  | 'slug'
-  | 'icon'
-  | 'tagline'
-  | 'link'
-  | 'name'
-  | 'summary'
-  | 'categories'
-  | 'ecosystem'
+  'slug' | 'icon' | 'tagline' | 'link' | 'name' | 'summary' | 'categories' | 'ecosystem'
 >
 
 export const IntegrationCard: React.FC<{
   integration: IntegrationsCardData
   locale?: TypedLocale
 }> = ({ integration, locale }) => {
-  const { icon, tagline, link, name, summary, categories, ecosystem } =
-    integration
-
+  const { icon, tagline, link, name, summary, categories, ecosystem } = integration
+  console.log(link)
   return (
     // Use background variable and explicit rounding from Figma
     <div className="bg-background-neutral rounded-space-sm flex h-full w-full flex-col overflow-hidden lg:flex-row">
@@ -34,18 +26,10 @@ export const IntegrationCard: React.FC<{
           {/* Integration Badge (Icon + Name) */}
           <div className="flex items-start justify-end gap-4">
             {icon && (
-              <Media
-                resource={icon}
-                className="shrink-0"
-                imgClassName="size-space-3xl overflow-hidden rounded-xl"
-              />
+              <Media resource={icon} className="shrink-0" imgClassName="size-space-3xl overflow-hidden rounded-xl" />
             )}
             <div className="flex flex-col gap-2">
-              {name && (
-                <span className="text-body-lg text-base-secondary font-medium">
-                  {name}
-                </span>
-              )}
+              {name && <span className="text-body-lg text-base-secondary font-medium">{name}</span>}
               {categories && (
                 <span className="flex flex-wrap gap-2">
                   {ecosystem &&
@@ -58,9 +42,7 @@ export const IntegrationCard: React.FC<{
                             type="label"
                             size="md"
                             label={ecosystem.title}
-                            color={getEcosystemBadgeColorFromObject(
-                              ecosystem,
-                            )}
+                            color={getEcosystemBadgeColorFromObject(ecosystem)}
                           />
                         ),
                     )}
@@ -68,13 +50,7 @@ export const IntegrationCard: React.FC<{
                     (category) =>
                       category &&
                       typeof category === 'object' && (
-                        <Badge
-                          key={category.id}
-                          type="label"
-                          size="md"
-                          label={category.title}
-                          color="gray"
-                        />
+                        <Badge key={category.id} type="label" size="md" label={category.title} color="gray" />
                       ),
                   )}
                 </span>
@@ -86,11 +62,7 @@ export const IntegrationCard: React.FC<{
             {/* {tagline && <h3 className="text-h3 text-base-primary font-medium">{tagline}</h3>} */}
             {/* Render summary using RichText component with `data` prop */}
             {summary && (
-              <RichText
-                data={summary}
-                enableGutter={false}
-                className="text-body-sm text-base-secondary font-normal"
-              />
+              <RichText data={summary} enableGutter={false} className="text-body-sm text-base-secondary font-normal" />
             )}
           </div>
         </div>

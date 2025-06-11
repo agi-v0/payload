@@ -99,6 +99,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 'formBlock',
                 'galleryBlock',
                 'logosBlock',
+                'marketplaceBlock',
                 'metricsBlock',
                 'pricingBlock',
                 'richTextBlock',
