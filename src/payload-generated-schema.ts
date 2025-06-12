@@ -129,6 +129,11 @@ export const enum_logosBlock_block_header_badge_type = pgEnum('enum_logosBlock_b
   'reference',
 ])
 export const enum_logosBlock_type = pgEnum('enum_logosBlock_type', ['01', '02', '03'])
+export const enum_marketplaceBlock_initial_filters_sort = pgEnum('enum_marketplaceBlock_initial_filters_sort', [
+  'name',
+  'newest',
+  'oldest',
+])
 export const enum_metricsBlock_stats_indicator = pgEnum('enum_metricsBlock_stats_indicator', [
   'increase',
   'decrease',
@@ -310,6 +315,11 @@ export const enum__logosBlock_v_block_header_badge_type = pgEnum('enum__logosBlo
   'reference',
 ])
 export const enum__logosBlock_v_type = pgEnum('enum__logosBlock_v_type', ['01', '02', '03'])
+export const enum__marketplaceBlock_v_initial_filters_sort = pgEnum('enum__marketplaceBlock_v_initial_filters_sort', [
+  'name',
+  'newest',
+  'oldest',
+])
 export const enum__metricsBlock_v_stats_indicator = pgEnum('enum__metricsBlock_v_stats_indicator', [
   'increase',
   'decrease',
@@ -1428,12 +1438,25 @@ export const marketplaceBlock = pgTable(
     _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: varchar('id').primaryKey(),
+    initialFilters_ecosystem: uuid('initial_filters_ecosystem_id').references(() => categories.id, {
+      onDelete: 'set null',
+    }),
+    initialFilters_category: uuid('initial_filters_category_id').references(() => categories.id, {
+      onDelete: 'set null',
+    }),
+    initialFilters_sort: enum_marketplaceBlock_initial_filters_sort('initial_filters_sort').default('newest'),
     blockName: varchar('block_name'),
   },
   (columns) => ({
     _orderIdx: index('marketplaceBlock_order_idx').on(columns._order),
     _parentIDIdx: index('marketplaceBlock_parent_id_idx').on(columns._parentID),
     _pathIdx: index('marketplaceBlock_path_idx').on(columns._path),
+    marketplaceBlock_initial_filters_initial_filters_ecosystem_idx: index(
+      'marketplaceBlock_initial_filters_initial_filters_ecosystem_idx',
+    ).on(columns.initialFilters_ecosystem),
+    marketplaceBlock_initial_filters_initial_filters_category_idx: index(
+      'marketplaceBlock_initial_filters_initial_filters_category_idx',
+    ).on(columns.initialFilters_category),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [pages.id],
@@ -3137,6 +3160,13 @@ export const _marketplaceBlock_v = pgTable(
     _parentID: uuid('_parent_id').notNull(),
     _path: text('_path').notNull(),
     id: uuid('id').defaultRandom().primaryKey(),
+    initialFilters_ecosystem: uuid('initial_filters_ecosystem_id').references(() => categories.id, {
+      onDelete: 'set null',
+    }),
+    initialFilters_category: uuid('initial_filters_category_id').references(() => categories.id, {
+      onDelete: 'set null',
+    }),
+    initialFilters_sort: enum__marketplaceBlock_v_initial_filters_sort('initial_filters_sort').default('newest'),
     _uuid: varchar('_uuid'),
     blockName: varchar('block_name'),
   },
@@ -3144,6 +3174,12 @@ export const _marketplaceBlock_v = pgTable(
     _orderIdx: index('_marketplaceBlock_v_order_idx').on(columns._order),
     _parentIDIdx: index('_marketplaceBlock_v_parent_id_idx').on(columns._parentID),
     _pathIdx: index('_marketplaceBlock_v_path_idx').on(columns._path),
+    _marketplaceBlock_v_initial_filters_initial_filters_ecosystem_idx: index(
+      '_marketplaceBlock_v_initial_filters_initial_filters_ecosystem_idx',
+    ).on(columns.initialFilters_ecosystem),
+    _marketplaceBlock_v_initial_filters_initial_filters_category_idx: index(
+      '_marketplaceBlock_v_initial_filters_initial_filters_category_idx',
+    ).on(columns.initialFilters_category),
     _parentIdFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [_pages_v.id],
@@ -4665,11 +4701,11 @@ export const media = pgTable(
   'media',
   {
     id: uuid('id').defaultRandom().primaryKey(),
+    prefix: varchar('prefix').default('media'),
     alt: varchar('alt').notNull(),
     caption: jsonb('caption'),
     locale: enum_media_locale('locale'),
     blurhash: varchar('blurhash'),
-    prefix: varchar('prefix').default('media'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
     createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
     url: varchar('url'),
@@ -7349,6 +7385,16 @@ export const relations_marketplaceBlock = relations(marketplaceBlock, ({ one }) 
     references: [pages.id],
     relationName: '_blocks_marketplaceBlock',
   }),
+  initialFilters_ecosystem: one(categories, {
+    fields: [marketplaceBlock.initialFilters_ecosystem],
+    references: [categories.id],
+    relationName: 'initialFilters_ecosystem',
+  }),
+  initialFilters_category: one(categories, {
+    fields: [marketplaceBlock.initialFilters_category],
+    references: [categories.id],
+    relationName: 'initialFilters_category',
+  }),
 }))
 export const relations_metricsBlock_block_header_links_locales = relations(
   metricsBlock_block_header_links_locales,
@@ -8258,6 +8304,16 @@ export const relations__marketplaceBlock_v = relations(_marketplaceBlock_v, ({ o
     fields: [_marketplaceBlock_v._parentID],
     references: [_pages_v.id],
     relationName: '_blocks_marketplaceBlock',
+  }),
+  initialFilters_ecosystem: one(categories, {
+    fields: [_marketplaceBlock_v.initialFilters_ecosystem],
+    references: [categories.id],
+    relationName: 'initialFilters_ecosystem',
+  }),
+  initialFilters_category: one(categories, {
+    fields: [_marketplaceBlock_v.initialFilters_category],
+    references: [categories.id],
+    relationName: 'initialFilters_category',
   }),
 }))
 export const relations__metricsBlock_v_block_header_links_locales = relations(
@@ -10189,6 +10245,7 @@ type DatabaseSchema = {
   enum_logosBlock_block_header_type: typeof enum_logosBlock_block_header_type
   enum_logosBlock_block_header_badge_type: typeof enum_logosBlock_block_header_badge_type
   enum_logosBlock_type: typeof enum_logosBlock_type
+  enum_marketplaceBlock_initial_filters_sort: typeof enum_marketplaceBlock_initial_filters_sort
   enum_metricsBlock_stats_indicator: typeof enum_metricsBlock_stats_indicator
   enum_metricsBlock_block_header_type: typeof enum_metricsBlock_block_header_type
   enum_metricsBlock_block_header_badge_type: typeof enum_metricsBlock_block_header_badge_type
@@ -10232,6 +10289,7 @@ type DatabaseSchema = {
   enum__logosBlock_v_block_header_type: typeof enum__logosBlock_v_block_header_type
   enum__logosBlock_v_block_header_badge_type: typeof enum__logosBlock_v_block_header_badge_type
   enum__logosBlock_v_type: typeof enum__logosBlock_v_type
+  enum__marketplaceBlock_v_initial_filters_sort: typeof enum__marketplaceBlock_v_initial_filters_sort
   enum__metricsBlock_v_stats_indicator: typeof enum__metricsBlock_v_stats_indicator
   enum__metricsBlock_v_block_header_type: typeof enum__metricsBlock_v_block_header_type
   enum__metricsBlock_v_block_header_badge_type: typeof enum__metricsBlock_v_block_header_badge_type

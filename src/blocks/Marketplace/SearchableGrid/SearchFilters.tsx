@@ -26,9 +26,9 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({ categories, ecosys
 
   initialFilters = {
     search: searchParams.get('q') || '',
-    category: searchParams.get('category') || '',
-    ecosystem: searchParams.get('ecosystem') || '',
-    sort: searchParams.get('sort') || 'newest',
+    category: searchParams.get('category') || initialFilters?.category || '',
+    ecosystem: searchParams.get('ecosystem') || initialFilters?.ecosystem || '',
+    sort: searchParams.get('sort') || initialFilters?.sort || 'newest',
   }
 
   const updateSearchParams = useCallback(

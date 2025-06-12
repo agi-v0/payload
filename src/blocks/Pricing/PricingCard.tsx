@@ -2,26 +2,14 @@
 
 import React, { useState } from 'react'
 import { cn } from '@/utilities/ui'
-import type {
-  PricingBlock,
-  Media as MediaType,
-  Integration,
-  Solution,
-  Post,
-  Page,
-} from '@/payload-types'
+import type { PricingBlock, Media as MediaType, Integration, Solution, Post, Page } from '@/payload-types'
 import { Media } from '@/components/MediaResponsive'
 import { Badge } from '@/components/ui/badge'
 import { ChevronDown, CircleCheck, X } from 'lucide-react'
 import { CMSLink } from '@/components/Link'
 import { SaudiRiyal } from '@/icons/saudi-riyal'
 import { usePricing } from '@/providers/Pricing'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/motion-ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/motion-ui/tooltip'
 import { useTheme } from '@/providers/Theme'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
@@ -31,9 +19,7 @@ interface PricingCardProps {
   badge?: {
     type?: ('label' | 'reference') | null
     label?: string | null
-    color?:
-      | ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted')
-      | null
+    color?: ('blue' | 'red' | 'green' | 'yellow' | 'gray' | 'inverted') | null
     reference?:
       | ({
           relationTo: 'solutions'
@@ -81,9 +67,7 @@ interface PricingCardProps {
     /**
      * Choose how the link should be rendered.
      */
-    variant?:
-      | ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link')
-      | null
+    variant?: ('primary' | 'secondary' | 'tertiary' | 'ghost' | 'link') | null
   }
   features?:
     | {
@@ -129,15 +113,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
   return (
     <motion.div
       layout
-      data-theme={
-        type === 'featured'
-          ? theme === 'dark'
-            ? 'light'
-            : 'dark'
-          : theme === 'dark'
-            ? 'dark'
-            : 'light'
-      }
+      data-theme={type === 'featured' ? (theme === 'dark' ? 'light' : 'dark') : theme === 'dark' ? 'dark' : 'light'}
       className={cn(
         'bg-background-neutral rounded-space-sm relative space-y-4',
         type === 'featured' && 'bg-background-neutral p-card-xl',
@@ -153,12 +129,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
             </div>
           )}
 
-          {iconMedia && (
-            <Media
-              resource={iconMedia}
-              imgClassName="size-space-3xl object-contain"
-            />
-          )}
+          {iconMedia && <Media resource={iconMedia} imgClassName="size-space-3xl object-contain" />}
 
           <div className="text-start">
             {title && (
@@ -171,9 +142,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                 {title}
               </h3>
             )}
-            {subtitle && (
-              <p className="text-base-tertiary text-body-sm">{subtitle}</p>
-            )}
+            {subtitle && <p className="text-base-tertiary text-body-sm">{subtitle}</p>}
           </div>
         </div>
 
@@ -185,24 +154,14 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
             )}
           >
             {isMonthly ? price.monthly : price.annually}{' '}
-            <SaudiRiyal
-              className={cn(
-                'text-h4 inline-block',
-                type === null && 'text-(length:--text-body-sm)',
-              )}
-            />{' '}
+            <SaudiRiyal className={cn('text-h4 inline-block', type === null && 'text-(length:--text-body-sm)')} />{' '}
             <span className="text-base-tertiary text-body-sm font-normal">
               /{isMonthly ? translations.monthly : translations.annually}
             </span>
           </p>
         )}
         {link && (
-          <CMSLink
-            {...link}
-            className="w-full"
-            size="lg"
-            variant={type === 'featured' ? 'primary' : 'secondary'}
-          />
+          <CMSLink {...link} className="w-full" size="lg" variant={type === 'featured' ? 'primary' : 'secondary'} />
         )}
         <hr className="border-input" />
       </motion.div>
@@ -216,13 +175,8 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           data-state={isExpanded ? 'expanded' : 'collapsed'}
           className="hover:bg-neutral/5 data-[state=expanded]:hover:bg-neutral/10 data-[state=expanded]:bg-neutral/5 w-full space-y-4 rounded-xl px-4 py-3 pt-2 transition-colors duration-200 max-md:px-0 data-[state=expanded]:max-md:px-4"
         >
-          <motion.div
-            layout
-            className="-me-2 flex w-full flex-row items-center justify-between"
-          >
-            <p className="text-body-sm text-base-tertiary font-normal">
-              {translations.includedSolutions}
-            </p>
+          <motion.div layout className="-me-2 flex w-full flex-row items-center justify-between">
+            <p className="text-body-sm text-base-tertiary font-normal">{translations.includedSolutions}</p>
             <ChevronDown
               data-state={isExpanded ? 'expanded' : 'collapsed'}
               className="text-base-tertiary size-5 transition-transform duration-200 data-[state=expanded]:rotate-180"
@@ -231,9 +185,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           <motion.ul
             className={cn(
               'flex w-full items-start justify-start gap-1',
-              isExpanded
-                ? 'flex-col flex-nowrap gap-2'
-                : 'flex-row flex-wrap gap-1',
+              isExpanded ? 'flex-col flex-nowrap gap-2' : 'flex-row flex-wrap gap-1',
             )}
             layout
           >
@@ -243,10 +195,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
               const mediaElement = (
                 <Media
                   resource={icon as MediaType}
-                  imgClassName={cn(
-                    'size-12 object-contain',
-                    isExpanded && 'size-12',
-                  )}
+                  imgClassName={cn('size-12 rounded-md object-contain', isExpanded && 'size-12')}
                 />
               )
 
@@ -260,10 +209,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                     <motion.div
                       layout="position"
                       layoutId={`solution-icon-${type}-${name}`}
-                      className={cn(
-                        'flex-shrink-0',
-                        isExpanded ? '' : 'h-fit',
-                      )}
+                      className={cn('flex-shrink-0', isExpanded ? '' : 'h-fit')}
                     >
                       {isExpanded ? (
                         mediaElement
@@ -276,12 +222,8 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                             }}
                           >
                             <div className="text-center">
-                              <p className="text-base-secondary text-sm font-medium">
-                                {name}
-                              </p>
-                              <p className="text-base-tertiary text-sm">
-                                {tagline}
-                              </p>
+                              <p className="text-base-secondary text-sm font-medium">{name}</p>
+                              <p className="text-base-tertiary text-sm">{tagline}</p>
                             </div>
                           </TooltipContent>
                         </>
@@ -305,19 +247,13 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                             x: 16,
                             transition: {
                               ease: [0, 0, 0.2, 1],
-                              delay:
-                                (featuredSolutions.length - 1 - idx) *
-                                0.02,
+                              delay: (featuredSolutions.length - 1 - idx) * 0.02,
                             },
                           }}
                           className="flex flex-col items-start justify-start text-start"
                         >
-                          <p className="text-base-secondary text-base font-medium">
-                            {name}
-                          </p>
-                          <p className="text-base-tertiary text-sm">
-                            {tagline}
-                          </p>
+                          <p className="text-base-secondary text-base font-medium">{name}</p>
+                          <p className="text-base-tertiary text-sm">{tagline}</p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -333,27 +269,13 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
       {/* Featured Integrations */}
       {featuredIntegrations && featuredIntegrations.length > 0 && (
         <div className="px-4 max-md:px-0">
-          <p className="text-body-sm text-base-tertiary mb-4 font-normal">
-            {translations.integrations}
-          </p>
+          <p className="text-body-sm text-base-tertiary mb-4 font-normal">{translations.integrations}</p>
           <div className="flex flex-wrap gap-1">
             {featuredIntegrations.map((integration, idx) => {
-              const integrationTitle =
-                typeof integration === 'object' && integration.title
-                  ? integration.title
-                  : ''
-              const integrationIcon =
-                typeof integration === 'object' && integration.icon
-                  ? integration.icon
-                  : ''
+              const integrationTitle = typeof integration === 'object' && integration.title ? integration.title : ''
+              const integrationIcon = typeof integration === 'object' && integration.icon ? integration.icon : ''
 
-              return (
-                <Media
-                  key={idx}
-                  resource={integrationIcon}
-                  imgClassName="size-12 object-contain"
-                />
-              )
+              return <Media key={idx} resource={integrationIcon} imgClassName="size-12 object-contain" />
             })}
           </div>
         </div>
@@ -367,23 +289,13 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           </p> */}
           <ul className="space-y-2.5">
             {features.map((feature, featureIndex) => (
-              <li
-                key={featureIndex}
-                className="flex items-center justify-start gap-2"
-              >
+              <li key={featureIndex} className="flex items-center justify-start gap-2">
                 {feature.enabled ? (
                   <CircleCheck className="text-base-secondary size-5 flex-shrink-0" />
                 ) : (
                   <X className="text-base-tertiary size-5 flex-shrink-0" />
                 )}
-                <span
-                  className={cn(
-                    'text-caption',
-                    feature.enabled
-                      ? 'text-base-secondary'
-                      : 'text-base-tertiary',
-                  )}
-                >
+                <span className={cn('text-caption', feature.enabled ? 'text-base-secondary' : 'text-base-tertiary')}>
                   {feature.feature}
                 </span>
               </li>

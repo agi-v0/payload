@@ -48,20 +48,13 @@ type Args = {
     slug?: string[]
     locale?: 'ar' | 'en' | undefined
   }>
-  searchParams: Promise<{
-    q?: string
-    category?: string
-    ecosystem?: string
-    sort?: string
-  }>
 }
 
-export default async function Page({ params: paramsPromise, searchParams: searchParamsPromise }: Args) {
+export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
-  const searchParams = await searchParamsPromise
-  const slugPath = slugSegments.join('/') || 'integrations'
-  const url = `/${locale}/${slugPath === 'integrations' ? '' : slugPath}`
+  const slugPath = slugSegments.join('/') || 'marketplace'
+  const url = `/${locale}/${slugPath === 'marketplace' ? '' : slugPath}`
 
   let page: PageType | null
 
@@ -70,7 +63,7 @@ export default async function Page({ params: paramsPromise, searchParams: search
     locale,
   })
 
-  if (!page && slugPath === 'integrations') {
+  if (!page && slugPath === 'marketplace') {
     page = null
   }
 
@@ -88,18 +81,6 @@ export default async function Page({ params: paramsPromise, searchParams: search
       {draft && <LivePreviewListener />}
 
       <RenderHero {...hero} />
-      {/* <SearchableIntegrationsGrid
-        integrations={integrations.docs || []}
-        categories={categories.docs || []}
-        ecosystems={ecosystems.docs || []}
-        locale={locale}
-        initialFilters={{
-          search: searchParams.q || '',
-          category: searchParams.category || '',
-          ecosystem: searchParams.ecosystem || '',
-          sort: searchParams.sort || 'newest',
-        }}
-      /> */}
       <RenderBlocks blocks={layout as any} locale={locale} />
     </article>
   )

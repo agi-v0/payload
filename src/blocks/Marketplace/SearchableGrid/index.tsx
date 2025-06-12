@@ -8,17 +8,25 @@ import { draftMode } from 'next/headers'
 
 interface SearchableIntegrationsGridProps {
   locale: 'ar' | 'en'
+  initialFilters: {
+    ecosystem: Category
+    category: Category
+    sort: string
+  }
 }
 
-export const SearchableIntegrationsGrid: React.FC<SearchableIntegrationsGridProps> = async ({ locale }) => {
+export const SearchableIntegrationsGrid: React.FC<SearchableIntegrationsGridProps> = async ({
+  locale,
+  initialFilters,
+}) => {
   const payload = await getPayload({ config: configPromise })
   const { isEnabled: draft } = await draftMode()
   const [integrations, categories, ecosystems] = await Promise.all([
     getFilteredIntegrations({
       search: '',
-      category: '',
-      ecosystem: '',
-      sort: '',
+      category: initialFilters.category?.slug || '',
+      ecosystem: initialFilters.ecosystem?.slug || '',
+      sort: initialFilters.sort || 'newest',
       locale,
       draft,
     }),
@@ -58,22 +66,22 @@ export const SearchableIntegrationsGrid: React.FC<SearchableIntegrationsGridProp
     }),
   ])
 
-  const initialFilters = {
+  const filters = {
     search: '',
-    category: '',
-    ecosystem: '',
-    sort: '',
+    category: initialFilters.category?.slug || '',
+    ecosystem: initialFilters.ecosystem?.slug || '',
+    sort: initialFilters.sort || 'newest',
   }
-
+  console.log(filters)
   return (
     <div className="py-xl space-y-md container">
       <SearchFilters
         categories={categories.docs}
         ecosystems={ecosystems.docs}
         locale={locale}
-        initialFilters={initialFilters}
+        initialFilters={filters}
       />
-      <IntegrationsGrid integrations={integrations.docs} locale={locale} initialFilters={initialFilters} />
+      <IntegrationsGrid integrations={integrations.docs} locale={locale} initialFilters={filters} />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 {
-  "id": "b1382cb4-e238-436a-9b06-7bacffc062fc",
+  "id": "c24ed575-d201-473f-8a84-620ba18fd22c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -4641,6 +4641,26 @@
           "primaryKey": true,
           "notNull": true
         },
+        "initial_filters_ecosystem_id": {
+          "name": "initial_filters_ecosystem_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "initial_filters_category_id": {
+          "name": "initial_filters_category_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "initial_filters_sort": {
+          "name": "initial_filters_sort",
+          "type": "enum_marketplaceBlock_initial_filters_sort",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'newest'"
+        },
         "block_name": {
           "name": "block_name",
           "type": "varchar",
@@ -4693,9 +4713,65 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
+        },
+        "marketplaceBlock_initial_filters_initial_filters_ecosystem_idx": {
+          "name": "marketplaceBlock_initial_filters_initial_filters_ecosystem_idx",
+          "columns": [
+            {
+              "expression": "initial_filters_ecosystem_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "marketplaceBlock_initial_filters_initial_filters_category_idx": {
+          "name": "marketplaceBlock_initial_filters_initial_filters_category_idx",
+          "columns": [
+            {
+              "expression": "initial_filters_category_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
         }
       },
       "foreignKeys": {
+        "marketplaceBlock_initial_filters_ecosystem_id_categories_id_fk": {
+          "name": "marketplaceBlock_initial_filters_ecosystem_id_categories_id_fk",
+          "tableFrom": "marketplaceBlock",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "initial_filters_ecosystem_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "marketplaceBlock_initial_filters_category_id_categories_id_fk": {
+          "name": "marketplaceBlock_initial_filters_category_id_categories_id_fk",
+          "tableFrom": "marketplaceBlock",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "initial_filters_category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
         "marketplaceBlock_parent_id_fk": {
           "name": "marketplaceBlock_parent_id_fk",
           "tableFrom": "marketplaceBlock",
@@ -12758,6 +12834,26 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "initial_filters_ecosystem_id": {
+          "name": "initial_filters_ecosystem_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "initial_filters_category_id": {
+          "name": "initial_filters_category_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "initial_filters_sort": {
+          "name": "initial_filters_sort",
+          "type": "enum__marketplaceBlock_v_initial_filters_sort",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'newest'"
+        },
         "_uuid": {
           "name": "_uuid",
           "type": "varchar",
@@ -12816,9 +12912,65 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
+        },
+        "_marketplaceBlock_v_initial_filters_initial_filters_ecosystem_idx": {
+          "name": "_marketplaceBlock_v_initial_filters_initial_filters_ecosystem_idx",
+          "columns": [
+            {
+              "expression": "initial_filters_ecosystem_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_marketplaceBlock_v_initial_filters_initial_filters_category_idx": {
+          "name": "_marketplaceBlock_v_initial_filters_initial_filters_category_idx",
+          "columns": [
+            {
+              "expression": "initial_filters_category_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
         }
       },
       "foreignKeys": {
+        "_marketplaceBlock_v_initial_filters_ecosystem_id_categories_id_fk": {
+          "name": "_marketplaceBlock_v_initial_filters_ecosystem_id_categories_id_fk",
+          "tableFrom": "_marketplaceBlock_v",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "initial_filters_ecosystem_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_marketplaceBlock_v_initial_filters_category_id_categories_id_fk": {
+          "name": "_marketplaceBlock_v_initial_filters_category_id_categories_id_fk",
+          "tableFrom": "_marketplaceBlock_v",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "initial_filters_category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
         "_marketplaceBlock_v_parent_id_fk": {
           "name": "_marketplaceBlock_v_parent_id_fk",
           "tableFrom": "_marketplaceBlock_v",
@@ -20630,6 +20782,13 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "prefix": {
+          "name": "prefix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'media'"
+        },
         "alt": {
           "name": "alt",
           "type": "varchar",
@@ -20654,13 +20813,6 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
-        },
-        "prefix": {
-          "name": "prefix",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'media'"
         },
         "updated_at": {
           "name": "updated_at",
@@ -31417,6 +31569,15 @@
         "03"
       ]
     },
+    "public.enum_marketplaceBlock_initial_filters_sort": {
+      "name": "enum_marketplaceBlock_initial_filters_sort",
+      "schema": "public",
+      "values": [
+        "name",
+        "newest",
+        "oldest"
+      ]
+    },
     "public.enum_metricsBlock_stats_indicator": {
       "name": "enum_metricsBlock_stats_indicator",
       "schema": "public",
@@ -31811,6 +31972,15 @@
         "01",
         "02",
         "03"
+      ]
+    },
+    "public.enum__marketplaceBlock_v_initial_filters_sort": {
+      "name": "enum__marketplaceBlock_v_initial_filters_sort",
+      "schema": "public",
+      "values": [
+        "name",
+        "newest",
+        "oldest"
       ]
     },
     "public.enum__metricsBlock_v_stats_indicator": {
