@@ -407,7 +407,7 @@ export interface CallToActionBlock {
           value: string | Integration;
         } | null);
     /**
-     * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+     * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
      */
     icon?: string | null;
     icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -476,7 +476,7 @@ export interface CallToActionBlock {
   list?:
     | {
         /**
-         * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+         * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
          */
         icon?: string | null;
         title?: string | null;
@@ -561,7 +561,7 @@ export interface Page {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -852,7 +852,7 @@ export interface CustomHtmlBlock {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -945,7 +945,7 @@ export interface FaqBlock {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -1052,7 +1052,7 @@ export interface FeaturedAppsBlock {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -1160,7 +1160,7 @@ export interface FeaturesBlock {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -1269,6 +1269,9 @@ export interface FeaturesBlock {
             } | null);
         image?: (string | null) | Media;
         tabLabel?: string | null;
+        /**
+         * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
+         */
         icon?: string | null;
         content?: {
           title: string;
@@ -1306,7 +1309,7 @@ export interface FeaturesBlock {
                 value: string | Integration;
               } | null);
           /**
-           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+           * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
            */
           icon?: string | null;
           icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -1558,7 +1561,7 @@ export interface GalleryBlock {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -1660,7 +1663,7 @@ export interface LogoBlock {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -1740,7 +1743,7 @@ export interface RichTextBlock {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -1842,7 +1845,7 @@ export interface TestimonialsBlock {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -2083,7 +2086,7 @@ export interface MetricsBlock {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -2199,7 +2202,7 @@ export interface PricingBlock {
             value: string | Integration;
           } | null);
       /**
-       * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+       * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
        */
       icon?: string | null;
       icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -2273,7 +2276,7 @@ export interface PricingBlock {
                 value: string | Integration;
               } | null);
           /**
-           * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+           * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
            */
           icon?: string | null;
           icon_position?: ('flex-row' | 'flex-row-reverse') | null;
@@ -3482,7 +3485,7 @@ export interface Header {
                   url?: string | null;
                   label: string;
                   /**
-                   * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+                   * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
                    */
                   icon?: string | null;
                 };
@@ -3526,7 +3529,7 @@ export interface Header {
                         url?: string | null;
                         label: string;
                         /**
-                         * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+                         * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
                          */
                         icon?: string | null;
                       };
@@ -3558,7 +3561,7 @@ export interface Header {
                         label: string;
                         description?: string | null;
                         /**
-                         * Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/
+                         * Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons
                          */
                         icon?: string | null;
                       };
