@@ -19,7 +19,6 @@ import RichText from '@/components/RichText'
 import { Icon } from '@iconify-icon/react'
 import MarnIcon from '@/components/ui/marn-icon'
 
-import { Icon } from '@iconify-icon/react'
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
 interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {

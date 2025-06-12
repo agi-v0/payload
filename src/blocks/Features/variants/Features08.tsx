@@ -10,8 +10,6 @@ import { CMSLink } from '@/components/Link'
 import { Icon } from '@iconify-icon/react'
 import { Button } from '@/components/ui/button'
 
-import { Icon } from '@iconify-icon/react'
-
 type Features08Props = FeaturesBlock & {
   readMoreLabel?: string
 }

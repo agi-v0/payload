@@ -11,7 +11,7 @@ import {
   RichText as RichTextWithoutBlocks,
 } from '@payloadcms/richtext-lexical/react'
 
-import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
+// import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 import { StyledListBlock, StyledListBlockProps } from '@/blocks/StyledList/Component'
 
 import type {
@@ -25,9 +25,7 @@ import { CallToAction01 } from '@/blocks/CallToAction/CallToAction01'
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<
-      CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps | StyledListBlockProps
-    >
+  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | StyledListBlockProps>
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
@@ -53,7 +51,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         disableInnerContainer={true}
       />
     ),
-    code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
+    // code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     cta: ({ node }) => <CallToAction01 {...node.fields} />,
     styledList: ({ node }) => <StyledListBlock className="col-start-2" {...node.fields} />,
   },

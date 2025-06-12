@@ -8,8 +8,6 @@ import React from 'react'
 import type { Page, Post, Solution } from '@/payload-types'
 import { Icon } from '@iconify-icon/react'
 
-import { Icon } from '@iconify-icon/react'
-
 export type CMSLinkType = {
   variant?: 'inline' | ButtonProps['variant'] | null
   color?: ButtonProps['color'] | null

@@ -17,7 +17,6 @@ import {
   AccordionTrigger,
 } from '@/components/motion-ui/accordion'
 
-import { Icon } from '@iconify-icon/react'
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
 // Define the type for a single nav item from HeaderType
