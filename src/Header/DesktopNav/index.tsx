@@ -231,9 +231,9 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                       )}
                     </div>
                     <Icon
-                      icon="material-symbols:arrow-left-rounded"
+                      icon="tabler:caret-left-filled"
                       height="none"
-                      className="text-base-tertiary group-hover:text-base-tertiary shrink-0 translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+                      className="text-base-tertiary group-hover:text-base-tertiary size-4 shrink-0 translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
                     />
                   </CMSLink>
                 )

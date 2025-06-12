@@ -92,9 +92,9 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         {children && children}
         {variant === 'link' && (
           <Icon
-            icon="material-symbols:arrow-left-rounded"
+            icon="tabler:caret-left-filled"
             height="none"
-            className="size-3 translate-x-1 transition-all duration-150 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
+            className="size-3 shrink-0 translate-x-1 transition-all duration-150 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
           />
         )}
       </Link>

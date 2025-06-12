@@ -50,7 +50,7 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
                         {app.value?.name}
                       </span>
                       <Icon
-                            icon="material-symbols:arrow-left-rounded"
+                            icon="tabler:caret-left-filled"
                             height="none" className="size-4 translate-x-0 transition-all duration-150 group-hover:-translate-x-1 ltr:rotate-180 ltr:group-hover:translate-x-1" />
                     </CMSLink>
                   )
@@ -98,7 +98,7 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
                             {app.value?.name}
                           </span>
                           <Icon
-                            icon="material-symbols:arrow-left-rounded"
+                            icon="tabler:caret-left-filled"
                             height="none"
                             className="size-4 translate-x-0 transition-all duration-150 group-hover:-translate-x-1 ltr:rotate-180 ltr:group-hover:translate-x-1"
                           />

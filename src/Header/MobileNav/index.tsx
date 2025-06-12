@@ -93,7 +93,7 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
                   >
                     <span>{tab.label}</span>
                     <Icon
-                      icon="material-symbols:arrow-left-rounded"
+                      icon="tabler:caret-left-filled"
                       height="none"
                       className="size-4 -rotate-90 transition-transform duration-200 group-data-[expanded]:rotate-90"
                     />

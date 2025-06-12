@@ -137,7 +137,7 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
             onClick={() => handleSetActiveIndex(activeIndex - 1)}
           >
             <Icon
-              icon="material-symbols:arrow-left-rounded"
+              icon="tabler:caret-left-filled"
               height="none"
               className="size-4 rotate-180 ltr:rotate-0"
             />
@@ -156,11 +156,7 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
             }
           >
             {locale === 'ar' ? 'التالي' : 'Next'}{' '}
-            <Icon
-              icon="material-symbols:arrow-left-rounded"
-              height="none"
-              className="size-4 ltr:rotate-180"
-            />
+            <Icon icon="tabler:caret-left-filled" height="none" className="size-4 ltr:rotate-180" />
           </Button>
         </div>
       </div>

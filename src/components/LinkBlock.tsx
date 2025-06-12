@@ -63,7 +63,7 @@ export const LinkBlock: React.FC<LinkBlockProps> = ({
           {/* <ArrowRight className="size-xl text-inverted-primary rtl:rotate-180" /> */}
           {CTALabel}
           <Icon
-            icon="material-symbols:arrow-left-rounded"
+            icon="tabler:caret-left-filled"
             height="none"
             className="size-xl text-inverted-primary ltr:rotate-180"
           />
@@ -72,7 +72,7 @@ export const LinkBlock: React.FC<LinkBlockProps> = ({
         {position === 'corner' && (
           <span className="ease-in-out-cubic end-sm bottom-sm absolute transition-all duration-200 group-hover:-translate-x-full group-hover:opacity-0">
             <Icon
-              icon="material-symbols:arrow-left-rounded"
+              icon="tabler:caret-left-filled"
               height="none"
               className="size-h4 text-inverted-primary ltr:rotate-180"
             />

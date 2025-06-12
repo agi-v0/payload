@@ -107,7 +107,7 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
                         <span className="mt-auto flex w-fit flex-row items-center gap-2">
                           {readMoreLabel}
                           <Icon
-                            icon="material-symbols:arrow-left-rounded"
+                            icon="tabler:caret-left-filled"
                             height="none"
                             className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
                           />
