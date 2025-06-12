@@ -7,7 +7,7 @@ import { containerVariants, itemsFling } from '@/utilities/motion'
 import { cn } from '@/utilities/ui'
 
 import { Card, CardContent } from '@/components/ui/card'
-import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
+import { Icon } from '@iconify-icon/react'
 
 export const Features13: React.FC<FeaturesBlock> = ({ columns }) => {
   if (!columns || columns.length === 0) return null
@@ -21,15 +21,16 @@ export const Features13: React.FC<FeaturesBlock> = ({ columns }) => {
       viewport={{ once: true, amount: 0.3 }}
     >
       {columns.map((column, index) => {
-        const iconName = column.icon as keyof typeof dynamicIconImports
+        const iconName = column.icon as string
         return (
           <motion.div key={index} variants={itemsFling}>
             <Card className="rounded-space-sm p-md bg-card h-full w-full flex-grow border-0">
               <CardContent className={cn('gap-md flex flex-col justify-start p-0')}>
                 {column.icon && (
-                  <DynamicIcon
+                  <Icon
                     className="text-base-secondary size-md"
-                    name={iconName}
+                    icon={`material-symbols:${iconName}`}
+                    height="none"
                     color="currentColor"
                   />
                 )}

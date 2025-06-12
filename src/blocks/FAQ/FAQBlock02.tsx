@@ -12,7 +12,7 @@ import { Media } from '@/components/Media'
 import { Faq, FaqBlock } from '@/payload-types'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { DynamicIcon } from 'lucide-react/dynamic'
+import { Icon } from '@iconify-icon/react'
 import { PlusIcon } from 'lucide-react'
 import { BlockHeader } from '@/components/BlockHeader'
 

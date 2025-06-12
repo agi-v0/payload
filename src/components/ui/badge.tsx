@@ -3,7 +3,7 @@ import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utilities/ui'
-import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
+import { Icon } from '@iconify-icon/react'
 import { Solution, Integration, Media as MediaType } from '@/payload-types'
 import { Media } from '../Media'
 
@@ -67,13 +67,20 @@ function Badge({
   size,
   ...props
 }: BadgeProps) {
-  const iconName = icon ? (icon as keyof typeof dynamicIconImports) : undefined
+  const iconName = icon ? (icon as string) : undefined
   const referenceValue = reference?.value as Solution | Integration
 
   if (type === 'label') {
     return (
       <div className={cn(badgeVariants({ color, size }), icon_position, className)} {...props}>
-        {iconName && <DynamicIcon name={iconName} color="currentColor" size={16} />}
+        {iconName && (
+          <Icon
+            icon={`material-symbols:${iconName}`}
+            color="currentColor"
+            size={16}
+            height="none"
+          />
+        )}
         <p>{label}</p>
       </div>
     )

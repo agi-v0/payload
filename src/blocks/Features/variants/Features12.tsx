@@ -24,7 +24,7 @@ import {
   MorphingDialogTrigger,
 } from '@/components/motion-ui/morphing-dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
+import { Icon } from '@iconify-icon/react'
 import { Plus, PlusCircle } from 'lucide-react'
 
 type Features11Props = FeaturesBlock & {
@@ -65,9 +65,10 @@ export const Features12: React.FC<Features11Props> = ({ columns, locale }) => {
                   >
                     <CardContent className="rounded-space-sm pe-md flex flex-col items-start gap-2 pb-4">
                       {column.icon && (
-                        <DynamicIcon
+                        <Icon
                           className="text-base-secondary mb-sm size-md"
-                          name={column.icon as keyof typeof dynamicIconImports}
+                          icon={`material-symbols:${column.icon}`}
+                          height="none"
                           color="currentColor"
                         />
                       )}
@@ -105,9 +106,10 @@ export const Features12: React.FC<Features11Props> = ({ columns, locale }) => {
                         <CardContent className="rounded-space-sm gap-xs flex h-full flex-col items-start p-0">
                           <MorphingDialogClose className="bg-neutral/10 hover:bg-neutral/30 text-base-secondary h-10 w-10 rounded-full px-2 py-2" />
                           {column.icon && (
-                            <DynamicIcon
+                            <Icon
                               className="text-base-secondary size-md my-2"
-                              name={column.icon as keyof typeof dynamicIconImports}
+                              icon={`material-symbols:${column.icon}`}
+                              height="none"
                               color="currentColor"
                             />
                           )}

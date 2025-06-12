@@ -2,7 +2,7 @@
 import React from 'react'
 import { Media } from '@/components/Media'
 import { FeaturesBlock } from '@/payload-types'
-import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
+import { Icon } from '@iconify-icon/react'
 import { BlockHeader } from '@/components/BlockHeader'
 import { motion } from 'motion/react'
 import { containerVariants, itemsFling } from '@/utilities/motion'
@@ -58,9 +58,10 @@ export const Features06: React.FC<FeaturesBlock> = ({ columns, blockImage, block
                 >
                   {icon && (
                     <div className="bg-background-neutral-subtle p-xs inline rounded-full">
-                      <DynamicIcon
+                      <Icon
                         className="text-base-secondary size-sm"
-                        name={icon as keyof typeof dynamicIconImports}
+                        height="none"
+                        icon={`material-symbols:${icon}`}
                         color="currentColor"
                       />
                     </div>

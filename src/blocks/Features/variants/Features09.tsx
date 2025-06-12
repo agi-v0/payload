@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
-import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
+import { Icon } from '@iconify-icon/react'
 import { FeaturesBlock } from '@/payload-types'
 import {
   Accordion,
@@ -30,7 +30,7 @@ export const Features09: React.FC<FeaturesBlock> = ({ columns }) => {
         className="md:pe-xs flex flex-col"
       >
         {columns.map((column, index) => {
-          const iconName = column.icon as keyof typeof dynamicIconImports
+          const iconName = column.icon as string
           const isActive = activeAccordionId === String(index)
 
           return (
@@ -45,12 +45,13 @@ export const Features09: React.FC<FeaturesBlock> = ({ columns }) => {
               <AccordionTrigger className="text-base-tertiary gap-xs flex items-center justify-start bg-transparent p-0 hover:no-underline">
                 {column.icon && (
                   <div className={`flex-shrink-0`}>
-                    <DynamicIcon
+                    <Icon
                       className={cn(
                         'size-md',
                         isActive ? 'text-base-primary' : 'text-base-tertiary',
                       )}
-                      name={iconName}
+                      icon={`material-symbols:${iconName}`}
+                      height="none"
                       color="currentColor"
                     />
                   </div>

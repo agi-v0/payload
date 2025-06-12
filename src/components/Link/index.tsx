@@ -6,7 +6,7 @@ import { Link } from '@/i18n/routing'
 import React from 'react'
 
 import type { Page, Post, Solution } from '@/payload-types'
-import { DynamicIcon } from 'lucide-react/dynamic'
+import { Icon } from '@iconify-icon/react'
 import { CaretLeft } from '@/icons/caret-left-filled'
 
 export type CMSLinkType = {
@@ -88,7 +88,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   return (
     <Button asChild className={className} size={size} variant={variant} color={color || 'neutral'}>
       <Link className={cn('group', className)} href={href || url || ''} {...newTabProps}>
-        {icon && <DynamicIcon name={icon as any} className="size-3" />}
+        {icon && <Icon icon={`material-symbols:${icon}`} className="size-3" />}
         {label && label}
         {children && children}
         {variant === 'link' && (

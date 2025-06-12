@@ -9,7 +9,7 @@ import type { CMSLinkType } from '@/components/Link'
 
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
-import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic'
+import { Icon } from '@iconify-icon/react'
 
 export const CallToAction02: React.FC<CTABlockProps> = ({ links, richText, list }) => {
   return (
@@ -51,9 +51,10 @@ export const CallToAction02: React.FC<CTABlockProps> = ({ links, richText, list 
                 >
                   {icon && (
                     <div className="bg-background-neutral-subtle p-xs inline rounded-full">
-                      <DynamicIcon
+                      <Icon
                         className="text-base-secondary size-sm"
-                        name={icon as keyof typeof dynamicIconImports}
+                        height="none"
+                        icon={`material-symbols:${icon}`}
                         color="currentColor"
                       />
                     </div>

@@ -7,7 +7,7 @@ import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 import { Badge } from '@/components/ui/badge'
 import { CMSLink } from '@/components/Link'
-import { DynamicIcon } from 'lucide-react/dynamic'
+import { Icon } from '@iconify-icon/react'
 import { Button } from '@/components/ui/button'
 import { CaretLeft } from '@/icons/caret-left-filled'
 
@@ -40,7 +40,13 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
                       : '',
                   )}
                 >
-                  {column.icon && <DynamicIcon name={column.icon as any} className="size-4" />}
+                  {column.icon && (
+                    <Icon
+                      icon={`material-symbols:${column.icon}`}
+                      className="size-4"
+                      height="none"
+                    />
+                  )}
                   {column?.tabLabel}
                 </Button>
               )

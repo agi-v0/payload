@@ -16,7 +16,7 @@ import Image from 'next/image'
 import { CMSLink } from '@/components/Link'
 import type { Header as HeaderType } from '@/payload-types'
 import RichText from '@/components/RichText'
-import { DynamicIcon } from 'lucide-react/dynamic'
+import { Icon } from '@iconify-icon/react'
 import MarnIcon from '@/components/ui/marn-icon'
 import { CaretLeft } from '@/icons/caret-left-filled'
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
@@ -64,7 +64,9 @@ export function DesktopNav({ tabs, cta, className }: DesktopNavProps) {
                         </CMSLink>
                       </NavigationMenuTrigger>
                     ) : (
-                      <NavigationMenuTrigger className="rounded-full">{tab.label}</NavigationMenuTrigger>
+                      <NavigationMenuTrigger className="rounded-full">
+                        {tab.label}
+                      </NavigationMenuTrigger>
                     )}
                     <NavigationMenuContent>
                       <ul
@@ -149,13 +151,19 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
         itemContent = (
           <div ref={ref as React.Ref<HTMLDivElement>} className={cn('p-3', className)} {...props}>
             {featuredLink?.tag && (
-              <div className="text-base-tertiary mb-1 text-xs font-semibold">{featuredLink.tag}</div>
+              <div className="text-base-tertiary mb-1 text-xs font-semibold">
+                {featuredLink.tag}
+              </div>
             )}
 
             <RichText data={featuredLink?.label} />
             <div className="mt-2 flex flex-col space-y-1">
               {featuredLink?.links?.map((subLink, i) => (
-                <CMSLink key={i} {...subLink.link} className="text-base-tertiary hover:text-base-secondary text-sm" />
+                <CMSLink
+                  key={i}
+                  {...subLink.link}
+                  className="text-base-tertiary hover:text-base-secondary text-sm"
+                />
               ))}
             </div>
           </div>
@@ -164,7 +172,11 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
       case 'list':
         itemContent = (
           <div ref={ref as React.Ref<HTMLDivElement>} className={cn('', className)} {...props}>
-            {listLinks?.tag && <div className="text-base-tertiary mb-1 px-4 text-xs font-normal">{listLinks.tag}</div>}
+            {listLinks?.tag && (
+              <div className="text-base-tertiary mb-1 px-4 text-xs font-normal">
+                {listLinks.tag}
+              </div>
+            )}
             <div className="mt-1 flex flex-col gap-0">
               {listLinks?.links?.map((subLink, i) => {
                 return (
@@ -177,15 +189,21 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                     className={cn(
                       navigationMenuTriggerStyle(),
                       'ease-in-out-quad relative h-fit w-full gap-4 rounded-2xl px-3 text-base transition-all duration-300 hover:px-4 [&_svg]:size-5',
-                      subLink.link.type === 'reference' && subLink.link.reference?.value?.icon && 'items-start',
+                      subLink.link.type === 'reference' &&
+                        subLink.link.reference?.value?.icon &&
+                        'items-start',
                     )}
                   >
                     {subLink.link.icon && (
-                      <div className="group-hover:bg-background-neutral bg-background flex size-10 flex-none items-center justify-center rounded-full">
+                      <div className="group-hover:bg-background-neutral text-base-tertiary group-hover:text-base-secondary bg-background flex size-10 flex-none items-center justify-center rounded-md">
                         {subLink.link.icon === 'marn-icon' ? (
-                          <MarnIcon className="text-base-secondary" />
+                          <MarnIcon className="" />
                         ) : (
-                          <DynamicIcon name={subLink.link.icon as any} className="text-base-secondary" />
+                          <Icon
+                            icon={`material-symbols:${subLink.link.icon}`}
+                            className="size-6"
+                            height="none"
+                          />
                         )}
                       </div>
                     )}
@@ -236,7 +254,9 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
             >
               <div className="text-sm leading-none font-medium">{defaultLink.link.label}</div>
               {defaultLink.description && (
-                <p className="text-base-tertiary line-clamp-2 text-sm leading-snug">{defaultLink.description}</p>
+                <p className="text-base-tertiary line-clamp-2 text-sm leading-snug">
+                  {defaultLink.description}
+                </p>
               )}
             </CMSLink>
           </NavigationMenuLink>
