@@ -44,7 +44,7 @@ async function generateIconsObjectAndSave(prefix, outputFilePath = 'icons.json')
 }
 
 // Example usage with 'lucide' (Lucide Icons)
-generateIconsObjectAndSave('lucide', 'lucide-icons.json')
+generateIconsObjectAndSave('material-symbols', 'material-symbols-icons.json')
   .then((iconsObject) => {
     console.log('Generated object size:', Object.keys(iconsObject).length, 'icons')
   })

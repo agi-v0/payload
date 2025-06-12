@@ -8,7 +8,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { iconPickerField } from '@/fields/iconPickerField'
-import lucideIcons from '@/fields/iconPickerField/lucide-icons.json'
+import materialIcons from '@/fields/iconPickerField/material-symbols-icons.json'
 
 import { badge } from '@/fields/badge'
 import { linkGroup } from '@/fields/linkGroup'
@@ -117,10 +117,10 @@ export const CallToActionBlock: Block = {
         iconPickerField({
           name: 'icon',
           label: 'Icon',
-          icons: lucideIcons,
+          icons: materialIcons,
           admin: {
             description:
-              'Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/',
+              'Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons',
           },
         }),
         {

@@ -1,6 +1,6 @@
 import type { Field } from 'payload'
 
-import lucideIcons from './iconPickerField/lucide-icons.json'
+import materialIcons from './iconPickerField/material-symbols-icons.json'
 import deepMerge from '@/utilities/deepMerge'
 
 import { iconPickerField } from './iconPickerField'
@@ -169,10 +169,10 @@ export const link: LinkType = ({
       iconPickerField({
         name: 'icon',
         label: 'Icon',
-        icons: lucideIcons,
+        icons: materialIcons,
         admin: {
           description:
-            'Select an icon from the Lucide icon set. You can preview all available icons at https://lucide.dev/icons/',
+            'Select an icon from the Material Symbols icon set. You can preview all available icons at https://fonts.google.com/icons',
         },
       }),
     )

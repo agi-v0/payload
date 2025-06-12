@@ -13,9 +13,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'
-import { iconPickerField } from '@/fields/iconPickerField'
-import lucideIcons from '@/fields/iconPickerField/lucide-icons.json'
-import { formatSlug } from '@/fields/slug/formatSlug'
+
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 
 export const Customers: CollectionConfig = {
