@@ -334,7 +334,7 @@ function CarouselContent({ children, className, transition }: CarouselContentPro
       dragMomentum={disableDrag ? undefined : false}
       style={{ x: dragX }}
       animate={{
-        translateX: `${direction === 'rtl' ? '' : '-'}${index * (100 / slidesPerView)}%`,
+        x: `${direction === 'rtl' ? '' : '-'}${index * (100 / slidesPerView)}%`,
       }}
       onDragEnd={disableDrag ? undefined : onDragEnd}
       transition={

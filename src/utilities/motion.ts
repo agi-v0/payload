@@ -7,12 +7,10 @@ export const containerVariants: Variants = {
     y: 0,
     transition: {
       staggerChildren: 0.1,
-      transition: {
-        type: 'spring',
-        stiffness: 800,
-        damping: 100,
-        mass: 4,
-      },
+      type: 'spring',
+      stiffness: 800,
+      damping: 100,
+      mass: 4,
     },
   },
 }

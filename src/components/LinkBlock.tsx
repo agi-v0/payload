@@ -2,25 +2,20 @@
 import React from 'react'
 import { motion } from 'motion/react' // Corrected import path
 import { cn } from '@/utilities/ui'
-import { Link } from '@/i18n/routing'
-import { ArrowRight } from 'lucide-react'
+
 import { CMSLink, CMSLinkType } from './Link'
 import { CaretLeft } from '@/icons/caret-left-filled'
 
 const linkBlockVariants = {
   initial: {
     borderRadius: '1.5rem',
-    transition: {
-      ease: [0.645, 0.045, 0.355, 1],
-      duration: 0.2,
-    },
+    ease: [0.645, 0.045, 0.355, 1],
+    duration: 0.2,
   },
   hover: {
     borderRadius: '40rem',
-    transition: {
-      ease: [0.645, 0.045, 0.355, 1],
-      duration: 0.2,
-    },
+    ease: [0.645, 0.045, 0.355, 1],
+    duration: 0.2,
   },
 }
 
