@@ -1,3 +1,4 @@
+'use client'
 import { Button, type ButtonProps } from '@/components/ui/button'
 
 import { cn } from '@/utilities/ui'
@@ -41,14 +42,30 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     icon,
   } = props
 
-  // console.log('reference ', reference)
-  const href =
-    type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ``}/${
-          reference.value.slug
-        }`
-      : url
-  // console.log(href)
+  const urlHandler = (link) => {
+    const { type, reference, url } = link
+    const { relationTo, value } = reference || {}
+    switch (relationTo) {
+      case 'pages':
+        return `/${value.slug}`
+      case 'posts':
+        return `/blog/${value.slug}`
+      case 'solutions':
+        return `/solutions/${value.slug}`
+      case 'integrations':
+        return `/marketplace/${value.slug}`
+      default:
+        return url
+    }
+  }
+
+  // const href =
+  //   type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
+  //     ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ``}/${reference.value.slug}`
+  //     : url
+
+  const href = urlHandler(props)
+
   if (!href) return null
 
   const size = variant === 'inline' ? 'clear' : sizeFromProps
@@ -75,7 +92,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         {label && label}
         {children && children}
         {variant === 'link' && (
-          <CaretLeft className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180" />
+          <CaretLeft className="size-3 translate-x-1 transition-all duration-150 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180" />
         )}
       </Link>
     </Button>

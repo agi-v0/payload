@@ -12,10 +12,16 @@ import lucideIcons from '@/fields/iconPickerField/lucide-icons.json'
 
 import { badge } from '@/fields/badge'
 import { linkGroup } from '@/fields/linkGroup'
-export const CallToAction: Block = {
-  slug: 'callToAction',
+import { mediaGroup } from '@/fields/media'
+
+export const CallToActionBlock: Block = {
+  slug: 'callToActionBlock',
   interfaceName: 'CallToActionBlock',
   dbName: 'callToActionBlock',
+  labels: {
+    singular: 'Call to Action',
+    plural: 'Calls to Action',
+  },
   fields: [
     {
       name: 'type',
@@ -50,17 +56,58 @@ export const CallToAction: Block = {
       label: false,
     },
     {
-      name: 'media',
-      type: 'upload',
-      // localized: true,
-      relationTo: 'media',
-      required: false,
+      type: 'collapsible',
+      label: 'Media',
+      admin: {
+        initCollapsed: true,
+      },
+      fields: [
+        {
+          name: 'media',
+          type: 'group',
+          label: false,
+          admin: {
+            hideGutter: true,
+          },
+          fields: [
+            mediaGroup({
+              mediaOverrides: {
+                localized: true,
+                relationTo: 'media',
+                required: false,
+              },
+              overrides: {
+                admin: {
+                  hideGutter: true,
+                },
+                name: 'desktop',
+                label: 'Default (Desktop)',
+              },
+            }),
+            mediaGroup({
+              mediaOverrides: {
+                localized: true,
+                relationTo: 'media',
+                required: false,
+              },
+              overrides: {
+                admin: {
+                  hideGutter: true,
+                  description: 'Optional',
+                },
+                name: 'mobile',
+                label: 'Mobile (Optional)',
+              },
+            }),
+          ],
+        },
+      ],
     },
     linkGroup({
       overrides: {
         maxRows: 2,
       },
-      supportingText: true,
+      caption: true,
     }),
 
     {
@@ -108,8 +155,4 @@ export const CallToAction: Block = {
       },
     },
   ],
-  labels: {
-    plural: 'Calls to Action',
-    singular: 'Call to Action',
-  },
 }

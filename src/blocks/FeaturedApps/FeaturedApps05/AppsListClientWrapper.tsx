@@ -60,27 +60,33 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
 
   const AppList = () => (
     <>
-      {appsData.docs.map(({ name, tagline, icon, link }, index) => (
-        <CMSLink
-          {...link}
-          key={index}
-          label={null}
-          className="px-xs hover:bg-background-neutral flex h-fit w-full flex-row items-center justify-start gap-4 rounded-3xl whitespace-normal transition-colors"
-        >
-          {/* Pass resource directly if it matches MediaProps resource type */}
-          {icon && typeof icon === 'object' && (
-            <Media
-              priority
-              resource={icon as MediaType}
-              className="size-12 flex-none overflow-hidden rounded-lg"
-            /> // Cast icon
-          )}
-          <div className="flex w-full flex-col py-4">
-            <p className="text-body-lg text-base-primary font-medium">{name}</p>
-            <p className="text-body-md text-base-secondary font-normal">{tagline}</p>
-          </div>
-        </CMSLink>
-      ))}
+      {appsData.docs.map(({ name, tagline, icon, link }, index) => {
+        if (!name) return null
+        return (
+          <CMSLink
+            {...link}
+            key={name + index}
+            label={null}
+            variant="inline"
+            className="px-xs hover:bg-background-neutral flex h-fit w-full flex-row items-center justify-start gap-4 rounded-3xl whitespace-normal transition-colors hover:no-underline"
+          >
+            {/* Pass resource directly if it matches MediaProps resource type */}
+            {icon && typeof icon === 'object' && (
+              <Media
+                key={`media-${name}-${index}`}
+                priority
+                resource={icon as MediaType}
+                className="flex-none overflow-hidden rounded-lg"
+                imgClassName="size-12"
+              /> // Cast icon
+            )}
+            <div className="flex w-full flex-col py-4" key={`info-${name}-${index}`}>
+              <p className="text-body-lg text-base-primary font-medium">{name}</p>
+              <p className="text-body-md text-base-secondary font-normal">{tagline}</p>
+            </div>
+          </CMSLink>
+        )
+      })}
     </>
   )
 
@@ -93,7 +99,7 @@ export const AppsListClientWrapper: React.FC<AppsListClientWrapperProps> = ({
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
-          {/* Basic loading indicator */}
+
           {isLoading && <p>Loading...</p>}
           {!isLoading && <AppList />}
           {!isLoading && appsData.docs.length === 0 && <p>No apps found.</p>}

@@ -24,8 +24,8 @@ interface AppsCarouselClientProps {
 
 // AppCard component, similar to before but ensure fields exist
 // Adapt this based on your actual App type fields
-const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
-  const { name, icon, tagline, overview, link, gallery } = app
+const AppCard: React.FC<{ app: Integration; locale?: TypedLocale }> = ({ app, locale }) => {
+  const { name, icon, tagline, summary, link } = app
 
   return (
     <div className="bg-background-neutral rounded-space-sm flex h-full w-full flex-col overflow-hidden lg:flex-row">
@@ -39,9 +39,9 @@ const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
           {/* Title and Description */}
           <div className="gap-xs flex flex-col">
             {tagline && <h3 className="text-h4 text-base-primary font-medium">{tagline}</h3>}
-            {overview && (
+            {summary && (
               <RichText
-                data={overview}
+                data={summary}
                 enableGutter={true}
                 className="text-body-sm text-base-secondary font-normal"
               />
@@ -54,7 +54,7 @@ const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
             {...link}
             // Use text size, color variables, and explicit gap
             className="text-body-lg mt-space-xs text-base-tertiary hover:text-base-primary w-fit px-0 py-0 hover:bg-transparent"
-            label="المزيد"
+            label={locale === 'ar' ? 'المزيد' : 'Learn More'}
             variant="link"
           />
         )}
@@ -65,7 +65,7 @@ const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
 
 // Main Client Component for the Carousel
 export const FeaturedApps04: React.FC<AppsCarouselClientProps> = (props) => {
-  const { apps } = props
+  const { apps, locale } = props
   if (!apps || apps.length === 0) {
     return null // Or render an empty state
   }
@@ -82,7 +82,7 @@ export const FeaturedApps04: React.FC<AppsCarouselClientProps> = (props) => {
         <CarouselContent className="-ms-xs">
           {apps.map((app, index) => (
             <CarouselItem key={app.id || index} className="ps-xs">
-              <AppCard app={app} />
+              <AppCard app={app} locale={locale} />
             </CarouselItem>
           ))}
         </CarouselContent>

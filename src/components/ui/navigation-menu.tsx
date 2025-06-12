@@ -8,19 +8,39 @@ import { cn } from '@/utilities/ui'
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
->(({ className, children, ...props }, ref) => (
-  <NavigationMenuPrimitive.Root
-    ref={ref}
-    className={cn(
-      'relative z-10 mx-auto flex w-full flex-1 items-center justify-center',
-      className,
-    )}
-    {...props}
-  >
-    {children}
-    <NavigationMenuViewport />
-  </NavigationMenuPrimitive.Root>
-))
+>(({ className, children, onValueChange, ...props }, ref) => {
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  const handleValueChange = (value: string) => {
+    setIsOpen(Boolean(value))
+    onValueChange?.(value)
+  }
+
+  return (
+    <>
+      <NavigationMenuPrimitive.Root
+        ref={ref}
+        className={cn(
+          'relative z-10 mx-auto flex w-full flex-1 items-center justify-center',
+          className,
+        )}
+        onValueChange={handleValueChange}
+        {...props}
+      >
+        {children}
+        <NavigationMenuViewport />
+      </NavigationMenuPrimitive.Root>
+      {/* Dark overlay that appears when any menu item is open */}
+      <div
+        className={cn(
+          'bg-background-inverted/20 pointer-events-none fixed inset-0 transition-opacity duration-300',
+          isOpen ? 'opacity-100' : 'opacity-0',
+        )}
+        style={{ zIndex: 5 }} // Between content and navigation menu
+      />
+    </>
+  )
+})
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
 
 const NavigationMenuList = React.forwardRef<
@@ -38,7 +58,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-  'group hover:bg-background-neutral-subtle text-base-secondary hover:text-base-primary focus:bg-accent focus:text-base-primary data-[state=open]:text-base-primary data-[state=open]:bg-accent/50 data-[state=open]:hover:bg-accent data-[state=open]:focus:bg-accent inline-flex h-9 w-max items-center justify-start rounded-lg bg-transparent px-4 py-3 text-sm font-medium transition-colors hover:no-underline focus:outline-none disabled:pointer-events-none disabled:opacity-50',
+  'group hover:bg-background-neutral-subtle text-base-secondary hover:text-base-primary focus:bg-background-neutral-subtle focus:text-base-primary data-[state=open]:text-base-primary data-[state=open]:bg-background-neutral-subtle data-[state=open]:focus:bg-background inline-flex h-9 w-max items-center justify-start rounded-lg bg-transparent px-4 py-3 text-sm font-medium transition-colors hover:no-underline focus:outline-none disabled:pointer-events-none disabled:opacity-50',
 )
 
 const NavigationMenuTrigger = React.forwardRef<

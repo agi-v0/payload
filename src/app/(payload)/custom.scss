@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 @import '@/styles/admin-makeup.scss';
 
+/* rubik-regular - arabic_latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 100 900;
+  src: url('/fonts/Rubik-VariableFont_wght.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  variable: '--font-rubik';
+}
+
 :root {
   --font-body:
     'Rubik', apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
@@ -149,4 +159,24 @@ html:not([dir='RTL']) .btn--withPopup .popup-button {
 .login__brand {
   height: 32px;
   width: auto;
+}
+
+.forgot-password {
+  text-align: center;
+}
+
+.forgot-password .template-minimal__wrap .form {
+  margin-bottom: calc(var(--base) / 2);
+}
+
+.forgot-password .template-minimal__wrap .form > *:last-child {
+  margin-top: calc(var(--base));
+}
+
+.login__form__inputWrap {
+  margin-bottom: var(--base);
+}
+
+.form > *:last-child {
+  margin-top: calc(var(--base) / 2);
 }

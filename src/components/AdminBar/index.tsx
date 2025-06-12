@@ -58,8 +58,9 @@ export const AdminBar: React.FC<{
       ref={ref}
       className={cn(
         baseClass,
-        'fixed top-0 left-0 z-[10] w-full bg-black text-white',
+        'z-[10] w-full bg-black text-white',
         'h-0 md:h-10',
+        // '-fixed -top-0 -left-0',
         {
           block: show,
           hidden: !show,

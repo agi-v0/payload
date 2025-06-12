@@ -7,8 +7,12 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-export const Archive: Block = {
-  slug: 'archive',
+export const ArchiveBlock: Block = {
+  slug: 'archiveBlock',
+  labels: {
+    singular: 'Archive',
+    plural: 'Archives',
+  },
   interfaceName: 'ArchiveBlock',
   dbName: 'archiveBlock',
   fields: [
@@ -89,8 +93,4 @@ export const Archive: Block = {
       relationTo: ['posts'],
     },
   ],
-  labels: {
-    plural: 'Archives',
-    singular: 'Archive',
-  },
 }

@@ -37,7 +37,7 @@ const sizeOptions = [
 ]
 
 export const FeaturesBlock: Block = {
-  slug: 'features',
+  slug: 'featuresBlock',
   labels: {
     singular: 'Features',
     plural: 'Features',
@@ -60,10 +60,10 @@ export const FeaturesBlock: Block = {
         { label: '07 - Brief (Centered)', value: '07' },
         { label: '08 - Carousel (Tabs)', value: '08' },
         { label: '09 - Carousel (Accordion)', value: '09' },
-        { label: '10 - Carousel (Row)', value: '10' },
-        { label: '11 - Cards with Modals', value: '11' },
-        { label: '12 - Simple Text with Icon', value: '12' },
-        { label: '13 - Simple Text with Icon (Cards)', value: '13' },
+        { label: '10 - Carousel (Cards)', value: '10' },
+        { label: '11 - Carousel', value: '11' },
+        { label: '12 - Carousel with Modals', value: '12' },
+        { label: '13 - Simple Grid (Mini cards)', value: '13' },
         { label: '14 - 3 Image with Text, Big CTA', value: '14' },
         { label: '15 - 3 Image with Text, Big CTA (2)', value: '15' },
         { label: '16 - 4 Image with Text, Big CTA ', value: '16' },
@@ -192,7 +192,7 @@ export const FeaturesBlock: Block = {
           ],
           admin: {
             condition: (_, siblingData, { blockData }) =>
-              !['01', '03', '04', '05'].includes(blockData?.type),
+              !['01', '03', '04', '05', '11'].includes(blockData?.type),
           },
         },
         {
@@ -202,7 +202,7 @@ export const FeaturesBlock: Block = {
           editor: richTextEditor,
           admin: {
             condition: (_, siblingData, { blockData }) =>
-              ['01', '03', '04', '05', '11'].includes(blockData?.type),
+              ['01', '03', '04', '05', '11', '12'].includes(blockData?.type),
           },
           localized: true,
         },

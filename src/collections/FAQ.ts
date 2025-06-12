@@ -30,7 +30,7 @@ export const FAQ: CollectionConfig = {
     answer: true,
   },
   admin: {
-    defaultColumns: ['question', 'updatedAt'],
+    defaultColumns: ['question', 'category', 'updatedAt'],
     useAsTitle: 'question',
   },
   fields: [
@@ -45,5 +45,19 @@ export const FAQ: CollectionConfig = {
         },
       }),
     },
+    {
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'categories',
+    },
   ],
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+      schedulePublish: true,
+    },
+    maxPerDoc: 50,
+  },
 }

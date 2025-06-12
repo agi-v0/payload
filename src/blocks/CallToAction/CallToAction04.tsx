@@ -13,10 +13,12 @@ export const CallToAction04: React.FC<CTABlockProps> = ({
   badge,
   richText,
   links,
-  supportingText,
+  caption,
   list,
   media,
 }) => {
+  const { desktop, mobile } = media || {}
+
   return (
     <div className="py-xl container">
       <motion.div

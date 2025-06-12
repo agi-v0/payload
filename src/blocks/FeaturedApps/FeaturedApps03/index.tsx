@@ -24,7 +24,7 @@ interface AppsCarouselClientProps {
 }
 
 const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
-  const { name, icon, tagline, overview, link, gallery } = app
+  const { name, icon, tagline, summary, link } = app
 
   return (
     // Use background variable and explicit rounding from Figma
@@ -40,11 +40,11 @@ const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
           {/* Title and Description */}
           <div className="gap-xs flex flex-col">
             {tagline && <h3 className="text-h3 text-base-primary font-medium">{tagline}</h3>}
-            {/* Render overview using RichText component with `data` prop */}
-            {overview && (
+            {/* Render summary using RichText component with `data` prop */}
+            {summary && (
               <div className="text-body-lg text-base-secondary font-normal">
                 <RichText
-                  data={overview}
+                  data={summary}
                   enableGutter={false}
                   className="text-body-lg text-base-secondary font-normal"
                 />
@@ -63,14 +63,6 @@ const AppCard: React.FC<{ app: Integration }> = ({ app }) => {
       </div>
 
       {/* Image Section - Placeholder */}
-
-      {gallery && gallery.length > 0 && (
-        <Media
-          resource={gallery[0]}
-          className="bg-background-neutral p-xs aspect-[4/3] h-auto w-full flex-shrink-0 lg:w-1/2"
-          imgClassName="rounded-space-sm"
-        />
-      )}
     </div>
   )
 }

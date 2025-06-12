@@ -5,6 +5,7 @@ import type {
   PayloadRequest,
   File,
   TypedLocale,
+  RequiredDataFromCollectionSlug,
 } from 'payload'
 import type { Header, Form, Footer, Category } from '@/payload-types'
 
@@ -18,7 +19,7 @@ import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
-import { seedTestimonials } from './testimonials'
+import { seedCustomers } from './customers'
 import { image169 } from './image-16-9'
 import { image43 } from './image-4-3'
 import { imageSquare } from './image-square'
@@ -27,13 +28,14 @@ import { seedSolutions } from './solutions'
 import { seedFeaturesShowcasePage } from './features-showcase-page'
 import { image3 } from './image-3'
 import { seedChangelog } from './changelog'
-import { seedCaseStudies } from './case-studies'
+
+import { seedFAQs } from './faq'
 
 const collections: CollectionSlug[] = [
   'pages',
   'posts',
   'users',
-  'case-studies',
+  'customers',
   'categories',
   'changelog',
   'faq',
@@ -41,7 +43,6 @@ const collections: CollectionSlug[] = [
   // 'logos',
   'media',
   'solutions',
-  'testimonials',
 ]
 const globals: GlobalSlug[] = ['header', 'footer']
 
@@ -363,55 +364,150 @@ export const seed = async ({
       },
     },
     // Integrations Categories
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'إدارة المطاعم',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'إدارة المخزون',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'تقارير المبيعات',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'إدارة الموظفين',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'برامج نقاط البيع',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
-
-    // {
-    //   collection: 'categories',
-    //   data: {
-    //     title: 'خدمة العملاء',
-    //     // slug: '',
-    //     parent: integrations.id,
-    //   },
-    // },
+    {
+      collection: 'categories',
+      data: {
+        title: 'بوابات الدفع',
+        slug: 'payment-gateways',
+        breadcrumbs: [
+          {
+            label: 'Payment Gateways',
+            url: '/integrations/payment-gateways',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'تطبيقات التوصيل',
+        slug: 'delivery-platforms',
+        breadcrumbs: [
+          {
+            label: 'Delivery Platforms',
+            url: '/integrations/delivery-platforms',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'برامج المحاسبة',
+        slug: 'accounting-software',
+        breadcrumbs: [
+          {
+            label: 'Accounting Software',
+            url: '/integrations/accounting-software',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'إدارة المخزون',
+        slug: 'inventory-management',
+        breadcrumbs: [
+          {
+            label: 'Inventory Management',
+            url: '/integrations/inventory-management',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'برامج الولاء',
+        slug: 'loyalty-programs',
+        breadcrumbs: [
+          {
+            label: 'Loyalty Programs',
+            url: '/integrations/loyalty-programs',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'التجارة الإلكترونية',
+        slug: 'ecommerce-platforms',
+        breadcrumbs: [
+          {
+            label: 'E-commerce Platforms',
+            url: '/integrations/ecommerce-platforms',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'أدوات التسويق',
+        slug: 'marketing-tools',
+        breadcrumbs: [
+          {
+            label: 'Marketing Tools',
+            url: '/integrations/marketing-tools',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
+    {
+      collection: 'categories',
+      data: {
+        title: 'إدارة الموظفين',
+        slug: 'staff-management',
+        breadcrumbs: [
+          {
+            label: 'Staff Management',
+            url: '/integrations/staff-management',
+          },
+          {
+            label: 'Integrations',
+            url: '/integrations',
+          },
+        ],
+        parent: integrations.id,
+      },
+    },
     // Ecosystems Categories
     {
       collection: 'categories',
@@ -497,6 +593,32 @@ export const seed = async ({
   const sellCategory = categoriesMap['sell']
   const operateCategory = categoriesMap['operate']
   const manageCategory = categoriesMap['manage']
+
+  // Fetch integration categories
+  const integrationCategories = await payload.find({
+    collection: 'categories',
+    where: {
+      slug: {
+        in: [
+          'payment-gateways',
+          'delivery-platforms',
+          'accounting-software',
+          'inventory-management',
+          'loyalty-programs',
+          'ecommerce-platforms',
+          'marketing-tools',
+          'staff-management',
+        ],
+      },
+    },
+  })
+  const integrationCategoriesMap = integrationCategories.docs.reduce(
+    (acc, category) => {
+      acc[category?.slug ?? ''] = category
+      return acc
+    },
+    {} as Record<string, Category>,
+  )
 
   payload.logger.info('— Seeding media...')
 
@@ -604,11 +726,13 @@ export const seed = async ({
   )
 
   payload.logger.info(`— Seeding integrations...`)
-  const integrationsSlugToIdMap = await seedIntegrations(payload, req, imageSquareDoc?.id, [
-    sellCategory,
-    operateCategory,
-    manageCategory,
-  ])
+  const integrationsSlugToIdMap = await seedIntegrations(
+    payload,
+    req,
+    imageSquareDoc?.id,
+    [sellCategory, operateCategory, manageCategory],
+    integrationCategoriesMap,
+  )
 
   payload.logger.info(`— Seeding contact form...`)
   const contactForm = (await payload.create({
@@ -660,24 +784,28 @@ export const seed = async ({
     }),
   )
 
-  // Seed Case Studies using the new function and get the map
-  const caseStudiesSlugToIdMap = await seedCaseStudies(payload, {
-    image169Doc,
-    solutionsSlugToIdMap, // Pass the solutions map
-    integrationsSlugToIdMap, // Pass the integrations map
-  })
-
-  payload.logger.info(`— Seeding testimonials...`)
-  await seedTestimonials({
+  // Seed Customers (replaces both testimonials and case studies)
+  const { customers, slugToIdMap: customersSlugToIdMap } = await seedCustomers({
     payload,
+    req,
     image1: image43Doc,
     logo: logoDoc,
     imageSquare: imageSquareDoc,
-    caseStudies: caseStudiesSlugToIdMap, // Pass the fetched case studies
+    image169: image169Doc,
+    solutionsSlugToIdMap,
+    integrationsSlugToIdMap,
   })
 
   payload.logger.info(`— Seeding changelog...`)
   await seedChangelog(payload, req)
+
+  payload.logger.info(`— Seeding FAQs...`)
+  await seedFAQs(payload, req, {
+    sellCategory,
+    operateCategory,
+    manageCategory,
+    otherCategory: other,
+  })
 
   payload.logger.info(`— Seeding globals...`)
 
@@ -760,7 +888,7 @@ export const seed = async ({
                 { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['analytics'] as any }, label: 'التحليلات', description: 'تقارير فورية عن المبيعات والأرباح تساعدك تتخذ قرارات', icon: null } }, // prettier-ignore
                 { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['branches'] as any }, label: 'الفروع', description: 'راقب كل فروعك وتقاريرها من نفس اللوحة', icon: null } }, // prettier-ignore
                 { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['customers'] as any }, label: 'العملاء', description: 'احفظ بيانات عملاءك وفعّل برامج الولاء', icon: null } }, // prettier-ignore
-                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['accouting'] as any }, label: 'المالية', description: 'تتبّع المصاريف، الضرائب، والتدفق المالي بسهولة', icon: null } }, // prettier-ignore
+                { link: { type: 'reference', newTab: false, reference: { relationTo: 'solutions', value: solutionsSlugToIdMap['accounting'] as any }, label: 'المالية', description: 'تتبّع المصاريف، الضرائب، والتدفق المالي بسهولة', icon: null } }, // prettier-ignore
               ],
             },
           },
@@ -874,7 +1002,7 @@ export const seed = async ({
           { link: { type: 'custom', newTab: false, url: '/solutions/analytics', label: 'التحليلات' } }, // prettier-ignore
           { link: { type: 'custom', newTab: false, url: '/solutions/branches', label: 'الفروع' } }, // prettier-ignore
           { link: { type: 'custom', newTab: false, url: '/solutions/customers', label: 'العملاء' } }, // prettier-ignore
-          { link: { type: 'custom', newTab: false, url: '/solutions/accouting', label: 'المالية' } }, // prettier-ignore
+          { link: { type: 'custom', newTab: false, url: '/solutions/accounting', label: 'المالية' } }, // prettier-ignore
         ],
       },
       // ... Add other footer columns if needed, based on original Footer global structure
@@ -887,14 +1015,12 @@ export const seed = async ({
       slug: 'header',
       data: headerData,
       req,
-      // locale: 'ar',
     }),
     payload.logger.info('Updating global – footer'),
     payload.updateGlobal({
       slug: 'footer',
       data: footerData,
       req,
-      // locale: 'ar',
     }),
   ])
 

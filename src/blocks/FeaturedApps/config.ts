@@ -18,7 +18,7 @@ const fields: Field[] = [
     type: 'select',
     options: [
       { value: '01', label: '01 - Apps Grid Hero' },
-      { value: '02', label: '02 - Animated Icons' },
+      { value: '02', label: '02 - Animated Icons [NOT READY]' },
       { value: '03', label: '03 - Carousel (full width card)' },
       { value: '04', label: '04 - Carousel (3 slides per view)' },
       { value: '05', label: '05 - List with image' },
@@ -32,6 +32,11 @@ const fields: Field[] = [
     type: 'upload',
     // localized: true,
     relationTo: 'media',
+    admin: {
+      condition: (_, siblingData, { blockData }) => {
+        return ['05'].includes(blockData?.type)
+      },
+    },
   },
   {
     name: 'apps',
@@ -66,7 +71,7 @@ const fields: Field[] = [
         localized: true,
       },
       {
-        name: 'description',
+        name: 'subtitle',
         type: 'textarea',
         localized: true,
       },
@@ -86,7 +91,7 @@ const fields: Field[] = [
 ]
 
 export const FeaturedAppsBlock: Block = {
-  slug: 'featuredApps',
+  slug: 'featuredAppsBlock',
   labels: {
     singular: 'Featured Apps',
     plural: 'Featured Apps',

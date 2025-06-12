@@ -1,7 +1,19 @@
 'use client'
-import { motion, AnimatePresence, Transition, Variants, Variant, MotionConfig } from 'motion/react'
+import {
+  motion,
+  AnimatePresence,
+  Transition,
+  Variants,
+  Variant,
+  MotionConfig,
+} from 'motion/react'
 import { cn } from '@/utilities/ui'
-import React, { createContext, useContext, useState, ReactNode } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+} from 'react'
 
 export type AccordionContextType = {
   expandedValue: React.Key | null
@@ -9,12 +21,16 @@ export type AccordionContextType = {
   variants?: { expanded: Variant; collapsed: Variant }
 }
 
-const AccordionContext = createContext<AccordionContextType | undefined>(undefined)
+const AccordionContext = createContext<AccordionContextType | undefined>(
+  undefined,
+)
 
 function useAccordion() {
   const context = useContext(AccordionContext)
   if (!context) {
-    throw new Error('useAccordion must be used within an AccordionProvider')
+    throw new Error(
+      'useAccordion must be used within an AccordionProvider',
+    )
   }
   return context
 }
@@ -32,10 +48,13 @@ function AccordionProvider({
   expandedValue: externalExpandedValue,
   onValueChange,
 }: AccordionProviderProps) {
-  const [internalExpandedValue, setInternalExpandedValue] = useState<React.Key | null>(null)
+  const [internalExpandedValue, setInternalExpandedValue] =
+    useState<React.Key | null>(null)
 
   const expandedValue =
-    externalExpandedValue !== undefined ? externalExpandedValue : internalExpandedValue
+    externalExpandedValue !== undefined
+      ? externalExpandedValue
+      : internalExpandedValue
 
   const toggleItem = (value: React.Key) => {
     const newValue = expandedValue === value ? null : value
@@ -47,7 +66,9 @@ function AccordionProvider({
   }
 
   return (
-    <AccordionContext.Provider value={{ expandedValue, toggleItem, variants }}>
+    <AccordionContext.Provider
+      value={{ expandedValue, toggleItem, variants }}
+    >
       {children}
     </AccordionContext.Provider>
   )
@@ -72,7 +93,10 @@ function Accordion({
 }: AccordionProps) {
   return (
     <MotionConfig transition={transition}>
-      <div className={cn('relative', className)} aria-orientation="vertical">
+      <div
+        className={cn('relative', className)}
+        aria-orientation="vertical"
+      >
         <AccordionProvider
           variants={variants}
           expandedValue={expandedValue}
@@ -91,7 +115,11 @@ export type AccordionItemProps = {
   className?: string
 }
 
-function AccordionItem({ value, children, className }: AccordionItemProps) {
+function AccordionItem({
+  value,
+  children,
+  className,
+}: AccordionItemProps) {
   const { expandedValue } = useAccordion()
   const isExpanded = value === expandedValue
 
@@ -117,9 +145,13 @@ function AccordionItem({ value, children, className }: AccordionItemProps) {
 export type AccordionTriggerProps = {
   children: ReactNode
   className?: string
-}
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-function AccordionTrigger({ children, className, ...props }: AccordionTriggerProps) {
+function AccordionTrigger({
+  children,
+  className,
+  ...props
+}: AccordionTriggerProps) {
   const { toggleItem, expandedValue } = useAccordion()
   const value = (props as { value?: React.Key }).value
   const isExpanded = value === expandedValue
@@ -142,7 +174,11 @@ export type AccordionContentProps = {
   className?: string
 }
 
-function AccordionContent({ children, className, ...props }: AccordionContentProps) {
+function AccordionContent({
+  children,
+  className,
+  ...props
+}: AccordionContentProps) {
   const { expandedValue, variants } = useAccordion()
   const value = (props as { value?: React.Key }).value
   const isExpanded = value === expandedValue

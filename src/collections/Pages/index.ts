@@ -17,8 +17,6 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 
-import { CustomHtmlBlock } from '@/blocks/CustomHtmlBlock/config'
-
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
   labels: {
@@ -91,16 +89,21 @@ export const Pages: CollectionConfig<'pages'> = {
               type: 'blocks',
               blocks: [],
               blockReferences: [
-                'archive',
-                'callToAction',
-                'customHtml',
-                'divider',
+                'archiveBlock',
+                'callToActionBlock',
+                'customHtmlBlock',
+                'dividerBlock',
                 'faqBlock',
-                'featuredApps',
-                'features',
+                'featuredAppsBlock',
+                'featuresBlock',
                 'formBlock',
-                'gallery',
-                'testimonials',
+                'galleryBlock',
+                'logosBlock',
+                'marketplaceBlock',
+                'metricsBlock',
+                'pricingBlock',
+                'richTextBlock',
+                'testimonialsBlock',
               ],
               required: true,
               admin: {

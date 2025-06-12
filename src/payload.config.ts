@@ -22,18 +22,17 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Solutions } from './collections/Solutions'
 import { Integrations } from './collections/Integrations'
+import { Customers } from './collections/Customers'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
-import { Testimonials } from './collections/Testimonials'
 import { Changelog } from './collections/Changelog'
 import { FAQ } from './collections/FAQ'
-import { CaseStudies } from './collections/CaseStudies'
 
 //blocks
-import { Archive } from '@/blocks/ArchiveBlock/config'
+import { ArchiveBlock } from '@/blocks/ArchiveBlock/config'
 import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
-import { CallToAction } from '@/blocks/CallToAction/config'
-import { CustomHtmlBlock } from '@/blocks/CustomHtmlBlock/config'
+import { CallToActionBlock } from '@/blocks/CallToAction/config'
+import { CustomHtmlBlock } from '@/blocks/CustomHTML/config'
 import { FeaturesBlock } from '@/blocks/Features/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
@@ -41,9 +40,15 @@ import { StyledList } from '@/blocks/StyledList/config'
 import { TestimonialsBlock } from '@/blocks/Testimonials/config'
 import { GalleryBlock } from '@/blocks/Gallery/config'
 import { FaqBlock } from '@/blocks/FAQ/config'
-import { DividerBlock } from '@/blocks/DividerBlock/config'
+import { DividerBlock } from '@/blocks/Divider/config'
+import { LogosBlock } from '@/blocks/Logos/config'
+import { RichTextBlock } from '@/blocks/RichText/config'
+import { PricingBlock } from '@/blocks/Pricing/config'
+import { MetricsBlock } from '@/blocks/Metrics/config'
+
 import { en } from '@payloadcms/translations/languages/en'
 import { ar } from '@payloadcms/translations/languages/ar'
+import { Marketplace } from './blocks/Marketplace/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -124,15 +129,10 @@ export default buildConfig({
     },
     user: Users.slug,
   },
-  db: vercelPostgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI || '',
-    },
-    push: false, // disable push mode
-  }),
+
   blocks: [
-    Archive,
-    CallToAction,
+    ArchiveBlock,
+    CallToActionBlock,
     CustomHtmlBlock,
     DividerBlock,
     FaqBlock,
@@ -140,28 +140,28 @@ export default buildConfig({
     FeaturedAppsBlock,
     GalleryBlock,
     FormBlock,
-    TestimonialsBlock,
+    LogosBlock,
     MediaBlock,
+    Marketplace,
+    MetricsBlock,
+    PricingBlock,
+    RichTextBlock,
     StyledList,
+    TestimonialsBlock,
   ],
-  collections: [
-    Pages,
-    Posts,
-    Solutions,
-    Integrations,
-    Media,
-    Testimonials,
-    CaseStudies,
-    Categories,
-    FAQ,
-    Changelog,
-    Users,
-  ],
+  collections: [Pages, Posts, Solutions, Integrations, Media, Customers, Categories, FAQ, Changelog, Users],
   cors: [getServerSideURL()].filter(Boolean),
+  db: vercelPostgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI || '',
+    },
+    idType: 'uuid',
+    push: false, // disable push mode
+  }),
   editor: defaultLexical,
   email: resendAdapter({
     defaultFromAddress: process.env.RESEND_EMAIL || '',
-    defaultFromName: 'Payload CMS',
+    defaultFromName: 'Marn CMS',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
   i18n: {

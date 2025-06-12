@@ -87,15 +87,21 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           id: '6800e854462e705cdaf2a9ce',
         },
       ],
-      supportingText: null,
+      caption: null,
       headline: null,
       logos: {
         headline: null,
         logos: [],
       },
       media: {
-        light: image169?.id,
-        dark: image169?.id,
+        desktop: {
+          light: image169?.id,
+          dark: image169?.id,
+        },
+        mobile: {
+          light: null,
+          dark: null,
+        },
       },
       badge: {
         label: null,
@@ -107,7 +113,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
 
     layout: [
       {
-        blockType: 'features',
+        blockType: 'featuresBlock',
         type: '02',
         blockImage: image169?.id,
         blockName: null,

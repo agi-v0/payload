@@ -1,6 +1,4 @@
-'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
@@ -19,11 +17,7 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
     type,
   } = props
 
-  const { setHeaderTheme } = useHeaderTheme()
-
-  useEffect(() => {
-    setHeaderTheme('light')
-  })
+  if (!headerText) return null
 
   return (
     <div
@@ -34,15 +28,17 @@ export const BlockHeader: React.FC<BlockHeaderType> = (props) => {
       )}
       data-theme="light"
     >
-      {badge?.label && <Badge {...badge} className={cn('col-span-2', badgeClassName)} />}
+      {(badge?.label || badge?.reference) && (
+        <Badge size="lg" {...badge} className={cn('col-span-2', badgeClassName)} />
+      )}
+
       {headerText && (
         <RichText
           className={cn(
-            'col-span-2 mx-0 md:row-start-2',
-            type === 'split'
-              ? 'md:grid md:grid-cols-subgrid [&>*:is(h1,h2,h3,h4,h5,h6)]:pe-(length:--spacing-xl)'
-              : '',
-            type === 'center' ? 'mx-auto text-center' : '',
+            'col-span-2 mx-0',
+            type === 'split' &&
+              'md:grid md:grid-cols-subgrid [&>*:is(h1,h2,h3,h4,h5,h6)]:pe-(length:--spacing-xl)',
+            type === 'center' && 'mx-auto text-center',
             '[&_p]:text-body-lg',
             richTextClassName,
           )}

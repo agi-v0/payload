@@ -15,10 +15,15 @@ const initialContext: ThemeContextType = {
 
 const ThemeContext = createContext(initialContext)
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setThemeState] = useState<Theme | undefined>(
-    canUseDOM ? (document.documentElement.getAttribute('data-theme') as Theme) : undefined,
-  )
+export const ThemeProvider = ({
+  children,
+  initialTheme,
+}: {
+  children: React.ReactNode
+  initialTheme?: Theme
+}) => {
+  // Initialize with the server-provided theme to prevent hydration mismatch
+  const [theme, setThemeState] = useState<Theme | undefined>(initialTheme)
 
   const setTheme = useCallback((themeToSet: Theme | null) => {
     if (themeToSet === null) {
@@ -27,9 +32,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       const newAppliedTheme = implicitPreference || defaultTheme
       document.documentElement.setAttribute('data-theme', newAppliedTheme)
       setThemeState(newAppliedTheme)
+      document.cookie = `theme=${newAppliedTheme}; path=/; max-age=31536000`
     } else {
       setThemeState(themeToSet)
       window.localStorage.setItem(themeLocalStorageKey, themeToSet)
+      document.cookie = `theme=${themeToSet}; path=/; max-age=31536000`
       document.documentElement.setAttribute('data-theme', themeToSet)
     }
   }, [])
@@ -40,11 +47,18 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       return
     }
 
-    let themeToSet: Theme = defaultTheme
+    let themeToSet: Theme = initialTheme || defaultTheme
     const preference = window.localStorage.getItem(themeLocalStorageKey)
+    const cookieTheme = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('theme='))
+      ?.split('=')[1]
 
     if (themeIsValid(preference)) {
       themeToSet = preference
+    } else if (cookieTheme && themeIsValid(cookieTheme)) {
+      themeToSet = cookieTheme as Theme
+      window.localStorage.setItem(themeLocalStorageKey, themeToSet)
     } else {
       const implicitPreference = getImplicitPreference()
 
@@ -53,8 +67,16 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
 
-    document.documentElement.setAttribute('data-theme', themeToSet)
-    setThemeState(themeToSet)
+    // Only update if different from the initial theme to prevent unnecessary re-renders
+    if (themeToSet !== initialTheme) {
+      document.documentElement.setAttribute('data-theme', themeToSet)
+      document.cookie = `theme=${themeToSet}; path=/; max-age=31536000`
+      setThemeState(themeToSet)
+    } else {
+      // Ensure the document element has the correct theme attribute
+      document.documentElement.setAttribute('data-theme', themeToSet)
+    }
+
     /* watch system theme change */
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
@@ -63,6 +85,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         const newImplicitPreference = getImplicitPreference()
         const themeToSet = newImplicitPreference || defaultTheme
         document.documentElement.setAttribute('data-theme', themeToSet)
+        document.cookie = `theme=${themeToSet}; path=/; max-age=31536000`
         setThemeState(themeToSet)
       }
     }
@@ -72,7 +95,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       mediaQuery.removeEventListener('change', handleSystemThemeChange)
     }
-  }, [])
+  }, [initialTheme])
 
   return <ThemeContext.Provider value={{ setTheme, theme }}>{children}</ThemeContext.Provider>
 }

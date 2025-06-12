@@ -1,35 +1,53 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import type { Header as HeaderType } from '@/payload-types'
-import type { Theme } from '@/providers/Theme/types' // Import Theme type if needed
 import { Link } from '@/i18n/routing'
 import { usePathname } from 'next/navigation'
-import { useScrollInfo } from '@faceless-ui/scroll-info'
 import { useHeaderObserver } from '@/providers/HeaderIntersectionObserver'
 import { cn } from '@/utilities/ui'
-import { Button } from '@/components/ui/button'
-import { Menu, X } from 'lucide-react'
 import Logo from '@/components/ui/logo'
 
 // Assuming DesktopNav and MobileNav will be refactored similarly
 import { DesktopNav } from './DesktopNav'
-import { MobileNav } from './MobileNav'
-import { motion } from 'motion/react'
+import { MobileNav, AnimatedToggle } from './MobileNav'
+import { motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { AnimatePresence } from 'motion/react'
+import { AdminBar } from '@/components/AdminBar'
+import { PayloadAdminBarProps } from 'payload-admin-bar'
+import { itemsFling, itemsFling2 } from '@/utilities/motion'
 
-export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
+interface AdminBarProps {
+  adminBarProps: PayloadAdminBarProps
+}
+
+export const HeaderClient: React.FC<HeaderType & AdminBarProps> = ({
+  cta,
+  tabs,
+  adminBarProps,
+}) => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
-  const [hideBackground, setHideBackground] = React.useState(true)
+  const [hideBackground, setHideBackground] = useState(true)
+  const lastScrollY = useRef(0)
 
   const pathname = usePathname()
-  const { y } = useScrollInfo()
-  const { headerTheme } = useHeaderObserver()
+
+  const { headerTheme, setHeaderTheme } = useHeaderObserver()
+
+  const { scrollY } = useScroll()
+  const [scrollDirection, setScrollDirection] = useState('down')
+  const [y, setY] = useState(0)
+
+  useMotionValueEvent(scrollY, 'change', (current) => {
+    const diff = current - (scrollY.getPrevious() ?? 0)
+    setScrollDirection(diff > 0 ? 'down' : 'up')
+    setY(current)
+  })
 
   useEffect(() => {
     setIsMobileNavOpen(false)
   }, [pathname])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isMobileNavOpen) {
       setHideBackground(false)
     } else {
@@ -39,26 +57,32 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
 
   useEffect(() => {
     if (isMobileNavOpen) {
+      lastScrollY.current = window.scrollY
       document.body.style.overflow = 'hidden'
+      document.body.style.height = '100vh'
     } else {
       document.body.style.overflow = ''
+      document.body.style.height = 'auto'
+      window.scrollTo(0, lastScrollY.current)
     }
     return () => {
       document.body.style.overflow = ''
+      document.body.style.height = 'auto'
     }
   }, [isMobileNavOpen])
 
   return (
     <header
-      data-theme={headerTheme}
+      data-theme={headerTheme || 'light'}
       className={cn(
-        'bg-background fixed left-0 z-10 w-full max-w-screen transition-colors duration-300',
-        'top-0 md:top-[var(--admin-bar-height,0px)]',
+        'border-border fixed top-0 left-0 z-10 w-full max-w-screen border-0 bg-transparent transition-colors duration-300',
+        '-md:top-[var(--admin-bar-height,0px)]',
         hideBackground && 'before:opacity-0 after:opacity-0',
-        isMobileNavOpen && 'bg-background-neutral',
-        headerTheme && '',
+        isMobileNavOpen && 'bg-background border-none',
+        y > 20 && 'bg-background border-b',
       )}
     >
+      <AdminBar adminBarProps={adminBarProps} />
       {/* Main container with flex layout */}
       <div
         className={cn(
@@ -67,50 +91,53 @@ export const HeaderClient: React.FC<HeaderType> = ({ cta, tabs }) => {
       >
         <div className="z-50 w-full max-w-54">
           <Link href="/" className="flex-shrink-0">
-            <Logo className="text-base-primary h-5 w-auto" />
+            <Logo className="text-base-primary h-6 w-auto" />
           </Link>
         </div>
 
-        <DesktopNav cta={cta} tabs={tabs} className="hidden lg:flex lg:w-full lg:justify-end" />
+        <DesktopNav
+          cta={cta}
+          tabs={tabs}
+          className="hidden lg:flex lg:w-full lg:items-center lg:justify-end"
+        />
 
         <div className="flex flex-shrink-0 justify-end lg:hidden">
-          <Button
-            variant="secondary"
-            size="icon"
-            color="neutral"
-            onClick={() => setIsMobileNavOpen((prev) => !prev)} // Toggle state on click
-            aria-expanded={isMobileNavOpen} // Accessibility
-            aria-controls="mobile-nav-content" // Accessibility
-          >
-            {isMobileNavOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-            <span className="sr-only">{isMobileNavOpen ? 'Close Menu' : 'Open Menu'}</span>
-          </Button>
+          <AnimatedToggle
+            isOpen={isMobileNavOpen}
+            onClick={() => setIsMobileNavOpen((prev) => !prev)}
+            size={24}
+          />
         </div>
       </div>
 
       {/* Conditionally rendered Mobile Nav Dropdown */}
       {/* Animate presence will be added later with framer-motion */}
-      {isMobileNavOpen && (
-        <AnimatePresence>
+      <AnimatePresence mode="wait">
+        {isMobileNavOpen && (
           <motion.div
             key="mobile-nav-content"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
             transition={{
-              ease: [0.455, 0.03, 0.515, 0.955],
+              type: 'spring',
+              stiffness: 200,
+              damping: 20,
+              mass: 1,
             }}
             className={cn(
-              // Remove island styles: absolute inset-x-4 top-full my-4 rounded-2xl border
-              'bg-background-neutral fixed inset-x-0 top-[var(--header-height)] bottom-0 z-40 overflow-y-auto lg:hidden',
-              // Remove animation for now, can be added back later
+              'px-site pb-site fixed inset-x-0 top-[var(--header-height)] bottom-0 z-50 overflow-y-auto lg:hidden',
               // 'animate-in slide-in-from-top-4 duration-300 ease-out',
             )}
           >
-            <MobileNav cta={cta} tabs={tabs} onLinkClick={() => setIsMobileNavOpen(false)} />
+            <MobileNav
+              cta={cta}
+              tabs={tabs}
+              onLinkClick={() => setIsMobileNavOpen(false)}
+            />
           </motion.div>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </header>
   )
 }

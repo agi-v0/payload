@@ -12,7 +12,7 @@ type LinkGroupType = (options?: {
   icon?: boolean
   description?: boolean
   overrides?: Partial<ArrayField>
-  supportingText?: boolean
+  caption?: boolean
 }) => Field
 
 export const linkGroup: LinkGroupType = ({
@@ -21,7 +21,7 @@ export const linkGroup: LinkGroupType = ({
   description,
   icon,
   overrides = {},
-  supportingText = false,
+  caption = false,
 } = {}) => {
   const generatedLinkGroup: Field = {
     // name: 'links',
@@ -46,9 +46,9 @@ export const linkGroup: LinkGroupType = ({
       },
     ],
   }
-  if (supportingText) {
+  if (caption) {
     generatedLinkGroup.fields.push({
-      name: 'supportingText',
+      name: 'caption',
       type: 'text',
       label: 'Supporting text',
       required: false,

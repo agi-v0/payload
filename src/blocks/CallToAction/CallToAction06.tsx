@@ -20,6 +20,7 @@ import { Data } from '../Form/Component'
 
 type CTABlockType = CallToActionBlock & {
   form: FormType
+  locale?: string
 }
 
 export const CallToAction06: React.FC<CTABlockType> = (props) => {
@@ -27,11 +28,12 @@ export const CallToAction06: React.FC<CTABlockType> = (props) => {
     badge,
     richText,
     links,
-    supportingText,
+    caption,
     list,
     media,
     form: formFromProps,
     form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
+    locale,
   } = props
 
   const formMethods = useForm({
@@ -153,6 +155,7 @@ export const CallToAction06: React.FC<CTABlockType> = (props) => {
                                 control={control}
                                 errors={errors}
                                 register={register}
+                                locale={locale}
                               />
                             </div>
                           )

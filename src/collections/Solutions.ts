@@ -1,27 +1,11 @@
-import type { CollectionConfig, Field } from 'payload'
+import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../access/authenticated'
 import { authenticatedOrPublished } from '../access/authenticatedOrPublished'
-import { MediaBlock } from '../blocks/MediaBlock/config'
-import { StyledList } from '../blocks/StyledList/config'
-import { hero } from '@/heros/config'
-import { Banner } from '../blocks/Banner/config'
-import { Code } from '../blocks/Code/config'
 
 import { slugField } from '@/fields/slug'
 
 import { link } from '@/fields/link'
-import {
-  BlocksFeature,
-  FixedToolbarFeature,
-  HeadingFeature,
-  HorizontalRuleFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
-import { iconPickerField } from '@/fields/iconPickerField'
-import lucideIcons from '@/fields/iconPickerField/lucide-icons.json'
 
 export const Solutions: CollectionConfig<'solutions'> = {
   slug: 'solutions',
@@ -144,19 +128,18 @@ export const Solutions: CollectionConfig<'solutions'> = {
       admin: {
         position: 'sidebar',
       },
+      hooks: {
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (siblingData._status === 'published' && !value) {
+              return new Date()
+            }
+            return value
+          },
+        ],
+      },
     },
-    // {
-    //   name: 'ecosystem',
-    //   type: 'select',
-    //   options: [
-    //     { value: 'sell', label: { en: 'Sell', ar: 'بيع' } },
-    //     { value: 'operate', label: { en: 'Operate', ar: 'تشغيل' } },
-    //     { value: 'manage', label: { en: 'Manage', ar: 'إدارة' } },
-    //   ],
-    //   admin: {
-    //     position: 'sidebar',
-    //   },
-    // },
+
     {
       name: 'ecosystem',
       type: 'relationship',
@@ -180,11 +163,10 @@ export const Solutions: CollectionConfig<'solutions'> = {
 
   versions: {
     drafts: {
-      // autosave: {
-      //   interval: 100, // We set this interval for optimal live preview
-      // },
-      schedulePublish: true,
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
     },
-    maxPerDoc: 50,
+    maxPerDoc: 25,
   },
 }

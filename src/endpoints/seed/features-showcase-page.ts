@@ -103,7 +103,7 @@ type CommonPayloadLink = {
   newTab?: boolean | null
   reference?: {
     relationTo: 'pages' | 'posts' | 'solutions' | 'integrations' // Add all valid relationTo targets
-    value: string | number | Page | Post | Solution | Integration // Or the actual related document type
+    value: string | string | Page | Post | Solution | Integration // Or the actual related document type
   } | null
   url?: string | null
   label: string // Label is often required
@@ -205,7 +205,7 @@ export const seedFeaturesShowcasePage = (media: {
     }
 
     const block: Partial<FeaturesBlock> = {
-      blockType: 'features',
+      blockType: 'featuresBlock',
       type: type,
       blockHeader: blockHeaderData,
       blockImage: ['04', '06', '07'].includes(type) ? media.image169?.id : undefined,
@@ -371,8 +371,14 @@ export const seedFeaturesShowcasePage = (media: {
       },
     ]),
     media: {
-      light: media.image169?.id,
-      dark: media.image169?.id,
+      desktop: {
+        light: media.image169?.id,
+        dark: media.image169?.id,
+      },
+      mobile: {
+        light: null,
+        dark: null,
+      },
     },
     links: [
       {

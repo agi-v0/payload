@@ -14,36 +14,33 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
-export const dynamic = 'force-dynamic'
-
-export async function generateStaticParams({
-  params: { locale },
-}: {
-  params: { locale?: 'ar' | 'en' | undefined }
-}) {
+export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
-  const pages = await payload.find({
-    collection: 'pages',
-    locale: locale,
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    select: {
-      slug: true,
-    },
-  })
-
-  const params = pages.docs
-    ?.filter((doc) => {
-      // Filter out the home page and any slugs that might be null/undefined
-      return doc.slug && doc.slug !== 'home'
+  const locales = ['en', 'ar']
+  const params: { slug: string[]; locale: 'ar' | 'en' }[] = []
+  for (const locale of locales) {
+    const pages = await payload.find({
+      collection: 'pages',
+      locale: locale as 'ar' | 'en',
+      draft: false,
+      limit: 1000,
+      overrideAccess: false,
+      pagination: false,
+      select: {
+        slug: true,
+      },
     })
-    .map(({ slug }) => {
-      // Split the full slug path into an array of segments
-      // We've already filtered for non-null slugs, but TS might not know
-      return { slug: (slug || '').split('/') }
-    })
+    pages.docs
+      ?.filter((doc) => {
+        return doc.slug && doc.slug !== 'home'
+      })
+      .map((doc) => {
+        params.push({
+          slug: doc.slug?.split('/') || [],
+          locale: locale as 'ar' | 'en',
+        })
+      })
+  }
 
   return params
 }
@@ -57,16 +54,15 @@ type Args = {
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
+  const { slug: slugSegments = ['home'], locale = 'ar' } = await paramsPromise
   const slugPath = slugSegments.join('/') || 'home'
-  const url = `/${locale}/${slugPath === 'home' ? '' : slugPath}`
+  const url = `/${locale}/${slugPath}`
 
   let page: PageType | null
 
   page = await queryPageBySlug({
     slug: slugPath,
     locale,
-    draft,
   })
 
   if (!page && slugPath === 'home') {
@@ -93,45 +89,35 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { isEnabled: draft } = await draftMode()
-  const { slug: slugSegments = [], locale = 'ar' } = await paramsPromise
+  const { slug: slugSegments = ['home'], locale = 'ar' } = await paramsPromise
   const slugPath = slugSegments.join('/') || 'home'
 
   const page = await queryPageBySlug({
     slug: slugPath,
     locale,
-    draft,
   })
 
   return generateMeta({ doc: page })
 }
 
-const queryPageBySlug = cache(
-  async ({
-    slug,
-    locale,
+const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale?: 'ar' | 'en' }) => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'pages',
+    locale: locale,
     draft,
-  }: {
-    slug: string
-    locale?: 'ar' | 'en' | undefined
-    draft: boolean
-  }) => {
-    const payload = await getPayload({ config: configPromise })
-
-    const result = await payload.find({
-      collection: 'pages',
-      locale: locale,
-      draft,
-      limit: 1,
-      pagination: false,
-      overrideAccess: draft,
-      where: {
-        slug: {
-          equals: slug,
-        },
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+    where: {
+      slug: {
+        equals: slug,
       },
-    })
+    },
+  })
 
-    return result.docs?.[0] || null
-  },
-)
+  return result.docs?.[0] || null
+})

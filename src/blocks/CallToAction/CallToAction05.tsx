@@ -6,7 +6,7 @@ import type { CMSLinkType } from '@/components/Link'
 
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { motion, useScroll } from 'motion/react'
 import { useTransform } from 'motion/react'
 
@@ -14,7 +14,7 @@ export const CallToAction05: React.FC<CTABlockProps> = ({
   badge,
   richText,
   links,
-  supportingText,
+  caption,
   list,
   media,
 }) => {
@@ -26,6 +26,8 @@ export const CallToAction05: React.FC<CTABlockProps> = ({
   })
   // Parallax: image moves up to -40px as you scroll through the block
   const y = useTransform(scrollYProgress, [0, 1], [-40, 40])
+  const { desktop, mobile } = media || {}
+
   return (
     <div data-theme="dark" className="py-xl bg-background-neutral" ref={containerRef}>
       <div className="px-md py-xl gap-md rounded-space-sm container flex flex-col items-center md:flex-row md:items-center md:justify-between">
@@ -48,8 +50,8 @@ export const CallToAction05: React.FC<CTABlockProps> = ({
         </motion.div>
         {media && (
           <Media
-            resource={media}
-            className="rounded-space-md overflow-hidden md:max-w-[32rem] md:basis-1/2"
+            media={media}
+            className="rounded-space-sm overflow-hidden md:max-w-[32rem] md:basis-1/2"
           />
         )}
       </div>

@@ -41,13 +41,13 @@ const fields: Field[] = [
     name: 'type',
     type: 'select',
     options: [
-      { value: 'gallery01', label: 'Gallery 01 (Card)' },
-      { value: 'gallery02', label: 'Gallery 02 (Full-width)' },
-      { value: 'gallery03', label: 'Gallery 03 (Infinite Slider)' },
-      { value: 'gallery04', label: 'Gallery 04 (Interactive)' },
+      { value: '01', label: 'Gallery 01 (Card)' },
+      { value: '02', label: 'Gallery 02 (Full-width)' },
+      { value: '03', label: 'Gallery 03 (Infinite Slider)' },
+      { value: '04', label: 'Gallery 04 (Interactive)' },
     ],
     required: true,
-    defaultValue: 'gallery01',
+    defaultValue: '01',
     admin: {
       description: 'Select the layout for the gallery.',
     },
@@ -59,7 +59,7 @@ const fields: Field[] = [
     hasMany: true,
     admin: {
       description: 'Select or upload images for the gallery.',
-      condition: (data, siblingData, { blockData }) => blockData?.type !== 'gallery04',
+      condition: (data, siblingData, { blockData }) => blockData?.type !== '04',
     },
     localized: true,
   },
@@ -70,13 +70,13 @@ const fields: Field[] = [
     minRows: 1,
     fields: imageEntry,
     admin: {
-      condition: (data, siblingData, { blockData }) => blockData?.type === 'gallery04',
+      condition: (data, siblingData, { blockData }) => blockData?.type === '04',
     },
   },
 ]
 
 export const GalleryBlock: Block = {
-  slug: 'gallery',
+  slug: 'galleryBlock',
   interfaceName: 'GalleryBlock',
   dbName: 'galleryBlock',
   fields: [blockHeader, ...fields],

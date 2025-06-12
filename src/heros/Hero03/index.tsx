@@ -1,23 +1,22 @@
-'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
 import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 
-export const Hero03: React.FC<Page['hero']> = ({
+export const Hero03: React.FC<Page['hero'] & { children?: React.ReactNode }> = ({
   richText,
   media,
   links,
-  supportingText,
+  caption,
   logos,
   badge,
+  children,
 }) => {
   const { logos: logosGroup, headline } = logos || {}
   // const { setHeaderTheme } = useHeaderTheme()
@@ -27,7 +26,7 @@ export const Hero03: React.FC<Page['hero']> = ({
   // }, [setHeaderTheme])
 
   return (
-    <section className="pb-xl gap-3xl container flex flex-col items-center pt-[calc(3*var(--header-height))]">
+    <section className="pb-xl gap-space-3xl container flex flex-col items-center pt-[calc(3*var(--header-height))]">
       <div className="gap-md flex max-w-[36rem] flex-col items-center">
         {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
@@ -54,8 +53,9 @@ export const Hero03: React.FC<Page['hero']> = ({
               })}
             </ul>
           )}
-          {supportingText && <p className="text-base-tertiary text-sm">{supportingText}</p>}
+          {caption && <p className="text-base-tertiary text-sm">{caption}</p>}
         </div>
+        {children}
       </div>
 
       {logos && logosGroup && logosGroup.length > 0 && (
@@ -88,8 +88,7 @@ export const Hero03: React.FC<Page['hero']> = ({
           className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
           imgClassName="object-cover"
           priority
-          light={media.light ?? undefined}
-          dark={media.dark ?? undefined}
+          media={media}
           // fill
         />
       )}

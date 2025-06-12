@@ -9,24 +9,34 @@ import { BlockHeader } from '@/components/BlockHeader'
 import { BlockHeaderType } from '@/types/blockHeader'
 import { RenderFeaturedAppsBlock } from './FeaturedApps/RenderFeaturedAppsBlock'
 import { RenderTestimonialsBlock } from './Testimonials/RenderTestimonialsBlock'
-import { FaqBlock } from './FAQ/Component'
+import { RenderFAQBlock } from './FAQ/RenderFAQBlock'
 import { RenderGalleryBlock } from './Gallery/RenderGalleryBlock'
 import { RenderCallToActionBlock } from './CallToAction/RenderCallToActionBlock'
-import { RenderCustomHtmlBlock } from './CustomHtmlBlock/RenderCustomHtmlBlock'
-import { RenderDividerBlock } from './DividerBlock/RenderDividerBlock'
+import { RenderCustomHtmlBlock } from './CustomHTML/RenderCustomHtmlBlock'
+import { RenderDividerBlock } from './Divider/RenderDividerBlock'
+import { RenderLogoBlock } from './Logos/RenderLogoBlock'
+import { RenderRichTextBlock } from './RichText/RenderRichTextBlock'
+import { RenderMetricsBlock } from './Metrics/RenderMetricsBlock'
+import { RenderPricingBlock } from './Pricing/RenderPricingBlock'
+import { SearchableIntegrationsGrid } from '@/blocks/Marketplace/SearchableGrid'
 
 const blockComponents = {
-  archive: ArchiveBlock,
-  callToAction: RenderCallToActionBlock,
-  customHtml: RenderCustomHtmlBlock,
-  divider: RenderDividerBlock,
-  faqBlock: FaqBlock,
-  featuredApps: RenderFeaturedAppsBlock,
-  features: RenderFeaturesBlock,
+  archiveBlock: ArchiveBlock,
+  callToActionBlock: RenderCallToActionBlock,
+  customHtmlBlock: RenderCustomHtmlBlock,
+  dividerBlock: RenderDividerBlock,
+  faqBlock: RenderFAQBlock,
+  featuredAppsBlock: RenderFeaturedAppsBlock,
+  featuresBlock: RenderFeaturesBlock,
   formBlock: FormBlock,
-  gallery: RenderGalleryBlock,
+  galleryBlock: RenderGalleryBlock,
+  marketplaceBlock: SearchableIntegrationsGrid,
+  logosBlock: RenderLogoBlock,
   mediaBlock: MediaBlock,
-  testimonials: RenderTestimonialsBlock,
+  metricsBlock: RenderMetricsBlock,
+  pricingBlock: RenderPricingBlock,
+  richTextBlock: RenderRichTextBlock,
+  testimonialsBlock: RenderTestimonialsBlock,
 }
 
 type BlockWithHeader = {
@@ -55,10 +65,9 @@ export const RenderBlocks: React.FC<{
         return (
           <div id={block.blockName || undefined} className="*:first:pt-xl *:last:pb-xl" key={index}>
             {blockHeader &&
-              !(block?.blockType === 'features' && ['06', '07', '17'].includes(block.type)) &&
-              !(block.blockType === 'featuredApps' && block.type === '01') && (
-                <BlockHeader {...blockHeader} className="" />
-              )}
+              !(block?.blockType === 'featuresBlock' && ['06', '07', '17'].includes(block.type)) &&
+              !(block.blockType === 'featuredAppsBlock' && block.type === '01') &&
+              !(block.blockType === 'faqBlock' && block.type === '02') && <BlockHeader {...blockHeader} className="" />}
             <Block {...(block as any)} locale={locale} />
           </div>
         )

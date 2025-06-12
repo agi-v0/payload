@@ -16,7 +16,8 @@
   line-height: 2;
 
   *:where(:not(.not-prose, .not-prose *)) + *:where(:not(.not-prose, .not-prose *)) {
-    margin-top: calc(var(--spacing-space-xs));
+    /* margin-top: calc(var(--spacing-space-xs)); */
+    margin-top: 0.5em;
   }
 
   /*

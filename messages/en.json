@@ -9,6 +9,10 @@
   "TestimonialsBlock": {
     "readMore": "Read story"
   },
+  "PricingBlock": {
+    "annually": "Annually",
+    "monthly": "Monthly"
+  },
   "Header": {
     "home": "Home",
     "pages": "Pages",

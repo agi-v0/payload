@@ -23,11 +23,12 @@ export const Select: React.FC<
         [x: string]: any
       }>
     >
+    locale?: string
   }
-> = ({ name, control, errors, label, options, required, width }) => {
+> = ({ name, control, errors, label, options, required, width, locale }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name}>{label}</Label>
+      {/* <Label htmlFor={name}>{label}</Label> */}
       <Controller
         control={control}
         defaultValue=""
@@ -36,7 +37,11 @@ export const Select: React.FC<
           const controlledValue = options.find((t) => t.value === value)
 
           return (
-            <SelectComponent onValueChange={(val) => onChange(val)} value={controlledValue?.value}>
+            <SelectComponent
+              dir={locale === 'ar' ? 'rtl' : 'ltr'}
+              onValueChange={(val) => onChange(val)}
+              value={controlledValue?.value}
+            >
               <SelectTrigger className="w-full" id={name}>
                 <SelectValue placeholder={label} />
               </SelectTrigger>

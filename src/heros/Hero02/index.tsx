@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
@@ -15,7 +15,7 @@ export const Hero02: React.FC<Page['hero']> = ({
   richText,
   media,
   links,
-  supportingText,
+  caption,
   logos,
   badge,
 }) => {
@@ -28,8 +28,8 @@ export const Hero02: React.FC<Page['hero']> = ({
   // }, [setHeaderTheme])
 
   return (
-    <section className="container mt-(--header-height) md:mt-[calc(var(--header-height)+var(--admin-bar-height))]">
-      <div className="pb-site bg-background-neutral rounded-space-sm gap-3xl container flex flex-col items-center pt-[calc(1*var(--header-height))]">
+    <section className="mt-header md:mt-header-plus-admin-bar container">
+      <div className="pb-site bg-background-neutral rounded-space-sm gap-space-3xl pt-header container flex flex-col items-center">
         <div className="gap-md flex max-w-[36rem] flex-col items-center">
           {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
 
@@ -56,7 +56,7 @@ export const Hero02: React.FC<Page['hero']> = ({
                 })}
               </ul>
             )}
-            {supportingText && <p className="text-base-tertiary text-sm">{supportingText}</p>}
+            {caption && <p className="text-base-tertiary text-sm">{caption}</p>}
           </div>
         </div>
 
@@ -92,8 +92,7 @@ export const Hero02: React.FC<Page['hero']> = ({
             className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
             imgClassName="object-cover"
             priority
-            light={media.light ?? undefined}
-            dark={media.dark ?? undefined}
+            media={media}
             // fill
           />
         )}

@@ -1,46 +1,56 @@
 import React from 'react'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import { CMSLink } from '@/components/Link'
 import { Button } from '@/components/ui/button'
-import { Solution, Integration } from '@/payload-types'
+import { Solution, Integration, Media as MediaType } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 
 interface AppReferenceProps {
   appReference:
     | ({
         relationTo: 'solutions'
-        value: number | Solution
+        value: string | Solution
       } | null)
     | ({
         relationTo: 'integrations'
-        value: number | Integration
+        value: string | Integration
       } | null)
   className?: string
 }
 
-export const AppReference: React.FC<AppReferenceProps> = ({ appReference, className }) => {
+export const AppReference: React.FC<AppReferenceProps> = ({
+  appReference,
+  className,
+}) => {
   if (!appReference) return null
   // Check if appReference.value is an object
   if (typeof appReference.value !== 'object') return null
 
   return (
     <div
-      className={cn('group flex flex-row items-center justify-between gap-4 lg:gap-0', className)}
+      className={cn(
+        'group flex flex-row items-center justify-between gap-4 lg:gap-0',
+        className,
+      )}
     >
       <div className="flex items-center gap-4">
         {appReference.value.icon && (
           <Media
-            resource={appReference.value.icon}
-            className="size-15 shrink-0"
-            imgClassName="w-full h-full rounded-xl aspect-square"
+            resource={appReference.value.icon as MediaType}
+            className="size-[clamp(2.5rem,1.7rem+2vw,3.5rem)] shrink-0"
+            imgClassName="w-full h-full rounded-md aspect-square"
           />
         )}
         <div>
           {appReference.value.name && (
-            <p className="text-body-md text-base-primary font-medium">{appReference.value.name}</p>
+            <p className="text-body-md text-base-primary mb-1 font-medium">
+              {appReference.value.name}
+            </p>
           )}
           {appReference.value.tagline && (
-            <p className="text-base-secondary text-sm">{appReference.value.tagline}</p>
+            <p className="text-base-tertiary text-body-sm">
+              {appReference.value.tagline}
+            </p>
           )}
         </div>
       </div>

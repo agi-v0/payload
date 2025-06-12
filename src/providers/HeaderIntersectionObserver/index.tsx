@@ -35,69 +35,68 @@ export const HeaderIntersectionObserver: React.FC<HeaderIntersectionObserverProp
   const { theme } = useTheme()
   const [headerTheme, setHeaderTheme] = React.useState<null | Theme | undefined>(theme)
   const [observer, setObserver] = React.useState<IntersectionObserver | undefined>(undefined)
-  const [tick, setTick] = React.useState<number | undefined>(undefined)
   const pathname = usePathname()
 
   const addObservable = React.useCallback(
-    (el: HTMLElement) => {
-      if (observer) {
+    (el: HTMLElement, isAttached: boolean) => {
+      if (observer && isAttached) {
         observer.observe(el)
+      } else {
+        observer?.unobserve(el)
       }
     },
     [observer],
   )
 
+  // Use a ref so the observer sees the latest theme without re-instantiation
+  const headerThemeRef = React.useRef(headerTheme)
   React.useEffect(() => {
-    let observerRef: IntersectionObserver | undefined
+    headerThemeRef.current = headerTheme
+  }, [headerTheme])
+
+  React.useEffect(() => {
+    if (!windowHeight) return
 
     const cssHeaderHeight = parseInt(
       getComputedStyle(document.documentElement).getPropertyValue('--header-height'),
       10,
     )
+    if (!cssHeaderHeight) return
 
-    let tickTimeout: NodeJS.Timeout | undefined
-    if (!cssHeaderHeight) {
-      // workaround for styles not always being loaded in time (oddity with NextJS App folder)
-      tickTimeout = setTimeout(() => {
-        setTick(tick === undefined ? 1 : tick + 1)
-      }, 50)
+    const halfHeaderHeight = windowHeight - Math.ceil(cssHeaderHeight / 2)
 
-      // early return to prevent the observer from being set up incorrectly
-      return
-    }
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const elTheme = entry.target.getAttribute('data-theme') as Theme | null
+          const restoreOnExit = entry.target.getAttribute('data-restore-theme') === 'true'
 
-    if (windowHeight) {
-      const halfHeaderHeight = windowHeight - Math.ceil(cssHeaderHeight / 2)
-
-      observerRef = new IntersectionObserver(
-        (entries) => {
-          const intersectingElement = entries.find((entry) => entry.isIntersecting)
-
-          if (intersectingElement) {
-            setHeaderTheme(intersectingElement.target.getAttribute('data-theme') as Theme)
+          if (entry.isIntersecting && elTheme && elTheme !== headerThemeRef.current) {
+            setHeaderTheme(elTheme) // section override
+          } else if (!entry.isIntersecting && restoreOnExit) {
+            setHeaderTheme(theme) // fall back to global theme
           }
-        },
-        {
-          // intersection area is top of the screen from 0px to 50% of the header height
-          // when the sticky element which is offset from the top by 50% of the header height
-          // is intersecting the intersection area
-          rootMargin: `0px 0px -${halfHeaderHeight}px 0px`,
-          threshold: 0,
-        },
-      )
+        })
+      },
+      {
+        rootMargin: `0px 0px -${halfHeaderHeight}px 0px`,
+        threshold: 0,
+      },
+    )
 
-      setObserver(observerRef)
-    }
+    setObserver(obs)
+  }, [windowWidth, windowHeight, theme])
 
-    return () => {
-      if (tickTimeout) {
-        clearTimeout(tickTimeout)
-      }
-      if (observerRef) {
-        observerRef.disconnect()
-      }
-    }
-  }, [windowWidth, windowHeight, theme, tick])
+  React.useEffect(() => {
+    const meta = document.querySelector('meta[name="theme-color"]')
+    if (!meta) return
+
+    meta.setAttribute('content', headerTheme === 'dark' ? '#000000' : '#fafafa')
+  }, [headerTheme])
+
+  React.useEffect(() => {
+    setHeaderTheme(theme)
+  }, [theme])
 
   React.useEffect(() => {
     setHeaderTheme(theme)

@@ -3,12 +3,10 @@
 import * as React from 'react'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
-import { ChevronLeft } from 'lucide-react' // Import back icon
 
 import { cn } from '@/utilities/ui'
 import { CMSLink } from '@/components/Link'
 import type { Header as HeaderType } from '@/payload-types'
-import { Button } from '@/components/ui/button' // Import Button for Back button
 import { DynamicIcon } from 'lucide-react/dynamic'
 import MarnIcon from '@/components/ui/marn-icon'
 import { cva } from 'class-variance-authority'
@@ -19,9 +17,12 @@ import {
   AccordionTrigger,
 } from '@/components/motion-ui/accordion'
 import { CaretLeft } from '@/icons/caret-left-filled'
+import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
 // Define the type for a single nav item from HeaderType
-type NavItem = NonNullable<NonNullable<HeaderType['tabs']>[number]['navItems']>[number]
+type NavItem = NonNullable<
+  NonNullable<HeaderType['tabs']>[number]['navItems']
+>[number]
 type Tab = NonNullable<HeaderType['tabs']>[number] // Define Tab type
 
 // Explicitly define props for ListItem based on the NavItem structure
@@ -35,17 +36,20 @@ interface ListItemProps {
   [key: string]: any // Allow other props temporarily
 }
 
-interface MobileNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
+interface MobileNavProps
+  extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
   onLinkClick?: () => void // Callback to close sheet on link click
 }
 
 const navigationMenuTriggerStyle = cva(
-  'focus:text-base-primary data-[closed]:text-base-secondary inline-flex w-full items-center justify-start gap-2 bg-transparent py-4 text-(length:--text-h3) font-medium text-(color:--color-base-secondary) transition-colors group-data-[expanded]:text-(color:--color-base-primary) hover:text-(color:--color-base-primary) hover:no-underline focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-transparent data-[state=open]:focus:bg-transparent',
+  'hover:text-base-primary inline-flex w-full items-center justify-start gap-2 bg-transparent py-4 text-(length:--text-h3) font-medium transition-colors hover:no-underline focus:bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[expanded]:bg-transparent data-[expanded]:focus:bg-transparent',
 )
 
 export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
   const validTabs = tabs || []
   const pathname = usePathname()
+  const [expandedValue, setExpandedValue] =
+    React.useState<React.Key | null>(null)
 
   const handleLinkClick = () => {
     if (onLinkClick) {
@@ -55,32 +59,53 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
 
   const handleDirectLinkClick = () => {
     handleLinkClick() // Close sheet for direct links
-    // Navigation is handled by CMSLink
+  }
+
+  const handleAccordionValueChange = (value: React.Key | null) => {
+    setExpandedValue(value)
   }
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="bg-background-neutral flex h-full w-full flex-col rounded-3xl">
+      {/* Preload all navigation images */}
+      <NavigationImagePreloader tabs={tabs} />
+
       {/* NEW: Scrollable wrapper for menu content */}
       <div className="p-site flex-grow overflow-y-auto pb-20">
         {/* Added pb-20 for CTA spacing */}
         {/* Main Menu View using Accordion */}
         <Accordion
-          className="flex w-full flex-col divide-y divide-neutral-200"
-          transition={{ duration: 0.2, ease: 'easeInOut' }}
+          className="divide-border flex w-full flex-col divide-y"
+          onValueChange={handleAccordionValueChange}
+          expandedValue={expandedValue}
         >
           {validTabs.map((tab, i) => {
             // --- Dropdown Tab (renders as AccordionItem) ---
             if (tab.enableDropdown) {
               return (
                 <AccordionItem value={`item-${i}`} key={i}>
-                  <AccordionTrigger className={cn(navigationMenuTriggerStyle(), '')}>
+                  <AccordionTrigger
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      'justify-between',
+                      expandedValue === null && 'text-base-secondary',
+                      'data-[expanded]:text-base-primary',
+                      expandedValue !== null &&
+                        expandedValue !== `item-${i}` &&
+                        'text-base-tertiary',
+                    )}
+                  >
                     <span>{tab.label}</span>
                     <CaretLeft className="size-4 -rotate-90 transition-transform duration-200 group-data-[expanded]:rotate-90" />
                   </AccordionTrigger>
                   <AccordionContent className="">
                     <nav className="space-y-4 pb-4">
                       {tab.navItems?.map((navItem) => (
-                        <MobileNavItem key={navItem.id} item={navItem} onClick={handleLinkClick} />
+                        <MobileNavItem
+                          key={navItem.id}
+                          item={navItem}
+                          onClick={handleLinkClick}
+                        />
                       ))}
                     </nav>
                   </AccordionContent>
@@ -99,6 +124,9 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
                   className={cn(
                     navigationMenuTriggerStyle(),
                     'text-base-secondary text-(length:--text-h3)',
+                    expandedValue !== null &&
+                      expandedValue !== `item-${i}` &&
+                      'text-base-tertiary',
                   )}
                 />
               )
@@ -163,7 +191,11 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && onClick()}
             >
-              <CMSLink {...subLink.link} variant="inline" className={baseItemClasses} />
+              <CMSLink
+                {...subLink.link}
+                variant="inline"
+                className={baseItemClasses}
+              />
             </div>
           ))}
         </div>
@@ -179,7 +211,9 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
           {item.listLinks?.links?.map((subLink, i) => {
             const referenceValue = subLink.link.reference?.value
             const isReferenceObject =
-              referenceValue && typeof referenceValue === 'object' && !Array.isArray(referenceValue)
+              referenceValue &&
+              typeof referenceValue === 'object' &&
+              !Array.isArray(referenceValue)
 
             return (
               <div
@@ -201,7 +235,9 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                 >
                   {/* Icon/Image Rendering */}
                   {(subLink.link.icon ||
-                    (isReferenceObject && 'icon' in referenceValue && referenceValue.icon)) && (
+                    (isReferenceObject &&
+                      'icon' in referenceValue &&
+                      referenceValue.icon)) && (
                     <div className="group-hover:bg-background-neutral bg-background flex size-10 flex-none items-center justify-center rounded-full [&_svg]:size-4">
                       {subLink.link.icon ? (
                         subLink.link.icon === 'marn-icon' ? (
@@ -216,25 +252,31 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
                       isReferenceObject &&
                         'icon' in referenceValue &&
                         typeof referenceValue.icon === 'object' && // Ensure icon itself is an object
-                        referenceValue.icon?.url ? (
+                        referenceValue.icon ? (
                         <Image
-                          src={referenceValue.icon.url} // Safe to access now
+                          src={
+                            referenceValue.icon.sizes?.thumbnail?.url ||
+                            referenceValue.icon.url ||
+                            ''
+                          }
                           alt={referenceValue.icon.alt ?? ''} // Safe to access now
-                          width={300} // Keep original desktop size for now
-                          height={300}
+                          width={40}
+                          height={40}
                           className="aspect-square size-10 flex-none rounded-md"
+                          priority
+                          sizes="40px"
                         />
                       ) : null}
                     </div>
                   )}
                   {/* Text Content (with type safety for tagline) */}
-                  <div className="flex-grow space-y-1">
+                  <div className="flex-grow space-y-1 font-medium">
                     {subLink.link.label}
                     {(subLink.link.description ||
                       (isReferenceObject &&
                         'tagline' in referenceValue &&
                         referenceValue.tagline)) && (
-                      <p className="text-base-secondary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
+                      <p className="text-base-tertiary line-clamp-2 text-sm leading-snug font-normal whitespace-normal">
                         {subLink.link.description ||
                           (isReferenceObject && 'tagline' in referenceValue
                             ? referenceValue.tagline
@@ -258,8 +300,14 @@ function MobileNavItem({ item, onClick }: MobileNavItemProps) {
           tabIndex={0}
           onKeyDown={(e) => e.key === 'Enter' && onClick()}
         >
-          <CMSLink {...item.defaultLink.link} className={cn(baseItemClasses, 'font-medium')} />
+          <CMSLink
+            {...item.defaultLink.link}
+            className={cn(baseItemClasses, 'font-medium')}
+          />
         </div>
       )
   }
 }
+
+// Export the AnimatedToggle component
+export { AnimatedToggle } from './AnimatedToggle'

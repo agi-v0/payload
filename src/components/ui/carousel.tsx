@@ -1,9 +1,18 @@
 'use client'
 
-import { Children, ReactNode, createContext, useContext, useEffect, useRef, useState } from 'react'
+import {
+  Children,
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { motion, Transition, useMotionValue } from 'motion/react'
 import { cn } from '@/utilities/ui'
-import { ArrowLeftIcon, ArrowRightIcon, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useDirection } from '@/hooks/useDirection'
 import { Button } from './button'
 
@@ -23,6 +32,8 @@ function useSlidesPerView(slidesPerView: number | Record<string, number>): numbe
   )
 
   useEffect(() => {
+    let rafId: number | null = null
+
     function update() {
       let value: number
 
@@ -56,7 +67,7 @@ function useSlidesPerView(slidesPerView: number | Record<string, number>): numbe
             // pick the largest matching breakpoint
             value = matches[matches.length - 1][2]
           } else {
-            // below smallest: fallback to smallest’s value
+            // below smallest: fallback to smallest's value
             value = valid[0][2]
           }
         }
@@ -64,10 +75,19 @@ function useSlidesPerView(slidesPerView: number | Record<string, number>): numbe
 
       setCurrent(value)
     }
-
+    function throttledUpdate() {
+      if (rafId !== null) return
+      rafId = requestAnimationFrame(() => {
+        update()
+        rafId = null
+      })
+    }
     update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
+    window.addEventListener('resize', throttledUpdate)
+    return () => {
+      window.removeEventListener('resize', throttledUpdate)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+    }
   }, [slidesPerView])
 
   return current
@@ -80,6 +100,9 @@ export type CarouselContextType = {
   setItemsCount: (count: number) => void
   disableDrag: boolean
   slidesPerView: number
+  pagesCount: number // derived
+  prevDisabled: boolean // derived
+  nextDisabled: boolean // derived
 }
 
 const CarouselContext = createContext<CarouselContextType | undefined>(undefined)
@@ -110,6 +133,7 @@ function CarouselProvider({
   const [index, setIndex] = useState(initialIndex)
   const [itemsCount, setItemsCount] = useState(0)
   const resolved = useSlidesPerView(slidesPerView)
+  const pagesCount = useMemo(() => Math.max(itemsCount - resolved + 1, 1), [itemsCount, resolved])
 
   const handleSetIndex = (newIdx: number) => {
     setIndex(newIdx)
@@ -120,6 +144,13 @@ function CarouselProvider({
     setIndex(initialIndex)
   }, [initialIndex])
 
+  // Clamp index when pagesCount shrinks (e.g., slidesPerView grows)
+  useEffect(() => {
+    if (index + 1 > pagesCount) {
+      handleSetIndex(Math.max(pagesCount - 1, 0))
+    }
+  }, [pagesCount, index])
+
   return (
     <CarouselContext.Provider
       value={{
@@ -129,6 +160,9 @@ function CarouselProvider({
         setItemsCount,
         disableDrag,
         slidesPerView: resolved,
+        pagesCount,
+        prevDisabled: index === 0,
+        nextDisabled: index + 1 === pagesCount,
       }}
     >
       {children}
@@ -184,15 +218,13 @@ export type CarouselNavigationProps = {
 }
 
 function CarouselNavigation({ className, classNameButton, alwaysShow }: CarouselNavigationProps) {
-  const { index, setIndex, itemsCount, slidesPerView } = useCarousel()
+  const { index, setIndex, pagesCount, prevDisabled, nextDisabled } = useCarousel()
   const direction = useDirection()
-
-  const pagesCount = Math.max(itemsCount - slidesPerView + 1, 1)
-  const prevDisabled = index === 0
-  const nextDisabled = index + 1 === pagesCount
 
   const PreviousIcon = direction === 'rtl' ? ChevronRight : ChevronLeft
   const NextIcon = direction === 'rtl' ? ChevronLeft : ChevronRight
+
+  if (!alwaysShow && pagesCount <= 1) return null // respect the prop
 
   return (
     <div
@@ -210,7 +242,7 @@ function CarouselNavigation({ className, classNameButton, alwaysShow }: Carousel
           if (!prevDisabled) setIndex(index - 1)
         }}
       >
-        <ArrowRightIcon className="size-4" />
+        <PreviousIcon className="size-4" />
       </Button>
 
       <Button
@@ -225,7 +257,7 @@ function CarouselNavigation({ className, classNameButton, alwaysShow }: Carousel
           if (!nextDisabled) setIndex(index + 1)
         }}
       >
-        <ArrowLeftIcon className="size-4" />
+        <NextIcon className="size-4" />
       </Button>
     </div>
   )
@@ -237,8 +269,8 @@ export type CarouselIndicatorProps = {
 }
 
 function CarouselIndicator({ className, classNameButton }: CarouselIndicatorProps) {
-  const { index, itemsCount, setIndex, slidesPerView } = useCarousel()
-  const pagesCount = Math.max(itemsCount - slidesPerView + 1, 1)
+  const { index, setIndex, pagesCount } = useCarousel()
+  if (pagesCount <= 1) return null
 
   return (
     <div

@@ -124,7 +124,7 @@ export const Testimonials: CollectionConfig = {
         {
           name: 'linkedCaseStudy',
           type: 'relationship',
-          relationTo: 'case-studies',
+          relationTo: 'customers',
           admin: {
             position: 'sidebar',
             condition: (data, siblingData) => siblingData?.linkCaseStudy,
@@ -153,6 +153,16 @@ export const Testimonials: CollectionConfig = {
         date: {
           pickerAppearance: 'dayOnly',
         },
+      },
+      hooks: {
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (siblingData._status === 'published' && !value) {
+              return new Date()
+            }
+            return value
+          },
+        ],
       },
     },
   ],

@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/utilities/ui'
@@ -15,7 +15,7 @@ export const Hero05: React.FC<Page['hero']> = ({
   richText,
   media,
   links,
-  supportingText,
+  caption,
   logos,
   badge,
 }) => {
@@ -30,11 +30,11 @@ export const Hero05: React.FC<Page['hero']> = ({
   return (
     <section
       className={cn(
-        'pb-xl gap-xs container flex flex-col items-center pt-(--header-plus-admin-bar-height)',
-        media?.light && 'min-h-screen',
+        'pb-xl gap-xs container flex flex-col items-stretch pt-(--header-plus-admin-bar-height)',
+        media?.desktop?.light && 'min-h-screen',
       )}
     >
-      <div className="gap-xs flex w-full flex-col items-center lg:flex-row lg:items-stretch">
+      <div className="gap-xs flex w-full grow flex-col items-center justify-stretch lg:flex-row lg:items-stretch">
         <div className="p-xl bg-background-neutral rounded-space-sm w-full">
           <div className="gap-md flex h-full max-w-[36rem] flex-col items-start justify-center">
             {(badge?.label || badge?.reference) && <Badge size="lg" {...badge} />}
@@ -62,19 +62,18 @@ export const Hero05: React.FC<Page['hero']> = ({
                   })}
                 </ul>
               )}
-              {supportingText && <p className="text-base-tertiary text-sm">{supportingText}</p>}
+              {caption && <p className="text-base-tertiary text-sm">{caption}</p>}
             </div>
           </div>
         </div>
 
-        {media && typeof media?.light === 'object' && (
+        {media && typeof media?.desktop?.light === 'object' && (
           <Media
             className="rounded-space-sm relative h-auto w-full overflow-hidden select-none"
             imgClassName="object-cover"
             priority
-            light={media.light ?? undefined}
-            dark={media.dark ?? undefined}
-            // fill
+            media={media}
+            fill
           />
         )}
       </div>

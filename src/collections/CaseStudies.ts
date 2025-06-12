@@ -6,6 +6,7 @@ import { slugField } from '../fields/slug'
 // import { formatPreviewURL } from '../utilities/formatPreviewURL'
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
+
 import {
   lexicalEditor,
   FixedToolbarFeature,
@@ -13,16 +14,9 @@ import {
   HeadingFeature,
   BlocksFeature,
 } from '@payloadcms/richtext-lexical'
+
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
-import { Archive } from '@/blocks/ArchiveBlock/config'
-import { CallToAction } from '@/blocks/CallToAction/config'
-import { FaqBlock } from '@/blocks/FAQ/config'
-import { FeaturesBlock } from '@/blocks/Features/config'
-import { FormBlock } from '@/blocks/Form/config'
-import { FeaturedAppsBlock } from '@/blocks/FeaturedApps/config'
-import { GalleryBlock } from '@/blocks/Gallery/config'
-import { TestimonialsBlock } from '@/blocks/Testimonials/config'
 
 export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
@@ -39,7 +33,7 @@ export const CaseStudies: CollectionConfig = {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
           locale: locale as any,
-          collection: 'case-studies',
+          collection: 'customers',
           req,
         })
         return path
@@ -49,7 +43,7 @@ export const CaseStudies: CollectionConfig = {
       generatePreviewPath({
         slug: typeof data?.slug === 'string' ? data.slug : '',
         locale,
-        collection: 'case-studies',
+        collection: 'customers',
         req,
       }),
     useAsTitle: 'title',
@@ -186,14 +180,18 @@ export const CaseStudies: CollectionConfig = {
       type: 'blocks',
       blocks: [],
       blockReferences: [
-        'archive',
-        'callToAction',
+        'archiveBlock',
+        'callToActionBlock',
+        'customHtmlBlock',
+        'dividerBlock',
         'faqBlock',
-        'features',
-        'featuredApps',
-        'gallery',
+        'featuredAppsBlock',
+        'featuresBlock',
         'formBlock',
-        'testimonials',
+        'galleryBlock',
+        'logosBlock',
+        'richTextBlock',
+        'testimonialsBlock',
       ],
 
       admin: {

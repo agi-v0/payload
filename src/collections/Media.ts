@@ -25,8 +25,18 @@ export const Media: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['filename', 'alt', 'category', 'locale'],
+    // folders: true,
   },
   fields: [
+    {
+      name: 'prefix',
+      type: 'text',
+      defaultValue: 'media',
+      admin: {
+        readOnly: true,
+        hidden: true,
+      },
+    },
     {
       name: 'alt',
       type: 'text',

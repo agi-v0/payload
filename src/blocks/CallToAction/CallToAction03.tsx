@@ -5,7 +5,7 @@ import type { CMSLinkType } from '@/components/Link'
 
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { Media } from '@/components/MediaResponsive'
 
 import * as motion from 'motion/react-client'
 import { containerVariants } from '@/utilities/motion'
@@ -14,10 +14,12 @@ export const CallToAction03: React.FC<CTABlockProps> = ({
   badge,
   richText,
   links,
-  supportingText,
+  caption,
   list,
   media,
 }) => {
+  const { desktop, mobile } = media || {}
+
   return (
     <div className="py-xl container">
       <motion.div
@@ -37,7 +39,7 @@ export const CallToAction03: React.FC<CTABlockProps> = ({
             })}
           </div>
         </div>
-        {media && <Media resource={media} className="m-sm rounded-space-md overflow-hidden" />}
+        {media && <Media media={media} className="m-sm rounded-space-sm overflow-hidden" />}
       </motion.div>
     </div>
   )

@@ -2,25 +2,15 @@
 @import 'tw-animate-css';
 @import './typography.css' layer(components);
 
-@custom-variant dark (&:is(.dark *));
-
 /* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
-@variant dark {
-  &:where([data-theme='dark'], [data-theme='dark'] *) {
-    @slot;
-  }
-}
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 /* @config '../../../../tailwind.config.mjs'; */
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4;
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles; we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+[lang='ar'] {
+  direction: rtl;
+  letter-spacing: 0;
+}
 
 @layer base {
   *,
@@ -28,7 +18,19 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-neutral-200, currentColor);
+    border-color: var(--color-border, currentColor);
+  }
+
+  ::selection {
+    background-color: --alpha(var(--color-sky-400) / 20%);
+    color: var(--color-marn-500);
+  }
+
+  [data-theme='dark'] {
+    ::selection {
+      background-color: --alpha(var(--color-sky-700) / 20%);
+      color: var(--color-marn-50);
+    }
   }
 
   h1,
@@ -38,148 +40,177 @@
   h5,
   h6 {
     font-size: unset;
-    font-weight: 600;
+    font-weight: 500;
   }
-}
+  /*
+ The default border color has changed to `currentColor` in Tailwind CSS v4;
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
 
-[lang='ar'] {
-  direction: rtl;
-  letter-spacing: 0;
-}
+  If we ever want to remove these styles; we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+  * {
+    @apply border-border outline-ring/50;
+  }
 
-:root {
-  --header-height: 52px;
-  @media (min-width: 1024px) {
+  html[data-theme='dark'],
+  html[data-theme='light'] {
+    opacity: initial;
+  }
+  /* Workaround for <select> modal causing layout shift */
+  html body[data-scroll-locked] {
+    overflow: visible !important;
+    margin-right: 0 !important;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-base-secondary);
+  }
+
+  :root {
+    overscroll-behavior: none;
+    overflow-x: hidden;
+    /* or you could use overflow-x: clip */
+
     --header-height: 56px;
+
+    @media (min-width: 1024px) {
+      --header-height: 60px;
+    }
+
+    --admin-bar-height: 2.5rem;
+    --header-plus-admin-bar-height: calc(var(--header-height) + var(--admin-bar-height));
+
+    /* --background: hsl(0 0% 100%);
+    --foreground: hsl(0 0% 3.9%); */
+    --card: theme(--color-background-neutral);
+    --card-foreground: hsl(0 0% 3.9%);
+    --popover: hsl(0 0% 100%);
+    --popover-foreground: hsl(0 0% 3.9%);
+    --primary: hsl(0 0% 9%);
+    --primary-foreground: hsl(0 0% 98%);
+    --secondary: hsl(0 0% 96.1%);
+    --secondary-foreground: hsl(0 0% 9%);
+    --muted: hsl(0 0% 96.1%);
+    --muted-foreground: theme(--color-base-tertiary);
+    --accent: hsl(0 0% 96.1%);
+    --accent-foreground: hsl(0 0% 9%);
+    --destructive: hsl(0 84.2% 60.2%);
+    --destructive-foreground: hsl(0 0% 98%);
+    --border: --alpha(var(--color-neutral-950) / 10%);
+    --input: --alpha(var(--color-neutral-950) / 10%);
+    --ring: theme(--color-base-secondary);
+    --chart-1: hsl(12 76% 61%);
+    --chart-2: hsl(173 58% 39%);
+    --chart-3: hsl(197 37% 24%);
+    --chart-4: hsl(43 74% 66%);
+    --chart-5: hsl(27 87% 67%);
+    /* --radius: 0.5rem; */
+
+    --brand: var(--color-marn-600);
+    --neutral: var(--color-neutral-950);
+    /* use for background */
+    --background: var(--color-neutral-50);
+    --background-light: var(--color-white);
+    --background-medium: var(--color-neutral-100);
+    --background-inverted: var(--color-neutral-950);
+
+    /*for foreground (text & icons) */
+    --neutral-primary: var(--color-neutral-950);
+    --neutral-secondary: var(--color-neutral-700);
+    --neutral-tertiary: var(--color-neutral-500);
+    --neutral-quaternary: var(--color-neutral-300);
+
+    --brand-primary: --alpha(var(--color-brand) / 100%);
+    --brand-secondary: --alpha(var(--color-brand) / 70%);
+    --brand-tertiary: --alpha(var(--color-brand) / 50%);
+    --brand-quaternary: --alpha(var(--color-brand) / 30%);
+
+    --inverted-primary: var(--color-white);
+    --inverted-secondary: var(--color-neutral-200);
+    --inverted-tertiary: var(--color-neutral-400);
+    --inverted-quaternary: var(--color-neutral-600);
   }
 
-  --admin-bar-height: 2.5rem;
+  [data-theme='dark'] {
+    /* --background: hsl(0 0% 3.9%);
+    --foreground: hsl(0 0% 98%); */
+    --card: hsl(0 0% 3.9%);
+    --card-foreground: hsl(0 0% 98%);
+    --popover: hsl(0 0% 3.9%);
+    --popover-foreground: hsl(0 0% 98%);
+    --primary: hsl(0 0% 98%);
+    --primary-foreground: hsl(0 0% 9%);
+    --secondary: hsl(0 0% 14.9%);
+    --secondary-foreground: hsl(0 0% 98%);
+    --muted: hsl(0 0% 14.9%);
+    --muted-foreground: theme(--color-base-tertiary);
 
-  --header-plus-admin-bar-height: calc(var(--header-height) + var(--admin-bar-height));
+    --accent: hsl(0 0% 14.9%);
+    --accent-foreground: hsl(0 0% 98%);
+    --destructive: hsl(0 62.8% 30.6%);
+    --destructive-foreground: hsl(0 0% 98%);
+    --border: --alpha(var(--color-white) / 30%);
+    --input: --alpha(var(--color-white) / 30%);
+    --ring: theme(--color-base-secondary);
+    --chart-1: hsl(220 70% 50%);
+    --chart-2: hsl(160 60% 45%);
+    --chart-3: hsl(30 80% 55%);
+    --chart-4: hsl(280 65% 60%);
+    --chart-5: hsl(340 75% 55%);
 
-  /* --background: hsl(0 0% 100%);
-  --foreground: hsl(0 0% 3.9%); */
-  --card: theme(--color-background-neutral);
-  --card-foreground: hsl(0 0% 3.9%);
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(0 0% 3.9%);
-  --primary: hsl(0 0% 9%);
-  --primary-foreground: hsl(0 0% 98%);
-  --secondary: hsl(0 0% 96.1%);
-  --secondary-foreground: hsl(0 0% 9%);
-  --muted: hsl(0 0% 96.1%);
-  --muted-foreground: hsl(0 0% 45.1%);
-  --accent: hsl(0 0% 96.1%);
-  --accent-foreground: hsl(0 0% 9%);
-  --destructive: hsl(0 84.2% 60.2%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: --alpha(var(--color-neutral-950) / 10%);
-  --input: --alpha(var(--color-neutral-950) / 10%);
-  --ring: hsl(0 0% 3.9%);
-  --chart-1: hsl(12 76% 61%);
-  --chart-2: hsl(173 58% 39%);
-  --chart-3: hsl(197 37% 24%);
-  --chart-4: hsl(43 74% 66%);
-  --chart-5: hsl(27 87% 67%);
-  /* --radius: 0.5rem; */
+    --neutral: var(--color-white);
+    /* use for background */
+    --background: var(--color-black);
+    --background-light: var(--color-neutral-900);
+    --background-medium: --alpha(var(--color-neutral-900) / 70%);
+    --background-inverted: var(--color-white);
 
-  --brand: var(--color-marn-500);
-  --neutral: var(--color-neutral-950);
-  /* use for background */
-  --background: var(--color-neutral-50);
-  --background-light: var(--color-white);
-  --background-medium: var(--color-neutral-200);
-  --background-inverted: var(--color-neutral-950);
+    /*for foreground (text & icons) */
+    --neutral-primary: var(--color-white);
+    --neutral-secondary: var(--color-neutral-200);
+    --neutral-tertiary: var(--color-neutral-400);
+    --neutral-quaternary: var(--color-neutral-600);
 
-  /*for foreground (text & icons) */
-  --neutral-primary: --alpha(var(--color-neutral-950) / 100%);
-  --neutral-secondary: --alpha(var(--color-neutral-950) / 70%);
-  --neutral-tertiary: --alpha(var(--color-neutral-950) / 50%);
-  --neutral-quaternary: --alpha(var(--color-neutral-950) / 30%);
+    --brand-primary: --alpha(var(--color-brand) / 100%);
+    --brand-secondary: --alpha(var(--color-brand) / 70%);
+    --brand-tertiary: --alpha(var(--color-brand) / 50%);
+    --brand-quaternary: --alpha(var(--color-brand) / 30%);
 
-  --brand-primary: --alpha(var(--color-brand) / 100%);
-  --brand-secondary: --alpha(var(--color-brand) / 70%);
-  --brand-tertiary: --alpha(var(--color-brand) / 50%);
-  --brand-quaternary: --alpha(var(--color-brand) / 30%);
-
-  --inverted-primary: --alpha(var(--color-white) / 100%);
-  --inverted-secondary: --alpha(var(--color-white) / 70%);
-  --inverted-tertiary: --alpha(var(--color-white) / 50%);
-  --inverted-quaternary: --alpha(var(--color-white) / 30%);
-}
-
-[data-theme='dark'] {
-  /* --background: hsl(0 0% 3.9%);
-  --foreground: hsl(0 0% 98%); */
-  --card: hsl(0 0% 3.9%);
-  --card-foreground: hsl(0 0% 98%);
-  --popover: hsl(0 0% 3.9%);
-  --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 0% 98%);
-  --primary-foreground: hsl(0 0% 9%);
-  --secondary: hsl(0 0% 14.9%);
-  --secondary-foreground: hsl(0 0% 98%);
-  --muted: hsl(0 0% 14.9%);
-  --muted-foreground: hsl(0 0% 63.9%);
-  --accent: hsl(0 0% 14.9%);
-  --accent-foreground: hsl(0 0% 98%);
-  --destructive: hsl(0 62.8% 30.6%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: --alpha(var(--color-white) / 30%);
-  --input: --alpha(var(--color-white) / 30%);
-  --ring: hsl(0 0% 83.1%);
-  --chart-1: hsl(220 70% 50%);
-  --chart-2: hsl(160 60% 45%);
-  --chart-3: hsl(30 80% 55%);
-  --chart-4: hsl(280 65% 60%);
-  --chart-5: hsl(340 75% 55%);
-
-  --neutral: var(--color-white);
-  /* use for background */
-  --background: var(--color-neutral-950);
-  --background-light: var(--color-neutral-800);
-  --background-medium: var(--color-neutral-900);
-  --background-inverted: var(--color-white);
-
-  /*for foreground (text & icons) */
-  --neutral-primary: --alpha(var(--color-white) / 100%);
-  --neutral-secondary: --alpha(var(--color-white) / 70%);
-  --neutral-tertiary: --alpha(var(--color-white) / 50%);
-  --neutral-quaternary: --alpha(var(--color-white) / 30%);
-
-  --brand-primary: --alpha(var(--color-brand) / 100%);
-  --brand-secondary: --alpha(var(--color-brand) / 70%);
-  --brand-tertiary: --alpha(var(--color-brand) / 50%);
-  --brand-quaternary: --alpha(var(--color-brand) / 30%);
-
-  --inverted-primary: --alpha(var(--color-neutral-950) / 100%);
-  --inverted-secondary: --alpha(var(--color-neutral-950) / 70%);
-  --inverted-tertiary: --alpha(var(--color-neutral-950) / 50%);
-  --inverted-quaternary: --alpha(var(--color-neutral-950) / 30%);
+    --inverted-primary: var(--color-neutral-950);
+    --inverted-secondary: var(--color-neutral-700);
+    --inverted-tertiary: var(--color-neutral-500);
+    --inverted-quaternary: var(--color-neutral-300);
+  }
 }
 
 @theme inline {
-  --breakpoint-2xl: 90rem;
-
+  /* --breakpoint-2xl: 90rem; */
   /* --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+ --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px); */
 
-  --radius-space-sm: clamp(1rem, 0.6rem + 1vw, 1.5rem);
+  --radius-space-sm: 1.5rem;
+  --radius-space-md: clamp(1rem, 0.6rem + 1vw, 1.5rem);
 
   --font-sans: var(--font-rubik);
+  --spacing-header: var(--header-height);
+  --spacing-header-plus-admin-bar: calc(var(--header-height) + var(--admin-bar-height));
+
+  --spacing-card-xl: clamp(1.5rem, 0.3rem + 3vw, 3rem);
 
   --spacing-space-site: clamp(1rem, 0.2rem + 2vw, 2rem); /* 16px - 32px site margin */
+  --spacing-space-2xs: clamp(0.25rem, 0.05rem + 0.5vw, 0.5rem); /* 4px - 8px smaller element spacing */
   --spacing-space-xs: clamp(0.5rem, 0.1rem + 1vw, 1rem); /* 8px - 16px smaller element spacing */
   --spacing-space-sm: clamp(1rem, 0.6rem + 1vw, 1.5rem); /* 16px - 24px main element spacing */
   --spacing-space-md: clamp(1.5rem, 1.1rem + 1vw, 2rem); /* 24px - 32px main card padding */
   --spacing-space-lg: clamp(2rem, 1.6rem + 1vw, 2.5rem); /* 32px - 40px larger element spacing */
-  --spacing-space-xl: clamp(
-    2.5rem,
-    2.1rem + 1vw,
-    3rem
-  ); /* 40px - 48px extra large element spacing*/
+  --spacing-space-xl: clamp(2.5rem, 2.1rem + 1vw, 3rem); /* 40px - 48px extra large element spacing*/
+  --spacing-space-2xl: clamp(3rem, 2.6rem + 1vw, 3.5rem); /* 48px - 56px extra large element spacing*/
+  --spacing-space-3xl: clamp(3.5rem, 3.1rem + 1vw, 4rem); /* 56px - 64px extra large element spacing*/
 
   --spacing-site: clamp(1rem, 0.2rem + 2vw, 2rem); /* 16px - 32px site margin */
   --spacing-2xs: clamp(0.25rem, 0.05rem + 0.5vw, 0.5rem); /* 4px - 8px smaller element spacing */
@@ -188,10 +219,6 @@
   --spacing-md: clamp(1.5rem, 1.1rem + 1vw, 2rem); /* 24px - 32px main card padding */
   --spacing-lg: clamp(2rem, 1.6rem + 1vw, 2.5rem); /* 32px - 40px larger element spacing */
   --spacing-xl: clamp(2.5rem, 2.1rem + 1vw, 3rem); /* 40px - 48px extra large element spacing*/
-  --spacing-2xl: clamp(3rem, 2.6rem + 1vw, 3.5rem); /* 48px - 56px extra large element spacing*/
-  --spacing-3xl: clamp(3.5rem, 3.1rem + 1vw, 4rem); /* 56px - 64px extra large element spacing*/
-
-  --radius-space-md: clamp(1rem, 0.6rem + 1vw, 1.5rem);
 
   --text-display: clamp(2.4rem, 1.32rem + 2.7vw, 3.75rem); /* 32px - 56px display text */
   --text-h1: clamp(1.92rem, 1.056rem + 2.16vw, 3rem); /* 31px - 48px heading 1 */
@@ -206,7 +233,6 @@
 
   --color-brand: var(--brand);
   --color-neutral: var(--neutral);
-
   /* use for background */
   --color-background: var(--background); /* default */
   --color-background-neutral: var(--background-light);
@@ -216,7 +242,6 @@
 
   --color-button-neutral: var(--neutral);
   --color-button-brand: var(--brand);
-
   /* use for foreground (text & icons) */
   --color-base-primary: var(--neutral-primary);
   --color-base-secondary: var(--neutral-secondary);
@@ -230,9 +255,8 @@
 
   --color-inverted-primary: var(--inverted-primary);
   --color-inverted-secondary: var(--inverted-secondary);
-
   /* indigo */
-  /* --color-marn-50: #eef1fc;
+  --color-marn-50: #eef1fc;
   --color-marn-100: #d8dff8;
   --color-marn-200: #b1c0f1;
   --color-marn-300: #8aa0ea;
@@ -242,20 +266,20 @@
   --color-marn-700: #1f42b2;
   --color-marn-800: #1a3693;
   --color-marn-900: #152b75;
-  --color-marn-950: #122668; */
+  --color-marn-950: #122668;
 
   /* sky blue */
-  --color-marn-50: #f2f7fc;
-  --color-marn-100: #e1edf8;
-  --color-marn-200: #c9e0f4;
-  --color-marn-300: #98c5e9;
-  --color-marn-400: #79b1e1;
-  --color-marn-500: #5a93d7;
-  --color-marn-600: #457acb;
-  --color-marn-700: #3c67b9;
-  --color-marn-800: #365597;
-  --color-marn-900: #304978;
-  --color-marn-950: #212d4a;
+  --color-sky-50: #f2f7fc;
+  --color-sky-100: #e1edf8;
+  --color-sky-200: #c9e0f4;
+  --color-sky-300: #98c5e9;
+  --color-sky-400: #79b1e1;
+  --color-sky-500: #5a93d7;
+  --color-sky-600: #457acb;
+  --color-sky-700: #3c67b9;
+  --color-sky-800: #365597;
+  --color-sky-900: #304978;
+  --color-sky-950: #212d4a;
 
   --color-tomato-50: #fdf0ed;
   --color-tomato-100: #fae0db;
@@ -269,18 +293,30 @@
   --color-tomato-900: #5f1a0c;
   --color-tomato-950: #441208;
 
-  --color-foreground: var(--foreground);
+  --color-yellow-50: #fefce8;
+  --color-yellow-100: #fef9c2;
+  --color-yellow-200: #fff085;
+  --color-yellow-300: #ffdf20;
+  --color-yellow-400: #fcc800;
+  --color-yellow-500: #efb100;
+  --color-yellow-600: #d08700;
+  --color-yellow-700: #a65f00;
+  --color-yellow-800: #894b00;
+  --color-yellow-900: #733e0a;
+  --color-yellow-950: #432004;
+
+  --color-foreground: var(--neutral-primary);
   --color-card: var(--color-background-neutral);
   --color-card-foreground: var(--color-base-secondary);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
+  --color-popover: var(--color-background-neutral);
+  --color-popover-foreground: var(--color-base-primary);
+  --color-primary: var(--background);
+  --color-primary-foreground: var(--neutral-primary);
   --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
+  --color-secondary-foreground: var(--color-base-secondary);
+  --color-muted: var(--color-background-neutral-subtle);
+  --color-muted-foreground: var(--color-base-tertiary);
+  --color-accent: var(--color-background);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
@@ -312,6 +348,7 @@
     from {
       height: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
     }
@@ -321,30 +358,10 @@
     from {
       height: var(--radix-accordion-content-height);
     }
+
     to {
       height: 0;
     }
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  html {
-    opacity: 0;
-  }
-  html[data-theme='dark'],
-  html[data-theme='light'] {
-    opacity: initial;
-  }
-  body {
-    @apply bg-background text-foreground flex min-h-[100vh] flex-col;
-  }
-  /* Workaround for <select> modal causing layout shift */
-  html body[data-scroll-locked] {
-    overflow: visible !important;
-    margin-right: 0 !important;
   }
 }
 
@@ -357,30 +374,4 @@
 
 @utility shadow-border {
   box-shadow: 0 0 0 1px var(--color-border);
-}
-
-@utility shadow-card {
-  box-shadow:
-    0px 64px 64px -32px transparent,
-    0px 32px 32px -16px transparent,
-    0px 16px 16px -8px transparent,
-    0px 12px 12px -6px var(--color-grey-50),
-    0px 6px 6px -3px var(--color-grey-50),
-    0px 3px 3px -1.5px var(--color-grey-50),
-    0px 1px 1px -0.5px var(--color-grey-100),
-    0px 0px 0px 1px var(--color-grey-50);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-:root {
-  overscroll-behavior: none;
-  overflow-x: hidden; /* or you could use overflow-x: clip */
 }

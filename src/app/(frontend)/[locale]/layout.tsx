@@ -5,13 +5,10 @@ import React from 'react'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
-import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { draftMode } from 'next/headers'
+import { cookies, draftMode } from 'next/headers'
 import { DynamicAdminBarLoader } from '@/components/AdminBar/DynamicLoader.client'
 
-import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 
@@ -37,8 +34,10 @@ export default async function RootLayout({
     notFound()
   }
 
-  const messages = await getMessages()
   const { isEnabled } = await draftMode()
+
+  const cookieStore = await cookies()
+  const initialTheme = (cookieStore.get('theme')?.value as 'light' | 'dark' | undefined) ?? 'light'
 
   return (
     <html
@@ -48,22 +47,20 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <meta name="theme-color" content={initialTheme === 'dark' ? '#000000' : '#fafafa'} />
       </head>
       <body>
-        <Providers>
-          <NextIntlClientProvider messages={messages}>
-            <DynamicAdminBarLoader
-              adminBarProps={{
-                preview: isEnabled,
-              }}
-            />
-            <Header />
-            {children}
-            <Footer />
-          </NextIntlClientProvider>
+        <Providers initialTheme={initialTheme}>
+          {/* <DynamicAdminBarLoader
+            adminBarProps={{
+              preview: isEnabled,
+            }}
+          /> */}
+          <Header adminBarProps={{ preview: isEnabled }} />
+          {children}
+          <Footer />
         </Providers>
       </body>
     </html>
@@ -75,6 +72,6 @@ export const metadata: Metadata = {
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
-    creator: '@payloadcms',
+    creator: '@marnpos',
   },
 }

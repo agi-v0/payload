@@ -1,17 +1,17 @@
-import type { Payload, PayloadRequest } from 'payload'
+import type { Payload, PayloadRequest, RequiredDataFromCollectionSlug } from 'payload'
 import type { Media, Solution } from '@/payload-types'
 
 export const seedSolutions = async (
   payload: Payload,
   req: PayloadRequest,
-  { imageSquareId }: { imageSquareId?: number },
+  { imageSquareId }: { imageSquareId?: string },
   {
     sellCategoryId,
     operateCategoryId,
     manageCategoryId,
-  }: { sellCategoryId: number; operateCategoryId: number; manageCategoryId: number },
-): Promise<Record<string, number>> => {
-  const solutionsData = [
+  }: { sellCategoryId: string; operateCategoryId: string; manageCategoryId: string },
+): Promise<Record<string, string>> => {
+  const solutionsData: RequiredDataFromCollectionSlug<'solutions'>[] = [
     {
       title: 'Cashier',
       icon: imageSquareId,
@@ -25,6 +25,7 @@ export const seedSolutions = async (
       },
       ecosystem: sellCategoryId,
       slug: 'cashier',
+      _status: 'published',
     },
     {
       title: 'PaySync',
@@ -39,6 +40,7 @@ export const seedSolutions = async (
       },
       ecosystem: sellCategoryId,
       slug: 'paysync',
+      _status: 'published',
     },
     {
       title: 'Kiosk',
@@ -53,6 +55,7 @@ export const seedSolutions = async (
       },
       ecosystem: sellCategoryId,
       slug: 'kiosk',
+      _status: 'published',
     },
     {
       title: 'OrderStation',
@@ -67,6 +70,7 @@ export const seedSolutions = async (
       },
       ecosystem: operateCategoryId,
       slug: 'orderstation',
+      _status: 'published',
     },
     {
       title: 'Products',
@@ -81,6 +85,7 @@ export const seedSolutions = async (
       },
       ecosystem: operateCategoryId,
       slug: 'products',
+      _status: 'published',
     },
     {
       title: 'Inventory',
@@ -95,6 +100,7 @@ export const seedSolutions = async (
       },
       ecosystem: operateCategoryId,
       slug: 'inventory',
+      _status: 'published',
     },
     {
       title: 'Analytics',
@@ -109,6 +115,7 @@ export const seedSolutions = async (
       },
       ecosystem: manageCategoryId,
       slug: 'analytics',
+      _status: 'published',
     },
     {
       title: 'Branches',
@@ -123,6 +130,7 @@ export const seedSolutions = async (
       },
       ecosystem: manageCategoryId,
       slug: 'branches',
+      _status: 'published',
     },
     {
       title: 'Customers',
@@ -137,6 +145,7 @@ export const seedSolutions = async (
       },
       ecosystem: manageCategoryId,
       slug: 'customers',
+      _status: 'published',
     },
     {
       title: 'Accounting',
@@ -146,11 +155,12 @@ export const seedSolutions = async (
       link: {
         type: 'custom' as const,
         newTab: null,
-        url: '/solutions/accouting',
+        url: '/solutions/accounting',
         label: 'المالية',
       },
       ecosystem: manageCategoryId,
-      slug: 'accouting',
+      slug: 'accounting',
+      _status: 'published',
     },
   ]
 
@@ -173,7 +183,7 @@ export const seedSolutions = async (
     },
   })
 
-  const slugToIdMap: Record<string, number> = {}
+  const slugToIdMap: Record<string, string> = {}
   createdSolutions.forEach((doc) => {
     const solutionDoc = doc as Solution
     if (solutionDoc.slug) {
