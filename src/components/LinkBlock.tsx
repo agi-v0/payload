@@ -10,13 +10,21 @@ import { Icon } from '@iconify-icon/react'
 const linkBlockVariants = {
   initial: {
     borderRadius: '1.5rem',
-    ease: [0.645, 0.045, 0.355, 1],
-    duration: 0.2,
+    // ease: [0.645, 0.045, 0.355, 1],
+    // duration: 0.2,
+    type: 'spring',
+    stiffness: 200,
+    damping: 20,
+    mass: 1,
   },
   hover: {
     borderRadius: '40rem',
-    ease: [0.645, 0.045, 0.355, 1],
-    duration: 0.2,
+    // ease: [0.645, 0.045, 0.355, 1],
+    // duration: 0.2,
+    type: 'spring',
+    stiffness: 200,
+    damping: 20,
+    mass: 1,
   },
 }
 
@@ -49,7 +57,7 @@ export const LinkBlock: React.FC<LinkBlockProps> = ({
         variant="inline"
         className={cn(
           'text-h4 group p-sm bg-neutral hover:bg-neutral/90 text-inverted-primary ease-in-out-quad relative flex h-full items-center justify-center rounded-none text-center font-medium transition-all duration-300 hover:no-underline',
-          position === 'corner' && 'items-start justify-start',
+          position === 'corner' && 'items-start justify-start text-start',
         )}
       >
         <span

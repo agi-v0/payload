@@ -42,7 +42,7 @@ export const Features14: React.FC<FeaturesBlock> = ({ columns, link, CTALabel })
           'col-span-2': columns.length < 3,
         })}
       >
-        <LinkBlock className="md:aspect-square" link={link} label={link?.label} />
+        <LinkBlock className="md:aspect-square" link={link} label={link?.label} position="corner" />
       </div>
     </div>
   )
