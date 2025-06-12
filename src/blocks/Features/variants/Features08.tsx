@@ -9,7 +9,8 @@ import { Badge } from '@/components/ui/badge'
 import { CMSLink } from '@/components/Link'
 import { Icon } from '@iconify-icon/react'
 import { Button } from '@/components/ui/button'
-import { CaretLeft } from '@/icons/caret-left-filled'
+
+import { Icon } from '@iconify-icon/react'
 
 type Features08Props = FeaturesBlock & {
   readMoreLabel?: string
@@ -107,7 +108,11 @@ export const Features08: React.FC<Features08Props> = ({ columns, readMoreLabel }
                       {column.enableCta && column.link?.label && (
                         <span className="mt-auto flex w-fit flex-row items-center gap-2">
                           {readMoreLabel}
-                          <CaretLeft className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180" />
+                          <Icon
+                            icon="material-symbols:arrow-left-rounded"
+                            height="none"
+                            className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
+                          />
                         </span>
                       )}
                     </div>

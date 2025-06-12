@@ -15,7 +15,8 @@ import { InfiniteSlider } from '@/components/motion-ui/infinite-slider'
 import { TransitionPanel } from '@/components/motion-ui/transition-panel'
 import useMeasure from 'react-use-measure'
 import { Button } from '@/components/ui/button'
-import { CaretLeft } from '@/icons/caret-left-filled'
+
+import { Icon } from '@iconify-icon/react'
 import { TypedLocale } from 'payload'
 
 interface Gallery04Props {
@@ -135,7 +136,11 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
             disabled={activeIndex === 0}
             onClick={() => handleSetActiveIndex(activeIndex - 1)}
           >
-            <CaretLeft className="size-4 rotate-180 ltr:rotate-0" />
+            <Icon
+              icon="material-symbols:arrow-left-rounded"
+              height="none"
+              className="size-4 rotate-180 ltr:rotate-0"
+            />
             {locale === 'ar' ? 'السابق' : 'Previous'}{' '}
           </Button>
 
@@ -150,7 +155,12 @@ export const Gallery04: React.FC<Gallery04Props> = ({ interactiveGallery, classN
                 : handleSetActiveIndex(activeIndex + 1)
             }
           >
-            {locale === 'ar' ? 'التالي' : 'Next'} <CaretLeft className="size-4 ltr:rotate-180" />
+            {locale === 'ar' ? 'التالي' : 'Next'}{' '}
+            <Icon
+              icon="material-symbols:arrow-left-rounded"
+              height="none"
+              className="size-4 ltr:rotate-180"
+            />
           </Button>
         </div>
       </div>

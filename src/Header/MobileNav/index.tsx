@@ -16,7 +16,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/motion-ui/accordion'
-import { CaretLeft } from '@/icons/caret-left-filled'
+
+import { Icon } from '@iconify-icon/react'
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
 // Define the type for a single nav item from HeaderType
@@ -92,7 +93,11 @@ export function MobileNav({ tabs, cta, onLinkClick }: MobileNavProps) {
                     )}
                   >
                     <span>{tab.label}</span>
-                    <CaretLeft className="size-4 -rotate-90 transition-transform duration-200 group-data-[expanded]:rotate-90" />
+                    <Icon
+                      icon="material-symbols:arrow-left-rounded"
+                      height="none"
+                      className="size-4 -rotate-90 transition-transform duration-200 group-data-[expanded]:rotate-90"
+                    />
                   </AccordionTrigger>
                   <AccordionContent className="">
                     <nav className="space-y-4 pb-4">

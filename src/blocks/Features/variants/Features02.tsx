@@ -5,7 +5,8 @@ import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 
 import { CMSLink } from '@/components/Link'
-import { CaretLeft } from '@/icons/caret-left-filled'
+
+import { Icon } from '@iconify-icon/react'
 import * as motion from 'motion/react-client'
 import { itemVariants } from '@/utilities/motion'
 
@@ -99,7 +100,11 @@ function FeatureCardContent({
         {column.enableCta && column.link?.label && (
           <span className="mt-auto flex w-fit flex-row items-center gap-2">
             {readMoreLabel}
-            <CaretLeft className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180" />
+            <Icon
+              icon="material-symbols:arrow-left-rounded"
+              height="none"
+              className="size-3 translate-x-1 transition-all duration-300 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
+            />
           </span>
         )}
       </div>

@@ -9,21 +9,16 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { Card, CardContent } from '@/components/ui/card'
 import { Carousel } from '@/components/ui/carousel'
-import { CaretLeft } from '@/icons/caret-left-filled'
-import {
-  FeaturedAppsBlock,
-  Integration,
-  Media as MediaType,
-  Solution,
-} from '@/payload-types'
+
+import { Icon } from '@iconify-icon/react'
+
+import { FeaturedAppsBlock, Integration, Media as MediaType, Solution } from '@/payload-types'
 
 interface FeaturedApps06Props {
   cards: FeaturedAppsBlock['cards']
 }
 
-export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({
-  cards,
-}) => {
+export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
   return (
     <div className="py-xl container">
       {/* <div className="gap-xs grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -54,7 +49,9 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({
                         )}
                         {app.value?.name}
                       </span>
-                      <CaretLeft className="size-4 translate-x-0 transition-all duration-150 group-hover:-translate-x-1 ltr:rotate-180 ltr:group-hover:translate-x-1" />
+                      <Icon
+                            icon="material-symbols:arrow-left-rounded"
+                            height="none" className="size-4 translate-x-0 transition-all duration-150 group-hover:-translate-x-1 ltr:rotate-180 ltr:group-hover:translate-x-1" />
                     </CMSLink>
                   )
                 })}
@@ -77,9 +74,7 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({
                 <CardContent className="rounded-space-sm gap-sm bg-background-neutral">
                   <div className="gap-xs flex flex-col">
                     <h3 className="text-h3">{title}</h3>
-                    <p className="text-body-md text-base-secondary">
-                      {subtitle}
-                    </p>
+                    <p className="text-body-md text-base-secondary">{subtitle}</p>
                   </div>
                   <hr className="border-border w-full" />
                   <div className="gap-xs flex flex-col">
@@ -102,7 +97,11 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({
                             )}
                             {app.value?.name}
                           </span>
-                          <CaretLeft className="size-4 translate-x-0 transition-all duration-150 group-hover:-translate-x-1 ltr:rotate-180 ltr:group-hover:translate-x-1" />
+                          <Icon
+                            icon="material-symbols:arrow-left-rounded"
+                            height="none"
+                            className="size-4 translate-x-0 transition-all duration-150 group-hover:-translate-x-1 ltr:rotate-180 ltr:group-hover:translate-x-1"
+                          />
                         </CMSLink>
                       )
                     })}

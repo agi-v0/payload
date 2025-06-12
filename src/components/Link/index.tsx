@@ -7,7 +7,8 @@ import React from 'react'
 
 import type { Page, Post, Solution } from '@/payload-types'
 import { Icon } from '@iconify-icon/react'
-import { CaretLeft } from '@/icons/caret-left-filled'
+
+import { Icon } from '@iconify-icon/react'
 
 export type CMSLinkType = {
   variant?: 'inline' | ButtonProps['variant'] | null
@@ -92,7 +93,11 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         {label && label}
         {children && children}
         {variant === 'link' && (
-          <CaretLeft className="size-3 translate-x-1 transition-all duration-150 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180" />
+          <Icon
+            icon="material-symbols:arrow-left-rounded"
+            height="none"
+            className="size-3 translate-x-1 transition-all duration-150 group-hover:translate-x-0 ltr:-translate-x-1 ltr:rotate-180"
+          />
         )}
       </Link>
     </Button>

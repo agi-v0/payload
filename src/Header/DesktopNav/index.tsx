@@ -18,7 +18,8 @@ import type { Header as HeaderType } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Icon } from '@iconify-icon/react'
 import MarnIcon from '@/components/ui/marn-icon'
-import { CaretLeft } from '@/icons/caret-left-filled'
+
+import { Icon } from '@iconify-icon/react'
 import { NavigationImagePreloader } from '../NavigationIconPreloader'
 
 interface DesktopNavProps extends Omit<HeaderType, 'id' | 'updatedAt' | 'createdAt'> {
@@ -230,7 +231,11 @@ const ListItem = React.forwardRef<HTMLAnchorElement | HTMLDivElement, ListItemPr
                         </p>
                       )}
                     </div>
-                    <CaretLeft className="text-base-tertiary group-hover:text-base-tertiary shrink-0 translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                    <Icon
+                      icon="material-symbols:arrow-left-rounded"
+                      height="none"
+                      className="text-base-tertiary group-hover:text-base-tertiary shrink-0 translate-x-[4px] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+                    />
                   </CMSLink>
                 )
               })}

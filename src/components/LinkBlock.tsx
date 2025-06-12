@@ -4,7 +4,8 @@ import { motion } from 'motion/react' // Corrected import path
 import { cn } from '@/utilities/ui'
 
 import { CMSLink, CMSLinkType } from './Link'
-import { CaretLeft } from '@/icons/caret-left-filled'
+
+import { Icon } from '@iconify-icon/react'
 
 const linkBlockVariants = {
   initial: {
@@ -61,12 +62,20 @@ export const LinkBlock: React.FC<LinkBlockProps> = ({
         <span className="ease-in-out-cubic text-h4 absolute inset-0 flex translate-x-1/2 items-center justify-center opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100">
           {/* <ArrowRight className="size-xl text-inverted-primary rtl:rotate-180" /> */}
           {CTALabel}
-          <CaretLeft className="size-xl text-inverted-primary ltr:rotate-180" />
+          <Icon
+            icon="material-symbols:arrow-left-rounded"
+            height="none"
+            className="size-xl text-inverted-primary ltr:rotate-180"
+          />
         </span>
 
         {position === 'corner' && (
           <span className="ease-in-out-cubic end-sm bottom-sm absolute transition-all duration-200 group-hover:-translate-x-full group-hover:opacity-0">
-            <CaretLeft className="size-h4 text-inverted-primary ltr:rotate-180" />
+            <Icon
+              icon="material-symbols:arrow-left-rounded"
+              height="none"
+              className="size-h4 text-inverted-primary ltr:rotate-180"
+            />
           </span>
         )}
       </CMSLink>
