@@ -21,45 +21,7 @@ interface FeaturedApps06Props {
 export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
   return (
     <div className="py-xl container">
-      {/* <div className="gap-xs grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {cards?.map(({ title, subtitle, appReference, id }) => (
-          <Card key={id} className="">
-            <CardContent className="rounded-space-sm gap-sm bg-background-neutral">
-              <div className="gap-xs flex flex-col">
-                <h3 className="text-h3">{title}</h3>
-                <p className="text-body-md text-base-secondary">{subtitle}</p>
-              </div>
-              <hr className="border-border w-full" />
-              <div className="gap-xs flex flex-col">
-                {appReference?.map((app) => {
-                  if (typeof app.value === 'string') return null
-                  return (
-                    <CMSLink
-                      className="text-body-lg group text-base-secondary hover:text-base-primary gap-xs flex h-fit flex-row items-center justify-between font-medium hover:no-underline"
-                      url={app.value?.slug}
-                      variant="inline"
-                    >
-                      <span className="gap-xs text-body-lg inline-flex items-center">
-                        {app.value?.icon && (
-                          <Media
-                            resource={app.value?.icon as MediaType}
-                            className="size-8 shrink-0"
-                            imgClassName="w-full h-full rounded-md aspect-square"
-                          />
-                        )}
-                        {app.value?.name}
-                      </span>
-                      <Icon
-                            icon="tabler:caret-left-filled"
-                            height="none" className="size-4 translate-x-0 transition-all duration-150 group-hover:-translate-x-1 ltr:rotate-180 ltr:group-hover:translate-x-1" />
-                    </CMSLink>
-                  )
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div> */}
+      {/* disable carousel in less than md */}
       <Carousel
         slidesPerView={{
           sm: 1, //   ≥640px: 1 slide
@@ -67,10 +29,10 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
           lg: 3, //  ≥1024px: 3 slides
         }}
       >
-        <CarouselContent className="-ms-xs">
+        <CarouselContent className="md:-ms-xs max-md:gap-xs max-md:flex-col">
           {cards?.map(({ title, subtitle, appReference, id }) => (
-            <CarouselItem key={id} className="ps-xs">
-              <Card key={id} className="h-full">
+            <CarouselItem key={id} className="md:ps-xs">
+              <Card key={id} className="h-full w-full">
                 <CardContent className="rounded-space-sm gap-sm bg-background-neutral">
                   <div className="gap-xs flex flex-col">
                     <h3 className="text-h3">{title}</h3>
@@ -80,12 +42,14 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
                   <div className="gap-xs flex flex-col">
                     {appReference?.map((app) => {
                       if (typeof app.value === 'string') return null
+
                       return (
                         <CMSLink
                           key={app.value?.id}
                           className="text-body-lg group text-base-secondary hover:text-base-primary gap-xs flex h-fit flex-row items-center justify-between font-medium hover:no-underline"
-                          url={app.value?.slug}
                           variant="inline"
+                          {...app.value.link}
+                          label={null}
                         >
                           <span className="gap-xs text-body-lg inline-flex items-center">
                             {app.value?.icon && (
@@ -113,8 +77,8 @@ export const FeaturedApps06: React.FC<FeaturedApps06Props> = ({ cards }) => {
         </CarouselContent>
         {cards && cards.length > 1 && (
           <>
-            <CarouselNavigation className="mt-xs relative justify-between" />
-            <CarouselIndicator className="absolute bottom-0 h-10" />
+            <CarouselNavigation className="mt-xs relative justify-between max-md:hidden" />
+            <CarouselIndicator className="absolute bottom-0 h-10 max-md:hidden" />
           </>
         )}
       </Carousel>
