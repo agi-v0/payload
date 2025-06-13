@@ -336,7 +336,7 @@ export const Integrations: CollectionConfig<'integrations'> = {
       type: 'relationship',
       relationTo: 'categories',
       filterOptions: {
-        'parent.slug': { equals: 'integrations' },
+        'parent.slug': { equals: 'marketplace' },
       },
       hasMany: true,
       admin: {
