@@ -43,10 +43,9 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   const urlHandler = (link) => {
     const { type, reference, url } = link
+    if (type !== 'reference') return url
     const { relationTo, value } = reference || {}
     switch (relationTo) {
-      case 'pages':
-        return `/${value.slug}`
       case 'posts':
         return `/blog/${value.slug}`
       case 'solutions':
@@ -54,7 +53,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
       case 'integrations':
         return `/marketplace/${value.slug}`
       default:
-        return url
+        return `/${value.slug}`
     }
   }
 
