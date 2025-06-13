@@ -52,6 +52,7 @@ export const PricingBlock02: React.FC<PricingBlock02Props> = ({
               <PricingCard
                 key={index}
                 type={null}
+                media={media}
                 title={title}
                 subtitle={subtitle}
                 price={price}

@@ -2,9 +2,7 @@
 
 import React from 'react'
 import type { PricingBlock } from '@/payload-types'
-import { BlockHeader } from '@/components/BlockHeader'
 import { PricingCard } from '../PricingCard'
-import { PricingToggle } from '@/components/PricingToggle'
 import { TooltipProvider } from '@/components/motion-ui/tooltip'
 
 interface PricingBlock01Props {

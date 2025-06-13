@@ -2,17 +2,16 @@
 
 import React, { useState } from 'react'
 import { cn } from '@/utilities/ui'
-import type { PricingBlock, Media as MediaType, Integration, Solution, Post, Page } from '@/payload-types'
+import type { Media as MediaType, Integration, Solution, Post, Page } from '@/payload-types'
 import { Media } from '@/components/MediaResponsive'
 import { Badge } from '@/components/ui/badge'
 import { ChevronDown, CircleCheck, X } from 'lucide-react'
 import { CMSLink } from '@/components/Link'
 import { SaudiRiyal } from '@/icons/saudi-riyal'
 import { usePricing } from '@/providers/Pricing'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/motion-ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/motion-ui/tooltip'
 import { useTheme } from '@/providers/Theme'
-import { useBreakpoint } from '@/hooks/useBreakpoint'
-import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 
 interface PricingCardProps {
   type?: ('basic' | 'featured') | null
@@ -42,6 +41,7 @@ interface PricingCardProps {
     annually?: string | null
     monthly?: string | null
   }
+  enableCta?: boolean | null
   link?: {
     type?: ('reference' | 'custom') | null
     newTab?: boolean | null
@@ -79,7 +79,6 @@ interface PricingCardProps {
   featuredSolutions?: (string | Solution)[] | null
   featuredIntegrations?: (string | Integration)[] | null
   id?: string | null
-
   translations: {
     monthly: string
     annually: string
@@ -97,6 +96,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
     subtitle,
     media,
     price,
+    enableCta,
     link,
     features,
     featuredSolutions,
@@ -105,7 +105,6 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
   } = props
   const { isMonthly } = usePricing()
   const { theme } = useTheme()
-  const breakpoint = useBreakpoint()
 
   const [isExpanded, setIsExpanded] = useState(false)
   const iconMedia = media as MediaType | undefined
@@ -113,7 +112,15 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
   return (
     <motion.div
       layout
-      data-theme={type === 'featured' ? (theme === 'dark' ? 'light' : 'dark') : theme === 'dark' ? 'dark' : 'light'}
+      data-theme={
+        type === 'featured'
+          ? theme === 'dark'
+            ? 'light'
+            : 'dark'
+          : theme === 'dark'
+            ? 'dark'
+            : 'light'
+      }
       className={cn(
         'bg-background-neutral rounded-space-sm relative space-y-4',
         type === 'featured' && 'bg-background-neutral p-card-xl',
@@ -122,21 +129,27 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
       )}
     >
       <motion.div layout className="flex flex-col gap-4">
-        <div className="relative flex flex-row gap-4">
+        <div className="relative flex flex-row items-center gap-4">
           {badge?.label && (
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
               <Badge {...badge} className="px-space-sm py-space-xs" />
             </div>
           )}
 
-          {iconMedia && <Media resource={iconMedia} imgClassName="size-space-3xl object-contain" />}
+          {iconMedia && (
+            <Media
+              resource={iconMedia}
+              className="shrink-0"
+              imgClassName="size-space-3xl object-contain"
+            />
+          )}
 
-          <div className="text-start">
+          <div className="space-y-1 text-start">
             {title && (
               <h3
                 className={cn(
                   'text-base-primary text-(length:--text-h3) font-medium',
-                  type === null && 'text-(length:--text-h4)',
+                  type === null && 'text-(length:--text-body-lg)',
                 )}
               >
                 {title}
@@ -149,26 +162,38 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
         {price && (
           <p
             className={cn(
-              'text-base-primary text-start text-(length:--text-h2) font-medium',
-              type === null && 'text-(length:--text-h4)',
+              'text-base-primary inline-block space-x-[0.15em] text-start text-(length:--text-h2)/none font-medium',
+              type === null && 'text-(length:--text-h4)/none',
             )}
           >
-            {isMonthly ? price.monthly : price.annually}{' '}
-            <SaudiRiyal className={cn('text-h4 inline-block', type === null && 'text-(length:--text-body-sm)')} />{' '}
-            <span className="text-base-tertiary text-body-sm font-normal">
+            <span className="inline-block align-baseline">
+              {isMonthly ? price.monthly : price.annually}
+            </span>
+            <SaudiRiyal
+              className={cn(
+                'inline-block size-[0.7em] align-baseline',
+                // type === null && '-size-(length:--text-h6)',
+              )}
+            />
+            <span className="text-base-tertiary text-body-sm/none inline-block align-baseline font-normal">
               /{isMonthly ? translations.monthly : translations.annually}
             </span>
           </p>
         )}
-        {link && (
-          <CMSLink {...link} className="w-full" size="lg" variant={type === 'featured' ? 'primary' : 'secondary'} />
+        {enableCta && link && (
+          <CMSLink
+            {...link}
+            className="w-full"
+            size="lg"
+            variant={type === 'featured' ? 'primary' : 'secondary'}
+          />
         )}
         <hr className="border-input" />
       </motion.div>
 
       {/* Featured Solutions */}
       {featuredSolutions && featuredSolutions.length > 0 && (
-        <motion.button
+        <motion.div
           layout
           style={{ borderRadius: 12 }}
           onClick={() => setIsExpanded(!isExpanded)}
@@ -176,7 +201,9 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
           className="hover:bg-neutral/5 data-[state=expanded]:hover:bg-neutral/10 data-[state=expanded]:bg-neutral/5 w-full space-y-4 rounded-xl px-4 py-3 pt-2 transition-colors duration-200 max-md:px-0 data-[state=expanded]:max-md:px-4"
         >
           <motion.div layout className="-me-2 flex w-full flex-row items-center justify-between">
-            <p className="text-body-sm text-base-tertiary font-normal">{translations.includedSolutions}</p>
+            <p className="text-body-sm text-base-tertiary font-normal">
+              {translations.includedSolutions}
+            </p>
             <ChevronDown
               data-state={isExpanded ? 'expanded' : 'collapsed'}
               className="text-base-tertiary size-5 transition-transform duration-200 data-[state=expanded]:rotate-180"
@@ -263,19 +290,25 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
               return solutionItem
             })}
           </motion.ul>
-        </motion.button>
+        </motion.div>
       )}
 
       {/* Featured Integrations */}
       {featuredIntegrations && featuredIntegrations.length > 0 && (
         <div className="px-4 max-md:px-0">
-          <p className="text-body-sm text-base-tertiary mb-4 font-normal">{translations.integrations}</p>
+          <p className="text-body-sm text-base-tertiary mb-4 font-normal">
+            {translations.integrations}
+          </p>
           <div className="flex flex-wrap gap-1">
             {featuredIntegrations.map((integration, idx) => {
-              const integrationTitle = typeof integration === 'object' && integration.title ? integration.title : ''
-              const integrationIcon = typeof integration === 'object' && integration.icon ? integration.icon : ''
+              const integrationTitle =
+                typeof integration === 'object' && integration.title ? integration.title : ''
+              const integrationIcon =
+                typeof integration === 'object' && integration.icon ? integration.icon : ''
 
-              return <Media key={idx} resource={integrationIcon} imgClassName="size-12 object-contain" />
+              return (
+                <Media key={idx} resource={integrationIcon} imgClassName="size-12 object-contain" />
+              )
             })}
           </div>
         </div>
@@ -283,7 +316,7 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
 
       {/* Features */}
       {features && features.length > 0 && (
-        <div className="space-y-space-xs pt-4">
+        <div className="space-y-space-xs">
           {/* <p className="text-body-sm mb-space-xs text-base-tertiary font-normal">
             {translations.features}
           </p> */}
@@ -295,7 +328,12 @@ export const PricingCard: React.FC<PricingCardProps> = (props) => {
                 ) : (
                   <X className="text-base-tertiary size-5 flex-shrink-0" />
                 )}
-                <span className={cn('text-caption', feature.enabled ? 'text-base-secondary' : 'text-base-tertiary')}>
+                <span
+                  className={cn(
+                    'text-caption',
+                    feature.enabled ? 'text-base-secondary' : 'text-base-tertiary',
+                  )}
+                >
                   {feature.feature}
                 </span>
               </li>

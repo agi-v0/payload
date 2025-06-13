@@ -25,6 +25,24 @@ export type CMSLinkType = {
   onClick?: () => void
 }
 
+function getHref(link) {
+  const { type, reference, url } = link
+  const { relationTo, value } = reference || {}
+  if (type !== 'reference') return url
+  switch (relationTo) {
+    case 'pages':
+      return value.slug
+    case 'posts':
+      return `/blog/${value.slug}`
+    case 'solutions':
+      return `/solutions/${value.slug}`
+    case 'integrations':
+      return `/marketplace/${value.slug}`
+    default:
+      return url
+  }
+}
+
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const {
     type,
@@ -39,22 +57,6 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     url,
     icon,
   } = props
-
-  const getHref = (link) => {
-    const { type, reference, url } = link
-    if (type !== 'reference') return url
-    const { relationTo, value } = reference || {}
-    switch (relationTo) {
-      case 'posts':
-        return `/blog/${value.slug}`
-      case 'solutions':
-        return `/solutions/${value.slug}`
-      case 'integrations':
-        return `/marketplace/${value.slug}`
-      default:
-        return `/${value.slug}`
-    }
-  }
 
   // const href =
   //   type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
