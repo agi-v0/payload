@@ -1,11 +1,10 @@
-'use client'
 import { Button, type ButtonProps } from '@/components/ui/button'
 
 import { cn } from '@/utilities/ui'
 import { Link } from '@/i18n/routing'
 import React from 'react'
 
-import type { Page, Post, Solution } from '@/payload-types'
+import type { Integration, Page, Post, Solution } from '@/payload-types'
 import { Icon } from '@iconify-icon/react'
 
 export type CMSLinkType = {
@@ -16,8 +15,8 @@ export type CMSLinkType = {
   label?: string | null
   newTab?: boolean | null
   reference?: {
-    relationTo: 'pages' | 'posts' | 'solutions'
-    value: Page | Post | Solution | string | number
+    relationTo: 'pages' | 'posts' | 'solutions' | 'integrations'
+    value: Page | Post | Solution | Integration | string | number
   } | null
   size?: ButtonProps['size'] | null
   type?: 'custom' | 'reference' | null
@@ -41,7 +40,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     icon,
   } = props
 
-  const urlHandler = (link) => {
+  const getHref = (link) => {
     const { type, reference, url } = link
     if (type !== 'reference') return url
     const { relationTo, value } = reference || {}
@@ -62,7 +61,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   //     ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ``}/${reference.value.slug}`
   //     : url
 
-  const href = urlHandler(props)
+  const href = getHref(props)
 
   if (!href) return null
 
