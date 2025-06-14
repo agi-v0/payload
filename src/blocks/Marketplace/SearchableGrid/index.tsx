@@ -38,7 +38,7 @@ export const SearchableIntegrationsGrid: React.FC<SearchableIntegrationsGridProp
       pagination: false,
       where: {
         'parent.slug': {
-          equals: 'integrations',
+          equals: 'marketplace',
         },
       },
       select: {
