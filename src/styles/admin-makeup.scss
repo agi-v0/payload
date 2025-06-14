@@ -302,32 +302,32 @@ html[data-theme='dark'] {
   mask-size: contain;
 }
 #action-create.popup-button-list__button:before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/circle-plus.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:add-circle.svg');
   content: '';
 }
 
 #action-duplicate.popup-button-list__button:before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/copy.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:content-copy.svg');
   content: '';
 }
 
 #action-delete.popup-button-list__button:before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/trash-2.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:delete.svg');
   content: '';
 }
 
 #copy-locale-data__button.popup-button-list__button:before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/clipboard-paste.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:content-paste.svg');
   content: '';
 }
 
 #schedule-publish.popup-button-list__button:before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/calendar-clock.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:event.svg');
   content: '';
 }
 
 #action-save + .popup .popup-button-list__button:not([id]):before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/save.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:save.svg');
   content: '';
 }
 
@@ -442,166 +442,161 @@ html[data-theme='dark'] .nav__link:hover {
 
 /* Fallback Icon */
 .nav-group[id*='Collections'] .nav__link::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/layers-2.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:filter_none.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='page']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/file.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:description.svg');
   content: '';
 }
 .nav-group .nav__link[id*='solutions']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/computer.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:point-of-sale.svg');
   content: '';
 }
 .nav-group .nav__link[id*='integrations']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/diamond-plus.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:sdk.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='post']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/pencil-line.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:border-color.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='customers']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/message-square-quote.svg');
-  content: '';
-}
-
-.nav-group .nav__link[id*='case-studies']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/newspaper.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:format-quote.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='categories']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/folder-tree.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:category.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='product']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/shopping-cart.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:shopping-cart.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='media']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/image.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:image.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='upload']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/upload.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:upload.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='faq']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/circle-help.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:forum.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='changelog']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/history.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:history.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='form']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/file-text.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:format-list-bulleted.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='submission']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/message-square.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:mark-email-read.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='block']::before,
 .nav-group .nav__link[id*='lock']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/boxes.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:boxes.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='redirect']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/route.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:conversion-path.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='header']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/panel-top.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:top-panel-close.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='footer']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/panel-bottom.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:bottom-panel-close.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='settings']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/settings.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:settings.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='user']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/users.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:group.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='session']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/key.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:key.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='verification']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/rectangle-ellipsis.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:rectangle-ellipsis.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='account']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/shield-user.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:shield-user.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='admin-invitation']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/user-plus.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:user-plus.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='comment']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/message-circle.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:message-circle.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='review']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/star.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:star.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='search']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/search.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:search.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='tag']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/tags.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:tags.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='analytics']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/bar-chart.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:bar-chart.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='objects']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/car-front.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:car-front.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='auctions']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/megaphone.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:megaphone.svg');
   content: '';
 }
 
 .nav-group .nav__link[id*='bids']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/banknote-arrow-up.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:banknote-arrow-up.svg');
   content: '';
 }
 
@@ -609,7 +604,7 @@ html[data-theme='dark'] .nav__link:hover {
 .nav-group .nav__link[id*='booking']::before,
 .nav-group .nav__link[id*='event']::before,
 .nav-group .nav__link[id*='calendar']::before {
-  mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.507.0/icons/calendar-clock.svg');
+  mask-image: url('https://api.iconify.design/material-symbols:calendar-clock.svg');
   content: '';
 }
 
