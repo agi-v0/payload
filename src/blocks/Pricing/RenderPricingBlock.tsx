@@ -4,11 +4,13 @@ import { getLocale, getTranslations } from 'next-intl/server'
 import type { PricingBlock as PricingBlockType } from '@/payload-types'
 import { PricingBlock01 } from './variants/PricingBlock01'
 import { PricingBlock02 } from './variants/PricingBlock02'
+import { PricingBlock03 } from './variants/PricingBlock03'
 
 // Map block types to components
 const blockComponents = {
   '01': PricingBlock01,
   '02': PricingBlock02,
+  '03': PricingBlock03,
 }
 
 export const RenderPricingBlock: React.FC<PricingBlockType> = async (props) => {

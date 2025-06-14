@@ -99,7 +99,7 @@ function Badge({
         {referenceValue?.icon && (
           <Media
             imgClassName={cn(
-              'overflow-hidden rounded-lg',
+              'overflow-hidden rounded-md',
               size === 'sm' && 'size-6',
               size === 'md' && 'size-8',
               size === 'lg' && 'size-10',

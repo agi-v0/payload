@@ -90,6 +90,9 @@ const pricingCard: Field[] = [
         localized: true,
       },
     ],
+    admin: {
+      condition: (_, siblingData, { blockData }) => ['01', '02'].includes(blockData.type),
+    },
   },
 
   {
@@ -97,12 +100,18 @@ const pricingCard: Field[] = [
     type: 'relationship',
     relationTo: 'solutions',
     hasMany: true,
+    admin: {
+      condition: (_, siblingData, { blockData }) => ['01', '02'].includes(blockData.type),
+    },
   },
   {
     name: 'featuredIntegrations',
     type: 'relationship',
     relationTo: 'integrations',
     hasMany: true,
+    admin: {
+      condition: (_, siblingData, { blockData }) => ['01', '02'].includes(blockData.type),
+    },
   },
 ]
 
